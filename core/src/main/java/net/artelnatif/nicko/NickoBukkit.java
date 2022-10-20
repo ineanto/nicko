@@ -15,6 +15,8 @@ import net.artelnatif.nicko.utils.ServerUtils;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
 
@@ -25,6 +27,12 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+
+        getLogger().info("Loading internals...");
+        if (getInternals() == null) {
+            getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
+            getServer().getPluginManager().disablePlugin(this);
+        }
 
         final PluginCommand command = getCommand("nicko");
         if (command != null) {

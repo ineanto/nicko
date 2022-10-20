@@ -1,0 +1,28 @@
+# Nicko ${project.version} - Config:
+
+prefix: "§8[§6Nicko§8] "
+
+bungeecord:
+  # Enables Bungeecord support, switching through servers will keep player's skins.
+  enabled: false
+  redis:
+    username: ""
+    password: ""
+    # Time To Live, the time the data will be stored on a player-by-player basis.
+    ttl: -1
+
+
+disguisekit:
+  # The rainbow header text in the book.
+  header: "Nicko's Disguise Kit"
+
+storage:
+  # Indicates wherever the data will be stored
+  # locally through a .json file or a (My)SQL database.
+  local: true
+  # SQL database's address
+  address: "localhost"
+  # SQL database's username.
+  username: ""
+  # SQL database's password.
+  password: ""

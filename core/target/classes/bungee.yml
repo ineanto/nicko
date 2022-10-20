@@ -1,0 +1,4 @@
+name: Nicko
+main: net.artelnatif.nicko.bungee.NickoBungee
+version: 1.0-SNAPSHOT
+author: Aro

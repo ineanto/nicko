@@ -1,0 +1,7 @@
+name: Nicko
+main: net.artelnatif.nicko.NickoBukkit
+version: 1.0-SNAPSHOT
+author: Aro
+api-version: 1.18
+commands:
+  nicko:

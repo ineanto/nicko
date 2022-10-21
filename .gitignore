@@ -24,6 +24,9 @@
 hs_err_pid*
 replay_pid*
 
+# Nicko first pass build files
+core/target
+
 # Idea Folder
 .idea
 

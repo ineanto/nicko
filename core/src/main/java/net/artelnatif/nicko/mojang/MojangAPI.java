@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class MojangAPI {
     public static final String URL_NAME = "https://api.mojang.com/users/profiles/minecraft/{name}";
@@ -29,6 +30,7 @@ public class MojangAPI {
     };
     private final LoadingCache<String, Optional<MojangSkin>> cache = CacheBuilder
             .newBuilder()
+            .expireAfterWrite(120, TimeUnit.MINUTES)
             .build(loader);
 
     public Optional<MojangSkin> getSkin(String uuid) throws IOException, ExecutionException {

@@ -28,8 +28,6 @@ public class NickoBukkit extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         mojangAPI = new MojangAPI();
-        nickoConfiguration = new NickoConfiguration(this);
-        dataStore = new PlayerDataStore(this);
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
@@ -50,8 +48,10 @@ public class NickoBukkit extends JavaPlugin {
 
             getLogger().info("Loading configuration...");
             saveDefaultConfig();
+            nickoConfiguration = new NickoConfiguration(this);
 
             getLogger().info("Loading persistence...");
+            dataStore = new PlayerDataStore(this);
 
             if (!dataStore.getStorage().getProvider().init()) {
                 dataStore.getStorage().setError(true);

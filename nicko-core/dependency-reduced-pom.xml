@@ -35,7 +35,6 @@
             <configuration>
               <artifactSet>
                 <includes>
-                  <include>net.artelnatif:nicko-*</include>
                   <include>xyz.upperlevel.spigot.book:spigot-book-api</include>
                   <include>net.wesjd:anvilgui</include>
                 </includes>
@@ -93,7 +92,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>5.8.2</version>
+      <version>5.9.0-M1</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>

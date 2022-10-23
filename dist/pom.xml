@@ -30,7 +30,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>net.artelnatif:nicko-*</include>
+                                    <include>net.artelnatif:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -48,7 +48,17 @@
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
+            <artifactId>nicko-v1_18_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
             <artifactId>nicko-v1_18_R2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>nicko-v1_19_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

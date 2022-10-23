@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>core</module>
+        <module>nicko-core</module>
         <module>dist</module>
         <module>v1_18_R2</module>
         <module>v1_18_R1</module>

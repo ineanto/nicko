@@ -24,7 +24,7 @@
             <configuration>
               <artifactSet>
                 <includes>
-                  <include>net.artelnatif:nicko-*</include>
+                  <include>net.artelnatif:*</include>
                 </includes>
               </artifactSet>
             </configuration>

@@ -27,7 +27,6 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        mojangAPI = new MojangAPI();
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
@@ -37,6 +36,8 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (getServer().getPluginManager().isPluginEnabled(this)) {
+            mojangAPI = new MojangAPI();
+
             final PluginCommand command = getCommand("nicko");
             if (command != null) {
                 command.setExecutor(new NickoCommand());

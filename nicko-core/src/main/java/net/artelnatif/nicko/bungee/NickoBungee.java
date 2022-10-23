@@ -12,7 +12,7 @@ public class NickoBungee extends Plugin {
     @Override
     public void onEnable() {
         plugin = this;
-        
+
         getLogger().info("Registering channels...");
         getProxy().registerChannel(NICKO_PLUGIN_CHANNEL_FETCH);
         getProxy().registerChannel(NICKO_PLUGIN_CHANNEL_UPDATE);

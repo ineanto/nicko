@@ -6,6 +6,7 @@ import net.artelnatif.nicko.command.NickoTabCompleter;
 import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
+import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
@@ -15,6 +16,7 @@ import net.artelnatif.nicko.utils.ServerUtils;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Locale;
 import java.util.logging.Level;
 
 public class NickoBukkit extends JavaPlugin {
@@ -23,6 +25,7 @@ public class NickoBukkit extends JavaPlugin {
     private NickoConfiguration nickoConfiguration;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
+    private I18N i18N;
 
     @Override
     public void onEnable() {
@@ -37,6 +40,10 @@ public class NickoBukkit extends JavaPlugin {
 
         if (getServer().getPluginManager().isPluginEnabled(this)) {
             mojangAPI = new MojangAPI();
+
+            getLogger().info("Loading locale...");
+            Locale.setDefault(Locale.ENGLISH);
+            i18N = new I18N(this);
 
             final PluginCommand command = getCommand("nicko");
             if (command != null) {

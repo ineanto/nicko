@@ -15,6 +15,8 @@ public class NickoConfiguration {
         return getConfig().getString("prefix");
     }
 
+    public String getLocale() { return getConfig().getString("locale"); }
+
     public String getDisguiseKitHeader() {
         return getConfig().getString("disguisekit.header");
     }

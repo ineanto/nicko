@@ -22,23 +22,25 @@ public class PlayerDataStore {
     public static final HashMap<UUID, NickoProfile> PROFILES = new HashMap<>();
 
     public Optional<NickoProfile> getData(UUID uuid) {
-        if(storage.isError()) {
+        if (storage.isError()) {
             return Optional.empty();
         }
 
         if (PROFILES.containsKey(uuid)) {
             return Optional.of(PROFILES.get(uuid));
         } else if (storage.isStored(uuid)) {
-            Optional<NickoProfile> retrievedProfile = storage.retrieve(uuid);
+            final Optional<NickoProfile> retrievedProfile = storage.retrieve(uuid);
             retrievedProfile.ifPresent(profile -> PROFILES.put(uuid, profile));
             return retrievedProfile;
         } else {
-            return Optional.empty();
+            final NickoProfile newProfile = NickoProfile.EMPTY_PROFILE;
+            PROFILES.put(uuid, newProfile);
+            return Optional.of(newProfile);
         }
     }
 
     public Optional<NickoProfile> getOfflineData(String name) {
-        if(storage.isError()) {
+        if (storage.isError()) {
             return Optional.empty();
         }
 
@@ -55,7 +57,7 @@ public class PlayerDataStore {
     }
 
     public void saveData(Player player) {
-        if(storage.isError()) {
+        if (storage.isError()) {
             return;
         }
 

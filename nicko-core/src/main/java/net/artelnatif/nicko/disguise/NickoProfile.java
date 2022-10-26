@@ -12,7 +12,7 @@ public class NickoProfile {
     }
 
     public boolean isEmpty() {
-        return this != NickoProfile.EMPTY_PROFILE || (name == null && skin == null);
+        return name == null && skin == null;
     }
 
     public String getName() {

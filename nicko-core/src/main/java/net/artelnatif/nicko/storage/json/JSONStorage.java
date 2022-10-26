@@ -53,11 +53,11 @@ public class JSONStorage extends Storage {
         final File file = new File(directory, uuid.toString() + ".json");
         try (FileReader fileReader = new FileReader(file)) {
             try (BufferedReader reader = new BufferedReader(fileReader)) {
-                NickoProfile value = gson.fromJson(reader, NickoProfile.class);
+                final NickoProfile value = gson.fromJson(reader, NickoProfile.class);
                 return Optional.of(value);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return Optional.empty();
         }
     }
 

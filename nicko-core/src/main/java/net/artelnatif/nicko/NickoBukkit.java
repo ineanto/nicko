@@ -41,10 +41,6 @@ public class NickoBukkit extends JavaPlugin {
         if (getServer().getPluginManager().isPluginEnabled(this)) {
             mojangAPI = new MojangAPI();
 
-            getLogger().info("Loading locale...");
-            Locale.setDefault(Locale.ENGLISH);
-            i18N = new I18N(this);
-
             final PluginCommand command = getCommand("nicko");
             if (command != null) {
                 command.setExecutor(new NickoCommand());
@@ -58,8 +54,13 @@ public class NickoBukkit extends JavaPlugin {
             saveDefaultConfig();
             nickoConfiguration = new NickoConfiguration(this);
 
+            getLogger().info("Loading locale...");
+            Locale.setDefault(Locale.ENGLISH);
+            i18N = new I18N(this);
+
             getLogger().info("Loading persistence...");
             dataStore = new PlayerDataStore(this);
+            System.out.println(dataStore.getStorage().isError());
 
             if (!dataStore.getStorage().getProvider().init()) {
                 dataStore.getStorage().setError(true);

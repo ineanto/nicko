@@ -58,6 +58,10 @@
   </build>
   <repositories>
     <repository>
+      <id>minebench-repo</id>
+      <url>https://repo.minebench.de/</url>
+    </repository>
+    <repository>
       <id>bungeecord-repo</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
@@ -81,6 +85,12 @@
       <groupId>net.md-5</groupId>
       <artifactId>bungeecord-api</artifactId>
       <version>1.18-R0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.themoep</groupId>
+      <artifactId>inventorygui</artifactId>
+      <version>1.6-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

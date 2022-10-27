@@ -59,7 +59,6 @@ public class NickoBukkit extends JavaPlugin {
 
             getLogger().info("Loading persistence...");
             dataStore = new PlayerDataStore(this);
-            System.out.println(dataStore.getStorage().isError());
 
             if (!dataStore.getStorage().getProvider().init()) {
                 dataStore.getStorage().setError(true);

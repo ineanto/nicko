@@ -5,16 +5,19 @@ import net.artelnatif.nicko.command.sub.NickoCheckSubCmd;
 import net.artelnatif.nicko.command.sub.NickoDebugSubCmd;
 import net.artelnatif.nicko.command.sub.NickoDisguiseSubCmd;
 import net.artelnatif.nicko.command.sub.NickoGUISubCmd;
+import net.artelnatif.nicko.gui.MainGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public class NickoCommand implements CommandExecutor {
     private final String opPrefix = "§c(OP)";
     private String helpMessage = """
             §cNicko §8§o[{version}] §f- §2Help:
+            §6/nicko §f- §7Open the GUI.
             §6/nicko disguise §f- §7Change your appearance.
             §6/nicko revert §f- §7Revert your appearance to your default skin and name.
             §6/nicko help §f- §7Prints this help message.
@@ -36,7 +39,13 @@ public class NickoCommand implements CommandExecutor {
                 default -> sendHelpMessages(sender);
             }
         } else {
-            sendHelpMessages(sender);
+            if (sender instanceof Player player) {
+                new MainGUI(player).open();
+                return false;
+            }
+
+            sender.sendMessage("The GUI can only be opened in-game.");
+            return false;
         }
 
         return false;

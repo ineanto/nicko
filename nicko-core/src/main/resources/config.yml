@@ -4,6 +4,7 @@ prefix: "§8[§6Nicko§8] "
 
 bungeecord:
   # Enables Bungeecord support, switching through servers will keep player's skins.
+  # Accepted values: false (Disabled), true (Enabled)
   enabled: false
   redis:
     username: ""
@@ -11,10 +12,11 @@ bungeecord:
     # Time To Live, the time the data will be stored on a player-by-player basis.
     ttl: -1
 
-
-disguisekit:
-  # The rainbow header text in the book.
-  header: "Nicko's Disguise Kit"
+# Localisation:
+# By default, Nicko tries to get the locale from the player's options.
+# If that fails, the locale fallback is the one provided by this option.
+# Accepted values: fr (French), en (English), custom (Custom language file).
+locale: "en"
 
 storage:
   # Indicates wherever the data will be stored

@@ -25,7 +25,7 @@ public class NickoDisguiseSubCmd extends NickoSubCmd {
             final String disguiseSkinCommand = disguiseBaseCommand + "skin";
             final String disguiseBothCommand = disguiseBaseCommand + "full";
 
-            final RainbowText text = new RainbowText(NickoBukkit.getInstance().getNickoConfig().getDisguiseKitHeader());
+            final RainbowText text = new RainbowText("Nicko Disguise Kit");
             final int displacement = new Random().nextInt(RainbowText.getDefaultRainbow().size() - 1);
             text.setPlace(displacement);
 

@@ -20,8 +20,8 @@
 
     <repositories>
         <repository>
-            <id>minebench-repo</id>
-            <url>https://repo.minebench.de/</url>
+            <id>xenondevs</id>
+            <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
         <repository>
             <id>bungeecord-repo</id>
@@ -49,11 +49,11 @@
             <artifactId>bungeecord-api</artifactId>
             <version>1.18-R0.1-SNAPSHOT</version>
         </dependency>
+        <!-- Inventory Lib -->
         <dependency>
-            <groupId>de.themoep</groupId>
-            <artifactId>inventorygui</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>de.studiocode.invui</groupId>
+            <artifactId>InvUI</artifactId>
+            <version>0.8.2</version>
         </dependency>
         <dependency>
             <groupId>xyz.upperlevel.spigot.book</groupId>

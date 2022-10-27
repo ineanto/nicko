@@ -104,6 +104,7 @@
                                 <includes>
                                     <include>xyz.upperlevel.spigot.book:spigot-book-api</include>
                                     <include>net.wesjd:anvilgui</include>
+                                    <include>de.studiocode.invui:*</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -114,6 +115,10 @@
                                 <relocation>
                                     <pattern>net.wesjd.anvilgui</pattern>
                                     <shadedPattern>net.artelnatif.anvilgui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>de.studiocode.invui</pattern>
+                                    <shadedPattern>net.artelnatif.invui</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

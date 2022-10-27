@@ -2,35 +2,34 @@ package net.artelnatif.nicko.i18n;
 
 import net.artelnatif.nicko.NickoBukkit;
 import org.apache.commons.lang.LocaleUtils;
+import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class I18N {
-    private final NickoBukkit instance;
-    private final MessageFormat formatter = new MessageFormat("");
+    private final static MessageFormat formatter = new MessageFormat("");
 
-    public I18N(NickoBukkit instance) {
-        this.instance = instance;
-        formatter.setLocale(getLocale());
-    }
-
-    private Locale getLocale() {
+    private static Locale getLocale(Player player) {
         try {
-            return LocaleUtils.toLocale(instance.getNickoConfig().getLocale());
+            return LocaleUtils.toLocale(player.getLocale().substring(0, 1));
         } catch (IllegalArgumentException exception) {
-            instance.getLogger().severe("Invalid locale provided, defaulting to " + Locale.getDefault().getDisplayName() + ".");
+            NickoBukkit.getInstance().getLogger().severe("Invalid locale provided, defaulting to " + Locale.getDefault().getDisplayName() + ".");
             return Locale.getDefault();
         }
     }
 
-    private ResourceBundle getBundle() {
-        return ResourceBundle.getBundle("locale", getLocale());
+    private static ResourceBundle getBundle(Player player) {
+        return ResourceBundle.getBundle("locale", getLocale(player));
     }
 
-    public String get(String key, Object... arguments) {
-        formatter.applyPattern(getBundle().getString(key));
-        return formatter.format(arguments);
+    public static String translate(Player player, String key, Object... arguments) {
+        try {
+            formatter.applyPattern(getBundle(player).getString(key));
+            return formatter.format(arguments);
+        } catch (Exception e) {
+            return key;
+        }
     }
 }

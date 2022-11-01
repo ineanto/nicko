@@ -13,7 +13,9 @@ public class I18N {
 
     private static Locale getLocale(Player player) {
         try {
-            return LocaleUtils.toLocale(player.getLocale().substring(0, 1));
+            System.out.println("player.getLocale() = " + player.getLocale());
+            System.out.println("player.getLocale().substring(0, 2) = " + player.getLocale().substring(0, 2));
+            return LocaleUtils.toLocale(player.getLocale().substring(0, 2));
         } catch (IllegalArgumentException exception) {
             NickoBukkit.getInstance().getLogger().severe("Invalid locale provided, defaulting to " + Locale.getDefault().getDisplayName() + ".");
             return Locale.getDefault();
@@ -27,9 +29,9 @@ public class I18N {
     public static String translate(Player player, String key, Object... arguments) {
         try {
             formatter.applyPattern(getBundle(player).getString(key));
-            return formatter.format(arguments);
+            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
-            return key;
+            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key;
         }
     }
 }

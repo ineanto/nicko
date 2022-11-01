@@ -3,8 +3,10 @@ package net.artelnatif.nicko.impl;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
+import io.vavr.control.Either;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.IChatBaseComponent;
@@ -82,7 +84,7 @@ public class v1_18_R2 implements Internals {
     }
 
     @Override
-    public void updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public Either<String, Void> updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         Optional<MojangSkin> skin;
@@ -102,16 +104,17 @@ public class v1_18_R2 implements Internals {
                         final PropertyMap properties = gameProfile.getProperties();
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
+                        return Either.right(null);
                     } else {
-                        player.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cFailed to get skin from Mojang.");
+                        return Either.left(I18NDict.Error.SKIN_FAIL_MOJANG.getKey());
                     }
                 } else {
-                    player.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cFailed to get username from Mojang. Does the user exists?");
+                    return Either.left(I18NDict.Error.NAME_FAIL_MOJANG.getKey());
                 }
             } catch (IOException e) {
-                player.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cAn error occurred.");
+                return Either.left(I18NDict.Error.UNEXPECTED_ERROR.getKey());
             } catch (ExecutionException e) {
-                player.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cFailed to get skin from cache.");
+                return Either.left(I18NDict.Error.SKIN_FAIL_CACHE.getKey());
             }
         }
 
@@ -127,5 +130,6 @@ public class v1_18_R2 implements Internals {
             onlineEntityPlayer.b.a(add);
         });
         updateOthers(player);
+        return null;
     }
 }

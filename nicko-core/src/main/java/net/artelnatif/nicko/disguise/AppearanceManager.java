@@ -1,5 +1,6 @@
 package net.artelnatif.nicko.disguise;
 
+import io.vavr.control.Either;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Bukkit;
@@ -65,7 +66,7 @@ public class AppearanceManager {
         updatePlayer(true);
     }
 
-    public void updatePlayer(boolean skinChange) {
-        NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange);
+    public Either<String, Void> updatePlayer(boolean skinChange) {
+        return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange);
     }
 }

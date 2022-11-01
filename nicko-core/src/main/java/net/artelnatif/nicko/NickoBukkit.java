@@ -1,5 +1,8 @@
 package net.artelnatif.nicko;
 
+import de.studiocode.invui.gui.structure.Structure;
+import de.studiocode.invui.item.builder.ItemBuilder;
+import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.command.NickoTabCompleter;
@@ -14,6 +17,7 @@ import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.pluginchannel.UpdateMessageHandler;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.utils.ServerUtils;
+import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,6 +60,10 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+            getLogger().info("Setting GUI defaults...");
+            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)));
+            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE)));
 
             getLogger().info("Loading persistence...");
             dataStore = new PlayerDataStore(this);

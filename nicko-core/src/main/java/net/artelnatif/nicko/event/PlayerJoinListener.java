@@ -19,9 +19,9 @@ public class PlayerJoinListener implements Listener {
 
             if (appearanceManager.hasData()) {
                 final boolean skinChange = !player.getName().equals(appearanceManager.getSkin());
-                appearanceManager.updatePlayer(skinChange).peek(unused -> player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLIED.getKey()))).peekLeft(s -> {
-                    player.sendMessage(I18N.translate(player, s));
-                });
+                appearanceManager.updatePlayer(skinChange)
+                        .peek(unused -> player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLIED.getKey())))
+                        .peekLeft(s -> player.sendMessage(I18N.translate(player, s)));
             }
         }, 20L);
     }

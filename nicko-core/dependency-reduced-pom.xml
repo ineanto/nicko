@@ -38,6 +38,7 @@
                   <include>xyz.upperlevel.spigot.book:spigot-book-api</include>
                   <include>net.wesjd:anvilgui</include>
                   <include>de.studiocode.invui:*</include>
+                  <include>io.vavr:vavr</include>
                 </includes>
               </artifactSet>
               <relocations>
@@ -122,5 +123,6 @@
   <properties>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.source>17</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>

@@ -3,10 +3,8 @@ package net.artelnatif.nicko.impl;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
-import io.vavr.control.Either;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.game.*;
@@ -85,7 +83,7 @@ public class v1_19_R1 implements Internals {
     }
 
     @Override
-    public Either<String, Void> updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public void updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         Optional<MojangSkin> skin;
@@ -105,34 +103,30 @@ public class v1_19_R1 implements Internals {
                         final PropertyMap properties = gameProfile.getProperties();
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
-                        return Either.right(null);
                     } else {
-                        return Either.left(I18NDict.Error.SKIN_FAIL_MOJANG.getKey());
+                        return;
                     }
                 } else {
-                    return Either.left(I18NDict.Error.NAME_FAIL_MOJANG.getKey());
+                    return;
                 }
-            } catch (IOException e) {
-                return Either.left(I18NDict.Error.UNEXPECTED_ERROR.getKey());
-            } catch (ExecutionException e) {
-                return Either.left(I18NDict.Error.SKIN_FAIL_CACHE.getKey());
+            } catch (IOException | ExecutionException e) {
+                return;
             }
+
+            add.b().clear();
+            add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
+                    player.getPing(),
+                    EnumGamemode.a(player.getGameMode().ordinal()),
+                    IChatBaseComponent.a(profile.getName()),
+                    entityPlayer.fz().b()));
+            entityPlayer.b.a(add);
+
+            Bukkit.getOnlinePlayers().forEach(online -> {
+                EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
+                onlineEntityPlayer.b.a(remove);
+                onlineEntityPlayer.b.a(add);
+            });
+            updateOthers(player);
         }
-
-        add.b().clear();
-        add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
-                player.getPing(),
-                EnumGamemode.a(player.getGameMode().ordinal()),
-                IChatBaseComponent.a(profile.getName()),
-                entityPlayer.fz().b()));
-        entityPlayer.b.a(add);
-
-        Bukkit.getOnlinePlayers().forEach(online -> {
-            EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
-            onlineEntityPlayer.b.a(remove);
-            onlineEntityPlayer.b.a(add);
-        });
-        updateOthers(player);
-        return Either.right(null);
     }
 }

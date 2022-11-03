@@ -22,9 +22,9 @@ public class PlayerJoinListener implements Listener {
                 final boolean skinChange = !player.getName().equals(appearanceManager.getSkin());
                 final UpdateResult updateResult = appearanceManager.updatePlayer(skinChange);
                 if (updateResult.isError()) {
-                    player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL.getKey(), I18N.translate(player, updateResult.getErrorMessage().getKey())));
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLY_FAIL.getKey(), I18N.translate(player, updateResult.getErrorMessage().getKey())));
                 } else {
-                    player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS.getKey()));
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLIED.getKey()));
                 }
             }
         }, 20L);

@@ -10,12 +10,10 @@ import org.bukkit.entity.Player;
 public class AdminPanelGUI {
     private final Player player;
     private final GUI gui;
-    private String[] structureIngredients = new String[]{"# # # # # # # # #",
-            "# % % % % % % % #",
-            "# % # # B # # % #",
-            "# % # N A S # % #",
-            "# % % % % % % % #",
-            "E # # # # # # # #"};
+    private String[] structureIngredients = new String[]
+                    {"# # # # # # # # #",
+                    "# % % M C R % % #",
+                    "E # # # # # # # #"};
 
     public AdminPanelGUI(Player player) {
         this.gui = new GUIBuilder<>(GUIType.NORMAL)

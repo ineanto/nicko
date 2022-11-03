@@ -11,12 +11,13 @@ import org.bukkit.entity.Player;
 public class MainGUI {
     private final Player player;
     private final GUI gui;
-    private final String[] structureIngredients = new String[]{"# # # # # # # # #",
-            "# % % % % % % % #",
-            "# % # # B # # % #",
-            "# % # N A S # % #",
-            "# % % % % % % % #",
-            "E # # # # # # # #"};
+    private final String[] structureIngredients = new String[]
+                    {"# # # # # # # # #",
+                    "# % % % % % % % #",
+                    "# % # # B # # % #",
+                    "# % # N A S # % #",
+                    "# % % % % % % % #",
+                    "E # # # # # # # #"};
 
     public MainGUI(Player player) {
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {

@@ -4,7 +4,7 @@ public class I18NDict {
     public enum Event {
         DISGUISE_SUCCESS("disguise.success"),
         DISGUISE_FAIL("disguise.fail"),
-        PREVIOUS_SKIN_APPLIED("previous_skin_applied.ok"),
+        PREVIOUS_SKIN_APPLIED("previous_skin_applied.success"),
         PREVIOUS_SKIN_APPLY_FAIL("previous_skin_applied.fail");
 
         private final String messageKey;

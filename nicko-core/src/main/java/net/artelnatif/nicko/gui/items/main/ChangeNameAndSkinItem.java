@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class ChangeNameAndSkinItem extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
-        final ItemBuilder builder = new ItemBuilder(Material.WRITABLE_BOOK);
+        final ItemBuilder builder = new ItemBuilder(Material.ENDER_PEARL);
         builder.setDisplayName("§6Skin §fand §6name §fchange");
         builder.addLoreLines("§7Change both your skin and name.");
         return builder;

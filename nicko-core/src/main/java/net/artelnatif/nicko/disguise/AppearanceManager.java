@@ -65,7 +65,7 @@ public class AppearanceManager {
         updatePlayer(true);
     }
 
-    public void updatePlayer(boolean skinChange) {
-        NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange);
+    public UpdateResult updatePlayer(boolean skinChange) {
+        return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange);
     }
 }

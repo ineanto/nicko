@@ -5,6 +5,8 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.game.*;
@@ -83,7 +85,7 @@ public class v1_19_R1 implements Internals {
     }
 
     @Override
-    public void updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public UpdateResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         Optional<MojangSkin> skin;
@@ -104,29 +106,30 @@ public class v1_19_R1 implements Internals {
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
-                        return;
+                        return new UpdateResult(I18NDict.Error.SKIN_FAIL_MOJANG);
                     }
                 } else {
-                    return;
+                    return new UpdateResult(I18NDict.Error.NAME_FAIL_MOJANG);
                 }
             } catch (IOException | ExecutionException e) {
-                return;
+                return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
             }
-
-            add.b().clear();
-            add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
-                    player.getPing(),
-                    EnumGamemode.a(player.getGameMode().ordinal()),
-                    IChatBaseComponent.a(profile.getName()),
-                    entityPlayer.fz().b()));
-            entityPlayer.b.a(add);
-
-            Bukkit.getOnlinePlayers().forEach(online -> {
-                EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
-                onlineEntityPlayer.b.a(remove);
-                onlineEntityPlayer.b.a(add);
-            });
-            updateOthers(player);
         }
+
+        add.b().clear();
+        add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
+                player.getPing(),
+                EnumGamemode.a(player.getGameMode().ordinal()),
+                IChatBaseComponent.a(profile.getName()),
+                entityPlayer.fz().b()));
+        entityPlayer.b.a(add);
+
+        Bukkit.getOnlinePlayers().forEach(online -> {
+            EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
+            onlineEntityPlayer.b.a(remove);
+            onlineEntityPlayer.b.a(add);
+        });
+        updateOthers(player);
+        return new UpdateResult();
     }
 }

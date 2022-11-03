@@ -1,6 +1,7 @@
 package net.artelnatif.nicko.impl;
 
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.disguise.UpdateResult;
 import org.bukkit.entity.Player;
 
 public interface Internals {
@@ -8,5 +9,5 @@ public interface Internals {
 
     void updateOthers(Player player);
 
-    void updateProfile(Player player, NickoProfile profile, boolean skinChange);
+    UpdateResult updateProfile(Player player, NickoProfile profile, boolean skinChange);
 }

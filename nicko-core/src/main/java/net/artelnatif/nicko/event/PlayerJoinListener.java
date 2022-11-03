@@ -2,6 +2,9 @@ package net.artelnatif.nicko.event;
 
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
+import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.i18n.I18N;
+import net.artelnatif.nicko.i18n.I18NDict;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +20,12 @@ public class PlayerJoinListener implements Listener {
 
             if (appearanceManager.hasData()) {
                 final boolean skinChange = !player.getName().equals(appearanceManager.getSkin());
-                appearanceManager.updatePlayer(skinChange);
+                final UpdateResult updateResult = appearanceManager.updatePlayer(skinChange);
+                if (updateResult.isError()) {
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL.getKey(), I18N.translate(player, updateResult.getErrorMessage().getKey())));
+                } else {
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS.getKey()));
+                }
             }
         }, 20L);
     }

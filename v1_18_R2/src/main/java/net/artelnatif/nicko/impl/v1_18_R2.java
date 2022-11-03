@@ -5,6 +5,8 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.IChatBaseComponent;
@@ -82,7 +84,7 @@ public class v1_18_R2 implements Internals {
     }
 
     @Override
-    public void updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public UpdateResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         Optional<MojangSkin> skin;
@@ -103,13 +105,13 @@ public class v1_18_R2 implements Internals {
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
-                        return;
+                        return new UpdateResult(I18NDict.Error.SKIN_FAIL_MOJANG);
                     }
                 } else {
-                    return;
+                    return new UpdateResult(I18NDict.Error.NAME_FAIL_MOJANG);
                 }
             } catch (IOException | ExecutionException e) {
-                return;
+                return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
             }
         }
 
@@ -125,5 +127,6 @@ public class v1_18_R2 implements Internals {
             onlineEntityPlayer.b.a(add);
         });
         updateOthers(player);
+        return new UpdateResult();
     }
 }

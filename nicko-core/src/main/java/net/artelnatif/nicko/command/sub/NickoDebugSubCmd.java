@@ -30,6 +30,7 @@ public class NickoDebugSubCmd extends NickoSubCmd {
 
             if(args.length < 3) {
                 sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cMissing argument.");
+                return;
             }
 
             name = args[2];

@@ -35,6 +35,7 @@ public class NickoCommand implements CommandExecutor {
                     case "check" -> new NickoCheckSubCmd(this).execute(player, args);
                     default -> sendHelpMessages(sender);
                 }
+                return false;
             }
 
             new MainGUI(player).open();

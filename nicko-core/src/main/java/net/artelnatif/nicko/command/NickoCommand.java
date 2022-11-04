@@ -16,14 +16,12 @@ public class NickoCommand implements CommandExecutor {
     private String helpMessage = """
             §cNicko §8§o[{version}] §f- §2Help:
             §6/nicko §f- §7Open the GUI.
-            §6/nicko disguise §f- §7Change your appearance.
-            §6/nicko revert §f- §7Revert your appearance to your default skin and name.
-            §6/nicko help §f- §7Prints this help message.
+            §6/nicko help §f- §7Print this help message.
             """;
     private String adminHelpMessage = """
-            {admin} §6/nicko disguise §b<player> §f- §7Change designed player's appearance.
-            {admin} §6/nicko revert §b<player> §f- §7Revert designed player's appearance to their default skin and name.
-            {admin} §6/nicko check §b<player> §f- §7Prints detailed information about designed player's appearance.
+            {admin} §6/nicko disguise §b<player> §f- §7Change specified player's appearance.
+            {admin} §6/nicko revert §b<player> §f- §7Revert specified player's appearance to their default skin and name.
+            {admin} §6/nicko check §b<player> §f- §7Print detailed information about specified player's appearance.
             """.replace("{admin}", opPrefix);
 
     @Override

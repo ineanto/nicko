@@ -1,6 +1,5 @@
 package net.artelnatif.nicko.command.sub;
 
-import com.yoshiplex.rainbow.RainbowText;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.disguise.AppearanceManager;
@@ -48,8 +47,7 @@ public class NickoDebugSubCmd extends NickoSubCmd {
         }
 
         appearanceManager.setNameAndSkin(name, skin);
-        final RainbowText whooshText = new RainbowText("Whoosh!");
-        target.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + whooshText.getText());
+        target.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§aWhoosh!");
         target.playSound(target.getLocation(), Sound.ENTITY_ITEM_FRAME_PLACE, 1, 1);
     }
 }

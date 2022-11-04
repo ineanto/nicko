@@ -5,3 +5,13 @@ author: Aro
 api-version: 1.18
 commands:
   nicko:
+    description: "Opens Nicko's GUI."
+    usage: "/nicko (check/debug)"
+    permission: nicko.admin
+permissions:
+  nicko.*:
+    default: op
+    children:
+      - nicko.use
+  nicko.use:
+    default: op

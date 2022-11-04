@@ -110,7 +110,9 @@ public class v1_18_R1 implements Internals {
                 } else {
                     return new UpdateResult(I18NDict.Error.NAME_FAIL_MOJANG);
                 }
-            } catch (IOException | ExecutionException e) {
+            } catch (ExecutionException e) {
+                return new UpdateResult(I18NDict.Error.SKIN_FAIL_CACHE);
+            } catch (IOException e) {
                 return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
             }
         }

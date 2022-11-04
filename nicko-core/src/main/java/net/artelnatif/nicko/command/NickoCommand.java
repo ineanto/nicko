@@ -3,7 +3,6 @@ package net.artelnatif.nicko.command;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.command.sub.NickoCheckSubCmd;
 import net.artelnatif.nicko.command.sub.NickoDebugSubCmd;
-import net.artelnatif.nicko.command.sub.NickoGUISubCmd;
 import net.artelnatif.nicko.gui.MainGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -34,7 +33,6 @@ public class NickoCommand implements CommandExecutor {
                 switch (args[0]) {
                     case "debug" -> new NickoDebugSubCmd(this).execute(sender, args);
                     case "check" -> new NickoCheckSubCmd(this).execute(player, args);
-                    case "gui" -> new NickoGUISubCmd(this).execute(sender, args);
                     default -> sendHelpMessages(sender);
                 }
             }

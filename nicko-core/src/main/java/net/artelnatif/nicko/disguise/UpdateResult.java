@@ -3,10 +3,10 @@ package net.artelnatif.nicko.disguise;
 import net.artelnatif.nicko.i18n.I18NDict;
 
 public class UpdateResult {
-    private final I18NDict.Error errorMessage;
+    private final I18NDict errorMessage;
     private boolean error = false;
 
-    public UpdateResult(I18NDict.Error errorMessage) {
+    public UpdateResult(I18NDict errorMessage) {
         this.error = true;
         this.errorMessage = errorMessage;
     }
@@ -19,7 +19,7 @@ public class UpdateResult {
         return error;
     }
 
-    public I18NDict.Error getErrorMessage() {
+    public I18NDict getErrorMessage() {
         return errorMessage;
     }
 }

@@ -26,9 +26,9 @@ public class I18N {
         return ResourceBundle.getBundle("locale", getLocale(player));
     }
 
-    public static String translate(Player player, String key, Object... arguments) {
+    public static String translate(Player player, I18NDict key, Object... arguments) {
         try {
-            formatter.applyPattern(getBundle(player).getString(key));
+            formatter.applyPattern(getBundle(player).getString(key.getKey()));
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key;

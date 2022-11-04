@@ -30,24 +30,22 @@ public class NickoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length >= 1) {
-            switch (args[0]) {
-                case "disguise" -> new NickoDisguiseSubCmd(this).execute(sender);
-                case "debug" -> new NickoDebugSubCmd(this).execute(sender, args);
-                case "check" -> new NickoCheckSubCmd(this).execute(sender, args);
-                case "gui" -> new NickoGUISubCmd(this).execute(sender, args);
-                default -> sendHelpMessages(sender);
-            }
-        } else {
-            if (sender instanceof Player player) {
-                new MainGUI(player).open();
-                return false;
+        if (sender instanceof Player player) {
+            if (args.length >= 1) {
+                switch (args[0]) {
+                    case "disguise" -> new NickoDisguiseSubCmd(this).execute(sender);
+                    case "debug" -> new NickoDebugSubCmd(this).execute(sender, args);
+                    case "check" -> new NickoCheckSubCmd(this).execute(player, args);
+                    case "gui" -> new NickoGUISubCmd(this).execute(sender, args);
+                    default -> sendHelpMessages(sender);
+                }
             }
 
-            sender.sendMessage("The GUI can only be opened in-game.");
+            new MainGUI(player).open();
             return false;
         }
 
+        sender.sendMessage("The GUI can only be opened in-game.");
         return false;
     }
 

@@ -3,9 +3,11 @@ package net.artelnatif.nicko.command.sub;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.disguise.AppearanceManager;
+import net.artelnatif.nicko.i18n.I18N;
+import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.utils.PlayerUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.StringJoiner;
@@ -15,11 +17,16 @@ public class NickoCheckSubCmd extends NickoSubCmd {
         super(nickoCommand);
     }
 
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(Player player, String[] args) {
         final String targetName = args[1];
         final Player target = Bukkit.getPlayerExact(targetName);
 
         AppearanceManager appearanceManager;
+        if (MojangUtils.isUsernameInvalid(targetName)) {
+            player.sendMessage(I18N.translate(player, I18NDict.Error.INVALID_USERNAME));
+            return;
+        }
+
         if (PlayerUtils.isPlayerOffline(target)) {
             appearanceManager = AppearanceManager.get(targetName);
         } else {
@@ -36,6 +43,6 @@ public class NickoCheckSubCmd extends NickoSubCmd {
             builder.add("§7- §fSkin: §6" + appearanceManager.getSkin());
         }
 
-        sender.sendMessage(builder.toString());
+        player.sendMessage(builder.toString());
     }
 }

@@ -40,7 +40,7 @@ public class NickoCommand implements CommandExecutor {
             return false;
         }
 
-        sender.sendMessage("The GUI can only be opened in-game.");
+        sender.sendMessage("This plugin can only be used in-game. Sorry!");
         return false;
     }
 

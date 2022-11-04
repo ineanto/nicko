@@ -28,10 +28,10 @@ public class I18N {
 
     public static String translate(Player player, I18NDict key, Object... arguments) {
         try {
-            formatter.applyPattern(getBundle(player).getString(key.getKey()));
+            formatter.applyPattern(getBundle(player).getString(key.key()));
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
-            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key;
+            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key.key();
         }
     }
 }

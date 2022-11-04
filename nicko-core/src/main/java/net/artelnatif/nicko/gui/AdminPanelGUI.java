@@ -5,21 +5,27 @@ import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
+import net.artelnatif.nicko.gui.items.common.BackItem;
 import org.bukkit.entity.Player;
 
 public class AdminPanelGUI {
     private final Player player;
     private final GUI gui;
-    private String[] structureIngredients = new String[]
-                    {"# # # # # # # # #",
-                    "# % % M C R % % #",
-                    "E # # # # # # # #"};
 
     public AdminPanelGUI(Player player) {
+        final Structure structure = new Structure("# # # # # # # # #",
+                "# % % M C R % % #",
+                "B # # # # # # # #");
+        structure.addIngredient('B', new BackItem(new MainGUI(player).getGUI()));
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
-                .setStructure(new Structure(structureIngredients))
+                .setStructure(structure)
                 .build();
+
         this.player = player;
+    }
+
+    public GUI getGUI() {
+        return gui;
     }
 
     public void open() {

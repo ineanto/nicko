@@ -15,6 +15,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
+        NickoBukkit.getInstance().getDataStore().storeName(player);
         Bukkit.getScheduler().runTaskLater(NickoBukkit.getInstance(), () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
 

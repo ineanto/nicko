@@ -35,10 +35,6 @@ public class AppearanceManager {
         return !profile.isEmpty();
     }
 
-    public boolean isNicked() {
-        return hasData() && !profile.getSkin().equals(player.getName()) || !profile.getName().equals(player.getName());
-    }
-
     public void setSkin(String skin) {
         profile.setSkin(skin);
     }
@@ -63,6 +59,16 @@ public class AppearanceManager {
         this.profile.setName(name);
         this.profile.setSkin(skin);
         updatePlayer(true);
+    }
+
+    public UpdateResult reset() {
+        final String defaultName = instance.getDataStore().getStoredName(player);
+        this.profile.setName(defaultName);
+        this.profile.setSkin(defaultName);
+        final UpdateResult updateResult = updatePlayer(true);
+        this.profile.setSkin(null);
+        this.profile.setName(null);
+        return updateResult;
     }
 
     public UpdateResult updatePlayer(boolean skinChange) {

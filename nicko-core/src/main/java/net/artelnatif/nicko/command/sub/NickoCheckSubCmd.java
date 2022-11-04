@@ -27,13 +27,13 @@ public class NickoCheckSubCmd extends NickoSubCmd {
         }
 
         final StringJoiner builder = new StringJoiner("\n");
-        builder.add("§c" + NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§f- §6Check for:§f§o" + targetName);
+        builder.add("§c" + NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§6Check for: §f§o" + targetName);
         if (!appearanceManager.hasData()) {
             builder.add("§cThis player has not data.");
         } else {
-            builder.add("§7- §fNicked: " + (appearanceManager.isNicked() ? "§a✔" : "§c❌"));
-            builder.add("§7- §fNickname: §6" + (appearanceManager.getName().equals(targetName) ? "N/A" : appearanceManager.getName()));
-            builder.add("§7- §fSkin: §6" + (appearanceManager.getSkin().equals(targetName) ? "N/A" : appearanceManager.getSkin()));
+            builder.add("§7- §fNicked: " + (appearanceManager.hasData() ? "§a✔" : "§c❌"));
+            builder.add("§7- §fName: §6" + appearanceManager.getName());
+            builder.add("§7- §fSkin: §6" + appearanceManager.getSkin());
         }
 
         sender.sendMessage(builder.toString());

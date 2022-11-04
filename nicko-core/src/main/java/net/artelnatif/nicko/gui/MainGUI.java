@@ -12,9 +12,9 @@ public class MainGUI {
     private final Player player;
     private final GUI gui;
     private final String[] structureIngredients = new String[]
-                    {"# # # # # # # # #",
+            {"# # # # # # # # #",
                     "# % % % % % % % #",
-                    "# % # # B # # % #",
+                    "# % # R B # # % #",
                     "# % # N A S # % #",
                     "# % % % % % % % #",
                     "E # # # # # # # #"};
@@ -31,8 +31,14 @@ public class MainGUI {
                 .addIngredient('S', new ChangeSkinItem())
                 .addIngredient('A', new AdminPanelAccessItem())
                 .addIngredient('B', new ChangeNameAndSkinItem())
+                .addIngredient('R', new ResetItem())
+                // TODO: 11/3/22 Add possibility to reset either skin or name or both
                 .build();
         this.player = player;
+    }
+
+    public GUI getGUI() {
+        return gui;
     }
 
     public void open() {

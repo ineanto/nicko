@@ -14,27 +14,46 @@ import java.util.UUID;
 
 public class PlayerDataStore {
     private final Storage storage;
+    private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
+    private final HashMap<UUID, String> names = new HashMap<>();
 
     public PlayerDataStore(NickoBukkit instance) {
         this.storage = instance.getNickoConfig().isLocalStorage() ? new JSONStorage() : new SQLStorage(instance);
     }
 
-    public static final HashMap<UUID, NickoProfile> PROFILES = new HashMap<>();
+    public void storeName(Player player) {
+        if(!isNameStored(player)) {
+            names.put(player.getUniqueId(), player.getName());
+        }
+    }
+
+    public String getStoredName(Player player) {
+        return names.get(player.getUniqueId());
+    }
+
+    private boolean isNameStored(Player player) {
+        return names.containsKey(player.getUniqueId());
+    }
+
+    public void removeAllNames() {
+        names.clear();
+    }
+
 
     public Optional<NickoProfile> getData(UUID uuid) {
         if (storage.isError()) {
             return Optional.empty();
         }
 
-        if (PROFILES.containsKey(uuid)) {
-            return Optional.of(PROFILES.get(uuid));
+        if (profiles.containsKey(uuid)) {
+            return Optional.of(profiles.get(uuid));
         } else if (storage.isStored(uuid)) {
             final Optional<NickoProfile> retrievedProfile = storage.retrieve(uuid);
-            retrievedProfile.ifPresent(profile -> PROFILES.put(uuid, profile));
+            retrievedProfile.ifPresent(profile -> profiles.put(uuid, profile));
             return retrievedProfile;
         } else {
             final NickoProfile newProfile = NickoProfile.EMPTY_PROFILE;
-            PROFILES.put(uuid, newProfile);
+            profiles.put(uuid, newProfile);
             return Optional.of(newProfile);
         }
     }
@@ -61,8 +80,8 @@ public class PlayerDataStore {
             return;
         }
 
-        storage.store(player.getUniqueId(), PROFILES.get(player.getUniqueId()));
-        PROFILES.remove(player.getUniqueId());
+        storage.store(player.getUniqueId(), profiles.get(player.getUniqueId()));
+        profiles.remove(player.getUniqueId());
     }
 
     public Storage getStorage() {

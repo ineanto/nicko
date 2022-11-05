@@ -10,17 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class NickoCommand implements CommandExecutor {
-    private final String opPrefix = "§c(OP)";
     private String helpMessage = """
             §cNicko §8§o[{version}] §f- §2Help:
             §6/nicko §f- §7Open the GUI.
             §6/nicko help §f- §7Print this help message.
             """;
-    private final String adminHelpMessage = """
-            {admin} §6/nicko disguise §b<player> §f- §7Change specified player's appearance.
-            {admin} §6/nicko revert §b<player> §f- §7Revert specified player's appearance to their default skin and name.
-            {admin} §6/nicko check §b<player> §f- §7Print detailed information about specified player's appearance.
-            """.replace("{admin}", opPrefix);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -46,6 +40,11 @@ public class NickoCommand implements CommandExecutor {
         helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getDescription().getVersion());
         sender.sendMessage(helpMessage);
         if (sender.isOp()) {
+            final String adminHelpMessage = """
+                    §c(OP) §6/nicko disguise §b<player> §f- §7Change specified player's appearance.
+                    §c(OP) §6/nicko revert §b<player> §f- §7Revert specified player's appearance to their default skin and name.
+                    §c(OP) §6/nicko check §b<player> §f- §7Print detailed information about specified player's appearance.
+                    """;
             sender.sendMessage(adminHelpMessage);
         }
     }

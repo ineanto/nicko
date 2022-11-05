@@ -4,11 +4,9 @@ import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.command.sub.NickoCheckSubCmd;
 import net.artelnatif.nicko.command.sub.NickoDebugSubCmd;
 import net.artelnatif.nicko.gui.MainGUI;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class NickoCommand implements CommandExecutor {
@@ -46,10 +44,6 @@ public class NickoCommand implements CommandExecutor {
 
     public void sendHelpMessages(CommandSender sender) {
         helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getDescription().getVersion());
-        if (sender instanceof ConsoleCommandSender) {
-            helpMessage = ChatColor.stripColor(helpMessage);
-            adminHelpMessage = ChatColor.stripColor(adminHelpMessage);
-        }
         sender.sendMessage(helpMessage);
         if (sender.isOp()) {
             sender.sendMessage(adminHelpMessage);

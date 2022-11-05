@@ -16,7 +16,7 @@ public class NickoCommand implements CommandExecutor {
             §6/nicko §f- §7Open the GUI.
             §6/nicko help §f- §7Print this help message.
             """;
-    private String adminHelpMessage = """
+    private final String adminHelpMessage = """
             {admin} §6/nicko disguise §b<player> §f- §7Change specified player's appearance.
             {admin} §6/nicko revert §b<player> §f- §7Revert specified player's appearance to their default skin and name.
             {admin} §6/nicko check §b<player> §f- §7Print detailed information about specified player's appearance.

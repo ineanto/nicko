@@ -15,7 +15,7 @@ public class NickoTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 1) {
-                return List.of("disguise", "revert", "help", "check");
+                return List.of("help", "check");
             } else if (args.length == 2 && !args[0].equalsIgnoreCase("help")) {
                 return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).toList();
             } else {

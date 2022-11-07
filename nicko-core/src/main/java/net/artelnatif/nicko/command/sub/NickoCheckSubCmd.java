@@ -1,7 +1,6 @@
 package net.artelnatif.nicko.command.sub;
 
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
@@ -12,11 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.StringJoiner;
 
-public class NickoCheckSubCmd extends NickoSubCmd {
-    public NickoCheckSubCmd(NickoCommand nickoCommand) {
-        super(nickoCommand);
-    }
-
+public class NickoCheckSubCmd {
     public void execute(Player player, String[] args) {
         final String targetName = args[1];
         final Player target = Bukkit.getPlayerExact(targetName);

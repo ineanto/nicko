@@ -21,8 +21,8 @@ public class NickoCommand implements CommandExecutor {
         if (sender instanceof Player player) {
             if (args.length >= 1) {
                 switch (args[0]) {
-                    case "debug" -> new NickoDebugSubCmd(this).execute(sender, args);
-                    case "check" -> new NickoCheckSubCmd(this).execute(player, args);
+                    case "debug" -> new NickoDebugSubCmd().execute(sender, args);
+                    case "check" -> new NickoCheckSubCmd().execute(player, args);
                     default -> sendHelpMessages(sender);
                 }
                 return false;

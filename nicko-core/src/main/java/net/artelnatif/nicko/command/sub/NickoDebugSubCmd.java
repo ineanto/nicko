@@ -1,7 +1,6 @@
 package net.artelnatif.nicko.command.sub;
 
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.utils.PlayerUtils;
@@ -10,12 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class NickoDebugSubCmd extends NickoSubCmd {
-
-    public NickoDebugSubCmd(NickoCommand nickoCommand) {
-        super(nickoCommand);
-    }
-
+public class NickoDebugSubCmd {
     public void execute(CommandSender sender, String[] args) {
         Player target;
         String name, skin;
@@ -27,7 +21,7 @@ public class NickoDebugSubCmd extends NickoSubCmd {
             final String playerName = args[1];
             target = Bukkit.getPlayer(playerName);
 
-            if(args.length < 3) {
+            if (args.length < 3) {
                 sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cMissing argument.");
                 return;
             }

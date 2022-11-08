@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.DataWatcherObject;
 import net.minecraft.network.syncher.DataWatcherRegistry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.world.entity.player.ProfilePublicKey;
 import net.minecraft.world.level.EnumGamemode;
 import net.minecraft.world.level.World;
 import org.bukkit.Bukkit;
@@ -90,10 +91,12 @@ public class v1_19_R1 implements Internals {
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         Optional<MojangSkin> skin;
 
+        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
         final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
         entityPlayer.b.a(remove);
 
-        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
+        // "It's a Surprise Tool That Will Help Us Later!"
+        final ProfilePublicKey.a key = remove.b().get(0).e();
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
 
         if (skinChange) {
@@ -123,9 +126,9 @@ public class v1_19_R1 implements Internals {
                 player.getPing(),
                 EnumGamemode.a(player.getGameMode().ordinal()),
                 IChatBaseComponent.a(profile.getName()),
-                entityPlayer.fz().b()));
-        entityPlayer.b.a(add);
+                key)); // f mojang
 
+        entityPlayer.b.a(add);
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
             onlineEntityPlayer.b.a(remove);

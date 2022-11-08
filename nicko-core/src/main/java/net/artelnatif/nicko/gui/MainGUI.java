@@ -32,7 +32,6 @@ public class MainGUI {
                 .addIngredient('A', new AdminPanelAccessItem())
                 .addIngredient('B', new ChangeNameAndSkinItem())
                 .addIngredient('R', new ResetItem())
-                // TODO: 11/3/22 Add possibility to reset either skin or name or both
                 .build();
         this.player = player;
     }

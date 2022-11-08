@@ -24,7 +24,7 @@ public class ChangeNameAndSkinItem extends BaseItem {
         if (clickType.isLeftClick() || clickType.isRightClick()) {
             event.getView().close();
             final AnvilManager manager = new AnvilManager(player);
-            manager.openNameAndSkinAnvil();
+            manager.openNameThenSkinAnvil();
         }
     }
 }

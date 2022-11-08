@@ -2,7 +2,6 @@ package net.artelnatif.nicko.anvil;
 
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
-import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.UpdateResult;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
@@ -15,45 +14,37 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AnvilManager {
     private final Player player;
-    private final NickoProfile profile;
     private final AppearanceManager appearanceManager;
 
     public AnvilManager(Player player) {
         this.player = player;
         this.appearanceManager = AppearanceManager.get(player);
-        this.profile = appearanceManager.getProfile();
     }
 
-    public void openNameAndSkinAnvil() {
-        final AnvilGUI.Builder skin = getSkinAnvil();
-        final AnvilGUI.Builder name = new AnvilGUI.Builder()
-                .plugin(NickoBukkit.getInstance())
-                .itemLeft(getLeftItem())
-                .onComplete((anvilPlayer, response) -> {
-                    if (MojangUtils.isUsernameInvalid(response)) {
-                        return AnvilGUI.Response.text("Invalid username!");
-                    } else {
-                        profile.setName(response);
-                        skin.open(player);
-                        return AnvilGUI.Response.close();
-                    }
-                })
-                .text("New name...");
+    public void openNameThenSkinAnvil() {
+        openNameAnvil();
+        openSkinAnvil();
+    }
 
-        name.open(player);
+    public void openSkinAnvil() {
+        getSkinAnvil().open(player);
     }
 
     public void openNameAnvil() {
-        new AnvilGUI.Builder()
+        getNameAnvil().open(player);
+    }
+
+    public AnvilGUI.Builder getNameAnvil() {
+        return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
-                .itemLeft(getLeftItem())
+                .itemLeft(getLeftItem(false))
                 .onComplete((anvilPlayer, response) -> {
                     if (MojangUtils.isUsernameInvalid(response)) {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setName(response);
                         final UpdateResult updateResult = appearanceManager.updatePlayer(false);
-                        if(updateResult.isError()) {
+                        if (updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
@@ -61,25 +52,20 @@ public class AnvilManager {
                         return AnvilGUI.Response.close();
                     }
                 })
-                .text("New name...")
-                .open(player);
-    }
-
-    public void openSkinAnvil() {
-        getSkinAnvil().open(player);
+                .text("New name...");
     }
 
     private AnvilGUI.Builder getSkinAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
-                .itemLeft(getLeftItem())
+                .itemLeft(getLeftItem(true))
                 .onComplete((anvilPlayer, response) -> {
                     if (MojangUtils.isUsernameInvalid(response)) {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setSkin(response);
                         final UpdateResult updateResult = appearanceManager.updatePlayer(true);
-                        if(!updateResult.isError()) {
+                        if (!updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
@@ -90,10 +76,10 @@ public class AnvilManager {
                 .text("New skin...");
     }
 
-    private ItemStack getLeftItem() {
+    private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§0ID");
+        meta.setDisplayName("§0New " + (skin ? "skin" : "name") + "...");
         item.setItemMeta(meta);
         return item;
     }

@@ -52,7 +52,7 @@ public class PlayerDataStore {
             retrievedProfile.ifPresent(profile -> profiles.put(uuid, profile));
             return retrievedProfile;
         } else {
-            final NickoProfile newProfile = NickoProfile.EMPTY_PROFILE;
+            final NickoProfile newProfile = NickoProfile.EMPTY_PROFILE.clone();
             profiles.put(uuid, newProfile);
             return Optional.of(newProfile);
         }

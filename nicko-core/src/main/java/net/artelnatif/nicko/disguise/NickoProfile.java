@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.disguise;
 
-public class NickoProfile {
+public class NickoProfile implements Cloneable {
     public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null);
 
     private String name;
@@ -38,5 +38,16 @@ public class NickoProfile {
                 ", skin='" + skin + '\'' +
                 ", empty='" + isEmpty() + '\'' +
                 '}';
+    }
+
+    @Override
+    public NickoProfile clone() {
+        Object o;
+        try {
+            o = super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return (NickoProfile) o;
     }
 }

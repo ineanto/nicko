@@ -15,12 +15,12 @@ public class AppearanceManager {
 
     private AppearanceManager(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
-        this.profile = dataStore.getData(uuid).orElse(NickoProfile.EMPTY_PROFILE);
+        this.profile = dataStore.getData(uuid).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
     private AppearanceManager(String name) {
         this.player = null;
-        this.profile = dataStore.getOfflineData(name).orElse(NickoProfile.EMPTY_PROFILE);
+        this.profile = dataStore.getOfflineData(name).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
     public static AppearanceManager get(Player player) {

@@ -22,8 +22,7 @@ public class AnvilManager {
     }
 
     public void openNameThenSkinAnvil() {
-        openNameAnvil();
-        openSkinAnvil();
+        getNameThenSkinAnvil().open(player);
     }
 
     public void openSkinAnvil() {
@@ -32,6 +31,22 @@ public class AnvilManager {
 
     public void openNameAnvil() {
         getNameAnvil().open(player);
+    }
+
+    public AnvilGUI.Builder getNameThenSkinAnvil() {
+        return new AnvilGUI.Builder()
+                .plugin(NickoBukkit.getInstance())
+                .itemLeft(getLeftItem(false))
+                .onComplete((anvilPlayer, response) -> {
+                    if (MojangUtils.isUsernameInvalid(response)) {
+                        return AnvilGUI.Response.text("Invalid username!");
+                    } else {
+                        appearanceManager.setName(response);
+                        openSkinAnvil();
+                        return AnvilGUI.Response.close();
+                    }
+                })
+                .text("New name...");
     }
 
     public AnvilGUI.Builder getNameAnvil() {

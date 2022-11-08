@@ -12,6 +12,7 @@ public record I18NDict(String key) {
     }
 
     public static class Error {
+        public static final I18NDict PLAYER_OFFLINE = new I18NDict("error.player_offline");
         public static final I18NDict SKIN_FAIL_MOJANG = new I18NDict("error.couldnt_get_skin_from_mojang");
         public static final I18NDict SKIN_FAIL_CACHE = new I18NDict("error.couldnt_get_skin_from_cache");
         public static final I18NDict NAME_FAIL_MOJANG = new I18NDict("error.couldnt_get_name_from_mojang");

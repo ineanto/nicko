@@ -33,7 +33,7 @@ public class NickoCheckSubCmd {
         if (!appearanceManager.hasData()) {
             builder.add("§cThis player has not data.");
         } else {
-            builder.add("§7- §fNicked: " + (appearanceManager.hasData() ? "§a✔" : "§c❌"));
+            builder.add("§7- §fNicked: §a✔");
             builder.add("§7- §fName: §6" + appearanceManager.getName());
             builder.add("§7- §fSkin: §6" + appearanceManager.getSkin());
         }

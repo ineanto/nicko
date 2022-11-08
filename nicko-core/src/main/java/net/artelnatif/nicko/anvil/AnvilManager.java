@@ -3,6 +3,9 @@ package net.artelnatif.nicko.anvil;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.i18n.I18N;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
@@ -49,7 +52,12 @@ public class AnvilManager {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setName(response);
-                        appearanceManager.updatePlayer(false);
+                        final UpdateResult updateResult = appearanceManager.updatePlayer(false);
+                        if(updateResult.isError()) {
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
+                        } else {
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
+                        }
                         return AnvilGUI.Response.close();
                     }
                 })
@@ -70,7 +78,12 @@ public class AnvilManager {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setSkin(response);
-                        appearanceManager.updatePlayer(true);
+                        final UpdateResult updateResult = appearanceManager.updatePlayer(true);
+                        if(!updateResult.isError()) {
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
+                        } else {
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
+                        }
                         return AnvilGUI.Response.close();
                     }
                 })

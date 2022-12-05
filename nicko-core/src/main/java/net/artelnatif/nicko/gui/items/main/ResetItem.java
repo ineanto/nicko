@@ -16,7 +16,7 @@ public class ResetItem extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.TNT);
-        builder.setDisplayName("§6Reset");
+        builder.setDisplayName("§fReset");
         builder.addLoreLines("§7Removes your disguise.");
         return builder;
     }

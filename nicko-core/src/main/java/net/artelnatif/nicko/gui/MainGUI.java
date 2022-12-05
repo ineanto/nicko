@@ -14,10 +14,10 @@ public class MainGUI {
     private final String[] structureIngredients = new String[]
             {"# # # # # # # # #",
                     "# % % % % % % % #",
-                    "# % # R B # # % #",
+                    "# % # R B P # % #",
                     "# % # N A S # % #",
                     "# % % % % % % % #",
-                    "E # # # # # # # #"};
+                    "E # # # # # # # P"};
 
     public MainGUI(Player player) {
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {
@@ -29,7 +29,8 @@ public class MainGUI {
                 .addIngredient('E', new ExitDoorItem())
                 .addIngredient('N', new ChangeNameItem())
                 .addIngredient('S', new ChangeSkinItem())
-                .addIngredient('A', new AdminPanelAccessItem())
+                .addIngredient('P', new SettingsItem())
+                .addIngredient('A', new AdminItem())
                 .addIngredient('B', new ChangeNameAndSkinItem())
                 .addIngredient('R', new ResetItem())
                 .build();

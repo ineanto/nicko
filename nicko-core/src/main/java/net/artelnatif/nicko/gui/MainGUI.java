@@ -17,7 +17,7 @@ public class MainGUI {
                     "# % # R B P # % #",
                     "# % # N A S # % #",
                     "# % % % % % % % #",
-                    "E # # # # # # # P"};
+                    "E # # # # # # # #"};
 
     public MainGUI(Player player) {
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {

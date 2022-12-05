@@ -1,14 +1,18 @@
 package net.artelnatif.nicko.disguise;
 
+import java.util.Locale;
+
 public class NickoProfile implements Cloneable {
-    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null);
+    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Locale.ENGLISH);
 
     private String name;
     private String skin;
+    private Locale locale;
 
-    public NickoProfile(String name, String skin) {
+    public NickoProfile(String name, String skin, Locale locale) {
         this.name = name;
         this.skin = skin;
+        this.locale = locale;
     }
 
     public boolean isEmpty() {
@@ -30,6 +34,10 @@ public class NickoProfile implements Cloneable {
     public void setSkin(String skin) {
         this.skin = skin;
     }
+
+    public Locale getLocale() { return locale; }
+
+    public void setLocale(Locale locale) { this.locale = locale; }
 
     @Override
     public String toString() {

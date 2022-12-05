@@ -9,7 +9,7 @@ public class ServerUtils {
         final NickoBukkit instance = NickoBukkit.getInstance();
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
-        if (!config.getConfigurationSection("settings").getBoolean("settings.bungeecord")) {
+        if (!config.getConfigurationSection("settings").getBoolean("bungeecord")) {
             instance.getLogger().severe("Hummm. You have enabled BungeeCord support inside Nicko,");
             instance.getLogger().severe("but it seems that your server is not hooked to your BungeeCord instance.");
             instance.getLogger().severe("If the server is already hooked to BungeeCord, please enable it into your spigot.yml aswell.");

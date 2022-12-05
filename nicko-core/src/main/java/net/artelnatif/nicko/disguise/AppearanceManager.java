@@ -43,6 +43,10 @@ public class AppearanceManager {
         return profile.getSkin();
     }
 
+    public boolean needsASkinChange() {
+        return profile.getSkin() != null && !profile.getSkin().equals(player.getName());
+    }
+
     public void setName(String name) {
         profile.setName(name);
     }

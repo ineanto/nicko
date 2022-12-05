@@ -59,10 +59,10 @@ public class AnvilManager {
                     } else {
                         appearanceManager.setName(response);
                         final UpdateResult updateResult = appearanceManager.updatePlayer(false);
-                        if (updateResult.isError()) {
+                        if (!updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, updateResult.getErrorMessage()));
                         }
                         return AnvilGUI.Response.close();
                     }
@@ -83,7 +83,7 @@ public class AnvilManager {
                         if (!updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, updateResult.getErrorMessage()));
                         }
                         return AnvilGUI.Response.close();
                     }

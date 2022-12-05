@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class AppearanceManager {
+public class "AppearanceManager {
     private final NickoProfile profile;
     private final Player player;
     private final NickoBukkit instance = NickoBukkit.getInstance();

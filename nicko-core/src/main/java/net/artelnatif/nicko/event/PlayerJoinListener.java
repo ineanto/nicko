@@ -19,6 +19,8 @@ public class PlayerJoinListener implements Listener {
         Bukkit.getScheduler().runTaskLater(NickoBukkit.getInstance(), () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
 
+            // TODO: 12/5/22 Update from BungeeCord
+
             if (appearanceManager.hasData()) {
                 final UpdateResult updateResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());
                 if (!updateResult.isError()) {

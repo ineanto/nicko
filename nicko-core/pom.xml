@@ -57,14 +57,14 @@
             <version>0.8.2</version>
         </dependency>
         <dependency>
-            <groupId>xyz.upperlevel.spigot.book</groupId>
-            <artifactId>spigot-book-api</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
             <version>1.5.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -74,8 +74,8 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.0-M1</version>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -103,17 +103,11 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>xyz.upperlevel.spigot.book:spigot-book-api</include>
                                     <include>net.wesjd:anvilgui</include>
                                     <include>de.studiocode.invui:*</include>
-                                    <include>io.vavr:vavr</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
-                                <relocation>
-                                    <pattern>xyz.upperlevel.spigot.book</pattern>
-                                    <shadedPattern>net.artelnatif.bookapi</shadedPattern>
-                                </relocation>
                                 <relocation>
                                     <pattern>net.wesjd.anvilgui</pattern>
                                     <shadedPattern>net.artelnatif.anvilgui</shadedPattern>

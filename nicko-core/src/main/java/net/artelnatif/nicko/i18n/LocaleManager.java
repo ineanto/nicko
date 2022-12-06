@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.i18n;
 
 import net.artelnatif.nicko.NickoBukkit;
-import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang3.LocaleUtils;
 
 import java.util.Arrays;
 import java.util.Locale;

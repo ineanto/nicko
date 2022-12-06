@@ -9,6 +9,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 public class UpdateMessageHandler implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+        System.out.println("channel = " + channel);
         if(!channel.equals(NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE)) {
             return;
         }
@@ -16,7 +17,8 @@ public class UpdateMessageHandler implements PluginMessageListener {
         final ByteArrayDataInput in = ByteStreams.newDataInput(message);
         final String subchannel = in.readUTF();
         if(subchannel.equals(NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE)) {
-            // TODO: 10/20/22 update player
+            System.out.println("subchannel = " + subchannel);
+            System.out.println("Received " + NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE + " msg");
         }
     }
 }

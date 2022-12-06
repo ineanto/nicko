@@ -15,7 +15,7 @@ import net.artelnatif.nicko.i18n.LocaleManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
-import net.artelnatif.nicko.pluginchannel.UpdateMessageHandler;
+import net.artelnatif.nicko.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.utils.ServerUtils;
 import org.bukkit.Material;
@@ -73,10 +73,11 @@ public class NickoBukkit extends JavaPlugin {
                 getLogger().warning("Failed to open persistence, data will NOT be saved!");
             }
 
+            ServerUtils.checkSpigotBungeeCordHook();
             if (nickoConfiguration.isBungeecordEnabled()) {
-                getLogger().info("Enabling Bungeecord support...");
                 if (ServerUtils.checkBungeeCordHook()) {
-                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new UpdateMessageHandler());
+                    getLogger().info("Enabling BungeeCord support...");
+                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
                 }
             }
 

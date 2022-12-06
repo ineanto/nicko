@@ -10,7 +10,6 @@ import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
 import net.artelnatif.nicko.gui.items.main.ExitDoorItem;
-import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.LocaleManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
@@ -30,7 +29,6 @@ public class NickoBukkit extends JavaPlugin {
     private NickoConfiguration nickoConfiguration;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
-    private I18N i18N;
 
     @Override
     public void onEnable() {

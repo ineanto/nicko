@@ -9,7 +9,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.ArrayList;
 
-public class UpdateMessageHandler implements PluginMessageListener {
+public class PluginMessageHandler implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         if (!channel.equals(NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE)) {
@@ -21,7 +21,8 @@ public class UpdateMessageHandler implements PluginMessageListener {
 
         final int payloadSize = in.readInt();
         if (payloadSize == 0 || payloadSize > 4) {
-            NickoBukkit.getInstance().getLogger().severe("Prevented error by skipping malformed payload of size " + payloadSize + ".");
+            NickoBukkit.getInstance().getLogger().severe("Prevented error by skipping malformed payload of size " + payloadSize + "!" +
+                    "This should not have happened, open an issue on the repository at https://atnrch.xyz/git/aro/Nicko !");
             return;
         }
 

@@ -11,10 +11,9 @@ public class PlaceHolderHook {
     }
 
     public void hook() {
-        instance.getLogger().info("Checking support for PlaceHolderAPI...");
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            instance.getLogger().info("Enabling PlaceHolderAPI support...");
             new NickoExpension(instance).register();
-            instance.getLogger().info("Hooked into PlaceHolderAPI!");
         }
     }
 }

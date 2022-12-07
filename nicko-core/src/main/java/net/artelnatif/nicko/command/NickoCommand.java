@@ -23,7 +23,7 @@ public class NickoCommand implements CommandExecutor {
                 switch (args[0]) {
                     case "debug" -> new NickoDebugSubCmd().execute(sender, args);
                     case "check" -> new NickoCheckSubCmd().execute(player, args);
-                    default -> sendHelpMessages(sender);
+                    default -> sendHelpMessage(sender);
                 }
                 return false;
             }
@@ -36,16 +36,8 @@ public class NickoCommand implements CommandExecutor {
         return false;
     }
 
-    public void sendHelpMessages(CommandSender sender) {
+    public void sendHelpMessage(CommandSender sender) {
         helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getDescription().getVersion());
         sender.sendMessage(helpMessage);
-        if (sender.isOp()) {
-            final String adminHelpMessage = """
-                    §c(OP) §6/nicko disguise §b<player> §f- §7Change specified player's appearance.
-                    §c(OP) §6/nicko revert §b<player> §f- §7Revert specified player's appearance to their default skin and name.
-                    §c(OP) §6/nicko check §b<player> §f- §7Print detailed information about specified player's appearance.
-                    """;
-            sender.sendMessage(adminHelpMessage);
-        }
     }
 }

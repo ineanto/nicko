@@ -5,7 +5,6 @@ import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.command.NickoCommand;
-import net.artelnatif.nicko.command.NickoTabCompleter;
 import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
@@ -54,7 +53,6 @@ public class NickoBukkit extends JavaPlugin {
             final PluginCommand command = getCommand("nicko");
             if (command != null) {
                 command.setExecutor(new NickoCommand());
-                command.setTabCompleter(new NickoTabCompleter());
             }
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);

@@ -5,8 +5,13 @@ import org.bukkit.Server;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ServerUtils {
-    public static void checkSpigotBungeeCordHook() {
-        final NickoBukkit instance = NickoBukkit.getInstance();
+    private final NickoBukkit instance;
+
+    public ServerUtils(NickoBukkit instance) {
+        this.instance = instance;
+    }
+
+    public void checkSpigotBungeeCordHook() {
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
         if (config.getConfigurationSection("settings").getBoolean("bungeecord") && instance.getNickoConfig().isBungeecordEnabled()) {
@@ -17,8 +22,7 @@ public class ServerUtils {
         }
     }
 
-    public static boolean checkBungeeCordHook() {
-        final NickoBukkit instance = NickoBukkit.getInstance();
+    public boolean checkBungeeCordHook() {
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
         if (!config.getConfigurationSection("settings").getBoolean("bungeecord")) {

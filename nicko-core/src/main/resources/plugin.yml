@@ -3,6 +3,7 @@ main: net.artelnatif.nicko.NickoBukkit
 version: ${project.version}
 author: Aro
 api-version: 1.19
+softdepend: [ PlaceholderAPI ]
 commands:
   nicko:
     description: "Opens Nicko's GUI."

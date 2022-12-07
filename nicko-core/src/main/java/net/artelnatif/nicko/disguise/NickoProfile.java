@@ -54,8 +54,8 @@ public class NickoProfile implements Cloneable {
         return "NickoProfile{" +
                 "name='" + name + '\'' +
                 ", skin='" + skin + '\'' +
-                ", locale='" + locale + '\'' +
-                ", empty='" + isEmpty() + '\'' +
+                ", locale=" + locale +
+                ", bungeecordTransfer=" + bungeecordTransfer +
                 '}';
     }
 

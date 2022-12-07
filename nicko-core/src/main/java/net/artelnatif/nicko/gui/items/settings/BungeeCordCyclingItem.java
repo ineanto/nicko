@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 
 public class BungeeCordCyclingItem {
-    private final ItemProvider[] possibleLocales = new ItemProvider[]{
+    private final ItemProvider[] providers = new ItemProvider[]{
             getItemProviderForValue(true),
             getItemProviderForValue(false)
     };
@@ -27,7 +27,7 @@ public class BungeeCordCyclingItem {
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setBungeecordTransfer(integer != 1);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
-            }, startingState, possibleLocales);
+            }, startingState, providers);
         }
 
         return new SimpleItem(ItemProvider.EMPTY);

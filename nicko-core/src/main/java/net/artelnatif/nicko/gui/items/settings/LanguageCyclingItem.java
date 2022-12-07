@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 
 public class LanguageCyclingItem {
-    private final ItemProvider[] possibleLocales = new ItemProvider[]{
+    private final ItemProvider[] providers = new ItemProvider[]{
             getItemProviderForLocale(Locale.ENGLISH),
             getItemProviderForLocale(Locale.FRENCH),
             getItemProviderForLocale(Locale.CUSTOM),
@@ -29,7 +29,7 @@ public class LanguageCyclingItem {
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
-            }, localeOrdinal, possibleLocales);
+            }, localeOrdinal, providers);
         }
 
         return new SimpleItem(ItemProvider.EMPTY);

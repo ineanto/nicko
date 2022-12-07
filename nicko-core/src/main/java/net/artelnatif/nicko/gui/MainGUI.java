@@ -26,7 +26,6 @@ public class MainGUI {
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
                 .setStructure(new Structure(structureIngredients))
-                .addIngredient('E', new ExitDoorItem())
                 .addIngredient('N', new ChangeNameItem())
                 .addIngredient('S', new ChangeSkinItem())
                 .addIngredient('P', new SettingsItem())

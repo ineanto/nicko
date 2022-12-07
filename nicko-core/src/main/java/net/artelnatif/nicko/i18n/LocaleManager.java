@@ -1,10 +1,8 @@
 package net.artelnatif.nicko.i18n;
 
 import net.artelnatif.nicko.NickoBukkit;
-import org.apache.commons.lang3.LocaleUtils;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public class LocaleManager {
     private static final String[] supportedLocales = new String[]{"en", "fr", "custom"};
@@ -17,8 +15,8 @@ public class LocaleManager {
                 Locale.setDefault(Locale.ENGLISH);
                 return;
             }
-            final Locale defaultLocale = LocaleUtils.toLocale(locale);
-            instance.getLogger().info("Default locale set to " + defaultLocale.getDisplayName() + ".");
+            final Locale defaultLocale = Locale.fromCode(locale);
+            instance.getLogger().info("Default locale set to " + defaultLocale.getName() + ".");
             Locale.setDefault(defaultLocale);
         } catch (Exception e) {
             instance.getLogger().severe(locale + " is not a valid locale, defaulting to English.");

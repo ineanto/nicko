@@ -13,7 +13,7 @@ bungeecord:
     ttl: -1
 
 # Localisation:
-# By default, Nicko tries to get the locale from the player's options.
+# By default, Nicko tries to get the locale from the player's preferences.
 # If that fails, the locale fallback is the one provided by this option.
 # Accepted values: fr (French), en (English), custom (Custom language file).
 locale: "en"

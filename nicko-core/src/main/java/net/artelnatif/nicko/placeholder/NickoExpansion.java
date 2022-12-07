@@ -9,11 +9,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class NickoExpension extends PlaceholderExpansion {
+public class NickoExpansion extends PlaceholderExpansion {
 
     private final NickoBukkit instance;
 
-    public NickoExpension(NickoBukkit instance) {
+    public NickoExpansion(NickoBukkit instance) {
         this.instance = instance;
     }
 
@@ -32,6 +32,10 @@ public class NickoExpension extends PlaceholderExpansion {
         return "1.0.0";
     }
 
+    @Override
+    public boolean persist() {
+        return true;
+    }
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
@@ -43,6 +47,7 @@ public class NickoExpension extends PlaceholderExpansion {
                 case "skin" -> profile.getSkin();
                 case "locale" -> profile.getLocale().getName();
                 case "bungeecord" -> String.valueOf(profile.isBungeecordTransfer());
+                default -> null;
             };
         } else {
             instance.getLogger().severe("Couldn't satisfy request for placeholder " + params + ". This is a bug!");

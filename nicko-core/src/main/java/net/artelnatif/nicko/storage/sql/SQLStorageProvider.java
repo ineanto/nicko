@@ -4,9 +4,7 @@ import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.storage.StorageProvider;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQLStorageProvider implements StorageProvider {
     private final NickoBukkit instance;
@@ -21,10 +19,22 @@ public class SQLStorageProvider implements StorageProvider {
         try {
             final NickoConfiguration config = instance.getNickoConfig();
             connection = DriverManager.getConnection("jdbc://" + config.getStorageAddress(), config.getStorageUsername(), config.getStoragePassword());
-            return !connection.isClosed() && connection != null;
+            final boolean initialized = connection != null && !connection.isClosed();
+
+            if (initialized) {
+                if (!doesTableExist()) {
+                    return createTables();
+                }
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     @Override
@@ -34,6 +44,42 @@ public class SQLStorageProvider implements StorageProvider {
             return connection.isClosed();
         } catch (SQLException e) {
             return false;
+        }
+    }
+
+    private boolean createTables() {
+        final Connection connection = getConnection();
+
+        final String query = """
+                CREATE TABLE IF NOT EXISTS 'NICKO' (
+                uuid uuid NOT NULL,
+                name varchar(16) NOT NULL,
+                skin varchar(16) NOT NULL,
+                bungeecord boolean NOT NULL,
+                PRIMARY KEY (UUID)
+                )
+                """;
+
+        try {
+            final PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean doesTableExist() {
+        final Connection connection = getConnection();
+
+        final String query = "SELECT UUID FROM 'NICKO'";
+
+        try {
+            final PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

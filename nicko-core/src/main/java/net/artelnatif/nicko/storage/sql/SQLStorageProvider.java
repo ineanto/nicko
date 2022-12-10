@@ -18,11 +18,12 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final NickoConfiguration config = instance.getNickoConfig();
-            connection = DriverManager.getConnection("jdbc://" + config.getStorageAddress(), config.getStorageUsername(), config.getStoragePassword());
+            connection = DriverManager.getConnection("jdbc://" + config.getSQLAddress(), config.getSQLUsername(), config.getSQLPassword());
             final boolean initialized = connection != null && !connection.isClosed();
 
             if (initialized) {
                 if (!doesTableExist()) {
+                    instance.getLogger().info("Creating SQL tables...");
                     return createTables();
                 }
                 return true;

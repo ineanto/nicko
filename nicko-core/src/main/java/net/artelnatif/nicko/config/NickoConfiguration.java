@@ -6,32 +6,97 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class NickoConfiguration {
     private final NickoBukkit nicko;
+    private String prefix;
+    private String defaultLocale;
+
+    private Boolean bungeecordSupport;
+    private Boolean localStorage;
+
+    private String sqlUsername, sqlPassword, sqlAddress;
 
     public NickoConfiguration(NickoBukkit nicko) {
         this.nicko = nicko;
     }
 
-    public String getPrefix() {
-        return getConfig().getString("prefix");
-    }
-
-    public String getDefaultLocale() { return getConfig().getString("locale"); }
-
     public ConfigurationSection getBungeecordSection() { return getConfig().getConfigurationSection("bungeecord"); }
 
-    public ConfigurationSection getStorageSction() { return getConfig().getConfigurationSection("storage"); }
+    public ConfigurationSection getStorageSection() { return getConfig().getConfigurationSection("storage"); }
 
     public ConfigurationSection getRedisSection() { return getBungeecordSection().getConfigurationSection("redis"); }
 
-    public boolean isLocalStorage() { return getStorageSction().getBoolean("local"); }
+    public String getPrefix() {
+        if (prefix == null) {
+            return prefix = getConfig().getString("prefix");
+        }
+        return prefix;
+    }
 
-    public boolean isBungeecordEnabled() { return getBungeecordSection().getBoolean("enabled"); }
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-    public String getStorageUsername() { return getStorageSction().getString("username"); }
+    public String getDefaultLocale() {
+        if (defaultLocale == null) {
+            return defaultLocale = getConfig().getString("locale");
+        }
+        return defaultLocale;
+    }
 
-    public String getStoragePassword() { return getStorageSction().getString("password"); }
+    public void setDefaultLocale(String defaultLocale) {
+        this.defaultLocale = defaultLocale;
+    }
 
-    public String getStorageAddress() { return getStorageSction().getString("address"); }
+    public boolean isBungeecordEnabled() {
+        if (bungeecordSupport == null) {
+            return bungeecordSupport = getBungeecordSection().getBoolean("enabled");
+        }
+        return bungeecordSupport;
+    }
+
+    public void setBungeecordSupport(Boolean bungeecordSupport) {
+        this.bungeecordSupport = bungeecordSupport;
+    }
+
+    public boolean isLocalStorage() {
+        if (localStorage == null) {
+            return localStorage = getStorageSection().getBoolean("local");
+        }
+        return localStorage;
+    }
+
+    public void setLocalStorage(Boolean localStorage) {
+        this.localStorage = localStorage;
+    }
+
+    public String getSQLUsername() {
+        if (sqlUsername == null) {
+            return sqlUsername = getStorageSection().getString("username");
+        }
+        return sqlUsername;
+    }
+
+    public void setSQLUsername(String sqlUsername) {
+        this.sqlUsername = sqlUsername;
+    }
+
+    public String getSQLPassword() {
+        return getStorageSection().getString("password");
+    }
+
+    public void setSQLPassword(String sqlPassword) {
+        this.sqlPassword = sqlPassword;
+    }
+
+    public String getSQLAddress() {
+        if (sqlAddress == null) {
+            return sqlAddress = getStorageSection().getString("address");
+        }
+        return sqlAddress;
+    }
+
+    public void setSQLAddress(String sqlAddress) {
+        this.sqlAddress = sqlAddress;
+    }
 
     private FileConfiguration getConfig() {
         return nicko.getConfig();

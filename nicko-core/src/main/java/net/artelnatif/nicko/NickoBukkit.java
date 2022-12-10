@@ -19,26 +19,41 @@ import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.utils.ServerUtils;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
+import java.io.File;
 import java.util.logging.Level;
 
 public class NickoBukkit extends JavaPlugin {
+    private boolean unitTesting;
     private static NickoBukkit plugin;
 
     private NickoConfiguration nickoConfiguration;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
 
+    /**
+     * Used by MockBukkit
+     */
+    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+        unitTesting = true;
+        getLogger().info("Unit Testing Mode enabled.");
+    }
+
     @Override
     public void onEnable() {
         plugin = this;
 
-        getLogger().info("Loading internals...");
-        if (getInternals() == null) {
-            getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
-            dataStore.getStorage().setError(true);
-            getServer().getPluginManager().disablePlugin(this);
+        if(!isUnitTesting()) {
+            getLogger().info("Loading internals...");
+            if (getInternals() == null) {
+                getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
+                dataStore.getStorage().setError(true);
+                getServer().getPluginManager().disablePlugin(this);
+            }
         }
 
         if (getServer().getPluginManager().isPluginEnabled(this)) {
@@ -55,9 +70,6 @@ public class NickoBukkit extends JavaPlugin {
                 command.setExecutor(new NickoCommand());
             }
 
-            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-            getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE)));
             Structure.addGlobalIngredient('E', new ExitDoorItem());
@@ -72,12 +84,17 @@ public class NickoBukkit extends JavaPlugin {
 
             new PlaceHolderHook(this).hook();
 
-            final ServerUtils serverUtils = new ServerUtils(this);
-            serverUtils.checkSpigotBungeeCordHook();
-            if (nickoConfiguration.isBungeecordEnabled()) {
-                if (serverUtils.checkBungeeCordHook()) {
-                    getLogger().info("Enabling BungeeCord support...");
-                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
+            if(!isUnitTesting()) {
+                getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+                getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+                final ServerUtils serverUtils = new ServerUtils(this);
+                serverUtils.checkSpigotBungeeCordHook();
+                if (nickoConfiguration.isBungeecordEnabled()) {
+                    if (serverUtils.checkBungeeCordHook()) {
+                        getLogger().info("Enabling BungeeCord support...");
+                        getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
+                    }
                 }
             }
 
@@ -115,6 +132,10 @@ public class NickoBukkit extends JavaPlugin {
     public NickoConfiguration getNickoConfig() { return nickoConfiguration; }
 
     public PlayerDataStore getDataStore() { return dataStore; }
+
+    public boolean isUnitTesting() {
+        return unitTesting;
+    }
 
     public Internals getInternals() {
         return InternalsProvider.getInternals();

@@ -1,6 +1,6 @@
-name: ${project.parent.name}
+name: Nicko
 main: net.artelnatif.nicko.NickoBukkit
-version: ${project.version}
+version: 1.0-SNAPSHOT
 author: Aro
 api-version: 1.19
 softdepend: [ PlaceholderAPI ]

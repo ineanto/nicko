@@ -80,7 +80,10 @@ public class NickoConfiguration {
     }
 
     public String getSQLPassword() {
-        return getStorageSection().getString("password");
+        if (sqlPassword == null) {
+            return sqlPassword = getStorageSection().getString("password");
+        }
+        return sqlPassword;
     }
 
     public void setSQLPassword(String sqlPassword) {

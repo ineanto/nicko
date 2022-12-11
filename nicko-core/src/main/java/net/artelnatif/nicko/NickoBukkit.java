@@ -27,8 +27,9 @@ import java.io.File;
 import java.util.logging.Level;
 
 public class NickoBukkit extends JavaPlugin {
-    private boolean unitTesting;
     private static NickoBukkit plugin;
+
+    private final boolean unitTesting;
 
     private NickoConfiguration nickoConfiguration;
     private MojangAPI mojangAPI;
@@ -37,9 +38,10 @@ public class NickoBukkit extends JavaPlugin {
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, NickoConfiguration nickoConfiguration) {
         super(loader, description, dataFolder, file);
         unitTesting = true;
+        this.nickoConfiguration = nickoConfiguration;
         getLogger().info("Unit Testing Mode enabled.");
     }
 
@@ -47,13 +49,48 @@ public class NickoBukkit extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        if(!isUnitTesting()) {
-            getLogger().info("Loading internals...");
-            if (getInternals() == null) {
-                getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
-                dataStore.getStorage().setError(true);
-                getServer().getPluginManager().disablePlugin(this);
+        if (isUnitTesting()) {
+            onUnitTestingStartup();
+        } else {
+            onPluginStartup();
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (!dataStore.getStorage().isError()) {
+            getLogger().info("Closing persistence...");
+            dataStore.removeAllNames();
+            if (!dataStore.getStorage().getProvider().close()) {
+                getLogger().warning("Failed to close persistence!");
             }
+            dataStore.getStorage().setError(false);
+        }
+
+        if (nickoConfiguration.isBungeecordEnabled()) {
+            getServer().getMessenger().unregisterIncomingPluginChannel(this);
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        }
+
+        getLogger().info("Nicko (Bukkit) has been disabled.");
+    }
+
+    public void onUnitTestingStartup() {
+        getLogger().info("Loading persistence...");
+        dataStore = new PlayerDataStore(this);
+
+        if (!dataStore.getStorage().getProvider().init()) {
+            dataStore.getStorage().setError(true);
+            getLogger().warning("Failed to open persistence, data will NOT be saved!");
+        }
+    }
+
+    public void onPluginStartup() {
+        getLogger().info("Loading internals...");
+        if (getInternals() == null) {
+            getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
+            dataStore.getStorage().setError(true);
+            getServer().getPluginManager().disablePlugin(this);
         }
 
         if (getServer().getPluginManager().isPluginEnabled(this)) {
@@ -84,41 +121,20 @@ public class NickoBukkit extends JavaPlugin {
 
             new PlaceHolderHook(this).hook();
 
-            if(!isUnitTesting()) {
-                getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-                getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+            getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
-                final ServerUtils serverUtils = new ServerUtils(this);
-                serverUtils.checkSpigotBungeeCordHook();
-                if (nickoConfiguration.isBungeecordEnabled()) {
-                    if (serverUtils.checkBungeeCordHook()) {
-                        getLogger().info("Enabling BungeeCord support...");
-                        getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
-                    }
+            final ServerUtils serverUtils = new ServerUtils(this);
+            serverUtils.checkSpigotBungeeCordHook();
+            if (nickoConfiguration.isBungeecordEnabled()) {
+                if (serverUtils.checkBungeeCordHook()) {
+                    getLogger().info("Enabling BungeeCord support...");
+                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
                 }
             }
 
             getLogger().info("Nicko (Bukkit) has been enabled.");
         }
-    }
-
-    @Override
-    public void onDisable() {
-        if (!dataStore.getStorage().isError()) {
-            getLogger().info("Closing persistence...");
-            dataStore.removeAllNames();
-            if (!dataStore.getStorage().getProvider().close()) {
-                getLogger().warning("Failed to close persistence!");
-            }
-            dataStore.getStorage().setError(false);
-        }
-
-        if (nickoConfiguration.isBungeecordEnabled()) {
-            getServer().getMessenger().unregisterIncomingPluginChannel(this);
-            getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-        }
-
-        getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 
     public static NickoBukkit getInstance() {

@@ -31,17 +31,17 @@ public class NickoBukkit extends JavaPlugin {
 
     private final boolean unitTesting;
 
-    private NickoConfiguration nickoConfiguration;
+    private NickoConfiguration config;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
 
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, NickoConfiguration nickoConfiguration) {
+    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, NickoConfiguration config) {
         super(loader, description, dataFolder, file);
         unitTesting = true;
-        this.nickoConfiguration = nickoConfiguration;
+        this.config = config;
         getLogger().info("Unit Testing Mode enabled.");
     }
 
@@ -67,7 +67,7 @@ public class NickoBukkit extends JavaPlugin {
             dataStore.getStorage().setError(false);
         }
 
-        if (nickoConfiguration.isBungeecordEnabled()) {
+        if (config.isBungeecordEnabled()) {
             getServer().getMessenger().unregisterIncomingPluginChannel(this);
             getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         }
@@ -98,7 +98,7 @@ public class NickoBukkit extends JavaPlugin {
 
             getLogger().info("Loading configuration...");
             saveDefaultConfig();
-            nickoConfiguration = new NickoConfiguration(this);
+            config = new NickoConfiguration(this);
 
             LocaleManager.setDefaultLocale(this);
 
@@ -126,7 +126,7 @@ public class NickoBukkit extends JavaPlugin {
 
             final ServerUtils serverUtils = new ServerUtils(this);
             serverUtils.checkSpigotBungeeCordHook();
-            if (nickoConfiguration.isBungeecordEnabled()) {
+            if (config.isBungeecordEnabled()) {
                 if (serverUtils.checkBungeeCordHook()) {
                     getLogger().info("Enabling BungeeCord support...");
                     getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
@@ -145,7 +145,7 @@ public class NickoBukkit extends JavaPlugin {
         return mojangAPI;
     }
 
-    public NickoConfiguration getNickoConfig() { return nickoConfiguration; }
+    public NickoConfiguration getNickoConfig() { return config; }
 
     public PlayerDataStore getDataStore() { return dataStore; }
 

@@ -13,17 +13,17 @@ import java.util.Optional;
 public class SQLStorageTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
-    private static NickoConfiguration config;
 
     @BeforeAll
     public static void setup() {
-        server = MockBukkit.mock();
-        config = new NickoConfiguration(null);
+        final NickoConfiguration config = new NickoConfiguration(null);
         config.setLocalStorage(false);
         config.setBungeecordSupport(false);
         config.setSQLAddress("127.0.0.1");
         config.setSQLUsername("root");
         config.setSQLPassword("12345"); // https://howsecureismypassword.net/ "Your password would be cracked: Instantly"
+
+        server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
     }
 

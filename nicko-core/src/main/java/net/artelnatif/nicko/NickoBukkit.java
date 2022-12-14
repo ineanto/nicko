@@ -35,6 +35,8 @@ public class NickoBukkit extends JavaPlugin {
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
 
+    public NickoBukkit() { this.unitTesting = false; }
+
     /**
      * Used by MockBukkit
      */

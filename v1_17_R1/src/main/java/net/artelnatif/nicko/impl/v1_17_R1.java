@@ -85,6 +85,7 @@ public class v1_17_R1 implements Internals {
     public UpdateResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
+        final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
         Optional<MojangSkin> skin;
 
         final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
@@ -93,7 +94,7 @@ public class v1_17_R1 implements Internals {
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
 
-        if (skinChange || !profile.getSkin().equalsIgnoreCase(player.getName())) {
+        if (skinChange || changeOnlyName) {
             try {
                 final Optional<String> uuid = NickoBukkit.getInstance().getMojangAPI().getUUID(profile.getSkin());
                 if (uuid.isPresent()) {

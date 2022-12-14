@@ -42,4 +42,17 @@ public class I18N {
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key.key();
         }
     }
+
+    public static String translateFlat(Player player, I18NDict key, Object... arguments) {
+        if (Locale.getDefault() == Locale.CUSTOM) {
+            // TODO: 12/6/22 Actually return from custom language file
+            return key.key();
+        }
+        try {
+            formatter.applyPattern(getBundle(player).getString(key.key()));
+            return formatter.format(arguments);
+        } catch (Exception e) {
+            return key.key();
+        }
+    }
 }

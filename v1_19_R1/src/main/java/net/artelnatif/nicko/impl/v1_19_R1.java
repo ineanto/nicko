@@ -94,7 +94,6 @@ public class v1_19_R1 implements Internals {
 
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
         final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
-        entityPlayer.b.a(remove);
 
         // "It's a Surprise Tool That Will Help Us Later!"
         final ProfilePublicKey.a key = remove.b().get(0).e();
@@ -118,7 +117,7 @@ public class v1_19_R1 implements Internals {
             } catch (ExecutionException e) {
                 return new UpdateResult(I18NDict.Error.SKIN_FAIL_CACHE);
             } catch (IOException e) {
-                return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
+                return new UpdateResult(I18NDict.Error.NAME_FAIL_MOJANG);
             }
         }
 
@@ -130,6 +129,7 @@ public class v1_19_R1 implements Internals {
                 IChatBaseComponent.a(profile.getName()),
                 key)); // f mojang
 
+        entityPlayer.b.a(remove);
         entityPlayer.b.a(add);
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();

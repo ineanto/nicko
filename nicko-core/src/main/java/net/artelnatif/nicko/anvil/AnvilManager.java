@@ -62,7 +62,7 @@ public class AnvilManager {
                         if (!updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, updateResult.getErrorMessage()));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, updateResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }
@@ -83,7 +83,7 @@ public class AnvilManager {
                         if (!updateResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, updateResult.getErrorMessage()));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, updateResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }

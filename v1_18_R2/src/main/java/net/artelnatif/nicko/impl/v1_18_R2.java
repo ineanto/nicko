@@ -91,8 +91,6 @@ public class v1_18_R2 implements Internals {
         Optional<MojangSkin> skin;
 
         final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
-        entityPlayer.b.a(remove);
-
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
 
@@ -122,6 +120,7 @@ public class v1_18_R2 implements Internals {
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
                 player.getPing(),
                 EnumGamemode.a(player.getGameMode().ordinal()), IChatBaseComponent.a(profile.getName())));
+        entityPlayer.b.a(remove);
         entityPlayer.b.a(add);
 
         Bukkit.getOnlinePlayers().forEach(online -> {

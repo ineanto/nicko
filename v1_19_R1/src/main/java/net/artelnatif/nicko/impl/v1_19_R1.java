@@ -99,7 +99,7 @@ public class v1_19_R1 implements Internals {
         final ProfilePublicKey.a key = remove.b().get(0).e();
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
 
-        if (skinChange) {
+        if (skinChange || !profile.getSkin().equalsIgnoreCase(player.getName())) {
             try {
                 final Optional<String> uuid = NickoBukkit.getInstance().getMojangAPI().getUUID(profile.getSkin());
                 if (uuid.isPresent()) {
@@ -120,6 +120,7 @@ public class v1_19_R1 implements Internals {
                 return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
             }
         }
+
 
         add.b().clear();
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,

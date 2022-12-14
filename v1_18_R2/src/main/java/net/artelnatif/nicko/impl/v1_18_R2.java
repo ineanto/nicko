@@ -95,7 +95,7 @@ public class v1_18_R2 implements Internals {
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
 
-        if (skinChange) {
+        if (skinChange || !profile.getSkin().equalsIgnoreCase(player.getName())) {
             try {
                 final Optional<String> uuid = NickoBukkit.getInstance().getMojangAPI().getUUID(profile.getSkin());
                 if (uuid.isPresent()) {

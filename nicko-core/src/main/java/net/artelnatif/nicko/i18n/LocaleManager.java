@@ -5,9 +5,15 @@ import net.artelnatif.nicko.NickoBukkit;
 import java.util.Arrays;
 
 public class LocaleManager {
-    private static final String[] supportedLocales = new String[]{"en", "fr", "custom"};
+    private final NickoBukkit instance;
+    private final String[] supportedLocales = new String[]{"en", "fr", "custom"};
 
-    public static void setFallbackLocale(NickoBukkit instance) {
+    public LocaleManager(NickoBukkit instance) {
+        this.instance = instance;
+
+    }
+
+    public void findFallbackLocale() {
         final String locale = instance.getNickoConfig().getFallbackLocale();
         try {
             if (Arrays.stream(supportedLocales).noneMatch(s -> s.equalsIgnoreCase(locale))) {

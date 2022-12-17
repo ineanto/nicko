@@ -7,10 +7,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class NickoConfiguration {
     private final NickoBukkit nicko;
     private String prefix;
-    private String defaultLocale;
+    private String fallbackLocale;
 
     private Boolean bungeecordSupport;
     private Boolean localStorage;
+    private Boolean customLocale;
 
     private String sqlUsername, sqlPassword, sqlAddress;
 
@@ -21,6 +22,8 @@ public class NickoConfiguration {
     public ConfigurationSection getBungeecordSection() { return getConfig().getConfigurationSection("bungeecord"); }
 
     public ConfigurationSection getStorageSection() { return getConfig().getConfigurationSection("storage"); }
+
+    public ConfigurationSection getLocaleSection() { return getBungeecordSection().getConfigurationSection("locale"); }
 
     public ConfigurationSection getRedisSection() { return getBungeecordSection().getConfigurationSection("redis"); }
 
@@ -35,15 +38,26 @@ public class NickoConfiguration {
         this.prefix = prefix;
     }
 
-    public String getDefaultLocale() {
-        if (defaultLocale == null) {
-            return defaultLocale = getConfig().getString("locale");
+    public String getFallbackLocale() {
+        if (fallbackLocale == null) {
+            return fallbackLocale = getLocaleSection().getString("fallback");
         }
-        return defaultLocale;
+        return fallbackLocale;
     }
 
-    public void setDefaultLocale(String defaultLocale) {
-        this.defaultLocale = defaultLocale;
+    public void setFallbackLocale(String fallbackLocale) {
+        this.fallbackLocale = fallbackLocale;
+    }
+
+    public boolean isCustomLocaleEnabled() {
+        if (customLocale == null) {
+            return customLocale = getStorageSection().getBoolean("local");
+        }
+        return customLocale;
+    }
+
+    public void setCustomLocaleEnabled(Boolean localStorage) {
+        this.localStorage = localStorage;
     }
 
     public boolean isBungeecordEnabled() {

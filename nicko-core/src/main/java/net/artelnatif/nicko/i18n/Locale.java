@@ -34,7 +34,7 @@ public enum Locale implements Serializable {
         return getLocales().getOrDefault(code, defaultLocale);
     }
 
-    public static void setDefault(Locale defaultLocale) {
+    public static void setFallback(Locale defaultLocale) {
         Locale.defaultLocale = defaultLocale;
     }
 

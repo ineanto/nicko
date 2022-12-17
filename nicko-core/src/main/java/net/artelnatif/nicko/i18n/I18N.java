@@ -21,22 +21,26 @@ public class I18N {
                 return profile.get().getLocale();
             }
         } catch (IllegalArgumentException exception) {
-            NickoBukkit.getInstance().getLogger().severe("Invalid locale provided, defaulting to " + Locale.getDefault().getCode() + ".");
+            NickoBukkit.getInstance().getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.getDefault().getCode() + ".");
             return Locale.getDefault();
         }
     }
 
-    private static ResourceBundle getBundle(Player player) {
-        return ResourceBundle.getBundle("locale", LocaleUtils.toLocale(getLocale(player).getCode()));
+    private static ResourceBundle getBundle(java.util.Locale locale) {
+        return ResourceBundle.getBundle("locale", locale);
     }
 
     public static String translate(Player player, I18NDict key, Object... arguments) {
-        if (Locale.getDefault() == Locale.CUSTOM) {
-            // TODO: 12/6/22 Actually return from custom language file
-            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key.key();
+        final Locale locale = getLocale(player);
+        String translation;
+        if (locale == Locale.CUSTOM) {
+            translation = "";
+        } else {
+            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
         }
+
         try {
-            formatter.applyPattern(getBundle(player).getString(key.key()));
+            formatter.applyPattern(translation);
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
             return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key.key();
@@ -44,12 +48,16 @@ public class I18N {
     }
 
     public static String translateFlat(Player player, I18NDict key, Object... arguments) {
-        if (Locale.getDefault() == Locale.CUSTOM) {
-            // TODO: 12/6/22 Actually return from custom language file
-            return key.key();
+        final Locale locale = getLocale(player);
+        String translation;
+        if (locale == Locale.CUSTOM) {
+            translation = "";
+        } else {
+            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
         }
+
         try {
-            formatter.applyPattern(getBundle(player).getString(key.key()));
+            formatter.applyPattern(translation);
             return formatter.format(arguments);
         } catch (Exception e) {
             return key.key();

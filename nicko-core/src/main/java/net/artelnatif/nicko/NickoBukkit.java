@@ -34,6 +34,7 @@ public class NickoBukkit extends JavaPlugin {
     private NickoConfiguration config;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
+    private LocaleManager localeManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -102,7 +103,9 @@ public class NickoBukkit extends JavaPlugin {
             saveDefaultConfig();
             config = new NickoConfiguration(this);
 
-            LocaleManager.setFallbackLocale(this);
+            localeManager = new LocaleManager(this);
+            localeManager.findFallbackLocale();
+
 
             final PluginCommand command = getCommand("nicko");
             if (command != null) {

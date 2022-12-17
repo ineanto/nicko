@@ -102,7 +102,7 @@ public class NickoBukkit extends JavaPlugin {
             saveDefaultConfig();
             config = new NickoConfiguration(this);
 
-            LocaleManager.setDefaultLocale(this);
+            LocaleManager.setFallbackLocale(this);
 
             final PluginCommand command = getCommand("nicko");
             if (command != null) {

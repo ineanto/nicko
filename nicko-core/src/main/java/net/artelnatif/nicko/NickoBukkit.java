@@ -105,7 +105,7 @@ public class NickoBukkit extends JavaPlugin {
 
             localeManager = new LocaleManager(this);
             localeManager.findFallbackLocale();
-
+            localeManager.installCustomLanguageFile();
 
             final PluginCommand command = getCommand("nicko");
             if (command != null) {
@@ -153,6 +153,10 @@ public class NickoBukkit extends JavaPlugin {
     public NickoConfiguration getNickoConfig() { return config; }
 
     public PlayerDataStore getDataStore() { return dataStore; }
+
+    public LocaleManager getLocaleManager() {
+        return localeManager;
+    }
 
     public boolean isUnitTesting() {
         return unitTesting;

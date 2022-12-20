@@ -13,16 +13,17 @@ public class I18N {
     private final static MessageFormat formatter = new MessageFormat("");
 
     private static Locale getLocale(Player player) {
+        final NickoBukkit instance = NickoBukkit.getInstance();
         try {
-            final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+            final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
             if (profile.isEmpty()) {
                 return Locale.ENGLISH;
             } else {
                 return profile.get().getLocale();
             }
         } catch (IllegalArgumentException exception) {
-            NickoBukkit.getInstance().getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.getDefault().getCode() + ".");
-            return Locale.getDefault();
+            instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + LocaleManager.getFallback().getCode() + ".");
+            return LocaleManager.getFallback();
         }
     }
 
@@ -31,36 +32,38 @@ public class I18N {
     }
 
     public static String translate(Player player, I18NDict key, Object... arguments) {
-        final Locale locale = getLocale(player);
-        String translation;
-        if (locale == Locale.CUSTOM) {
-            translation = "";
-        } else {
-            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
-        }
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        final String translation = findTranslation(player, key);
 
         try {
             formatter.applyPattern(translation);
-            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + formatter.format(arguments);
+            return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
-            return NickoBukkit.getInstance().getNickoConfig().getPrefix() + key.key();
+            return instance.getNickoConfig().getPrefix() + key.key();
         }
     }
 
     public static String translateFlat(Player player, I18NDict key, Object... arguments) {
-        final Locale locale = getLocale(player);
-        String translation;
-        if (locale == Locale.CUSTOM) {
-            translation = "";
-        } else {
-            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
-        }
-
+        final String translation = findTranslation(player, key);
         try {
             formatter.applyPattern(translation);
             return formatter.format(arguments);
         } catch (Exception e) {
             return key.key();
         }
+    }
+
+
+    private static String findTranslation(Player player, I18NDict key) {
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        final Locale locale = getLocale(player);
+        String translation;
+        if (locale == Locale.CUSTOM) {
+            translation = instance.getLocaleManager().getCustomLanguageFile().getProperty(key.key(), key.key());
+        } else {
+            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
+        }
+
+        return translation;
     }
 }

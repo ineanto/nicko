@@ -9,7 +9,6 @@ public enum Locale implements Serializable {
     CUSTOM("custom", "Server Custom");
 
     private static HashMap<String, Locale> locales;
-    private static Locale defaultLocale;
 
     private final String code;
     private transient final String name;
@@ -31,15 +30,7 @@ public enum Locale implements Serializable {
     }
 
     public static Locale fromCode(String code) {
-        return getLocales().getOrDefault(code, defaultLocale);
-    }
-
-    public static void setFallback(Locale defaultLocale) {
-        Locale.defaultLocale = defaultLocale;
-    }
-
-    public static Locale getDefault() {
-        return defaultLocale;
+        return getLocales().getOrDefault(code, LocaleManager.getFallback());
     }
 
     public String getCode() {

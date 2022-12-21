@@ -63,6 +63,11 @@ public class LocaleManager {
         return customLanguageFile;
     }
 
+    public Properties reloadCustomLanguageFile() {
+        customLanguageFile = null;
+        return getCustomLanguageFile();
+    }
+
     public void findFallbackLocale() {
         final String locale = instance.getNickoConfig().getFallbackLocale();
         try {

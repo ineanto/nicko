@@ -7,9 +7,11 @@ import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Properties;
@@ -17,7 +19,10 @@ import java.util.Properties;
 public class ReloadLanguageFileItem extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.OAK_DOOR).setDisplayName("§fExit");
+        return new ItemBuilder(Material.BOOK)
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1, false)
+                .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                .setDisplayName("§fReload Language File");
     }
 
     @Override

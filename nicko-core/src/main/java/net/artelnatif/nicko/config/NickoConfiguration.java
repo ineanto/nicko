@@ -23,7 +23,7 @@ public class NickoConfiguration {
 
     public ConfigurationSection getStorageSection() { return getConfig().getConfigurationSection("storage"); }
 
-    public ConfigurationSection getLocaleSection() { return getBungeecordSection().getConfigurationSection("locale"); }
+    public ConfigurationSection getLocaleSection() { return getConfig().getConfigurationSection("locale"); }
 
     public ConfigurationSection getRedisSection() { return getBungeecordSection().getConfigurationSection("redis"); }
 

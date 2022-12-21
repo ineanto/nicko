@@ -4,6 +4,8 @@ import net.artelnatif.nicko.NickoBukkit;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -34,10 +36,8 @@ public class LocaleManager {
 
         try {
             if (resource != null) {
-                if (!file.exists()) {
-                    instance.getLogger().info("Installed Custom language file as \"custom.properties\"");
-                    Files.copy(resource, file.toPath());
-                }
+                instance.getLogger().info("Installing custom language file as \"custom.properties\"");
+                Files.copy(resource, Paths.get(file.toURI()), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             // TODO: 12/19/22 Handle error

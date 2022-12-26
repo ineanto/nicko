@@ -35,10 +35,9 @@ public class LocaleManager {
         final InputStream resource = instance.getResource("locale_en.properties");
 
         try {
-            if (resource != null) {
-                instance.getLogger().info("Installing custom language file as \"custom.properties\"");
-                Files.copy(resource, Paths.get(file.toURI()), StandardCopyOption.REPLACE_EXISTING);
-            }
+            instance.getLogger().info("Installing custom language file as \"custom.properties\"");
+            // TODO: 12/26/22 This throws an error!
+            Files.copy(resource, Paths.get(file.toURI()), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             // TODO: 12/19/22 Handle error
             throw new RuntimeException(e);

@@ -19,7 +19,6 @@ public class ServerSwitchListener implements Listener {
 
         final ArrayList<String> payload = new ArrayList<>();
         payload.add(player.getUniqueId().toString());
-        payload.add("otherdata");
 
         PluginMessageUtils.sendMessage(server.getInfo(), NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, payload);
     }

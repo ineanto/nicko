@@ -1,11 +1,9 @@
 package net.artelnatif.nicko.i18n;
 
+import de.studiocode.invui.util.IOUtils;
 import net.artelnatif.nicko.NickoBukkit;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -32,14 +30,18 @@ public class LocaleManager {
     }
 
     public void installCustomLanguageFile() {
-        final InputStream resource = instance.getResource("locale_en.properties");
-
-        try {
-            instance.getLogger().info("Installing custom language file as \"custom.properties\"");
-            // TODO: 12/26/22 This throws an error!
-            Files.copy(resource, Paths.get(file.toURI()), StandardCopyOption.REPLACE_EXISTING);
+        try (InputStream stream = this.getClass().getResourceAsStream("locale_en.properties")) {
+            try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+                if (stream != null) {
+                    IOUtils.copy(stream, outputStream, 8 * 1024);
+                    instance.getLogger().info("Installing custom language file as \"custom.properties\"");
+                }
+            }
         } catch (IOException e) {
-            // TODO: 12/19/22 Handle error
+            instance.getLogger().warning("Couldn't get English resource file! Skipping.");
+            if (LocaleManager.getFallback() != Locale.ENGLISH) {
+                LocaleManager.setFallback(Locale.ENGLISH);
+            }
             throw new RuntimeException(e);
         }
     }

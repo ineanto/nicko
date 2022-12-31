@@ -97,7 +97,7 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (getServer().getPluginManager().isPluginEnabled(this)) {
-            mojangAPI = new MojangAPI();
+            mojangAPI = new MojangAPI(this);
 
             getLogger().info("Loading configuration...");
             saveDefaultConfig();

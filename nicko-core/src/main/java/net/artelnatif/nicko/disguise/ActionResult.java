@@ -2,16 +2,16 @@ package net.artelnatif.nicko.disguise;
 
 import net.artelnatif.nicko.i18n.I18NDict;
 
-public class UpdateResult {
+public class ActionResult {
     private final I18NDict errorMessage;
     private boolean error = false;
 
-    public UpdateResult(I18NDict errorMessage) {
+    public ActionResult(I18NDict errorMessage) {
         this.error = true;
         this.errorMessage = errorMessage;
     }
 
-    public UpdateResult() {
+    public ActionResult() {
         this.errorMessage = null;
     }
 

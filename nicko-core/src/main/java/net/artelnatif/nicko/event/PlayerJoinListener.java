@@ -2,7 +2,7 @@ package net.artelnatif.nicko.event;
 
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
-import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import org.bukkit.Bukkit;
@@ -22,11 +22,11 @@ public class PlayerJoinListener implements Listener {
             // TODO: 12/5/22 Update from BungeeCord
 
             if (appearanceManager.hasData()) {
-                final UpdateResult updateResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());
-                if (!updateResult.isError()) {
+                final ActionResult actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());
+                if (!actionResult.isError()) {
                     player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLIED));
                 } else {
-                    player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLY_FAIL, I18N.translate(player, updateResult.getErrorMessage())));
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.PREVIOUS_SKIN_APPLY_FAIL, I18N.translate(player, actionResult.getErrorMessage())));
                 }
             }
         }, 20L);

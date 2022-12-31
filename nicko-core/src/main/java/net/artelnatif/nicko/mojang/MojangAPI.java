@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import net.artelnatif.nicko.NickoBukkit;
 
 import javax.annotation.Nonnull;
 import javax.net.ssl.HttpsURLConnection;
@@ -32,6 +33,12 @@ public class MojangAPI {
             .newBuilder()
             .expireAfterWrite(120, TimeUnit.MINUTES)
             .build(loader);
+
+    private final NickoBukkit instance;
+
+    public MojangAPI(NickoBukkit instance) {
+        this.instance = instance;
+    }
 
     public Optional<MojangSkin> getSkin(String uuid) throws IOException, ExecutionException {
         return cache.get(uuid);
@@ -63,19 +70,27 @@ public class MojangAPI {
         con.setDoInput(true);
         con.setRequestMethod("GET");
 
-        final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        final StringBuilder builder = new StringBuilder();
-        String line;
-        while ((line = input.readLine()) != null) {
-            builder.append(line);
-        }
+        switch (con.getResponseCode()) {
+            case 429 -> {
+                instance.getLogger().warning("Failed to parse request! The connection is throttled.");
+                return getErrorObject();
+            }
+            case 200 -> {
+                final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                final StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = input.readLine()) != null) {
+                    builder.append(line);
+                }
 
-        try {
-            final JsonElement jsonElt = JsonParser.parseString(builder.toString());
-            return jsonElt.getAsJsonObject();
-        } catch (JsonParseException | IllegalStateException exception) {
-            System.out.println("Failed to parse request (" + parametrizedUrl + ")! Does the username exists?");
-            return getErrorObject();
+                try {
+                    final JsonElement jsonElt = JsonParser.parseString(builder.toString());
+                    return jsonElt.getAsJsonObject();
+                } catch (JsonParseException | IllegalStateException exception) {
+                    instance.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")! Does the username exists?");
+                    return getErrorObject();
+                }
+            }
         }
     }
 

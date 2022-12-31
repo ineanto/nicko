@@ -2,7 +2,7 @@ package net.artelnatif.nicko.anvil;
 
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
-import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangUtils;
@@ -58,11 +58,11 @@ public class AnvilManager {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setName(response);
-                        final UpdateResult updateResult = appearanceManager.updatePlayer(false);
-                        if (!updateResult.isError()) {
+                        final ActionResult actionResult = appearanceManager.updatePlayer(false);
+                        if (!actionResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, updateResult.getErrorMessage())));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, actionResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }
@@ -79,11 +79,11 @@ public class AnvilManager {
                         return AnvilGUI.Response.text("Invalid username!");
                     } else {
                         appearanceManager.setSkin(response);
-                        final UpdateResult updateResult = appearanceManager.updatePlayer(true);
-                        if (!updateResult.isError()) {
+                        final ActionResult actionResult = appearanceManager.updatePlayer(true);
+                        if (!actionResult.isError()) {
                             player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, updateResult.getErrorMessage())));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateFlat(player, actionResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }

@@ -5,7 +5,7 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.disguise.UpdateResult;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.core.Holder;
@@ -84,7 +84,7 @@ public class v1_18_R2 implements Internals {
     }
 
     @Override
-    public UpdateResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
@@ -104,15 +104,15 @@ public class v1_18_R2 implements Internals {
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
-                        return new UpdateResult(I18NDict.Error.SKIN_FAIL_MOJANG);
+                        return new ActionResult(I18NDict.Error.SKIN_FAIL_MOJANG);
                     }
                 } else {
-                    return new UpdateResult(I18NDict.Error.NAME_FAIL_MOJANG);
+                    return new ActionResult(I18NDict.Error.NAME_FAIL_MOJANG);
                 }
             } catch (ExecutionException e) {
-                return new UpdateResult(I18NDict.Error.SKIN_FAIL_CACHE);
+                return new ActionResult(I18NDict.Error.SKIN_FAIL_CACHE);
             } catch (IOException e) {
-                return new UpdateResult(I18NDict.Error.UNEXPECTED_ERROR);
+                return new ActionResult(I18NDict.Error.UNEXPECTED_ERROR);
             }
         }
 
@@ -129,6 +129,6 @@ public class v1_18_R2 implements Internals {
             onlineEntityPlayer.b.a(add);
         });
         updateOthers(player);
-        return new UpdateResult();
+        return new ActionResult();
     }
 }

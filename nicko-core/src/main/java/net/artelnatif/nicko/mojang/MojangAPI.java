@@ -71,6 +71,10 @@ public class MojangAPI {
         con.setRequestMethod("GET");
 
         switch (con.getResponseCode()) {
+            case 400 -> {
+                instance.getLogger().warning("Failed to parse request: Invalid Name");
+                return getErrorObject();
+            }
             case 429 -> {
                 instance.getLogger().warning("Failed to parse request! The connection is throttled.");
                 return getErrorObject();
@@ -87,9 +91,13 @@ public class MojangAPI {
                     final JsonElement jsonElt = JsonParser.parseString(builder.toString());
                     return jsonElt.getAsJsonObject();
                 } catch (JsonParseException | IllegalStateException exception) {
-                    instance.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")! Does the username exists?");
+                    instance.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")!");
                     return getErrorObject();
                 }
+            }
+            default -> {
+                instance.getLogger().warning("Unhandled response code from Mojang: " + con.getResponseCode());
+                return getErrorObject();
             }
         }
     }

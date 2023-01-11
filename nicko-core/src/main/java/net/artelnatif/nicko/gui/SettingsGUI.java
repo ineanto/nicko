@@ -21,9 +21,9 @@ public class SettingsGUI {
     };
 
     public SettingsGUI(Player player) {
-        if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordEnabled()) {
+        if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordSupport()) {
+            structureIngredients[1] = structureIngredients[1].replace("T", "#");
         }
-        //structureIngredients[1] = structureIngredients[1].replace("T", "#");
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
                 .setStructure(structureIngredients)

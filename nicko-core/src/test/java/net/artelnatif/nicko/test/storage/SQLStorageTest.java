@@ -31,7 +31,7 @@ public class SQLStorageTest {
     @DisplayName("Create SQL Tables")
     public void testSQLTables() {
 
-        final PlayerMock playerMock = server.addPlayer("Aro");
+        final PlayerMock playerMock = server.addPlayer();
         final Optional<NickoProfile> data = plugin.getDataStore().getData(playerMock.getUniqueId());
         Assertions.assertTrue(data.isPresent());
         Assertions.assertNull(data.get().getSkin());

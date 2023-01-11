@@ -2,33 +2,26 @@ package net.artelnatif.nicko.i18n;
 
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.entity.Player;
+import org.yaml.snakeyaml.Yaml;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class I18N {
     private final static MessageFormat formatter = new MessageFormat("");
+    private static final Yaml yaml = new Yaml();
 
     private static Locale getLocale(Player player) {
         final NickoBukkit instance = NickoBukkit.getInstance();
         try {
             final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
-            if (profile.isEmpty()) {
-                return Locale.ENGLISH;
-            } else {
-                return profile.get().getLocale();
-            }
+            return profile.isEmpty() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();
         } catch (IllegalArgumentException exception) {
-            instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + LocaleManager.getFallback().getCode() + ".");
-            return LocaleManager.getFallback();
+            instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
+            return Locale.FALLBACK_LOCALE;
         }
-    }
-
-    private static ResourceBundle getBundle(java.util.Locale locale) {
-        return ResourceBundle.getBundle("locale", locale);
     }
 
     public static String translate(Player player, I18NDict key, Object... arguments) {
@@ -43,7 +36,7 @@ public class I18N {
         }
     }
 
-    public static String translateFlat(Player player, I18NDict key, Object... arguments) {
+    public static String translateWithoutPrefix(Player player, I18NDict key, Object... arguments) {
         final String translation = findTranslation(player, key);
         try {
             formatter.applyPattern(translation);
@@ -53,15 +46,15 @@ public class I18N {
         }
     }
 
-
     private static String findTranslation(Player player, I18NDict key) {
         final NickoBukkit instance = NickoBukkit.getInstance();
         final Locale locale = getLocale(player);
         String translation;
         if (locale == Locale.CUSTOM) {
-            translation = instance.getLocaleManager().getCustomLanguageFile().getProperty(key.key(), key.key());
+            translation = instance.getLocaleFileManager().getFromFile(key.key());
         } else {
-            translation = getBundle(LocaleUtils.toLocale(locale.getCode())).getString(key.key());
+            final HashMap<String, String> values = yaml.load(I18N.class.getResourceAsStream(locale.getCode() + ".yml"));
+            translation = values.getOrDefault(key.key(), key.key());
         }
 
         return translation;

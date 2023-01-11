@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class NickoConfiguration {
     private final NickoBukkit nicko;
     private String prefix;
-    private String fallbackLocale;
 
     private Boolean bungeecordSupport;
     private Boolean localStorage;
@@ -19,13 +18,22 @@ public class NickoConfiguration {
         this.nicko = nicko;
     }
 
+    //.............
+    // SECTION ACCESSORS
+    //.............
+
     public ConfigurationSection getBungeecordSection() { return getConfig().getConfigurationSection("bungeecord"); }
 
-    public ConfigurationSection getStorageSection() { return getConfig().getConfigurationSection("storage"); }
+    // Unused for now
+    public ConfigurationSection getRedisSection() { return getBungeecordSection().getConfigurationSection("redis"); }
 
     public ConfigurationSection getLocaleSection() { return getConfig().getConfigurationSection("locale"); }
 
-    public ConfigurationSection getRedisSection() { return getBungeecordSection().getConfigurationSection("redis"); }
+    public ConfigurationSection getStorageSection() { return getConfig().getConfigurationSection("storage"); }
+
+    //.............
+    // GLOBAL
+    //.............
 
     public String getPrefix() {
         if (prefix == null) {
@@ -34,33 +42,11 @@ public class NickoConfiguration {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+    //.............
+    // BUNGEECORD
+    //.............
 
-    public String getFallbackLocale() {
-        if (fallbackLocale == null) {
-            return fallbackLocale = getLocaleSection().getString("fallback");
-        }
-        return fallbackLocale;
-    }
-
-    public void setFallbackLocale(String fallbackLocale) {
-        this.fallbackLocale = fallbackLocale;
-    }
-
-    public boolean isCustomLocaleEnabled() {
-        if (customLocale == null) {
-            return customLocale = getStorageSection().getBoolean("local");
-        }
-        return customLocale;
-    }
-
-    public void setCustomLocaleEnabled(Boolean localStorage) {
-        this.localStorage = localStorage;
-    }
-
-    public boolean isBungeecordEnabled() {
+    public boolean isBungeecordSupport() {
         if (bungeecordSupport == null) {
             return bungeecordSupport = getBungeecordSection().getBoolean("enabled");
         }
@@ -71,6 +57,25 @@ public class NickoConfiguration {
         this.bungeecordSupport = bungeecordSupport;
     }
 
+    //.............
+    // LOCALE
+    //.............
+
+    public boolean isCustomLocale() {
+        if (customLocale == null) {
+            return customLocale = getLocaleSection().getBoolean("use_custom_locale");
+        }
+        return customLocale;
+    }
+
+    public void setCustomLocale(boolean customLocale) {
+        this.customLocale = customLocale;
+    }
+
+    //.............
+    // STORAGE
+    //.............
+
     public boolean isLocalStorage() {
         if (localStorage == null) {
             return localStorage = getStorageSection().getBoolean("local");
@@ -78,7 +83,7 @@ public class NickoConfiguration {
         return localStorage;
     }
 
-    public void setLocalStorage(Boolean localStorage) {
+    public void setLocalStorage(boolean localStorage) {
         this.localStorage = localStorage;
     }
 

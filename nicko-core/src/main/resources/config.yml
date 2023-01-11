@@ -14,13 +14,9 @@ bungeecord:
 
 # Localisation:
 locale:
-  # By default, Nicko tries to get the locale from the player's preferences.
-  # If that fails, the locale fallback is the one provided by this option.
-  # Accepted values: fr (French), en (English), custom (Custom language file).
-  fallback: "en"
-  # Nicko will copy the English locale as "custom.yml"
+  # Nicko will copy the English locale as "lang.yml"
   # and will use the translations in that file when "Server Custom"
-  # is selected as the player's locale/default locale.
+  # is selected as the player's locale.
   use_custom_locale: false
 
 

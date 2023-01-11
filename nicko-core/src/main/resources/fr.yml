@@ -1,15 +1,21 @@
-event.previous_skin_applied.success=§aVotre précédent déguisement a été réappliqué.
-event.previous_skin_applied.fail=§cImpossible d'appliquer votre déguisement précédent. §7§o({0})
-event.disguise.success=§aDéguisement appliqué !
-event.disguise.fail=§cImpossible d'appliquer votre déguisement. §7§o({0})
-event.undisguise.success=§aDéguisement retiré.
-event.undisguise.fail=§cImpossible de retier votre déguisement. Il sera remis par défaut à votre prochaine reconnexion. Désolé !
-event.undisguise.notactive=§cVous n'avez pas de déguisement.
-error.player_offline=§c{0} §fest hors-ligne, veuillez réessayer.
-error.generic=Erreur inconnue
-error.couldnt_get_name_from_mojang=Impossible de récupérer le nom d'utilisateur depuis Mojang
-error.couldnt_get_skin_from_mojang=Impossible de récupérer le skin depuis Mojang
-error.couldnt_get_skin_from_cache=Impossible de récupérer le skin depuis le cache
-error.invalid_username=§cLe pseudo spécifié n'est pas un pseudo Minecraft valide.
-admin.custom_language_reload_success=§aFichier de langue rechargé.
-admin.custom_language_reload_fail=§cImpossible de recharger le fichier de langue !
+admin:
+  custom_language_reload_fail: "§cImpossible de recharger le fichier de langue !"
+  custom_language_reload_success: "§aFichier de langue rechargé."
+error:
+  couldnt_get_name_from_mojang: "Impossible de récupérer le nom d'utilisateur depuis Mojang"
+  couldnt_get_skin_from_cache: "Impossible de récupérer le skin depuis le cache"
+  couldnt_get_skin_from_mojang: "Impossible de récupérer le skin depuis Mojang"
+  generic: "Erreur inconnue"
+  invalid_username: "§cLe pseudo spécifié n'est pas un pseudo Minecraft valide."
+  player_offline: "§c{0} §fest hors-ligne, veuillez réessayer."
+event:
+  disguise:
+    fail: "§cImpossible d'appliquer votre déguisement. §7§o({0})"
+    success: "§aDéguisement appliqué !"
+  previous_skin_applied:
+    fail: "§cImpossible d'appliquer votre déguisement précédent. §7§o({0})"
+    success: "§aVotre précédent déguisement a été réappliqué."
+  undisguise:
+    fail: "§cImpossible de retier votre déguisement. Il sera remis par défaut à votre prochaine reconnexion. Désolé !"
+    notactive: "§cVous n'avez pas de déguisement."
+    success: "§aDéguisement retiré."

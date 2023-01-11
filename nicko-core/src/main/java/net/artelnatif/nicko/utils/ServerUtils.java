@@ -14,7 +14,7 @@ public class ServerUtils {
     public void checkSpigotBungeeCordHook() {
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
-        if (config.getConfigurationSection("settings").getBoolean("bungeecord") && instance.getNickoConfig().isBungeecordEnabled()) {
+        if (config.getConfigurationSection("settings").getBoolean("bungeecord") && instance.getNickoConfig().isBungeecordSupport()) {
             instance.getLogger().severe("Hummm. Your server is hooked to BungeeCord, but it seems");
             instance.getLogger().severe("that BungeeCord support is not enabled inside Nicko.");
             instance.getLogger().severe("If this is intentional, you can safely ignore this message.");

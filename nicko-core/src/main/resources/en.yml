@@ -1,15 +1,21 @@
-event.previous_skin_applied.success=§aYour previous active disguise has been applied back.
-event.previous_skin_applied.fail=§cFailed to apply your previous disguise back. §7§o({0})
-event.disguise.success=§aDisguise applied!
-event.disguise.fail=§cUnable to apply your disguise. §7§o({0})
-event.undisguise.success=§aDisguise removed.
-event.undisguise.fail=§cUnable to remove your disguise. It will be set back to default on your next login. Sorry!
-event.undisguise.notactive=§cYou do not have an active disguise.
-error.player_offline=§c{0} §fis offline, please try again.
-error.generic=Unknown error
-error.couldnt_get_name_from_mojang=Failed to get username from Mojang
-error.couldnt_get_skin_from_mojang=Failed to get skin from Mojang
-error.couldnt_get_skin_from_cache=Failed to get skin from cache
-error.invalid_username=§cThe specified username is not a valid Minecraft username.
-admin.custom_language_reload_success=§aReloaded custom language file.
-admin.custom_language_reload_fail=§cFailed to reload the custom language file!
+admin:
+  custom_language_reload_fail: "§cFailed to reload the custom language file!"
+  custom_language_reload_success: "§aReloaded custom language file."
+error:
+  couldnt_get_name_from_mojang: "Failed to get username from Mojang"
+  couldnt_get_skin_from_cache: "Failed to get skin from cache"
+  couldnt_get_skin_from_mojang: "Failed to get skin from Mojang"
+  generic: "Unknown error"
+  invalid_username: "§cThe specified username is not a valid Minecraft username."
+  player_offline: "§c{0} §fis offline, please try again."
+event:
+  disguise:
+    fail: "§cUnable to apply your disguise. §7§o({0})"
+    success: "§aDisguise applied!"
+  previous_skin_applied:
+    fail: "§cFailed to apply your previous disguise back. §7§o({0})"
+    success: "§aYour previous active disguise has been applied back."
+  undisguise:
+    fail: "§cUnable to remove your disguise. It will be set back to default on your next login. Sorry!"
+    notactive: "§cYou do not have an active disguise."
+    success: "§aDisguise removed."

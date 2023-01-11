@@ -9,7 +9,8 @@ import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
 import net.artelnatif.nicko.gui.items.main.ExitDoorItem;
-import net.artelnatif.nicko.i18n.LocaleManager;
+import net.artelnatif.nicko.i18n.Locale;
+import net.artelnatif.nicko.i18n.LocaleFileManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
@@ -34,7 +35,7 @@ public class NickoBukkit extends JavaPlugin {
     private NickoConfiguration config;
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
-    private LocaleManager localeManager;
+    private LocaleFileManager localeFileManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -70,7 +71,7 @@ public class NickoBukkit extends JavaPlugin {
             dataStore.getStorage().setError(false);
         }
 
-        if (config.isBungeecordEnabled()) {
+        if (config.isBungeecordSupport()) {
             getServer().getMessenger().unregisterIncomingPluginChannel(this);
             getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         }
@@ -103,9 +104,14 @@ public class NickoBukkit extends JavaPlugin {
             saveDefaultConfig();
             config = new NickoConfiguration(this);
 
-            localeManager = new LocaleManager(this);
-            localeManager.findFallbackLocale();
-            localeManager.installCustomLanguageFile();
+            localeFileManager = new LocaleFileManager();
+            if (config.isCustomLocale()) {
+                if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
+                    getLogger().info("Successfully dumped English locale to lang.yml!");
+                } else {
+                    getLogger().warning("Failed to dump English locale to lang.yml! Custom Locale usage will be disabled.");
+                }
+            }
 
             final PluginCommand command = getCommand("nicko");
             if (command != null) {
@@ -131,7 +137,7 @@ public class NickoBukkit extends JavaPlugin {
 
             final ServerUtils serverUtils = new ServerUtils(this);
             serverUtils.checkSpigotBungeeCordHook();
-            if (config.isBungeecordEnabled()) {
+            if (config.isBungeecordSupport()) {
                 if (serverUtils.checkBungeeCordHook()) {
                     getLogger().info("Enabling BungeeCord support...");
                     getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
@@ -154,8 +160,8 @@ public class NickoBukkit extends JavaPlugin {
 
     public PlayerDataStore getDataStore() { return dataStore; }
 
-    public LocaleManager getLocaleManager() {
-        return localeManager;
+    public LocaleFileManager getLocaleFileManager() {
+        return localeFileManager;
     }
 
     public boolean isUnitTesting() {

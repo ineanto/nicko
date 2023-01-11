@@ -1,6 +1,3 @@
-admin:
-  custom_language_reload_fail: "§cFailed to reload the custom language file!"
-  custom_language_reload_success: "§aReloaded custom language file."
 error:
   couldnt_get_name_from_mojang: "Failed to get username from Mojang"
   couldnt_get_skin_from_cache: "Failed to get skin from cache"

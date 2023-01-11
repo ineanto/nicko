@@ -19,11 +19,6 @@ public record I18NDict(String key) {
         }
     }
 
-    public static class Plugin {
-        public static final I18NDict CUSTOM_LANGUAGE_RELOAD_SUCCESS = new I18NDict("admin.custom_language_reload_success");
-        public static final I18NDict CUSTOM_LANGUAGE_RELOAD_FAIL = new I18NDict("admin.custom_language_reload_fail");
-    }
-
     public static class Error {
         public static final I18NDict PLAYER_OFFLINE = new I18NDict("error.player_offline");
         public static final I18NDict SKIN_FAIL_MOJANG = new I18NDict("error.couldnt_get_skin_from_mojang");

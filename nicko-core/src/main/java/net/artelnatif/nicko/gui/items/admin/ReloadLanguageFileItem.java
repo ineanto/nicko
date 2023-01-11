@@ -14,8 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Properties;
-
 public class ReloadLanguageFileItem extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
@@ -29,8 +27,8 @@ public class ReloadLanguageFileItem extends BaseItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
         if (clickType.isLeftClick() || clickType.isRightClick()) {
             event.getView().close();
-            final Properties properties = NickoBukkit.getInstance().getLocaleManager().reloadCustomLanguageFile();
-            if (properties != null) {
+            final boolean success = NickoBukkit.getInstance().getLocaleFileManager().loadValues();
+            if (success) {
                 player.sendMessage(I18N.translate(player, I18NDict.Plugin.CUSTOM_LANGUAGE_RELOAD_SUCCESS));
             } else {
                 player.sendMessage(I18N.translate(player, I18NDict.Plugin.CUSTOM_LANGUAGE_RELOAD_FAIL));

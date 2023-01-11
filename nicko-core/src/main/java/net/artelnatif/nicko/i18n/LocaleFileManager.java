@@ -14,7 +14,7 @@ public class LocaleFileManager {
     private HashMap<String, String> data = new HashMap<>();
 
     public boolean loadValues() {
-        if (!file.exists()) return false;
+        if (!file.exists()) return true;
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
             data = yaml.load(inputStream);
             return true;
@@ -31,7 +31,7 @@ public class LocaleFileManager {
     public boolean dumpFromLocale(Locale locale) {
         if (locale == Locale.CUSTOM) return true;
         if (file.exists()) return true;
-        final HashMap<String, String> values = yaml.load(this.getClass().getResourceAsStream(locale.getCode() + ".yml"));
+        final HashMap<String, String> values = yaml.load(this.getClass().getClassLoader().getResourceAsStream(locale.getCode() + ".yml"));
         try {
             if (file.createNewFile()) {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {

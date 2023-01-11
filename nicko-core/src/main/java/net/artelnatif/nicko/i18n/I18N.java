@@ -53,7 +53,7 @@ public class I18N {
         if (locale == Locale.CUSTOM) {
             translation = instance.getLocaleFileManager().getFromFile(key.key());
         } else {
-            final HashMap<String, String> values = yaml.load(I18N.class.getResourceAsStream(locale.getCode() + ".yml"));
+            final HashMap<String, String> values = yaml.load(instance.getResource(locale.getCode() + ".yml"));
             translation = values.getOrDefault(key.key(), key.key());
         }
 

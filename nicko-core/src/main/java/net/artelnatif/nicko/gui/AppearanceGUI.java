@@ -5,39 +5,31 @@ import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.items.main.AdminItem;
-import net.artelnatif.nicko.gui.items.main.ResetItem;
-import net.artelnatif.nicko.gui.items.main.SettingsItem;
-import net.artelnatif.nicko.gui.items.main.SkinItem;
+import net.artelnatif.nicko.gui.items.common.BackItem;
+import net.artelnatif.nicko.gui.items.skin.ChangeNameAndSkinItem;
+import net.artelnatif.nicko.gui.items.skin.ChangeNameItem;
+import net.artelnatif.nicko.gui.items.skin.ChangeSkinItem;
 import org.bukkit.entity.Player;
 
-public class MainGUI {
+public class AppearanceGUI {
     private final Player player;
     private final GUI gui;
     private final String[] structureIngredients = new String[]{
             "# # # # # # # # #",
             "# % % % % % % % #",
-            "# % # R S P # % #",
+            "# % # N A S # % #",
             "# % % % % % % % #",
-            "E A # # # # # # #"};
+            "B # # # # # # # #"};
 
-    public MainGUI(Player player) {
-        if (!player.hasPermission("nicko.admin") || !player.isOp()) {
-            structureIngredients[3] = structureIngredients[3].replace("A", "#");
-        }
-
+    public AppearanceGUI(Player player) {
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
                 .setStructure(new Structure(structureIngredients))
-                .addIngredient('R', new ResetItem())
-                .addIngredient('S', new SkinItem())
-                .addIngredient('P', new SettingsItem())
-                .addIngredient('A', new AdminItem())
+                .addIngredient('N', new ChangeNameItem())
+                .addIngredient('A', new ChangeNameAndSkinItem())
+                .addIngredient('S', new ChangeSkinItem())
+                .addIngredient('B', new BackItem(new MainGUI(player).getGUI()))
                 .build();
         this.player = player;
-    }
-
-    public GUI getGUI() {
-        return gui;
     }
 
     public void open() {

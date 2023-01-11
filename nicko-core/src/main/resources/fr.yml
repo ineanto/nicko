@@ -17,5 +17,5 @@ event:
     success: "§aVotre précédent déguisement a été réappliqué."
   undisguise:
     fail: "§cImpossible de retier votre déguisement. Il sera remis par défaut à votre prochaine reconnexion. Désolé !"
-    notactive: "§cVous n'avez pas de déguisement."
+    none: "§cVous n'avez pas de déguisement."
     success: "§aDéguisement retiré."

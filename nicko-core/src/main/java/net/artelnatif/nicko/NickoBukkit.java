@@ -107,9 +107,7 @@ public class NickoBukkit extends JavaPlugin {
             localeFileManager = new LocaleFileManager();
             if (config.isCustomLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
-                    if (localeFileManager.loadValues()) {
-                        getLogger().info("Successfully loaded custom language file.");
-                    }
+                    getLogger().info("Successfully loaded custom language file.");
                 } else {
                     getLogger().warning("Failed to load custom language file!");
                 }

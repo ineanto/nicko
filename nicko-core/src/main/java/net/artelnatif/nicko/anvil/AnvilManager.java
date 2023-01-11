@@ -60,9 +60,9 @@ public class AnvilManager {
                         appearanceManager.setName(response);
                         final ActionResult actionResult = appearanceManager.updatePlayer(false);
                         if (!actionResult.isError()) {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }
@@ -81,9 +81,9 @@ public class AnvilManager {
                         appearanceManager.setSkin(response);
                         final ActionResult actionResult = appearanceManager.updatePlayer(true);
                         if (!actionResult.isError()) {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_SUCCESS));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
                         } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.DISGUISE_FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
+                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
                         }
                         return AnvilGUI.Response.close();
                     }

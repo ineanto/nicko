@@ -17,5 +17,5 @@ event:
     success: "§aYour previous active disguise has been applied back."
   undisguise:
     fail: "§cUnable to remove your disguise. It will be set back to default on your next login. Sorry!"
-    notactive: "§cYou do not have an active disguise."
+    none: "§cYou do not have an active disguise."
     success: "§aDisguise removed."

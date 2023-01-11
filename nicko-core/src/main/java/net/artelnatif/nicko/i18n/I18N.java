@@ -1,12 +1,13 @@
 package net.artelnatif.nicko.i18n;
 
+import com.github.jsixface.YamlConfig;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Optional;
 
 public class I18N {
@@ -51,10 +52,11 @@ public class I18N {
         final Locale locale = getLocale(player);
         String translation;
         if (locale == Locale.CUSTOM) {
-            translation = instance.getLocaleFileManager().getFromFile(key.key());
+            translation = instance.getLocaleFileManager().get(key.key());
         } else {
-            final HashMap<String, String> values = yaml.load(instance.getResource(locale.getCode() + ".yml"));
-            translation = values.getOrDefault(key.key(), key.key());
+            final InputStream resource = instance.getResource(locale.getCode() + ".yml");
+            final YamlConfig yamlConfig = YamlConfig.load(resource);
+            translation = yamlConfig.getString(key.key());
         }
 
         return translation;

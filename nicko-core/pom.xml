@@ -105,7 +105,12 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>3.1.0</version>
         </dependency>
-
+        <!-- YAML Reader -->
+        <dependency>
+            <groupId>com.github.jsixface</groupId>
+            <artifactId>yamlconfig</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -130,16 +135,21 @@
                                 <includes>
                                     <include>net.wesjd:anvilgui</include>
                                     <include>de.studiocode.invui:*</include>
+                                    <include>com.github.jsixface:*</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>net.wesjd.anvilgui</pattern>
-                                    <shadedPattern>net.artelnatif.anvilgui</shadedPattern>
+                                    <shadedPattern>net.artelnatif.libs.anvilgui</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>de.studiocode.invui</pattern>
-                                    <shadedPattern>net.artelnatif.invui</shadedPattern>
+                                    <shadedPattern>net.artelnatif.libs.invui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.github.jsixface</pattern>
+                                    <shadedPattern>net.artelnatif.libs.yaml</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

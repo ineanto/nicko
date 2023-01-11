@@ -21,15 +21,21 @@ public class LanguageCyclingItem {
             getItemProviderForLocale(Locale.CUSTOM),
     };
 
+    private final ItemProvider[] providersNoCustom = new ItemProvider[]{
+            getItemProviderForLocale(Locale.ENGLISH),
+            getItemProviderForLocale(Locale.FRENCH)
+    };
+
     public BaseItem get(Player player) {
-        Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
-            }, localeOrdinal, providers);
+            }, localeOrdinal, instance.getNickoConfig().isCustomLocale() ? providers : providersNoCustom);
         }
 
         return new SimpleItem(ItemProvider.EMPTY);

@@ -1,5 +1,6 @@
 package net.artelnatif.nicko.i18n;
 
+import com.github.jsixface.YamlConfig;
 import net.artelnatif.nicko.NickoBukkit;
 import org.yaml.snakeyaml.Yaml;
 
@@ -11,21 +12,14 @@ public class LocaleFileManager {
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
     private final File file = new File(folder, "lang.yml");
 
-    private HashMap<String, String> data = new HashMap<>();
-
-    public boolean loadValues() {
-        if (!file.exists()) return true;
+    public String get(String key) {
+        if (!file.exists()) return key;
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-            data = yaml.load(inputStream);
-            return true;
+            final YamlConfig yamlConfig = YamlConfig.load(inputStream);
+            return yamlConfig.getString(key);
         } catch (IOException e) {
-            return false;
+            return key;
         }
-    }
-
-    public String getFromFile(String key) {
-        if (!file.exists() || data.isEmpty()) return key;
-        return data.get(key);
     }
 
     public boolean dumpFromLocale(Locale locale) {

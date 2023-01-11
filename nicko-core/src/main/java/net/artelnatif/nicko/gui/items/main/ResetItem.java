@@ -27,15 +27,15 @@ public class ResetItem extends BaseItem {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
 
             if (!appearanceManager.hasData()) {
-                player.sendMessage(I18N.translate(player, I18NDict.Event.UNDISGUISE_NOTACTIVE));
+                player.sendMessage(I18N.translate(player, I18NDict.Event.Undisguise.NONE));
                 event.getView().close();
                 return;
             }
 
             if (!appearanceManager.reset().isError()) {
-                player.sendMessage(I18N.translate(player, I18NDict.Event.UNDISGUISE_SUCCESS));
+                player.sendMessage(I18N.translate(player, I18NDict.Event.Undisguise.SUCCESS));
             } else {
-                player.sendMessage(I18N.translate(player, I18NDict.Event.UNDISGUISE_FAIL));
+                player.sendMessage(I18N.translate(player, I18NDict.Event.Undisguise.FAIL));
             }
         }
     }

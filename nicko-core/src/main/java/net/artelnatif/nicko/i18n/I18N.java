@@ -4,7 +4,6 @@ import com.github.jsixface.YamlConfig;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.entity.Player;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 public class I18N {
     private final static MessageFormat formatter = new MessageFormat("");
-    private static final Yaml yaml = new Yaml();
 
     private static Locale getLocale(Player player) {
         final NickoBukkit instance = NickoBukkit.getInstance();
@@ -56,6 +54,7 @@ public class I18N {
         } else {
             final InputStream resource = instance.getResource(locale.getCode() + ".yml");
             final YamlConfig yamlConfig = YamlConfig.load(resource);
+            // TODO: 1/12/23 French apostrophe is omited?
             translation = yamlConfig.getString(key.key());
         }
 

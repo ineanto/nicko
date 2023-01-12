@@ -54,7 +54,6 @@ public class I18N {
         } else {
             final InputStream resource = instance.getResource(locale.getCode() + ".yml");
             final YamlConfig yamlConfig = YamlConfig.load(resource);
-            // TODO: 1/12/23 French apostrophe is omitted?
             translation = yamlConfig.getString(key.key());
         }
 

@@ -12,19 +12,10 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import java.util.Optional;
+import java.util.*;
 
 public class LanguageCyclingItem {
-    private final ItemProvider[] providers = new ItemProvider[]{
-            getItemProviderForLocale(Locale.ENGLISH),
-            getItemProviderForLocale(Locale.FRENCH),
-            getItemProviderForLocale(Locale.CUSTOM),
-    };
-
-    private final ItemProvider[] providersNoCustom = new ItemProvider[]{
-            getItemProviderForLocale(Locale.ENGLISH),
-            getItemProviderForLocale(Locale.FRENCH)
-    };
+    private final ItemProvider[] providers = getItems();
 
     public BaseItem get(Player player) {
         final NickoBukkit instance = NickoBukkit.getInstance();
@@ -35,16 +26,16 @@ public class LanguageCyclingItem {
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
-            }, localeOrdinal, instance.getNickoConfig().isCustomLocale() ? providers : providersNoCustom);
+            }, localeOrdinal, providers);
         }
 
         return new SimpleItem(ItemProvider.EMPTY);
     }
 
-    private ItemProvider getItemProviderForLocale(Locale locale) {
+    private ItemProvider generateItem(Locale locale, List<Locale> locales) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
         builder.setDisplayName("§6Select your language:");
-        for (Locale value : Locale.values()) {
+        for (Locale value : locales) {
             if (locale != value) {
                 builder.addLoreLines("§7> " + value.getName());
             } else {
@@ -53,5 +44,18 @@ public class LanguageCyclingItem {
         }
         builder.addLoreLines("§7§oCycle through the values by", "§7§oleft and right clicking.");
         return builder;
+    }
+
+    private ItemProvider[] getItems() {
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        final ArrayList<ItemProvider> items = new ArrayList<>();
+
+        final ArrayList<Locale> localesToGenerate = new ArrayList<>();
+        Collections.addAll(localesToGenerate, Locale.values());
+        if (!instance.getNickoConfig().isCustomLocale()) {
+            localesToGenerate.remove(Locale.CUSTOM);
+        }
+        localesToGenerate.forEach(locale -> items.add(generateItem(locale, localesToGenerate)));
+        return items.toArray(new ItemProvider[]{});
     }
 }

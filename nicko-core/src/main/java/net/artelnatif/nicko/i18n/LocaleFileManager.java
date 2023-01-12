@@ -3,12 +3,10 @@ package net.artelnatif.nicko.i18n;
 import com.github.jsixface.YamlConfig;
 import de.studiocode.invui.util.IOUtils;
 import net.artelnatif.nicko.NickoBukkit;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 
 public class LocaleFileManager {
-    private final Yaml yaml = new Yaml();
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
     private final File file = new File(folder, "lang.yml");
 

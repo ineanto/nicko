@@ -1,11 +1,11 @@
 package net.artelnatif.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
+import de.studiocode.invui.util.IOUtils;
 import net.artelnatif.nicko.NickoBukkit;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.util.HashMap;
 
 public class LocaleFileManager {
     private final Yaml yaml = new Yaml();
@@ -25,15 +25,18 @@ public class LocaleFileManager {
     public boolean dumpFromLocale(Locale locale) {
         if (locale == Locale.CUSTOM) return true;
         if (file.exists()) return true;
-        final HashMap<String, String> values = yaml.load(this.getClass().getClassLoader().getResourceAsStream(locale.getCode() + ".yml"));
+        final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(locale.getCode() + ".yml");
         try {
-            if (file.createNewFile()) {
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                    yaml.dump(values, writer);
+            if (folder.mkdirs()) {
+                if (file.createNewFile()) {
+                    try (FileOutputStream outputStream = new FileOutputStream(file)) {
+                        IOUtils.copy(inputStream, outputStream, 8192);
+                    }
                 }
             }
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }

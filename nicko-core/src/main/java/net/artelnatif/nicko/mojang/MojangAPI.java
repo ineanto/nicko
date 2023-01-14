@@ -76,7 +76,7 @@ public class MojangAPI {
                 return getErrorObject();
             }
             case 429 -> {
-                instance.getLogger().warning("Failed to parse request! The connection is throttled.");
+                instance.getLogger().warning("Failed to parse request: The connection is throttled.");
                 return getErrorObject();
             }
             case 200 -> {

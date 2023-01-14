@@ -31,7 +31,7 @@ public class MojangAPI {
     };
     private final LoadingCache<String, Optional<MojangSkin>> cache = CacheBuilder
             .newBuilder()
-            .expireAfterWrite(120, TimeUnit.MINUTES)
+            .expireAfterWrite(8, TimeUnit.HOURS)
             .build(loader);
 
     private final NickoBukkit instance;

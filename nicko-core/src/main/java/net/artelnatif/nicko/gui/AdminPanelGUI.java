@@ -14,17 +14,13 @@ public class AdminPanelGUI {
 
     public AdminPanelGUI(Player player) {
         final Structure structure = new Structure("# # # # # # # # #",
-                "# % % P U # % % #",
+                "# % % X X X % % #",
                 "B # # # # # # # #");
         structure.addIngredient('B', new BackItem(new MainGUI(player).getGUI()));
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
                 .setStructure(structure)
                 .build();
         this.player = player;
-    }
-
-    public GUI getGUI() {
-        return gui;
     }
 
     public void open() {

@@ -3,7 +3,7 @@ package net.artelnatif.nicko.gui.items.main;
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
-import net.artelnatif.nicko.gui.SettingsGUI;
+import net.artelnatif.nicko.gui.sub.SettingsGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

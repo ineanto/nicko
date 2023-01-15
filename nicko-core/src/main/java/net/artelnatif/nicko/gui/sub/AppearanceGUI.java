@@ -15,13 +15,12 @@ import org.bukkit.entity.Player;
 public class AppearanceGUI {
     private final Player player;
     private final GUI gui;
-    private final String structure = """
-            # # # # # # # # #
-            # % % % % % % % #
-            # % # N A S # % #
-            # % % % % % % % #
-            B # # # # # # # #
-            """;
+    private final String[] structure = new String[]{
+            "# # # # # # # # #",
+            "# % % % % % % % #",
+            "# % # N A S # % #",
+            "# % % % % % % % #",
+            "B # # # # # # # #"};
 
     public AppearanceGUI(Player player) {
         this.gui = new GUIBuilder<>(GUIType.NORMAL)

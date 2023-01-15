@@ -14,16 +14,15 @@ import org.bukkit.entity.Player;
 public class SettingsGUI {
     private final Player player;
     private final GUI gui;
-    private final String structure = """
-            # # # # # # # # #
-            # % % L # T % % #
-            B # # # # # # # #
-            """;
+    private final String[] structure = new String[]{
+            "# # # # # # # # #",
+            "# % % L # T % % #",
+            "B # # # # # # # #"
+    };
 
     public SettingsGUI(Player player) {
         if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordSupport()) {
-            final String[] rows = structure.split("\n");
-            rows[1] = rows[1].replace("T", "#");
+            structure[1] = structure[1].replace("T", "#");
         }
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)

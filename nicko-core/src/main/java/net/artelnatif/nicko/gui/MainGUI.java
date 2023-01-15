@@ -14,18 +14,16 @@ import org.bukkit.entity.Player;
 public class MainGUI {
     private final Player player;
     private final GUI gui;
-    private final String structure = """
-            # # # # # # # # #
-            # % % % % % % % #
-            # % # R S P # % #
-            # % % % A % % % #
-            E # # # # # # # #
-            """;
+    private final String[] structure = new String[]{
+            "# # # # # # # # #",
+            "# % % % A % % % #",
+            "# % # R S P # % #",
+            "# % % % % % % % #",
+            "E # # # # # # # #"};
 
     public MainGUI(Player player) {
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {
-            final String[] rows = structure.split("\n");
-            rows[3] = rows[3].replace("A", "#");
+            structure[3] = structure[3].replace("A", "#");
         }
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)

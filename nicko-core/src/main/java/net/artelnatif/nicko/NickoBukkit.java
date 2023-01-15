@@ -118,8 +118,8 @@ public class NickoBukkit extends JavaPlugin {
                 command.setExecutor(new NickoCommand());
             }
 
-            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)));
-            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE)));
+            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
+            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('E', new ExitDoorItem());
 
             getLogger().info("Loading persistence...");

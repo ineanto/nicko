@@ -88,11 +88,12 @@ public class v1_18_R2 implements Internals {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
+        final String profileName = profile.getName() == null ? player.getName() : profile.getName();
         Optional<MojangSkin> skin;
 
         final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
-        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
+        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profileName);
 
         if (skinChange || changeOnlyName) {
             try {
@@ -119,7 +120,7 @@ public class v1_18_R2 implements Internals {
         add.b().clear();
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
                 player.getPing(),
-                EnumGamemode.a(player.getGameMode().ordinal()), IChatBaseComponent.a(profile.getName())));
+                EnumGamemode.a(player.getGameMode().ordinal()), IChatBaseComponent.a(profileName)));
         entityPlayer.b.a(remove);
         entityPlayer.b.a(add);
 

@@ -90,6 +90,7 @@ public class v1_19_R1 implements Internals {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
+        final String profileName = profile.getName() == null ? player.getName() : profile.getName();
         Optional<MojangSkin> skin;
 
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
@@ -97,7 +98,7 @@ public class v1_19_R1 implements Internals {
 
         // "It's a Surprise Tool That Will Help Us Later!"
         final ProfilePublicKey.a key = remove.b().get(0).e();
-        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profile.getName());
+        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profileName);
 
         if (skinChange || changeOnlyName) {
             try {
@@ -126,7 +127,7 @@ public class v1_19_R1 implements Internals {
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
                 player.getPing(),
                 EnumGamemode.a(player.getGameMode().ordinal()),
-                IChatBaseComponent.a(profile.getName()),
+                IChatBaseComponent.a(profileName),
                 key)); // f mojang
 
         entityPlayer.b.a(remove);

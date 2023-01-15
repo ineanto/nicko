@@ -35,8 +35,8 @@ public class v1_19_R1 implements Internals {
         final EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         final ResourceKey<World> levelResourceKey = entityPlayer.x().ab();
         final CraftWorld world = entityPlayer.s.getWorld();
-        // last boolean is: "has death location" attribute, if true, the optional contains the death dimension and positon.
-        // with the boolean being false, we don't need to provide a value and thus we return an empty optional.
+        // last boolean is: "has death location" attribute, if true, the optional contains the death dimension and position.
+        // with the boolean being false, we don't need to provide a value, and thus we return an empty optional.
         final PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(entityPlayer.x().Z(),
                 levelResourceKey, world.getSeed(),
                 entityPlayer.d.b(), entityPlayer.d.c(),

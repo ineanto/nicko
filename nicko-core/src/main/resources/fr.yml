@@ -6,6 +6,8 @@ error:
   invalid_username: "§cLe pseudo spécifié n''est pas un pseudo Minecraft valide."
   player_offline: "§c{0} §fest hors-ligne, veuillez réessayer."
 event:
+  admin:
+    cache_clear: "§aCache des skins nettoyé."
   disguise:
     fail: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
     success: "§aDéguisement appliqué !"

@@ -2,6 +2,10 @@ package net.artelnatif.nicko.i18n;
 
 public record I18NDict(String key) {
     public static class Event {
+        public static class Admin {
+            public static final I18NDict CACHE_CLEAN = new I18NDict("event.admin.cache_clear");
+        }
+
         public static class Disguise {
             public static final I18NDict SUCCESS = new I18NDict("event.disguise.success");
             public static final I18NDict FAIL = new I18NDict("event.disguise.fail");

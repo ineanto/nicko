@@ -6,6 +6,8 @@ error:
   invalid_username: "§cThe specified username is not a valid Minecraft username."
   player_offline: "§c{0} §fis offline, please try again."
 event:
+  admin:
+    cache_clear: "§aSkin cache cleaned."
   disguise:
     fail: "§cUnable to apply your disguise. §7§o({0})"
     success: "§aDisguise applied!"

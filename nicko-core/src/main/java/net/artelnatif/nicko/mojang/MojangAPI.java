@@ -111,4 +111,8 @@ public class MojangAPI {
     private boolean hasNoError(JsonObject object) {
         return object.get("error") == null;
     }
+
+    public LoadingCache<String, Optional<MojangSkin>> getCache() {
+        return cache;
+    }
 }

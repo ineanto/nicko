@@ -5,7 +5,6 @@ import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangUtils;
-import net.artelnatif.nicko.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -22,7 +21,7 @@ public class NickoCheckSubCmd {
             return;
         }
 
-        if (PlayerUtils.isPlayerOffline(target)) {
+        if (target == null) {
             appearanceManager = AppearanceManager.get(targetName);
         } else {
             appearanceManager = AppearanceManager.get(target);

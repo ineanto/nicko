@@ -3,7 +3,6 @@ package net.artelnatif.nicko.command.sub;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.mojang.MojangUtils;
-import net.artelnatif.nicko.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -28,7 +27,7 @@ public class NickoDebugSubCmd {
 
             name = args[2];
             skin = args[3];
-            if (PlayerUtils.isPlayerOffline(target)) {
+            if (target == null) {
                 sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cSpecified player is offline.");
                 return;
             }

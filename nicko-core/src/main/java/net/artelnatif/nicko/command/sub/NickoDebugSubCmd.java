@@ -17,16 +17,16 @@ public class NickoDebugSubCmd {
             name = args[1];
             skin = args[2];
         } else {
-            final String playerName = args[1];
-            target = Bukkit.getPlayer(playerName);
-
             if (args.length < 3) {
                 sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cMissing argument.");
                 return;
             }
 
+            final String playerName = args[1];
             name = args[2];
             skin = args[3];
+
+            target = Bukkit.getPlayer(playerName);
             if (target == null) {
                 sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cSpecified player is offline.");
                 return;

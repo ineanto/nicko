@@ -17,7 +17,7 @@ import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.storage.PlayerDataStore;
-import net.artelnatif.nicko.utils.ServerUtils;
+import net.artelnatif.nicko.bungee.BungeeCordSupport;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -135,10 +135,10 @@ public class NickoBukkit extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
-            final ServerUtils serverUtils = new ServerUtils(this);
-            serverUtils.checkSpigotBungeeCordHook();
+            final BungeeCordSupport support = new BungeeCordSupport(this);
+            support.warnNickoNotHookedToBungeeCord();
             if (config.isBungeecordSupport()) {
-                if (serverUtils.checkBungeeCordHook()) {
+                if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
                     getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
                 }

@@ -1,17 +1,17 @@
-package net.artelnatif.nicko.utils;
+package net.artelnatif.nicko.bungee;
 
 import net.artelnatif.nicko.NickoBukkit;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class ServerUtils {
+public class BungeeCordSupport {
     private final NickoBukkit instance;
 
-    public ServerUtils(NickoBukkit instance) {
+    public BungeeCordSupport(NickoBukkit instance) {
         this.instance = instance;
     }
 
-    public void checkSpigotBungeeCordHook() {
+    public void warnNickoNotHookedToBungeeCord() {
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
         if (config.getConfigurationSection("settings").getBoolean("bungeecord") && instance.getNickoConfig().isBungeecordSupport()) {
@@ -22,7 +22,7 @@ public class ServerUtils {
         }
     }
 
-    public boolean checkBungeeCordHook() {
+    public boolean stopIfBungeeCordIsNotEnabled() {
         final Server server = instance.getServer();
         final YamlConfiguration config = server.spigot().getConfig();
         if (!config.getConfigurationSection("settings").getBoolean("bungeecord")) {

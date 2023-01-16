@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.invalidator;
+package net.artelnatif.nicko.gui.items.admin.invalidator;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
@@ -12,16 +12,17 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class InvalidateAllItem extends BaseItem {
+public class SkinCacheInvalidateAllItem extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.BARRIER);
-        builder.setDisplayName("§fInvalidate §6all §fthe skin cache");
+        builder.setDisplayName("§6Invalidate the full Skin Cache");
         builder.addLoreLines(
                 "§c§oNOT RECOMMENDED",
                 "§7Invalidate every skin entry present in the cache,",
-                "§7without removing active player disguises.",
-                "§7Skins will have to be fetched again if asked by a disguise.");
+                "§7without resetting player disguises.",
+                "§7Could be useful if a skin has been updated",
+                "§7recently and the cache is now outdated.");
         return builder;
     }
 

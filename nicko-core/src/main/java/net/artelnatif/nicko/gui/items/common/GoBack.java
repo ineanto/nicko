@@ -11,10 +11,10 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class BackItem extends BaseItem {
+public class GoBack extends BaseItem {
     private final GUI gui;
 
-    public BackItem(GUI gui) {
+    public GoBack(GUI gui) {
         this.gui = gui;
     }
 

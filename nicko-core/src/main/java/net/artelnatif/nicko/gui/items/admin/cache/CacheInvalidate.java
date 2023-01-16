@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.admin.invalidator;
+package net.artelnatif.nicko.gui.items.admin.cache;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
@@ -12,10 +12,10 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class SkinCacheInvalidateAllItem extends BaseItem {
+public class CacheInvalidate extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
-        final ItemBuilder builder = new ItemBuilder(Material.BARRIER);
+        final ItemBuilder builder = new ItemBuilder(Material.TNT);
         builder.setDisplayName("§6Invalidate the full Skin Cache");
         builder.addLoreLines(
                 "§c§oNOT RECOMMENDED",

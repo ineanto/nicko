@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
-public class BungeeCordCyclingItem {
+public class BungeeCordCycling {
     private final ItemProvider[] providers = new ItemProvider[]{
             getItemProviderForValue(true),
             getItemProviderForValue(false)

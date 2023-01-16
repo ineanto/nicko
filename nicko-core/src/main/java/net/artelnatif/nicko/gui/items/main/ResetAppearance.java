@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ResetItem extends BaseItem {
+public class ResetAppearance extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.TNT);

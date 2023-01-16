@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.admin.invalidator;
+package net.artelnatif.nicko.gui.items.admin.cache;
 
 import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class SkinCacheStatisticsItem extends BaseItem {
+public class CacheOverview extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);

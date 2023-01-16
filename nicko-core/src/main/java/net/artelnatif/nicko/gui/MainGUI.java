@@ -3,35 +3,35 @@ package net.artelnatif.nicko.gui;
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.items.main.AdminItem;
-import net.artelnatif.nicko.gui.items.main.ResetItem;
-import net.artelnatif.nicko.gui.items.main.SettingsItem;
-import net.artelnatif.nicko.gui.items.main.SkinItem;
+import net.artelnatif.nicko.gui.items.main.AdminSubGUI;
+import net.artelnatif.nicko.gui.items.main.ResetAppearance;
+import net.artelnatif.nicko.gui.items.main.SettingsSubGUI;
+import net.artelnatif.nicko.gui.items.main.AppearanceManagerSubGUI;
 import org.bukkit.entity.Player;
 
 public class MainGUI {
     private final Player player;
     private final GUI gui;
-    private final String[] structure = new String[]{
-            "# # # # # # # # #",
-            "# % % % A % % % #",
-            "# % # R S P # % #",
-            "# % % % % % % % #",
-            "E # # # # # # # #"};
 
     public MainGUI(Player player) {
+        final String[] dynamicStructure = new String[]{
+                "# # # # # # # # #",
+                "# % % % A % % % #",
+                "# % # R S P # % #",
+                "# % % % % % % % #",
+                "E # # # # # # # #"};
+
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {
-            structure[3] = structure[3].replace("A", "#");
+            dynamicStructure[3] = dynamicStructure[3].replace("A", "#");
         }
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
-                .setStructure(new Structure(structure))
-                .addIngredient('R', new ResetItem())
-                .addIngredient('S', new SkinItem())
-                .addIngredient('P', new SettingsItem())
-                .addIngredient('A', new AdminItem())
+                .setStructure(dynamicStructure)
+                .addIngredient('R', new ResetAppearance())
+                .addIngredient('S', new AppearanceManagerSubGUI())
+                .addIngredient('P', new SettingsSubGUI())
+                .addIngredient('A', new AdminSubGUI())
                 .build();
         this.player = player;
     }

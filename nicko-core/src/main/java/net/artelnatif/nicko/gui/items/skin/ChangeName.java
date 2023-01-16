@@ -10,12 +10,12 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ChangeNameAndSkinItem extends BaseItem {
+public class ChangeName extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
-        final ItemBuilder builder = new ItemBuilder(Material.ENDER_PEARL);
-        builder.setDisplayName("§6Skin §fand §6name §fchange");
-        builder.addLoreLines("§7Change both your skin and name.");
+        final ItemBuilder builder = new ItemBuilder(Material.NAME_TAG);
+        builder.setDisplayName("§6Name §fchange");
+        builder.addLoreLines("§7Only change your name.");
         return builder;
     }
 
@@ -24,7 +24,7 @@ public class ChangeNameAndSkinItem extends BaseItem {
         if (clickType.isLeftClick() || clickType.isRightClick()) {
             event.getView().close();
             final AnvilManager manager = new AnvilManager(player);
-            manager.openNameThenSkinAnvil();
+            manager.openNameAnvil();
         }
     }
 }

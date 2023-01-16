@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class LanguageCyclingItem {
+public class LanguageCycling {
     private final ItemProvider[] providers = getItems();
 
     public BaseItem get(Player player) {

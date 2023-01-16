@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.sub;
+package net.artelnatif.nicko.gui;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
@@ -6,30 +6,31 @@ import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.gui.MainGUI;
-import net.artelnatif.nicko.gui.items.common.BackItem;
-import net.artelnatif.nicko.gui.items.settings.BungeeCordCyclingItem;
-import net.artelnatif.nicko.gui.items.settings.LanguageCyclingItem;
+import net.artelnatif.nicko.gui.items.common.GoBack;
+import net.artelnatif.nicko.gui.items.settings.BungeeCordCycling;
+import net.artelnatif.nicko.gui.items.settings.LanguageCycling;
 import org.bukkit.entity.Player;
 
 public class SettingsGUI {
     private final Player player;
     private final GUI gui;
-    private final String[] structure = new String[]{
-            "# # # # # # # # #",
-            "# % % L # T % % #",
-            "B # # # # # # # #"
-    };
 
     public SettingsGUI(Player player) {
+        final String[] dynamicStructure = new String[]{
+                "# # # # # # # # #",
+                "# % % L # T % % #",
+                "B # # # # # # # #"
+        };
+
         if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordSupport()) {
-            structure[1] = structure[1].replace("T", "#");
+            dynamicStructure[1] = dynamicStructure[1].replace("T", "#");
         }
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
-                .setStructure(structure)
-                .addIngredient('B', new BackItem(new MainGUI(player).getGUI()))
-                .addIngredient('L', new LanguageCyclingItem().get(player))
-                .addIngredient('T', new BungeeCordCyclingItem().get(player))
+                .setStructure(dynamicStructure)
+                .addIngredient('B', new GoBack(new MainGUI(player).getGUI()))
+                .addIngredient('L', new LanguageCycling().get(player))
+                .addIngredient('T', new BungeeCordCycling().get(player))
                 .build();
         this.player = player;
     }

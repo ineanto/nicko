@@ -8,7 +8,7 @@ import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
-import net.artelnatif.nicko.gui.items.main.ExitDoorItem;
+import net.artelnatif.nicko.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.i18n.LocaleFileManager;
 import net.artelnatif.nicko.impl.Internals;
@@ -120,7 +120,7 @@ public class NickoBukkit extends JavaPlugin {
 
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" ")));
-            Structure.addGlobalIngredient('E', new ExitDoorItem());
+            Structure.addGlobalIngredient('E', new ExitGUI());
 
             getLogger().info("Loading persistence...");
             dataStore = new PlayerDataStore(this);

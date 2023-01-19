@@ -48,7 +48,7 @@ public class CacheDetailledGUI {
                         "# x x x x x x D #",
                         "B # # # # # # # %"
                 )
-                .addIngredient('x', Markers.ITEM_LIST_SLOT_VERTICAL)
+                .addIngredient('x', Markers.ITEM_LIST_SLOT_HORIZONTAL)
                 .addIngredient('U', new ScrollUp())
                 .addIngredient('D', new ScrollDown())
                 .addIngredient('B', new GoBack(new CacheManagementGUI(player).getGUI()))

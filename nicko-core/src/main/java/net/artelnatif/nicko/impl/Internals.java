@@ -9,5 +9,5 @@ public interface Internals {
 
     void updateOthers(Player player);
 
-    ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange);
+    ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange, boolean reset);
 }

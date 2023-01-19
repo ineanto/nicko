@@ -46,6 +46,10 @@ public class MojangAPI {
         return cache.get(uuid);
     }
 
+    public Optional<MojangSkin> getSkinWithoutCaching(String uuid) throws IOException {
+        return getSkinFromMojang(uuid);
+    }
+
     public Optional<String> getUUID(String name) throws IOException {
         final String parametrizedUrl = URL_NAME.replace("{name}", name);
         final JsonObject object = getRequestToUrl(parametrizedUrl);

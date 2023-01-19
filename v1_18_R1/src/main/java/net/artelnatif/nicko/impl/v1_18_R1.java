@@ -7,6 +7,7 @@ import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.game.*;
@@ -84,7 +85,7 @@ public class v1_18_R1 implements Internals {
     }
 
     @Override
-    public ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange) {
+    public ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange, boolean reset) {
         final CraftPlayer craftPlayer = (CraftPlayer) player;
         final EntityPlayer entityPlayer = craftPlayer.getHandle();
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
@@ -97,9 +98,10 @@ public class v1_18_R1 implements Internals {
 
         if (skinChange || changeOnlyName) {
             try {
-                final Optional<String> uuid = NickoBukkit.getInstance().getMojangAPI().getUUID(profile.getSkin());
+                final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
+                final Optional<String> uuid = mojang.getUUID(profile.getSkin());
                 if (uuid.isPresent()) {
-                    skin = NickoBukkit.getInstance().getMojangAPI().getSkin(uuid.get());
+                    skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
                     if (skin.isPresent()) {
                         final PropertyMap properties = gameProfile.getProperties();
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));

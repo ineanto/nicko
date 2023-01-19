@@ -69,13 +69,17 @@ public class AppearanceManager {
         final String defaultName = instance.getDataStore().getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
-        final ActionResult actionResult = updatePlayer(true);
+        final ActionResult actionResult = resetPlayer();
         this.profile.setSkin(null);
         this.profile.setName(null);
         return actionResult;
     }
 
+    public ActionResult resetPlayer() {
+        return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, true, true);
+    }
+
     public ActionResult updatePlayer(boolean skinChange) {
-        return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange);
+        return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange, false);
     }
 }

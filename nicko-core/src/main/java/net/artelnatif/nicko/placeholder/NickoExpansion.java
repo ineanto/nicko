@@ -39,6 +39,7 @@ public class NickoExpansion extends PlaceholderExpansion {
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
+        if(player == null) return null;
         Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();

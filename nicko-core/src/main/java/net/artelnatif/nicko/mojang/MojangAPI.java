@@ -29,6 +29,7 @@ public class MojangAPI {
             return getSkinFromMojang(uuid);
         }
     };
+
     private final LoadingCache<String, Optional<MojangSkin>> cache = CacheBuilder
             .newBuilder()
             .recordStats()

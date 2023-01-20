@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 public class CacheDetailed extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
-        final ItemBuilder builder = new ItemBuilder(Material.ARROW);
+        final ItemBuilder builder = new ItemBuilder(Material.PAPER);
         builder.setDisplayName("§6Invalidate specific skin...");
-        builder.addLoreLines("§7PLACEHOLDER REPLACE ME");
+        builder.addLoreLines("§7Select a specific skin to invalidate.");
         return builder;
     }
 

@@ -8,11 +8,9 @@ import de.studiocode.invui.item.impl.BaseItem;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -23,14 +21,11 @@ public class CacheOverview extends BaseItem {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
         final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getMojangAPI().getCache();
         final CacheStats stats = cache.stats();
-        builder.addEnchantment(Enchantment.DAMAGE_ALL, 1, false);
-        builder.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        builder.setDisplayName("§6Skin Cache overview:");
+        builder.setDisplayName("§6Skin cache §foverview:");
         builder.addLoreLines(
-                "§d§oCache is cleared every 24 hours.",
-                "§6Average Load Penalty: §d" + Math.round(stats.averageLoadPenalty()),
-                "§6Request Count: §d" + stats.requestCount(),
-                "§6Skin Cached: §d" + Math.round(cache.size()),
+                "Request Count: §2" + stats.requestCount(),
+                "Skin Cached: §2" + Math.round(cache.size()),
+                "§7§oCache is cleared every 24 hours.",
                 "§7§o(Click to refresh)");
         return builder;
     }

@@ -5,10 +5,10 @@ import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.gui.MainGUI;
 import net.artelnatif.nicko.gui.items.common.GoBack;
 import net.artelnatif.nicko.gui.items.settings.BungeeCordCycling;
 import net.artelnatif.nicko.gui.items.settings.LanguageCycling;
+import net.artelnatif.nicko.gui.items.settings.OptionUnavailable;
 import org.bukkit.entity.Player;
 
 public class SettingsGUI {
@@ -18,12 +18,12 @@ public class SettingsGUI {
     public SettingsGUI(Player player) {
         final String[] dynamicStructure = new String[]{
                 "# # # # # # # # #",
-                "# % % L # T % % #",
+                "# % % L U T % % #",
                 "B # # # # # # # #"
         };
 
         if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordSupport()) {
-            dynamicStructure[1] = dynamicStructure[1].replace("T", "#");
+            dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
         }
 
         this.gui = new GUIBuilder<>(GUIType.NORMAL)
@@ -31,6 +31,7 @@ public class SettingsGUI {
                 .addIngredient('B', new GoBack(new MainGUI(player).getGUI()))
                 .addIngredient('L', new LanguageCycling().get(player))
                 .addIngredient('T', new BungeeCordCycling().get(player))
+                .addIngredient('U', new OptionUnavailable())
                 .build();
         this.player = player;
     }

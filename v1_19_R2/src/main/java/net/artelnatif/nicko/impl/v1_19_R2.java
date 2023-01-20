@@ -86,7 +86,8 @@ public class v1_19_R2 implements Internals {
     @Override
     public ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange, boolean reset) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
-        final String profileName = profile.getName() == null ? player.getName() : profile.getName();
+        // TODO: 1/20/23 Unable to update the GameProfile name.
+        //final String profileName = profile.getName() == null ? player.getName() : profile.getName();
         Optional<MojangSkin> skin;
 
         final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
@@ -95,7 +96,6 @@ public class v1_19_R2 implements Internals {
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
         // TODO: 1/20/23 Sets Gamemode to Survival but keeps the flying? Visual effect only?
         final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(serverPlayer));
-
 
         if (skinChange || changeOnlyName) {
             try {

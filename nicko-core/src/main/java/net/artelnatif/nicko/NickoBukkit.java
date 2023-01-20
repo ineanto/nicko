@@ -90,6 +90,11 @@ public class NickoBukkit extends JavaPlugin {
     }
 
     public void onPluginStartup() {
+        getLogger().info("Loading configuration...");
+        saveDefaultConfig();
+        config = new NickoConfiguration(this);
+        dataStore = new PlayerDataStore(this);
+
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
             getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
@@ -97,12 +102,14 @@ public class NickoBukkit extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
         }
 
-        if (getServer().getPluginManager().isPluginEnabled(this)) {
-            mojangAPI = new MojangAPI(this);
+        if (getServer().getPluginManager().isPluginEnabled(this) && !dataStore.getStorage().isError()) {
+            getLogger().info("Loading persistence...");
+            if (!dataStore.getStorage().getProvider().init()) {
+                dataStore.getStorage().setError(true);
+                getLogger().warning("Failed to open persistence, data will NOT be saved!");
+            }
 
-            getLogger().info("Loading configuration...");
-            saveDefaultConfig();
-            config = new NickoConfiguration(this);
+            mojangAPI = new MojangAPI(this);
 
             localeFileManager = new LocaleFileManager();
             if (config.isCustomLocale()) {
@@ -121,14 +128,6 @@ public class NickoBukkit extends JavaPlugin {
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('E', new ExitGUI());
-
-            getLogger().info("Loading persistence...");
-            dataStore = new PlayerDataStore(this);
-
-            if (!dataStore.getStorage().getProvider().init()) {
-                dataStore.getStorage().setError(true);
-                getLogger().warning("Failed to open persistence, data will NOT be saved!");
-            }
 
             new PlaceHolderHook(this).hook();
 

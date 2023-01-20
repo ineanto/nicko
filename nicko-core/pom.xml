@@ -71,7 +71,7 @@
         <dependency>
             <groupId>de.studiocode.invui</groupId>
             <artifactId>InvUI</artifactId>
-            <version>0.8.2</version>
+            <version>0.10.2</version>
         </dependency>
         <!-- AnvilGUI -->
         <dependency>

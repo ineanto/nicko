@@ -5,7 +5,6 @@ import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.gui.structure.Markers;
 import de.studiocode.invui.item.Item;
-import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.gui.admin.CacheManagementGUI;
@@ -33,8 +32,6 @@ public class CacheDetailledGUI {
                 .map(Map.Entry::getKey)
                 .toList();
 
-        System.out.println("loadedSkins.toString() = " + loadedSkins);
-
         final List<Item> items = loadedSkins.stream()
                 .map(SkinPlaceholder::new)
                 .collect(Collectors.toList());
@@ -52,7 +49,6 @@ public class CacheDetailledGUI {
                 .addIngredient('U', new ScrollUp())
                 .addIngredient('D', new ScrollDown())
                 .addIngredient('B', new GoBack(new CacheManagementGUI(player).getGUI()))
-                .setBackground(ItemProvider.EMPTY)
                 .setItems(items)
                 .build();
         this.player = player;

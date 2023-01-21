@@ -94,12 +94,9 @@ public class v1_19_R2 implements Internals {
         Optional<MojangSkin> skin;
 
         final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
-        final GameProfile gameProfile = serverPlayer.getGameProfile();
-        final GameProfile newGameProfile = new GameProfile(player.getUniqueId(), profileName);
+        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profileName);
 
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
-        // TODO: 1/20/23 Sets Gamemode to Survival but keeps the flying? Visual effect only?
-        //final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(serverPlayer));
 
         if (skinChange || changeOnlyName) {
             try {
@@ -108,7 +105,7 @@ public class v1_19_R2 implements Internals {
                 if (uuid.isPresent()) {
                     skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
                     if (skin.isPresent()) {
-                        final PropertyMap properties = newGameProfile.getProperties();
+                        final PropertyMap properties = gameProfile.getProperties();
                         properties.removeAll("textures");
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
@@ -137,7 +134,7 @@ public class v1_19_R2 implements Internals {
             field.setAccessible(true);
             field.set(init, List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
                     player.getUniqueId(),
-                    newGameProfile,
+                    gameProfile,
                     true,
                     serverPlayer.latency,
                     serverPlayer.gameMode.getGameModeForPlayer(),
@@ -148,15 +145,10 @@ public class v1_19_R2 implements Internals {
             throw new RuntimeException(e);
         }
 
-        System.out.println("======= AFTER ");
-        System.out.println("init.entries().toString() = " + init.entries().toString());
-
-        serverPlayer.connection.send(remove);
-        serverPlayer.connection.send(init);
         Bukkit.getOnlinePlayers().forEach(online -> {
-            ServerPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
-            onlineEntityPlayer.connection.send(remove);
-            onlineEntityPlayer.connection.send(init);
+            final ServerPlayer onlinePlayer = ((CraftPlayer) online).getHandle();
+            onlinePlayer.connection.send(remove);
+            onlinePlayer.connection.send(init);
         });
         updateOthers(player);
         return new ActionResult();

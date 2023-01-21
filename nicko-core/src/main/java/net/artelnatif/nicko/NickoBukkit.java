@@ -1,7 +1,5 @@
 package net.artelnatif.nicko;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
@@ -38,7 +36,6 @@ public class NickoBukkit extends JavaPlugin {
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
     private LocaleFileManager localeFileManager;
-    private ProtocolManager protocolManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -97,7 +94,6 @@ public class NickoBukkit extends JavaPlugin {
         saveDefaultConfig();
         config = new NickoConfiguration(this);
         dataStore = new PlayerDataStore(this);
-        protocolManager = ProtocolLibrary.getProtocolManager();
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
@@ -165,10 +161,6 @@ public class NickoBukkit extends JavaPlugin {
 
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;
-    }
-
-    public ProtocolManager getProtocolManager() {
-        return protocolManager;
     }
 
     public boolean isUnitTesting() {

@@ -1,8 +1,11 @@
 package net.artelnatif.nicko;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
+import net.artelnatif.nicko.bungee.BungeeCordSupport;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.NickoConfiguration;
@@ -17,7 +20,6 @@ import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.storage.PlayerDataStore;
-import net.artelnatif.nicko.bungee.BungeeCordSupport;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -36,6 +38,7 @@ public class NickoBukkit extends JavaPlugin {
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
     private LocaleFileManager localeFileManager;
+    private ProtocolManager protocolManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -94,6 +97,7 @@ public class NickoBukkit extends JavaPlugin {
         saveDefaultConfig();
         config = new NickoConfiguration(this);
         dataStore = new PlayerDataStore(this);
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
@@ -161,6 +165,10 @@ public class NickoBukkit extends JavaPlugin {
 
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;
+    }
+
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 
     public boolean isUnitTesting() {

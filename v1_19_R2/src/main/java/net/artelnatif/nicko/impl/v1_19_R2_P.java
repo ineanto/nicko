@@ -1,15 +1,19 @@
 package net.artelnatif.nicko.impl;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.*;
+import com.google.common.collect.Multimap;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
-import net.minecraft.network.protocol.game.*;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
+import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,11 +28,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-public class v1_19_R2 implements Internals {
+public class v1_19_R2_P implements InternalsProtocolLib {
     @Override
     public void updateSelf(Player player) {
         final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
@@ -89,14 +94,7 @@ public class v1_19_R2 implements Internals {
         final String profileName = profile.getName() == null ? player.getName() : profile.getName();
         Optional<MojangSkin> skin;
 
-        final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
-        final GameProfile gameProfile = serverPlayer.getGameProfile();
-        final GameProfile newGameProfile = new GameProfile(player.getUniqueId(), profileName);
-
-        final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
-        // TODO: 1/20/23 Sets Gamemode to Survival but keeps the flying? Visual effect only?
-        final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(serverPlayer));
-
+        final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(profileName);
         if (skinChange || changeOnlyName) {
             try {
                 final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
@@ -104,9 +102,9 @@ public class v1_19_R2 implements Internals {
                 if (uuid.isPresent()) {
                     skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
                     if (skin.isPresent()) {
-                        final PropertyMap properties = newGameProfile.getProperties();
+                        final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
                         properties.removeAll("textures");
-                        properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
+                        properties.put("textures", new WrappedSignedProperty("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
                         return new ActionResult(I18NDict.Error.SKIN_FAIL_MOJANG);
@@ -121,36 +119,27 @@ public class v1_19_R2 implements Internals {
             }
         }
 
-        /*
-        Tried this solution, doesn't work either:
+        // Letting ProtocolLib handle the reflection here.
+        final PacketContainer remove = getProtocolLib().createPacket(PacketType.Play.Server.PLAYER_INFO_REMOVE);
+        remove.getUUIDLists().write(0, Collections.singletonList(player.getUniqueId()));
 
-         final FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-         final EnumSet<ClientboundPlayerInfoUpdatePacket.Action> actions = EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER);
-        byteBuf.writeEnumSet(actions, ClientboundPlayerInfoUpdatePacket.Action.class);
-        byteBuf.writeCollection(List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
-                player.getUniqueId(),
-                newGameProfile,
-                true,
-                serverPlayer.latency,
-                serverPlayer.gameMode.getGameModeForPlayer(),
-                Component.literal(profileName),
-                serverPlayer.getChatSession().asData()
-        )), (bb, entry) -> {
-            bb.writeUUID(entry.profileId());
-            Iterator<ClientboundPlayerInfoUpdatePacket.Action> iterator = actions.iterator();
+        final EnumSet<EnumWrappers.PlayerInfoAction> actions = EnumSet.of(
+                EnumWrappers.PlayerInfoAction.ADD_PLAYER,
+                EnumWrappers.PlayerInfoAction.UPDATE_LATENCY,
+                EnumWrappers.PlayerInfoAction.UPDATE_LISTED);
+        final PacketContainer add = getProtocolLib().createPacket(PacketType.Play.Server.PLAYER_INFO);
 
-            while (iterator.hasNext()) {
-                bb.writeUtf(entry.profile().getName(), 16);
-                bb.writeGameProfileProperties(newGameProfile.getProperties());
-            }
-        });*/
+        add.getPlayerInfoActions().write(0, actions);
+        add.getPlayerInfoDataLists().write(1, Collections.singletonList(new PlayerInfoData(
+                gameProfile,
+                player.getPing(),
+                EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()),
+                WrappedChatComponent.fromText(profileName)
+        )));
 
-        serverPlayer.connection.send(remove);
-        serverPlayer.connection.send(init);
         Bukkit.getOnlinePlayers().forEach(online -> {
-            ServerPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
-            onlineEntityPlayer.connection.send(remove);
-            onlineEntityPlayer.connection.send(init);
+            getProtocolLib().sendServerPacket(online, remove);
+            getProtocolLib().sendServerPacket(online, add);
         });
         updateOthers(player);
         return new ActionResult();

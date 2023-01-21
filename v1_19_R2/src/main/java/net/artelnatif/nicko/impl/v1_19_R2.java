@@ -9,6 +9,7 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +25,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -95,7 +99,7 @@ public class v1_19_R2 implements Internals {
 
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
         // TODO: 1/20/23 Sets Gamemode to Survival but keeps the flying? Visual effect only?
-        final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(serverPlayer));
+        //final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(serverPlayer));
 
         if (skinChange || changeOnlyName) {
             try {
@@ -121,29 +125,31 @@ public class v1_19_R2 implements Internals {
             }
         }
 
-        /*
-        Tried this solution, doesn't work either:
+        final ClientboundPlayerInfoUpdatePacket init = new ClientboundPlayerInfoUpdatePacket(
+                EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                        ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY,
+                        ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED),
+                Collections.singletonList(serverPlayer));
 
-         final FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-         final EnumSet<ClientboundPlayerInfoUpdatePacket.Action> actions = EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER);
-        byteBuf.writeEnumSet(actions, ClientboundPlayerInfoUpdatePacket.Action.class);
-        byteBuf.writeCollection(List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
-                player.getUniqueId(),
-                newGameProfile,
-                true,
-                serverPlayer.latency,
-                serverPlayer.gameMode.getGameModeForPlayer(),
-                Component.literal(profileName),
-                serverPlayer.getChatSession().asData()
-        )), (bb, entry) -> {
-            bb.writeUUID(entry.profileId());
-            Iterator<ClientboundPlayerInfoUpdatePacket.Action> iterator = actions.iterator();
+        Field field;
+        try {
+            field = init.getClass().getDeclaredField("b");
+            field.setAccessible(true);
+            field.set(init, List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
+                    player.getUniqueId(),
+                    newGameProfile,
+                    true,
+                    serverPlayer.latency,
+                    serverPlayer.gameMode.getGameModeForPlayer(),
+                    Component.literal(profileName),
+                    serverPlayer.getChatSession().asData()
+            )));
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
 
-            while (iterator.hasNext()) {
-                bb.writeUtf(entry.profile().getName(), 16);
-                bb.writeGameProfileProperties(newGameProfile.getProperties());
-            }
-        });*/
+        System.out.println("======= AFTER ");
+        System.out.println("init.entries().toString() = " + init.entries().toString());
 
         serverPlayer.connection.send(remove);
         serverPlayer.connection.send(init);

@@ -4,8 +4,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.ActionResult;
+import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
@@ -23,7 +23,6 @@ import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -43,10 +42,8 @@ public class v1_17_R1 implements Internals {
                 false);
 
         final boolean wasFlying = player.isFlying();
-        final ItemStack itemOnCursor = player.getItemOnCursor();
         entityPlayer.b.sendPacket(respawn);
         player.setFlying(wasFlying);
-        player.setItemOnCursor(itemOnCursor);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.updateInventory();
     }
@@ -57,19 +54,9 @@ public class v1_17_R1 implements Internals {
         final PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityPlayer.getBukkitEntity().getEntityId());
         final PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityPlayer);
 
-        /*
-          BIT MASKS:
-          0x01 	Cape enabled
-          0x02 	Jacket enabled
-          0x04 	Left sleeve enabled
-          0x08 	Right sleeve enabled
-          0x10 	Left pants leg enabled
-          0x20 	Right pants leg enabled
-          0x40 	Hat enabled
-         */
         final DataWatcher dataWatcher = entityPlayer.getDataWatcher();
         final DataWatcherObject<Byte> displayedSkinPartDataWatcher = new DataWatcherObject<>(17, DataWatcherRegistry.a);
-        dataWatcher.set(displayedSkinPartDataWatcher, (byte) 0x7f); // 127, all masks combined
+        dataWatcher.set(displayedSkinPartDataWatcher, (byte) 0x7f);
         final PacketPlayOutEntityMetadata entityMetadata = new PacketPlayOutEntityMetadata(entityPlayer.getBukkitEntity().getEntityId(), dataWatcher, true);
 
         Bukkit.getOnlinePlayers().forEach(online -> {
@@ -77,8 +64,8 @@ public class v1_17_R1 implements Internals {
             if (onlineEntityPlayer.getBukkitEntity().getUniqueId() != player.getUniqueId()) {
                 onlineEntityPlayer.b.sendPacket(destroy);
                 onlineEntityPlayer.b.sendPacket(spawn);
-                onlineEntityPlayer.b.sendPacket(entityMetadata);
             }
+            onlineEntityPlayer.b.sendPacket(entityMetadata);
         });
     }
 
@@ -102,6 +89,7 @@ public class v1_17_R1 implements Internals {
                     skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
                     if (skin.isPresent()) {
                         final PropertyMap properties = gameProfile.getProperties();
+                        properties.removeAll("textures");
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
@@ -121,8 +109,6 @@ public class v1_17_R1 implements Internals {
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
                 player.getPing(),
                 EnumGamemode.getById(player.getGameMode().ordinal()), IChatBaseComponent.a(profileName)));
-        entityPlayer.b.sendPacket(remove);
-        entityPlayer.b.sendPacket(add);
 
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();

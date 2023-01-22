@@ -57,19 +57,9 @@ public class v1_19_R2 implements Internals {
         final ClientboundRemoveEntitiesPacket remove = new ClientboundRemoveEntitiesPacket(serverPlayer.getBukkitEntity().getEntityId());
         final ClientboundAddEntityPacket add = new ClientboundAddEntityPacket(serverPlayer);
 
-        /*
-          BIT MASKS:
-          0x01 	Cape enabled
-          0x02 	Jacket enabled
-          0x04 	Left sleeve enabled
-          0x08 	Right sleeve enabled
-          0x10 	Left pants leg enabled
-          0x20 	Right pants leg enabled
-          0x40 	Hat enabled
-         */
         final SynchedEntityData entityData = serverPlayer.getEntityData();
         final EntityDataAccessor<Byte> skinPartAccessor = new EntityDataAccessor<>(17, EntityDataSerializers.BYTE);
-        entityData.set(skinPartAccessor, (byte) 0x7f); // 127, all masks combined
+        entityData.set(skinPartAccessor, (byte) 0x7f);
         final ClientboundSetEntityDataPacket entityMetadata = new ClientboundSetEntityDataPacket(serverPlayer.getBukkitEntity().getEntityId(), entityData.getNonDefaultValues());
 
         Bukkit.getOnlinePlayers().forEach(online -> {

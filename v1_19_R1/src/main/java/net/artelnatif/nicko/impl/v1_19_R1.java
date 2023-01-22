@@ -4,8 +4,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.ActionResult;
+import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
@@ -20,11 +20,9 @@ import net.minecraft.world.entity.player.ProfilePublicKey;
 import net.minecraft.world.level.EnumGamemode;
 import net.minecraft.world.level.World;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -35,11 +33,8 @@ public class v1_19_R1 implements Internals {
     public void updateSelf(Player player) {
         final EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         final ResourceKey<World> levelResourceKey = entityPlayer.x().ab();
-        final CraftWorld world = entityPlayer.s.getWorld();
-        // last boolean is: "has death location" attribute, if true, the optional contains the death dimension and position.
-        // with the boolean being false, we don't need to provide a value, and thus we return an empty optional.
         final PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(entityPlayer.x().Z(),
-                levelResourceKey, world.getSeed(),
+                levelResourceKey, entityPlayer.s.getWorld().getSeed(),
                 entityPlayer.d.b(), entityPlayer.d.c(),
                 false,
                 false,
@@ -47,10 +42,8 @@ public class v1_19_R1 implements Internals {
                 Optional.empty());
 
         final boolean wasFlying = player.isFlying();
-        final ItemStack itemOnCursor = player.getItemOnCursor();
         entityPlayer.b.a(respawn);
         player.setFlying(wasFlying);
-        player.setItemOnCursor(itemOnCursor);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.updateInventory();
     }
@@ -61,19 +54,9 @@ public class v1_19_R1 implements Internals {
         final PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityPlayer.getBukkitEntity().getEntityId());
         final PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityPlayer);
 
-        /*
-          BIT MASKS:
-          0x01 	Cape enabled
-          0x02 	Jacket enabled
-          0x04 	Left sleeve enabled
-          0x08 	Right sleeve enabled
-          0x10 	Left pants leg enabled
-          0x20 	Right pants leg enabled
-          0x40 	Hat enabled
-         */
         final DataWatcher dataWatcher = entityPlayer.ai();
         final DataWatcherObject<Byte> displayedSkinPartDataWatcher = new DataWatcherObject<>(17, DataWatcherRegistry.a);
-        dataWatcher.b(displayedSkinPartDataWatcher, (byte) 0x7f); // 127, all masks combined
+        dataWatcher.b(displayedSkinPartDataWatcher, (byte) 0x7f);
         final PacketPlayOutEntityMetadata entityMetadata = new PacketPlayOutEntityMetadata(entityPlayer.getBukkitEntity().getEntityId(), dataWatcher, true);
 
         Bukkit.getOnlinePlayers().forEach(online -> {
@@ -81,8 +64,8 @@ public class v1_19_R1 implements Internals {
             if (onlineEntityPlayer.getBukkitEntity().getUniqueId() != player.getUniqueId()) {
                 onlineEntityPlayer.b.a(destroy);
                 onlineEntityPlayer.b.a(spawn);
-                onlineEntityPlayer.b.a(entityMetadata);
             }
+            onlineEntityPlayer.b.a(entityMetadata);
         });
     }
 
@@ -109,6 +92,7 @@ public class v1_19_R1 implements Internals {
                     skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
                     if (skin.isPresent()) {
                         final PropertyMap properties = gameProfile.getProperties();
+                        properties.removeAll("textures");
                         properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
                         updateSelf(player);
                     } else {
@@ -132,8 +116,6 @@ public class v1_19_R1 implements Internals {
                 IChatBaseComponent.a(profileName),
                 key)); // f mojang
 
-        entityPlayer.b.a(remove);
-        entityPlayer.b.a(add);
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
             onlineEntityPlayer.b.a(remove);

@@ -16,9 +16,7 @@ public class PluginMessageHandler implements PluginMessageListener {
             return;
         }
 
-        System.out.println("Received " + NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE + " msg");
         final ByteArrayDataInput in = ByteStreams.newDataInput(message);
-
         final int payloadSize = in.readInt();
         if (payloadSize == 0 || payloadSize > 4) {
             NickoBukkit.getInstance().getLogger().severe("Prevented error by skipping malformed payload of size " + payloadSize + "!" +

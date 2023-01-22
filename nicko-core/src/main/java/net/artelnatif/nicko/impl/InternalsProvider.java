@@ -11,7 +11,7 @@ public class InternalsProvider {
         try {
             final String packageName = Internals.class.getPackage().getName();
             final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-            String fullClassName = packageName + "." + bukkitVersion;
+            final String fullClassName = packageName + "." + bukkitVersion;
             internals = (Internals) Class.forName(fullClassName).getConstructors()[0].newInstance();
         } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException |
                  ClassCastException exception) {

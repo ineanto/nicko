@@ -16,7 +16,7 @@ public class CacheInvalidate extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.TNT);
-        builder.setDisplayName("§6Invalidate §fskin cache");
+        builder.setDisplayName("§fInvalidate §6skin cache");
         builder.addLoreLines(
                 "§c§oNOT RECOMMENDED",
                 "§7Invalidates every skin entry present in the cache.",

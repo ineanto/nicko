@@ -69,7 +69,6 @@ public class NickoBukkit extends JavaPlugin {
             if (!dataStore.getStorage().getProvider().close()) {
                 getLogger().warning("Failed to close persistence!");
             }
-            dataStore.getStorage().setError(false);
         }
 
         if (config.isBungeecordSupport()) {

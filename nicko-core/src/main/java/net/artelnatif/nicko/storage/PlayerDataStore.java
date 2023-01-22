@@ -5,6 +5,7 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.storage.json.JSONStorage;
 import net.artelnatif.nicko.storage.sql.SQLStorage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class PlayerDataStore {
     }
 
     public void storeName(Player player) {
-        if(!isNameStored(player)) {
+        if (!isNameStored(player)) {
             names.put(player.getUniqueId(), player.getName());
         }
     }
@@ -37,6 +38,10 @@ public class PlayerDataStore {
 
     public void removeAllNames() {
         names.clear();
+    }
+
+    public void saveAll() {
+        Bukkit.getOnlinePlayers().forEach(this::saveData);
     }
 
 
@@ -76,9 +81,8 @@ public class PlayerDataStore {
     }
 
     public void saveData(Player player) {
-        if (storage.isError()) {
-            return;
-        }
+        if (storage.isError()) { return; }
+        if (!profiles.containsKey(player.getUniqueId())) { return; }
 
         storage.store(player.getUniqueId(), profiles.get(player.getUniqueId()));
         profiles.remove(player.getUniqueId());

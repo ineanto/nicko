@@ -65,6 +65,7 @@ public class NickoBukkit extends JavaPlugin {
         if (!dataStore.getStorage().isError()) {
             getLogger().info("Closing persistence...");
             dataStore.removeAllNames();
+            dataStore.saveAll();
             if (!dataStore.getStorage().getProvider().close()) {
                 getLogger().warning("Failed to close persistence!");
             }

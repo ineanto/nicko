@@ -60,25 +60,6 @@ public class NickoBukkit extends JavaPlugin {
         }
     }
 
-    @Override
-    public void onDisable() {
-        if (!dataStore.getStorage().isError()) {
-            getLogger().info("Closing persistence...");
-            dataStore.removeAllNames();
-            dataStore.saveAll();
-            if (!dataStore.getStorage().getProvider().close()) {
-                getLogger().warning("Failed to close persistence!");
-            }
-        }
-
-        if (config.isBungeecordSupport()) {
-            getServer().getMessenger().unregisterIncomingPluginChannel(this);
-            getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-        }
-
-        getLogger().info("Nicko (Bukkit) has been disabled.");
-    }
-
     public void onUnitTestingStartup() {
         getLogger().info("Loading persistence...");
         dataStore = new PlayerDataStore(this);
@@ -145,6 +126,25 @@ public class NickoBukkit extends JavaPlugin {
 
             getLogger().info("Nicko (Bukkit) has been enabled.");
         }
+    }
+
+    @Override
+    public void onDisable() {
+        if (!dataStore.getStorage().isError()) {
+            getLogger().info("Closing persistence...");
+            dataStore.removeAllNames();
+            dataStore.saveAll();
+            if (!dataStore.getStorage().getProvider().close()) {
+                getLogger().warning("Failed to close persistence!");
+            }
+        }
+
+        if (config.isBungeecordSupport()) {
+            getServer().getMessenger().unregisterIncomingPluginChannel(this);
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        }
+
+        getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 
     public static NickoBukkit getInstance() {

@@ -22,7 +22,7 @@ public class PluginMessageHandler implements PluginMessageListener {
         final int payloadSize = in.readInt();
         if (payloadSize == 0 || payloadSize > 4) {
             NickoBukkit.getInstance().getLogger().severe("Prevented error by skipping malformed payload of size " + payloadSize + "!" +
-                    "This should not have happened, open an issue on the repository at https://atnrch.xyz/git/aro/Nicko !");
+                    "This should not have happened, open an issue at https://atnrch.xyz/git/aro/Nicko !");
             return;
         }
 

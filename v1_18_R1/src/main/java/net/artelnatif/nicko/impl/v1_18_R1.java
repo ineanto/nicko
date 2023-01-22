@@ -3,11 +3,8 @@ package net.artelnatif.nicko.impl;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
-import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.I18NDict;
-import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.game.*;
@@ -23,10 +20,6 @@ import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-
-import java.io.IOException;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 public class v1_18_R1 implements Internals {
     @Override
@@ -72,40 +65,27 @@ public class v1_18_R1 implements Internals {
     }
 
     @Override
-    public ActionResult updateProfile(Player player, NickoProfile profile, boolean skinChange, boolean reset) {
-        final CraftPlayer craftPlayer = (CraftPlayer) player;
-        final EntityPlayer entityPlayer = craftPlayer.getHandle();
+    public ActionResult<Void> updateProfile(Player player, NickoProfile profile, boolean skinChange, boolean reset) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
         final String profileName = profile.getName() == null ? player.getName() : profile.getName();
-        Optional<MojangSkin> skin;
 
-        final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
-        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
+        final CraftPlayer craftPlayer = (CraftPlayer) player;
+        final EntityPlayer entityPlayer = craftPlayer.getHandle();
         final GameProfile gameProfile = new GameProfile(player.getUniqueId(), profileName);
 
         if (skinChange || changeOnlyName) {
-            try {
-                final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
-                final Optional<String> uuid = mojang.getUUID(profile.getSkin());
-                if (uuid.isPresent()) {
-                    skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
-                    if (skin.isPresent()) {
-                        final PropertyMap properties = gameProfile.getProperties();
-                        properties.removeAll("textures");
-                        properties.put("textures", new Property("textures", skin.get().value(), skin.get().signature()));
-                        updateSelf(player);
-                    } else {
-                        return new ActionResult(I18NDict.Error.SKIN_FAIL_MOJANG);
-                    }
-                } else {
-                    return new ActionResult(I18NDict.Error.NAME_FAIL_MOJANG);
-                }
-            } catch (ExecutionException e) {
-                return new ActionResult(I18NDict.Error.SKIN_FAIL_CACHE);
-            } catch (IOException e) {
-                return new ActionResult(I18NDict.Error.UNEXPECTED_ERROR);
+            final ActionResult<MojangSkin> skinFetch = fetchSkinTextures(profile, reset);
+            if (!skinFetch.isError()) {
+                final MojangSkin skin = skinFetch.getResult();
+                final PropertyMap properties = gameProfile.getProperties();
+                properties.removeAll("textures");
+                properties.put("textures", new Property("textures", skin.value(), skin.signature()));
+                updateSelf(player);
             }
         }
+
+        final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
+        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
 
         add.b().clear();
         add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
@@ -118,6 +98,6 @@ public class v1_18_R1 implements Internals {
             onlineEntityPlayer.b.a(add);
         });
         updateOthers(player);
-        return new ActionResult();
+        return new ActionResult<>();
     }
 }

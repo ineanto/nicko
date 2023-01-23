@@ -23,7 +23,9 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final NickoConfiguration config = instance.getNickoConfig();
-            connection = DriverManager.getConnection("jdbc:mariadb://" + config.getSQLAddress(), config.getSQLUsername(), config.getSQLPassword());
+            connection = DriverManager.getConnection("jdbc:mariadb://" + config.getSQLAddress(),
+                    config.getSQLUsername(),
+                    config.getSQLPassword());
             final boolean initialized = connection != null && !connection.isClosed();
 
             if (initialized) {
@@ -46,7 +48,7 @@ public class SQLStorageProvider implements StorageProvider {
 
     @Override
     public boolean close() {
-        if(connection == null) { return true; }
+        if (connection == null) { return true; }
         try {
             connection.close();
             return connection.isClosed();

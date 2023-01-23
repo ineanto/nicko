@@ -14,7 +14,6 @@ public class SQLStorageProvider implements StorageProvider {
     private Connection connection;
 
     private final String schemaName = "nicko";
-    private final String tableName = "DATA";
 
     public SQLStorageProvider(NickoBukkit instance) {
         this.instance = instance;
@@ -58,6 +57,7 @@ public class SQLStorageProvider implements StorageProvider {
 
     private void createTable() {
         final Connection connection = getConnection();
+        final String tableName = "DATA";
 
         final String query = """
                 CREATE TABLE IF NOT EXISTS %s.%s (

@@ -28,22 +28,17 @@ public class SQLStorageProvider implements StorageProvider {
                     config.getSQLPassword());
             final boolean initialized = connection != null && !connection.isClosed();
 
-            if (initialized) {
-                instance.getLogger().info("Creating SQL database...");
-                createDatabase();
+            if (!initialized) return false;
 
-                instance.getLogger().info("Creating SQL table...");
-                createTable();
-                return true;
-            }
-            return false;
+            instance.getLogger().info("Creating SQL database...");
+            createDatabase();
+
+            instance.getLogger().info("Creating SQL table...");
+            createTable();
+            return true;
         } catch (SQLException e) {
             return false;
         }
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     @Override
@@ -59,17 +54,16 @@ public class SQLStorageProvider implements StorageProvider {
 
     private void createTable() {
         final Connection connection = getConnection();
-        final String tableName = "DATA";
 
         final String query = """
-                CREATE TABLE IF NOT EXISTS %s.%s (
+                CREATE TABLE IF NOT EXISTS %s.DATA (
                 uuid uuid NOT NULL,
                 name varchar(16) NOT NULL,
                 skin varchar(16) NOT NULL,
                 bungeecord boolean NOT NULL,
                 PRIMARY KEY (UUID)
                 )
-                """.formatted(schemaName, tableName);
+                """.formatted(schemaName);
 
         try {
             final PreparedStatement statement = connection.prepareStatement(query);
@@ -96,5 +90,9 @@ public class SQLStorageProvider implements StorageProvider {
             // TODO: 12/10/22 Handle error
             throw new RuntimeException(e);
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

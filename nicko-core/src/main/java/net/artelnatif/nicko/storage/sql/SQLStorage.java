@@ -6,8 +6,7 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,13 +26,24 @@ public class SQLStorage extends Storage {
     public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
         try {
-            connection.prepareStatement("");
+            final String sql = """ 
+                    INSERT INTO nicko.DATA
+                    (uuid, name, skin, bungeecord)
+                    VALUES
+                    (?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE uuid = %s
+                    """.formatted(uuid.toString());
+
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setObject(0, uuid);
+            statement.setString(1, profile.getName());
+            statement.setString(2, profile.getSkin());
+            statement.setBoolean(3, profile.isBungeecordTransfer());
+            return new ActionResult<>();
         } catch (SQLException e) {
             instance.getLogger().warning("Unable to store player.");
-            return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR);
+            return new ActionResult<>(I18NDict.Error.SQL_ERROR);
         }
-
-        return new ActionResult<>();
     }
 
     @Override

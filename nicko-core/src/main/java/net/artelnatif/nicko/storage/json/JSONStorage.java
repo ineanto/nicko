@@ -8,6 +8,7 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 import net.artelnatif.nicko.storage.StorageProvider;
+import net.artelnatif.nicko.storage.sql.SQLStorageProvider;
 
 import java.io.*;
 import java.util.Optional;
@@ -16,13 +17,20 @@ import java.util.UUID;
 public class JSONStorage extends Storage {
     private final NickoBukkit instance;
 
+    private JSONStorageProvider provider;
+
     final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
     final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
 
     public JSONStorage(NickoBukkit instance) { this.instance = instance; }
 
     @Override
-    public StorageProvider getProvider() { return new JSONStorageProvider(directory); }
+    public StorageProvider getProvider() {
+        if (provider == null) {
+            provider = new JSONStorageProvider(directory);
+        }
+        return provider;
+    }
 
     @Override
     public ActionResult<Void> store(UUID uuid, NickoProfile profile) {

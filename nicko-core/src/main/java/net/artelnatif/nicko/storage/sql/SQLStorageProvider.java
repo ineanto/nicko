@@ -3,15 +3,16 @@ package net.artelnatif.nicko.storage.sql;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.NickoConfiguration;
 import net.artelnatif.nicko.storage.StorageProvider;
+import org.mariadb.jdbc.MariaDbDataSource;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SQLStorageProvider implements StorageProvider {
     private final NickoBukkit instance;
     private Connection connection;
+    private MariaDbDataSource dataSource;
 
     private final String schemaName = "nicko";
 
@@ -23,9 +24,11 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final NickoConfiguration config = instance.getNickoConfig();
-            connection = DriverManager.getConnection("jdbc:mariadb://" + config.getSQLAddress(),
-                    config.getSQLUsername(),
-                    config.getSQLPassword());
+            dataSource = new MariaDbDataSource();
+            dataSource.setUrl("jdbc:mariadb://" + config.getSQLAddress());
+            dataSource.setUser(config.getSQLUsername());
+            dataSource.setPassword(config.getSQLPassword());
+            connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 
             if (!initialized) return false;
@@ -37,6 +40,7 @@ public class SQLStorageProvider implements StorageProvider {
             createTable();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -57,7 +61,7 @@ public class SQLStorageProvider implements StorageProvider {
 
         final String query = """
                 CREATE TABLE IF NOT EXISTS %s.DATA (
-                uuid uuid NOT NULL,
+                uuid binary(16) NOT NULL,
                 name varchar(16) NOT NULL,
                 skin varchar(16) NOT NULL,
                 bungeecord boolean NOT NULL,

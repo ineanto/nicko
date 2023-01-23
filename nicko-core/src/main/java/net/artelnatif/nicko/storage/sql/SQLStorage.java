@@ -6,12 +6,18 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 
-import java.sql.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
 public class SQLStorage extends Storage {
     private final NickoBukkit instance;
+
+    private SQLStorageProvider provider;
 
     public SQLStorage(NickoBukkit instance) {
         this.instance = instance;
@@ -19,7 +25,10 @@ public class SQLStorage extends Storage {
 
     @Override
     public SQLStorageProvider getProvider() {
-        return new SQLStorageProvider(instance);
+        if (provider == null) {
+            provider = new SQLStorageProvider(instance);
+        }
+        return provider;
     }
 
     @Override
@@ -27,21 +36,21 @@ public class SQLStorage extends Storage {
         final Connection connection = getProvider().getConnection();
         try {
             final String sql = """ 
-                    INSERT INTO nicko.DATA
-                    (uuid, name, skin, bungeecord)
+                    INSERT IGNORE INTO nicko.DATA
+                    (`uuid`, `name`, `skin`, `bungeecord`)
                     VALUES
                     (?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE uuid = %s
-                    """.formatted(uuid.toString());
+                    """;
 
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setObject(0, uuid);
-            statement.setString(1, profile.getName());
-            statement.setString(2, profile.getSkin());
-            statement.setBoolean(3, profile.isBungeecordTransfer());
+            statement.setObject(1, uuidToBin(uuid));
+            statement.setString(2, profile.getName());
+            statement.setString(3, profile.getSkin());
+            statement.setBoolean(4, profile.isBungeecordTransfer());
+            statement.executeUpdate();
             return new ActionResult<>();
         } catch (SQLException e) {
-            instance.getLogger().warning("Unable to store player.");
+            instance.getLogger().warning("Unable to store player. (%s)".formatted(e.getMessage()));
             return new ActionResult<>(I18NDict.Error.SQL_ERROR);
         }
     }
@@ -54,5 +63,19 @@ public class SQLStorage extends Storage {
     @Override
     public Optional<NickoProfile> retrieve(UUID uuid) {
         return Optional.empty();
+    }
+
+    private byte[] uuidToBin(UUID uuid) {
+        final byte[] uuidBytes = new byte[16];
+        final ByteBuffer buffer = ByteBuffer.wrap(uuidBytes)
+                .order(ByteOrder.BIG_ENDIAN)
+                .putLong(uuid.getMostSignificantBits())
+                .putLong(uuid.getLeastSignificantBits());
+        return buffer.array();
+    }
+
+    private UUID binToUUID(byte[] array) {
+        final ByteBuffer buffer = ByteBuffer.wrap(array);
+        return new UUID(buffer.getLong(), buffer.getLong());
     }
 }

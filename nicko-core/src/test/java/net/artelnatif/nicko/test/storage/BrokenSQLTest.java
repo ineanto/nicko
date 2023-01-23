@@ -34,12 +34,12 @@ public class BrokenSQLTest {
     }
 
     @Test
-    @DisplayName("Store Player Via SQL")
+    @DisplayName("Fail to Store Player Via SQL")
     public void storePlayer() {
         final PlayerMock playerMock = server.addPlayer();
         final NickoProfile profile = new NickoProfile("Notch", "Notch", Locale.ENGLISH, true);
         final ActionResult<Void> storeAction = plugin.getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
-        Assertions.assertFalse(storeAction.isError());
+        Assertions.assertTrue(storeAction.isError());
     }
 
     @AfterAll

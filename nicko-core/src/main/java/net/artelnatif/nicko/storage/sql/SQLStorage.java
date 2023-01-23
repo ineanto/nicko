@@ -34,6 +34,8 @@ public class SQLStorage extends Storage {
     @Override
     public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
+        if (connection == null) return new ActionResult<>(I18NDict.Error.SQL_ERROR);
+
         try {
             final String sql = """ 
                     INSERT IGNORE INTO nicko.DATA

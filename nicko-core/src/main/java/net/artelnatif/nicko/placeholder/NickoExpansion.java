@@ -39,20 +39,30 @@ public class NickoExpansion extends PlaceholderExpansion {
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        if(player == null) return null;
-        Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
+        if (player == null) return null;
+
+        String name, skin, locale;
+        boolean bungeecord;
+
+        final Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
-            return switch (params) {
-                case "name" -> profile.getName();
-                case "skin" -> profile.getSkin();
-                case "locale" -> profile.getLocale().getName();
-                case "bungeecord" -> String.valueOf(profile.isBungeecordTransfer());
-                default -> null;
-            };
+            name = profile.getName();
+            skin = profile.getSkin();
+            locale = profile.getLocale().getName();
+            bungeecord = profile.isBungeecordTransfer();
         } else {
-            instance.getLogger().severe("Couldn't satisfy request for placeholder " + params + ". This is a bug!");
-            return null;
+            name = skin = player.getName();
+            locale = "N/A";
+            bungeecord = true;
         }
+
+        return switch (params) {
+            case "name" -> name;
+            case "skin" -> skin;
+            case "locale" -> locale;
+            case "bungeecord" -> String.valueOf(bungeecord);
+            default -> null;
+        };
     }
 }

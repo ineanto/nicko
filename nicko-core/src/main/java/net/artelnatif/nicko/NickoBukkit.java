@@ -25,7 +25,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
-import java.util.logging.Level;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
@@ -66,7 +65,7 @@ public class NickoBukkit extends JavaPlugin {
 
         if (!dataStore.getStorage().getProvider().init()) {
             dataStore.getStorage().setError(true);
-            getLogger().warning("Failed to open persistence, data will NOT be saved!");
+            getLogger().severe("Failed to open persistence, data will NOT be saved!");
         }
     }
 
@@ -78,7 +77,7 @@ public class NickoBukkit extends JavaPlugin {
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
-            getLogger().log(Level.SEVERE, "Nicko could not find a valid implementation for this server version. Is your server supported?");
+            getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
             dataStore.getStorage().setError(true);
             getServer().getPluginManager().disablePlugin(this);
         }
@@ -87,7 +86,7 @@ public class NickoBukkit extends JavaPlugin {
             getLogger().info("Loading persistence...");
             if (!dataStore.getStorage().getProvider().init()) {
                 dataStore.getStorage().setError(true);
-                getLogger().warning("Failed to open persistence, data will NOT be saved!");
+                getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
 
             mojangAPI = new MojangAPI(this);
@@ -97,7 +96,7 @@ public class NickoBukkit extends JavaPlugin {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
                     getLogger().info("Successfully loaded custom language file.");
                 } else {
-                    getLogger().warning("Failed to load custom language file!");
+                    getLogger().severe("Failed to load custom language file!");
                 }
             }
 
@@ -135,7 +134,7 @@ public class NickoBukkit extends JavaPlugin {
             dataStore.removeAllNames();
             dataStore.saveAll();
             if (!dataStore.getStorage().getProvider().close()) {
-                getLogger().warning("Failed to close persistence!");
+                getLogger().severe("Failed to close persistence!");
             }
         }
 

@@ -50,7 +50,7 @@ public class SQLStorage extends Storage {
             statement.executeUpdate();
             return new ActionResult<>();
         } catch (SQLException e) {
-            instance.getLogger().warning("Unable to store player. (%s)".formatted(e.getMessage()));
+            instance.getLogger().warning("Couldn't send SQL Request: " + e.getMessage());
             return new ActionResult<>(I18NDict.Error.SQL_ERROR);
         }
     }

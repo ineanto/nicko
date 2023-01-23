@@ -40,7 +40,7 @@ public class SQLStorageProvider implements StorageProvider {
             createTable();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            instance.getLogger().severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
             return false;
         }
     }

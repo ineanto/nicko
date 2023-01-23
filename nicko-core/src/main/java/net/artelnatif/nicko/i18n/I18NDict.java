@@ -30,5 +30,7 @@ public record I18NDict(String key) {
         public static final I18NDict NAME_FAIL_MOJANG = new I18NDict("error.couldnt_get_name_from_mojang");
         public static final I18NDict INVALID_USERNAME = new I18NDict("error.invalid_username");
         public static final I18NDict UNEXPECTED_ERROR = new I18NDict("error.generic");
+        public static final I18NDict SQL_ERROR = new I18NDict("error.sql");
+        public static final I18NDict JSON_ERROR = new I18NDict("error.json");
     }
 }

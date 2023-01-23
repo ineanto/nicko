@@ -5,6 +5,8 @@ error:
   generic: "Erreur inconnue"
   invalid_username: "§cLe pseudo spécifié n''est pas un pseudo Minecraft valide."
   player_offline: "§c{0} §fest hors-ligne, veuillez réessayer."
+  sql: "Erreur SQL"
+  json: "Erreur JSON"
 event:
   admin:
     cache_clear: "§aCache des skins nettoyé."

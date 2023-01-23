@@ -3,7 +3,9 @@ package net.artelnatif.nicko.storage.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 import net.artelnatif.nicko.storage.StorageProvider;
 
@@ -12,14 +14,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class JSONStorage extends Storage {
+    private final NickoBukkit instance;
+
     final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
     final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+
+    public JSONStorage(NickoBukkit instance) { this.instance = instance; }
 
     @Override
     public StorageProvider getProvider() { return new JSONStorageProvider(directory); }
 
     @Override
-    public void store(UUID uuid, NickoProfile profile) {
+    public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
         final String profileToJson = gson.toJson(profile);
         final File file = new File(directory, uuid.toString() + ".json");
 
@@ -30,14 +36,16 @@ public class JSONStorage extends Storage {
                         writer.write(profileToJson);
                     }
                 } catch (IOException e) {
-                    System.out.println("Could not write to file.");
-                    throw new RuntimeException(e);
+                    instance.getLogger().warning("Could not write to file.");
+                    return new ActionResult<>(I18NDict.Error.JSON_ERROR);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Could not create file.");
-            throw new RuntimeException(e);
+            instance.getLogger().warning("Could not create file.");
+            return new ActionResult<>(I18NDict.Error.JSON_ERROR);
         }
+
+        return new ActionResult<>();
     }
 
     @Override

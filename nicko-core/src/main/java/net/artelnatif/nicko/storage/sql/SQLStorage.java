@@ -1,7 +1,9 @@
 package net.artelnatif.nicko.storage.sql;
 
 import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 
 import java.sql.Connection;
@@ -22,13 +24,16 @@ public class SQLStorage extends Storage {
     }
 
     @Override
-    public void store(UUID uuid, NickoProfile profile) {
+    public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
         try {
             connection.prepareStatement("");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            instance.getLogger().warning("Unable to store player.");
+            return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR);
         }
+
+        return new ActionResult<>();
     }
 
     @Override

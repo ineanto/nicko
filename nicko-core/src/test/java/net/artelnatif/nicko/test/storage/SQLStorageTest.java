@@ -5,10 +5,10 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.NickoConfiguration;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.Locale;
 import org.junit.jupiter.api.*;
-
-import java.util.Optional;
 
 public class SQLStorageTest {
     private static ServerMock server;
@@ -29,12 +29,17 @@ public class SQLStorageTest {
 
     @Test
     @DisplayName("Create SQL Tables")
-    public void testSQLTables() {
+    public void createSQLTables() {
+        Assertions.assertFalse(plugin.getDataStore().getStorage().isError());
+    }
 
+    @Test
+    @DisplayName("Store Player Via SQL")
+    public void storePlayer() {
         final PlayerMock playerMock = server.addPlayer();
-        final Optional<NickoProfile> data = plugin.getDataStore().getData(playerMock.getUniqueId());
-        Assertions.assertTrue(data.isPresent());
-        Assertions.assertNull(data.get().getSkin());
+        final NickoProfile profile = new NickoProfile("Notch", "Notch", Locale.ENGLISH, true);
+        final ActionResult<Void> storeAction = plugin.getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
+        Assertions.assertFalse(storeAction.isError());
     }
 
     @AfterAll

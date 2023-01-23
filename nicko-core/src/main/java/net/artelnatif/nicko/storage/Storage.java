@@ -1,5 +1,6 @@
 package net.artelnatif.nicko.storage;
 
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ public abstract class Storage {
 
     public abstract StorageProvider getProvider();
 
-    public abstract void store(UUID uuid, NickoProfile profile);
+    public abstract ActionResult<Void> store(UUID uuid, NickoProfile profile);
 
     public abstract boolean isStored(UUID uuid);
 

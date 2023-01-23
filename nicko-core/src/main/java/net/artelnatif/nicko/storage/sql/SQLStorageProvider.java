@@ -37,7 +37,6 @@ public class SQLStorageProvider implements StorageProvider {
             }
             return false;
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }

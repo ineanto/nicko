@@ -19,7 +19,7 @@ public class PlayerDataStore {
     private final HashMap<UUID, String> names = new HashMap<>();
 
     public PlayerDataStore(NickoBukkit instance) {
-        this.storage = instance.getNickoConfig().isLocalStorage() ? new JSONStorage() : new SQLStorage(instance);
+        this.storage = instance.getNickoConfig().isLocalStorage() ? new JSONStorage(instance) : new SQLStorage(instance);
     }
 
     public void storeName(Player player) {

@@ -95,17 +95,16 @@ public class v1_19_R2 implements Internals {
                 Collections.singletonList(serverPlayer));
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
 
-        if (serverPlayer.getChatSession() == null) {
-            NickoBukkit.getInstance().getLogger().warning("Chat Session of " + serverPlayer.displayName + " is undefined.\n" +
-                                                          "Nicko might fail at changing skins and even throw an error.\n" +
-                                                          "Worse however, the player might get kicked when chatting.\n" +
-                                                          "This is pretty rare however and this\n" +
-                                                          "warning can be safely ignored in most cases.");
-        }
+        RemoteChatSession chatSession;
 
-        final UUID uuid = serverPlayer.getChatSession().sessionId();
-        final ProfilePublicKey ppk = serverPlayer.getChatSession().profilePublicKey();
-        final RemoteChatSession newChatSession = new RemoteChatSession(uuid, ppk);
+        if (serverPlayer.getChatSession() == null) {
+            NickoBukkit.getInstance().getLogger().warning("Chat Session of " + serverPlayer.displayName + " is null!");
+            chatSession = null;
+        } else {
+            final UUID uuid = serverPlayer.getChatSession().sessionId();
+            final ProfilePublicKey ppk = serverPlayer.getChatSession().profilePublicKey();
+            chatSession = new RemoteChatSession(uuid, ppk);
+        }
 
         spoofPlayerInfoPacket(init, List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
                 player.getUniqueId(),
@@ -114,7 +113,7 @@ public class v1_19_R2 implements Internals {
                 serverPlayer.latency,
                 serverPlayer.gameMode.getGameModeForPlayer(),
                 Component.literal(profileName),
-                newChatSession.asData()
+                chatSession == null ? null : chatSession.asData()
         )));
 
         Bukkit.getOnlinePlayers().forEach(online -> {

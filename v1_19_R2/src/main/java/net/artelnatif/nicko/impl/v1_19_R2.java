@@ -99,6 +99,7 @@ public class v1_19_R2 implements Internals {
 
         if (serverPlayer.getChatSession() == null) {
             NickoBukkit.getInstance().getLogger().warning("Chat Session of " + serverPlayer.displayName + " is null!");
+            NickoBukkit.getInstance().getLogger().warning("If your server is in offline mode/under BungeeCord you can safely ignore this message.");
             chatSession = null;
         } else {
             final UUID uuid = serverPlayer.getChatSession().sessionId();

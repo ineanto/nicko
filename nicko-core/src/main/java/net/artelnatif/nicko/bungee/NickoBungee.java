@@ -1,6 +1,5 @@
 package net.artelnatif.nicko.bungee;
 
-import net.artelnatif.nicko.bungee.event.PluginMessageListener;
 import net.artelnatif.nicko.bungee.event.ServerSwitchListener;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -21,7 +20,6 @@ public class NickoBungee extends Plugin {
 
         getLogger().info("Registering listeners...");
         getProxy().getPluginManager().registerListener(this, new ServerSwitchListener());
-        getProxy().getPluginManager().registerListener(this, new PluginMessageListener());
 
         getLogger().info("Nicko (Bungee) has been enabled.");
     }

@@ -132,8 +132,7 @@ public class v1_19_R2 implements Internals {
             field.setAccessible(true);
             field.set(object, newValue);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            // TODO: 1/22/23 Throw nice error
-            throw new RuntimeException(e);
+            NickoBukkit.getInstance().getLogger().warning("Unable to spoof packet, that's bad! (" + e.getMessage() + ")");
         }
     }
 }

@@ -96,10 +96,10 @@ public class v1_19_R2 implements Internals {
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
 
         if (serverPlayer.getChatSession() == null) {
-            NickoBukkit.getInstance().getLogger().warning("Chat Session of " + serverPlayer.displayName + " is undefined." +
-                                                          "Nicko might fail at changing skins or might throw an error." +
-                                                          "Worse however, the player might get kicked when chatting." +
-                                                          "This is pretty rare however and this" +
+            NickoBukkit.getInstance().getLogger().warning("Chat Session of " + serverPlayer.displayName + " is undefined.\n" +
+                                                          "Nicko might fail at changing skins and even throw an error.\n" +
+                                                          "Worse however, the player might get kicked when chatting.\n" +
+                                                          "This is pretty rare however and this\n" +
                                                           "warning can be safely ignored in most cases.");
         }
 

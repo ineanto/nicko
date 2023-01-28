@@ -1,32 +1,44 @@
 # Nicko ${project.version} - Config:
 
-prefix: "§8[§6Nicko§8] "
+# This is the Nicko configuration file.
+# This file contains all the configuration for
+# the Bukkit AND Bungeecord versions of Nicko.
+# Nicko is smart and will only read its configuration
+# section based on what it's enabled as.
+# For example, if Nicko is enabled as a Bukkit plugin,
+# it will only read the "Bukkit" section of the config file.
+# As a result, modifying any other section is useless.
 
-bungeecord:
+###########
+# GENERAL #
+###########
+
+common:
+  storage:
+    # SQL database's address
+    address: "localhost"
+    # SQL database's username.
+    username: ""
+    # SQL database's password.
+    password: ""
+
+#################
+# BUKKIT/SPIGOT #
+#################
+
+bukkit:
+  # Nicko's messages prefix.
+  prefix: "§8[§6Nicko§8] "
+
+  # Indicates wherever the data will be stored
+  # locally through a .json file or a (My)SQL database.
+  local_storage: true
+
   # Enables Bungeecord support, switching through servers will transfer player's disguise.
   # Accepted values: false (Disabled), true (Enabled)
-  enabled: false
-  redis:
-    username: ""
-    password: ""
-    # Time To Live, the time the data will be stored on a player-by-player basis.
-    ttl: -1
+  use_bungeecord: false
 
-# Localisation:
-locale:
   # Nicko will copy the English locale as "lang.yml"
   # and will use the translations in that file when "Server Custom"
   # is selected as the player's locale.
   use_custom_locale: false
-
-
-storage:
-  # Indicates wherever the data will be stored
-  # locally through a .json file or a (My)SQL database.
-  local: true
-  # SQL database's address
-  address: "localhost"
-  # SQL database's username.
-  username: ""
-  # SQL database's password.
-  password: ""

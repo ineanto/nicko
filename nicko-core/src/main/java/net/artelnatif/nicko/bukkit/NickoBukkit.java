@@ -119,7 +119,7 @@ public class NickoBukkit extends JavaPlugin {
             if (config.isBungeecordSupport()) {
                 if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
-                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.NICKO_PLUGIN_CHANNEL_UPDATE, new PluginMessageHandler());
+                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageHandler());
                 }
             }
 

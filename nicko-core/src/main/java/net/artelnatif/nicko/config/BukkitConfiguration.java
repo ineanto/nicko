@@ -1,11 +1,14 @@
 package net.artelnatif.nicko.config;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.bungee.NickoBungee;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class NickoConfiguration {
-    private final NickoBukkit nicko;
+    private final Nicko nicko;
     private String prefix;
 
     private Boolean bungeecordSupport;
@@ -14,7 +17,7 @@ public class NickoConfiguration {
 
     private String sqlUsername, sqlPassword, sqlAddress;
 
-    public NickoConfiguration(NickoBukkit nicko) {
+    public NickoConfiguration(Nicko nicko) {
         this.nicko = nicko;
     }
 
@@ -121,6 +124,7 @@ public class NickoConfiguration {
     }
 
     private FileConfiguration getConfig() {
-        return nicko.getConfig();
+        final YamlConfiguration configuration = new YamlConfiguration();
+        return ;
     }
 }

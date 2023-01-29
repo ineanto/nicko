@@ -13,39 +13,36 @@
 # GENERAL #
 ###########
 
-common:
-  storage:
-    # SQL database's address
-    # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
-    address: "localhost"
-    # SQL database's username.
-    # Accepted values: any string
-    username: ""
-    # SQL database's password.
-    # Accepted values: any string
-    password: ""
+# SQL database's address
+# Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
+address: "localhost"
+# SQL database's username.
+# Accepted values: any string
+username: ""
+# SQL database's password.
+# Accepted values: any string
+password: ""
 
 #################
 # BUKKIT/SPIGOT #
 #################
 
-bukkit:
-  # Nicko's messages prefix.
-  # Accepted values: any string
-  prefix: "§8[§6Nicko§8] "
+# Nicko's messages prefix.
+# Accepted values: any string
+prefix: "§8[§6Nicko§8] "
 
-  # Indicates wherever the data will be stored
-  # locally through a .json file or a (My)SQL database.
-  # Accepted values: false (Disabled), true (Enabled)
-  local: true
+# Indicates wherever the data will be stored
+# locally through a .json file or a (My)SQL database.
+# Accepted values: false (Disabled), true (Enabled)
+local: true
 
-  # Enables Bungeecord support, switching
-  # servers will transfer player's disguise.
-  # Accepted values: false (Disabled), true (Enabled)
-  bungeecord: false
+# Enables Bungeecord support, switching
+# servers will transfer player's disguise.
+# Accepted values: false (Disabled), true (Enabled)
+bungeecord: false
 
-  # Nicko will copy the English locale as "lang.yml"
-  # and will use the translations in that file when "Server Custom"
-  # is selected as the player's locale.
-  # Accepted values: false (Disabled), true (Enabled)
-  customLocale: false
+# Nicko will copy the English locale as "lang.yml"
+# and will use the translations in that file when "Server Custom"
+# is selected as the player's locale.
+# Accepted values: false (Disabled), true (Enabled)
+customLocale: false

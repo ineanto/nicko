@@ -7,4 +7,8 @@ public record Configuration(
         String prefix,
         Boolean local,
         Boolean bungeecord,
-        Boolean customLocale) { }
+        Boolean customLocale) {
+    public Configuration() {
+        this("", "", "", "", false, false, false);
+    }
+}

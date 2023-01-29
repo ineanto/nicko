@@ -35,6 +35,8 @@
                   <include>net.wesjd:anvilgui</include>
                   <include>de.studiocode.invui:*</include>
                   <include>com.github.jsixface:*</include>
+                  <include>com.fasterxml.jackson.dataformat</include>
+                  <include>com.fasterxml.jackson.core</include>
                 </includes>
               </artifactSet>
               <relocations>
@@ -49,6 +51,14 @@
                 <relocation>
                   <pattern>com.github.jsixface</pattern>
                   <shadedPattern>net.artelnatif.libs.yaml</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml.jackson.dataformat</pattern>
+                  <shadedPattern>net.artelnatif.libs.jackson.yaml</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml.jackson.core</pattern>
+                  <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
                 </relocation>
               </relocations>
               <minimizeJar>false</minimizeJar>

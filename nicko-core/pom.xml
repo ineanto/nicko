@@ -111,6 +111,18 @@
             <artifactId>yamlconfig</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.14.0-rc1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.14.0-rc1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -136,6 +148,8 @@
                                     <include>net.wesjd:anvilgui</include>
                                     <include>de.studiocode.invui:*</include>
                                     <include>com.github.jsixface:*</include>
+                                    <include>com.fasterxml.jackson.dataformat</include>
+                                    <include>com.fasterxml.jackson.core</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -150,6 +164,14 @@
                                 <relocation>
                                     <pattern>com.github.jsixface</pattern>
                                     <shadedPattern>net.artelnatif.libs.yaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.fasterxml.jackson.dataformat</pattern>
+                                    <shadedPattern>net.artelnatif.libs.jackson.yaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.fasterxml.jackson.core</pattern>
+                                    <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

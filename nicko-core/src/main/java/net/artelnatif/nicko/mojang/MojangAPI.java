@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 
 import javax.annotation.Nonnull;
 import javax.net.ssl.HttpsURLConnection;

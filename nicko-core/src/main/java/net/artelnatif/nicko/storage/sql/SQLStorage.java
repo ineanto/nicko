@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.storage.sql;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
@@ -15,18 +15,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class SQLStorage extends Storage {
-    private final NickoBukkit instance;
+    private final Nicko nicko;
 
     private SQLStorageProvider provider;
 
-    public SQLStorage(NickoBukkit instance) {
-        this.instance = instance;
+    public SQLStorage(Nicko nicko) {
+        this.nicko = nicko;
     }
 
     @Override
     public SQLStorageProvider getProvider() {
         if (provider == null) {
-            provider = new SQLStorageProvider(instance);
+            provider = new SQLStorageProvider(nicko);
         }
         return provider;
     }
@@ -52,7 +52,7 @@ public class SQLStorage extends Storage {
             statement.executeUpdate();
             return new ActionResult<>();
         } catch (SQLException e) {
-            instance.getLogger().warning("Couldn't send SQL Request: " + e.getMessage());
+            nicko.getLogger().warning("Couldn't send SQL Request: " + e.getMessage());
             return new ActionResult<>(I18NDict.Error.SQL_ERROR);
         }
     }

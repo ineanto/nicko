@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.entity.Player;
 
@@ -15,7 +15,7 @@ public class I18N {
     private static Locale getLocale(Player player) {
         final NickoBukkit instance = NickoBukkit.getInstance();
         try {
-            final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
+            final Optional<NickoProfile> profile = instance.getNicko().getDataStore().getData(player.getUniqueId());
             return profile.isEmpty() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();
         } catch (IllegalArgumentException exception) {
             instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
@@ -29,9 +29,9 @@ public class I18N {
 
         try {
             formatter.applyPattern(translation);
-            return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
+            return instance.getNicko().getConfig().prefix() + formatter.format(arguments);
         } catch (Exception e) {
-            return instance.getNickoConfig().getPrefix() + key.key();
+            return instance.getNicko().getConfig().prefix() + key.key();
         }
     }
 

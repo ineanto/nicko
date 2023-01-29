@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.bungee.pluginchannel;
+package net.artelnatif.nicko.bungee.message;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;

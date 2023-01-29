@@ -1,8 +1,8 @@
-package net.artelnatif.nicko.pluginchannel;
+package net.artelnatif.nicko.bukkit.pluginchannel;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;

@@ -1,11 +1,11 @@
-package net.artelnatif.nicko.gui.items.settings;
+package net.artelnatif.nicko.bukkit.gui.items.settings;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
 import de.studiocode.invui.item.impl.CycleItem;
 import de.studiocode.invui.item.impl.SimpleItem;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -20,7 +20,7 @@ public class BungeeCordCycling {
     };
 
     public BaseItem get(Player player) {
-        Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+        Optional<NickoProfile> profile = NickoBukkit.getInstance().getNicko().getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int startingState = nickoProfile.isBungeecordTransfer() ? 0 : 1;

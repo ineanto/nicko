@@ -1,14 +1,14 @@
-package net.artelnatif.nicko.gui;
+package net.artelnatif.nicko.bukkit.gui;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.gui.items.common.GoBack;
-import net.artelnatif.nicko.gui.items.settings.BungeeCordCycling;
-import net.artelnatif.nicko.gui.items.settings.LanguageCycling;
-import net.artelnatif.nicko.gui.items.settings.OptionUnavailable;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.bukkit.gui.items.settings.LanguageCycling;
+import net.artelnatif.nicko.bukkit.gui.items.common.GoBack;
+import net.artelnatif.nicko.bukkit.gui.items.settings.BungeeCordCycling;
+import net.artelnatif.nicko.bukkit.gui.items.settings.OptionUnavailable;
 import org.bukkit.entity.Player;
 
 public class SettingsGUI {
@@ -22,7 +22,7 @@ public class SettingsGUI {
                 "B # # # # # # # #"
         };
 
-        if (!NickoBukkit.getInstance().getNickoConfig().isBungeecordSupport()) {
+        if (!NickoBukkit.getInstance().getNicko().getConfig().bungeecord()) {
             dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
         }
 

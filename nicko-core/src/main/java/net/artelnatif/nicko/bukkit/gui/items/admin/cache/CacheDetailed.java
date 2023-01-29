@@ -1,9 +1,9 @@
-package net.artelnatif.nicko.gui.items.admin.cache;
+package net.artelnatif.nicko.bukkit.gui.items.admin.cache;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
-import net.artelnatif.nicko.gui.admin.cache.CacheDetailledGUI;
+import net.artelnatif.nicko.bukkit.gui.admin.cache.CacheDetailledGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

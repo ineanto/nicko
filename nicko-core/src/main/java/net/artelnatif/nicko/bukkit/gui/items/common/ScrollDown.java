@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.common;
+package net.artelnatif.nicko.bukkit.gui.items.common;
 
 import de.studiocode.invui.gui.impl.ScrollGUI;
 import de.studiocode.invui.item.ItemProvider;

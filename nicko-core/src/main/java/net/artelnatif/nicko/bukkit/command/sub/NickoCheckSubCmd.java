@@ -1,6 +1,6 @@
-package net.artelnatif.nicko.command.sub;
+package net.artelnatif.nicko.bukkit.command.sub;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
@@ -28,7 +28,7 @@ public class NickoCheckSubCmd {
         }
 
         final StringJoiner builder = new StringJoiner("\n");
-        builder.add("§c" + NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§6Check for: §f§o" + targetName);
+        builder.add("§c" + NickoBukkit.getInstance().getNicko().getConfig().prefix() + "§6Check for: §f§o" + targetName);
         if (!appearanceManager.hasData()) {
             builder.add("§cThis player has not data.");
         } else {

@@ -1,11 +1,11 @@
-package net.artelnatif.nicko.gui;
+package net.artelnatif.nicko.bukkit.gui;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.items.admin.ManageCache;
-import net.artelnatif.nicko.gui.items.common.GoBack;
+import net.artelnatif.nicko.bukkit.gui.items.common.GoBack;
+import net.artelnatif.nicko.bukkit.gui.items.admin.ManageCache;
 import org.bukkit.entity.Player;
 
 public class AdminGUI {

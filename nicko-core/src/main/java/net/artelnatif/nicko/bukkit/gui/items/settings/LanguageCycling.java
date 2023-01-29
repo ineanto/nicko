@@ -1,11 +1,11 @@
-package net.artelnatif.nicko.gui.items.settings;
+package net.artelnatif.nicko.bukkit.gui.items.settings;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
 import de.studiocode.invui.item.impl.CycleItem;
 import de.studiocode.invui.item.impl.SimpleItem;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.Locale;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ public class LanguageCycling {
 
     public BaseItem get(Player player) {
         final NickoBukkit instance = NickoBukkit.getInstance();
-        Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
+        Optional<NickoProfile> profile = instance.getNicko().getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();
@@ -52,7 +52,7 @@ public class LanguageCycling {
 
         final ArrayList<Locale> localesToGenerate = new ArrayList<>();
         Collections.addAll(localesToGenerate, Locale.values());
-        if (!instance.getNickoConfig().isCustomLocale()) {
+        if (!instance.getNicko().getConfig().customLocale()) {
             localesToGenerate.remove(Locale.CUSTOM);
         }
         localesToGenerate.forEach(locale -> items.add(generateItem(locale, localesToGenerate)));

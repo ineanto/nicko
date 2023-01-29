@@ -1,13 +1,13 @@
-package net.artelnatif.nicko.gui;
+package net.artelnatif.nicko.bukkit.gui;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.items.main.AdminSubGUI;
-import net.artelnatif.nicko.gui.items.main.ResetAppearance;
-import net.artelnatif.nicko.gui.items.main.SettingsSubGUI;
-import net.artelnatif.nicko.gui.items.main.AppearanceManagerSubGUI;
+import net.artelnatif.nicko.bukkit.gui.items.main.AdminSubGUI;
+import net.artelnatif.nicko.bukkit.gui.items.main.AppearanceManagerSubGUI;
+import net.artelnatif.nicko.bukkit.gui.items.main.ResetAppearance;
+import net.artelnatif.nicko.bukkit.gui.items.main.SettingsSubGUI;
 import org.bukkit.entity.Player;
 
 public class MainGUI {

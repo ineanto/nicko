@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.placeholder;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +48,7 @@ public class NickoExpansion extends PlaceholderExpansion {
         locale = "N/A";
         bungeecord = true;
 
-        final Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = instance.getNicko().getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
             if (!profile.isEmpty()) {

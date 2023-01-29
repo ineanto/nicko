@@ -1,6 +1,7 @@
 package net.artelnatif.nicko.storage;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.storage.json.JSONStorage;
@@ -18,8 +19,8 @@ public class PlayerDataStore {
     private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
     private final HashMap<UUID, String> names = new HashMap<>();
 
-    public PlayerDataStore(NickoBukkit instance) {
-        this.storage = instance.getNickoConfig().isLocalStorage() ? new JSONStorage(instance) : new SQLStorage(instance);
+    public PlayerDataStore(Nicko nicko) {
+        this.storage = nicko.getConfig().local() ? new JSONStorage(nicko) : new SQLStorage(nicko);
     }
 
     public void storeName(Player player) {

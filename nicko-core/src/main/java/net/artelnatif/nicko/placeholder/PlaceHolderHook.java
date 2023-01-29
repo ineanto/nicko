@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.placeholder;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import org.bukkit.Bukkit;
 
 public class PlaceHolderHook {

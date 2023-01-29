@@ -1,23 +1,23 @@
-package net.artelnatif.nicko;
+package net.artelnatif.nicko.bukkit;
 
 import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
+import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.command.NickoCommand;
+import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
+import net.artelnatif.nicko.bukkit.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.bungee.BungeeCordSupport;
 import net.artelnatif.nicko.bungee.NickoBungee;
-import net.artelnatif.nicko.command.NickoCommand;
-import net.artelnatif.nicko.config.NickoConfiguration;
+import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
-import net.artelnatif.nicko.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.i18n.LocaleFileManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
-import net.artelnatif.nicko.pluginchannel.PluginMessageHandler;
-import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,11 +29,10 @@ import java.io.File;
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
 
+    private final Nicko nicko = new Nicko();
     private final boolean unitTesting;
 
-    private NickoConfiguration config;
     private MojangAPI mojangAPI;
-    private PlayerDataStore dataStore;
     private LocaleFileManager localeFileManager;
 
     public NickoBukkit() { this.unitTesting = false; }
@@ -41,10 +40,10 @@ public class NickoBukkit extends JavaPlugin {
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, NickoConfiguration config) {
+    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, Configuration config) {
         super(loader, description, dataFolder, file);
         unitTesting = true;
-        this.config = config;
+        nicko.setConfig(config);
         getLogger().info("Unit Testing Mode enabled.");
     }
 
@@ -60,39 +59,35 @@ public class NickoBukkit extends JavaPlugin {
     }
 
     public void onUnitTestingStartup() {
-        getLogger().info("Loading persistence...");
-        dataStore = new PlayerDataStore(this);
+        nicko.initBukkit(this);
 
-        if (!dataStore.getStorage().getProvider().init()) {
-            dataStore.getStorage().setError(true);
+        if (!nicko.getDataStore().getStorage().getProvider().init()) {
+            nicko.getDataStore().getStorage().setError(true);
             getLogger().severe("Failed to open persistence, data will NOT be saved!");
         }
     }
 
     public void onPluginStartup() {
-        getLogger().info("Loading configuration...");
-        saveDefaultConfig();
-        config = new NickoConfiguration(this);
-        dataStore = new PlayerDataStore(this);
+        nicko.initBukkit(this);
 
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
             getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
-            dataStore.getStorage().setError(true);
+            nicko.getDataStore().getStorage().setError(true);
             getServer().getPluginManager().disablePlugin(this);
         }
 
-        if (getServer().getPluginManager().isPluginEnabled(this) && !dataStore.getStorage().isError()) {
+        if (getServer().getPluginManager().isPluginEnabled(this) && !nicko.getDataStore().getStorage().isError()) {
             getLogger().info("Loading persistence...");
-            if (!dataStore.getStorage().getProvider().init()) {
-                dataStore.getStorage().setError(true);
+            if (!nicko.getDataStore().getStorage().getProvider().init()) {
+                nicko.getDataStore().getStorage().setError(true);
                 getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
 
             mojangAPI = new MojangAPI(this);
 
             localeFileManager = new LocaleFileManager();
-            if (config.isCustomLocale()) {
+            if (nicko.getConfig().customLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
                     getLogger().info("Successfully loaded custom language file.");
                 } else {
@@ -116,7 +111,7 @@ public class NickoBukkit extends JavaPlugin {
 
             final BungeeCordSupport support = new BungeeCordSupport(this);
             support.warnNickoNotHookedToBungeeCord();
-            if (config.isBungeecordSupport()) {
+            if (nicko.getConfig().bungeecord()) {
                 if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
                     getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageHandler());
@@ -129,16 +124,16 @@ public class NickoBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (!dataStore.getStorage().isError()) {
+        if (!nicko.getDataStore().getStorage().isError()) {
             getLogger().info("Closing persistence...");
-            dataStore.removeAllNames();
-            dataStore.saveAll();
-            if (!dataStore.getStorage().getProvider().close()) {
+            nicko.getDataStore().removeAllNames();
+            nicko.getDataStore().saveAll();
+            if (!nicko.getDataStore().getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");
             }
         }
 
-        if (config.isBungeecordSupport()) {
+        if (nicko.getConfig().bungeecord()) {
             getServer().getMessenger().unregisterIncomingPluginChannel(this);
             getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         }
@@ -150,13 +145,13 @@ public class NickoBukkit extends JavaPlugin {
         return plugin;
     }
 
+    public Nicko getNicko() {
+        return nicko;
+    }
+
     public MojangAPI getMojangAPI() {
         return mojangAPI;
     }
-
-    public NickoConfiguration getNickoConfig() { return config; }
-
-    public PlayerDataStore getDataStore() { return dataStore; }
 
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;

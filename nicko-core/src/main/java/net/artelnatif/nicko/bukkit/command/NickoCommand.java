@@ -1,9 +1,9 @@
-package net.artelnatif.nicko.command;
+package net.artelnatif.nicko.bukkit.command;
 
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.command.sub.NickoCheckSubCmd;
-import net.artelnatif.nicko.command.sub.NickoDebugSubCmd;
-import net.artelnatif.nicko.gui.MainGUI;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.bukkit.command.sub.NickoCheckSubCmd;
+import net.artelnatif.nicko.bukkit.command.sub.NickoDebugSubCmd;
+import net.artelnatif.nicko.bukkit.gui.MainGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.skin;
+package net.artelnatif.nicko.bukkit.gui.items.skin;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;

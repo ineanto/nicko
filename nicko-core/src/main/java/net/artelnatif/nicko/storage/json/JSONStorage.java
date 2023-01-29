@@ -2,27 +2,26 @@ package net.artelnatif.nicko.storage.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 import net.artelnatif.nicko.storage.StorageProvider;
-import net.artelnatif.nicko.storage.sql.SQLStorageProvider;
 
 import java.io.*;
 import java.util.Optional;
 import java.util.UUID;
 
 public class JSONStorage extends Storage {
-    private final NickoBukkit instance;
+    private final Nicko nicko;
+    private final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+    private final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
 
     private JSONStorageProvider provider;
 
-    final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-    final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
-
-    public JSONStorage(NickoBukkit instance) { this.instance = instance; }
+    public JSONStorage(Nicko nicko) { this.nicko = nicko; }
 
     @Override
     public StorageProvider getProvider() {
@@ -44,12 +43,12 @@ public class JSONStorage extends Storage {
                         writer.write(profileToJson);
                     }
                 } catch (IOException e) {
-                    instance.getLogger().warning("Could not write to file.");
+                    nicko.getLogger().warning("Could not write to file.");
                     return new ActionResult<>(I18NDict.Error.JSON_ERROR);
                 }
             }
         } catch (IOException e) {
-            instance.getLogger().warning("Could not create file.");
+            nicko.getLogger().warning("Could not create file.");
             return new ActionResult<>(I18NDict.Error.JSON_ERROR);
         }
 

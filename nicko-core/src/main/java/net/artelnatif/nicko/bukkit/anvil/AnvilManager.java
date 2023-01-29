@@ -1,6 +1,6 @@
-package net.artelnatif.nicko.anvil;
+package net.artelnatif.nicko.bukkit.anvil;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18N;

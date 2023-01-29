@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.impl;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.i18n.I18NDict;

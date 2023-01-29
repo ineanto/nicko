@@ -3,8 +3,8 @@ package net.artelnatif.nicko.test.storage;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.config.NickoConfiguration;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.Locale;
@@ -16,13 +16,14 @@ public class SQLStorageTest {
 
     @BeforeAll
     public static void setup() {
-        final NickoConfiguration config = new NickoConfiguration(null);
-        config.setLocalStorage(false);
-        config.setBungeecordSupport(false);
-        config.setSQLAddress("127.0.0.1");
-        config.setSQLUsername("root");
-        config.setSQLPassword("12345"); // https://howsecureismypassword.net/ "Your password would be cracked: Instantly"
-
+        final Configuration config = new Configuration(
+                "127.0.0.1",
+                "root",
+                "12345",
+                "",
+                false,
+                false,
+                false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
     }
@@ -30,7 +31,7 @@ public class SQLStorageTest {
     @Test
     @DisplayName("Create SQL Tables")
     public void createSQLTables() {
-        Assertions.assertFalse(plugin.getDataStore().getStorage().isError());
+        Assertions.assertFalse(plugin.getNicko().getDataStore().getStorage().isError());
     }
 
     @Test
@@ -38,7 +39,7 @@ public class SQLStorageTest {
     public void storePlayer() {
         final PlayerMock playerMock = server.addPlayer();
         final NickoProfile profile = new NickoProfile("Notch", "Notch", Locale.ENGLISH, true);
-        final ActionResult<Void> storeAction = plugin.getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
+        final ActionResult<Void> storeAction = plugin.getNicko().getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
         Assertions.assertFalse(storeAction.isError());
     }
 

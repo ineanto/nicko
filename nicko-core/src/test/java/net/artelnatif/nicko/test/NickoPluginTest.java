@@ -1,29 +1,32 @@
 package net.artelnatif.nicko.test;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.config.NickoConfiguration;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.config.Configuration;
 import org.junit.jupiter.api.*;
 
 public class NickoPluginTest {
-    private static ServerMock server;
     private static NickoBukkit plugin;
 
     @BeforeAll
     public static void setup() {
-        final NickoConfiguration config = new NickoConfiguration(null);
-        config.setLocalStorage(true);
-        config.setBungeecordSupport(false);
-        server = MockBukkit.mock();
+        final Configuration config = new Configuration(
+                "",
+                "",
+                "",
+                "",
+                true,
+                false,
+                false);
+        MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
     }
 
     @Test
     @DisplayName("Plugin Initialization")
     public void testPluginInitialization() {
-        Assertions.assertNotNull(plugin.getDataStore().getStorage().getProvider());
-        Assertions.assertNotNull(plugin.getNickoConfig());
+        Assertions.assertNotNull(plugin.getNicko().getDataStore().getStorage().getProvider());
+        Assertions.assertNotNull(plugin.getNicko().getConfig());
     }
 
     @AfterAll

@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.admin.cache;
+package net.artelnatif.nicko.bukkit.gui.admin.cache;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
@@ -6,12 +6,12 @@ import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.gui.structure.Markers;
 import de.studiocode.invui.item.Item;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.gui.admin.CacheManagementGUI;
-import net.artelnatif.nicko.gui.items.admin.cache.SkinPlaceholder;
-import net.artelnatif.nicko.gui.items.common.GoBack;
-import net.artelnatif.nicko.gui.items.common.ScrollDown;
-import net.artelnatif.nicko.gui.items.common.ScrollUp;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.bukkit.gui.items.admin.cache.SkinPlaceholder;
+import net.artelnatif.nicko.bukkit.gui.admin.CacheManagementGUI;
+import net.artelnatif.nicko.bukkit.gui.items.common.GoBack;
+import net.artelnatif.nicko.bukkit.gui.items.common.ScrollDown;
+import net.artelnatif.nicko.bukkit.gui.items.common.ScrollUp;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import org.bukkit.entity.Player;
 

@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.storage.sql;
 
-import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.config.NickoConfiguration;
+import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.storage.StorageProvider;
 import org.mariadb.jdbc.MariaDbDataSource;
 
@@ -10,37 +10,37 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SQLStorageProvider implements StorageProvider {
-    private final NickoBukkit instance;
+    private final Nicko nicko;
     private Connection connection;
     private MariaDbDataSource dataSource;
 
     private final String schemaName = "nicko";
 
-    public SQLStorageProvider(NickoBukkit instance) {
-        this.instance = instance;
+    public SQLStorageProvider(Nicko nicko) {
+        this.nicko = nicko;
     }
 
     @Override
     public boolean init() {
         try {
-            final NickoConfiguration config = instance.getNickoConfig();
+            final Configuration config = nicko.getConfig();
             dataSource = new MariaDbDataSource();
-            dataSource.setUrl("jdbc:mariadb://" + config.getSQLAddress());
-            dataSource.setUser(config.getSQLUsername());
-            dataSource.setPassword(config.getSQLPassword());
+            dataSource.setUrl("jdbc:mariadb://" + config.address());
+            dataSource.setUser(config.username());
+            dataSource.setPassword(config.password());
             connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 
             if (!initialized) return false;
 
-            instance.getLogger().info("Creating SQL database...");
+            nicko.getLogger().info("Creating SQL database...");
             createDatabase();
 
-            instance.getLogger().info("Creating SQL table...");
+            nicko.getLogger().info("Creating SQL table...");
             createTable();
             return true;
         } catch (SQLException e) {
-            instance.getLogger().severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
+            nicko.getLogger().severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
             return false;
         }
     }

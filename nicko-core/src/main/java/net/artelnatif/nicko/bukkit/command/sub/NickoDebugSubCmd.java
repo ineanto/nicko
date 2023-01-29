@@ -1,6 +1,6 @@
-package net.artelnatif.nicko.command.sub;
+package net.artelnatif.nicko.bukkit.command.sub;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import org.bukkit.Bukkit;
@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 
 public class NickoDebugSubCmd {
     public void execute(CommandSender sender, String[] args) {
+        final String prefix = NickoBukkit.getInstance().getNicko().getConfig().prefix();
+
         Player target;
         String name, skin;
         if (args.length == 3) {
@@ -18,7 +20,7 @@ public class NickoDebugSubCmd {
             skin = args[2];
         } else {
             if (args.length < 3) {
-                sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cMissing argument.");
+                sender.sendMessage(prefix + "§cMissing argument.");
                 return;
             }
 
@@ -28,7 +30,7 @@ public class NickoDebugSubCmd {
 
             target = Bukkit.getPlayer(playerName);
             if (target == null) {
-                sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cSpecified player is offline.");
+                sender.sendMessage(prefix + "§cSpecified player is offline.");
                 return;
             }
         }
@@ -36,11 +38,11 @@ public class NickoDebugSubCmd {
         final AppearanceManager appearanceManager = AppearanceManager.get(target.getPlayer());
 
         if (MojangUtils.isUsernameInvalid(name) || MojangUtils.isUsernameInvalid(skin)) {
-            sender.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cSpecified username is invalid.");
+            sender.sendMessage(prefix + "§cSpecified username is invalid.");
         }
 
         appearanceManager.setNameAndSkin(name, skin);
-        target.sendMessage(NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§aWhoosh!");
+        target.sendMessage(prefix + "§aWhoosh!");
         target.playSound(target.getLocation(), Sound.ENTITY_ITEM_FRAME_PLACE, 1, 1);
     }
 }

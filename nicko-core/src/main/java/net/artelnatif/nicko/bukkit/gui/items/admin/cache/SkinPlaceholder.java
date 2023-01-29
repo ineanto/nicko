@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.admin.cache;
+package net.artelnatif.nicko.bukkit.gui.items.admin.cache;
 
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.builder.SkullBuilder;

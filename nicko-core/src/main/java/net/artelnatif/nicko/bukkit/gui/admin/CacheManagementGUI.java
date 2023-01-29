@@ -1,14 +1,14 @@
-package net.artelnatif.nicko.gui.admin;
+package net.artelnatif.nicko.bukkit.gui.admin;
 
 import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.AdminGUI;
-import net.artelnatif.nicko.gui.items.admin.cache.CacheDetailed;
-import net.artelnatif.nicko.gui.items.admin.cache.CacheInvalidate;
-import net.artelnatif.nicko.gui.items.admin.cache.CacheOverview;
-import net.artelnatif.nicko.gui.items.common.GoBack;
+import net.artelnatif.nicko.bukkit.gui.AdminGUI;
+import net.artelnatif.nicko.bukkit.gui.items.admin.cache.CacheDetailed;
+import net.artelnatif.nicko.bukkit.gui.items.admin.cache.CacheInvalidate;
+import net.artelnatif.nicko.bukkit.gui.items.admin.cache.CacheOverview;
+import net.artelnatif.nicko.bukkit.gui.items.common.GoBack;
 import org.bukkit.entity.Player;
 
 public class CacheManagementGUI {

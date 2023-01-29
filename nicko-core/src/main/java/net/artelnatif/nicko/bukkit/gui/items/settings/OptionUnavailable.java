@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.settings;
+package net.artelnatif.nicko.bukkit.gui.items.settings;
 
 import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;

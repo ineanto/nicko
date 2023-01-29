@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.disguise;
 
-import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ public class AppearanceManager {
     private final NickoProfile profile;
     private final Player player;
     private final NickoBukkit instance = NickoBukkit.getInstance();
-    private final PlayerDataStore dataStore = instance.getDataStore();
+    private final PlayerDataStore dataStore = instance.getNicko().getDataStore();
 
     private AppearanceManager(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
@@ -65,21 +65,21 @@ public class AppearanceManager {
         updatePlayer(true);
     }
 
-    public ActionResult reset() {
-        final String defaultName = instance.getDataStore().getStoredName(player);
+    public ActionResult<Void> reset() {
+        final String defaultName = instance.getNicko().getDataStore().getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
-        final ActionResult actionResult = resetPlayer();
+        final ActionResult<Void> actionResult = resetPlayer();
         this.profile.setSkin(null);
         this.profile.setName(null);
         return actionResult;
     }
 
-    public ActionResult resetPlayer() {
+    public ActionResult<Void> resetPlayer() {
         return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, true, true);
     }
 
-    public ActionResult updatePlayer(boolean skinChange) {
+    public ActionResult<Void> updatePlayer(boolean skinChange) {
         return NickoBukkit.getInstance().getInternals().updateProfile(player, profile, skinChange, false);
     }
 }

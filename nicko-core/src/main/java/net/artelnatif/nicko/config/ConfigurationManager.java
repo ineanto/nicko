@@ -29,7 +29,6 @@ public class ConfigurationManager {
 
     public void saveDefaultConfig() {
         if (!file.exists()) {
-            System.out.println("FILE DOES NOT EXISTS");
             try {
                 final InputStream input = getClass().getResourceAsStream("/config.yml");
                 if (input != null) {

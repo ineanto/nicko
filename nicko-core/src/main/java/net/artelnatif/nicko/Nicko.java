@@ -14,6 +14,7 @@ public class Nicko {
     private ConfigurationManager configManager;
     private Logger logger;
     private File dataFolder;
+    private boolean bungeecord;
     private Configuration config;
 
     private PlayerDataStore dataStore;
@@ -65,5 +66,13 @@ public class Nicko {
 
     public void setConfig(Configuration config) {
         this.config = config;
+    }
+
+    public boolean isBungeecord() {
+        return bungeecord;
+    }
+
+    public void setBungeecord(boolean bungeecord) {
+        this.bungeecord = bungeecord;
     }
 }

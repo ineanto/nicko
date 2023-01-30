@@ -1,6 +1,8 @@
 package net.artelnatif.nicko.bungee;
 
+import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bungee.event.UpdateMessageListener;
+import net.artelnatif.nicko.storage.sql.SQLStorageProvider;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class NickoBungee extends Plugin {
@@ -9,27 +11,51 @@ public class NickoBungee extends Plugin {
     public static final String PROXY_FETCH = NICKO_PLUGIN_CHANNEL_BASE + "fetch";
     public static final String SERVER_DATA = NICKO_PLUGIN_CHANNEL_BASE + "data";
 
+    private final Nicko nicko = new Nicko();
+
     private static NickoBungee plugin;
 
     @Override
     public void onEnable() {
         plugin = this;
+        nicko.initBungeecord(this);
 
-        getLogger().info("Registering channel...");
-        getProxy().registerChannel(SERVER_DATA);
+        getLogger().info("Loading persistence...");
+        if (!(nicko.getDataStore().getStorage().getProvider() instanceof SQLStorageProvider)) {
+            getLogger().severe("Nicko does not support local storage in combination with Bungeecord.");
+            getLogger().severe("The plugin will not continue.");
+            nicko.getDataStore().getStorage().setError(true);
+            nicko.setBungeecord(false);
+            onDisable();
+            return;
+        }
 
-        getLogger().info("Registering listener...");
-        getProxy().getPluginManager().registerListener(this, new UpdateMessageListener());
+        if (!nicko.getDataStore().getStorage().isError()) {
+            if (!nicko.getDataStore().getStorage().getProvider().init()) {
+                getLogger().severe("Failed to open persistence!");
+                getLogger().severe("Player data transfer is disabled.");
+                nicko.setBungeecord(false);
+                return;
+            }
 
-        getLogger().info("Nicko (Bungee) has been enabled.");
+            getLogger().info("Registering channel...");
+            getProxy().registerChannel(SERVER_DATA);
+
+            getLogger().info("Registering listener...");
+            getProxy().getPluginManager().registerListener(this, new UpdateMessageListener());
+
+            getLogger().info("Nicko (Bungee) has been enabled.");
+        }
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Unregistering channels...");
-        getProxy().unregisterChannel(PROXY_UPDATE);
+        if (!nicko.getDataStore().getStorage().isError()) {
+            getLogger().info("Unregistering channels...");
+            getProxy().unregisterChannel(PROXY_UPDATE);
 
-        getLogger().info("Nicko (Bungee) has been disabled.");
+            getLogger().info("Nicko (Bungee) has been disabled.");
+        }
     }
 
     public static NickoBungee getInstance() {

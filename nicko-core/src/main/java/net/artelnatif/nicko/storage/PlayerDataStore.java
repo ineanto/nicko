@@ -1,12 +1,10 @@
 package net.artelnatif.nicko.storage;
 
 import net.artelnatif.nicko.Nicko;
-import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.storage.json.JSONStorage;
 import net.artelnatif.nicko.storage.sql.SQLStorage;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -16,10 +14,12 @@ import java.util.UUID;
 
 public class PlayerDataStore {
     private final Storage storage;
+    private final Nicko nicko;
     private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
     private final HashMap<UUID, String> names = new HashMap<>();
 
     public PlayerDataStore(Nicko nicko) {
+        this.nicko = nicko;
         this.storage = nicko.getConfig().local() ? new JSONStorage(nicko) : new SQLStorage(nicko);
     }
 
@@ -40,11 +40,6 @@ public class PlayerDataStore {
     public void removeAllNames() {
         names.clear();
     }
-
-    public void saveAll() {
-        Bukkit.getOnlinePlayers().forEach(this::saveData);
-    }
-
 
     public Optional<NickoProfile> getData(UUID uuid) {
         if (storage.isError()) {
@@ -70,7 +65,7 @@ public class PlayerDataStore {
         }
 
         try {
-            final Optional<String> uuidTrimmed = NickoBukkit.getInstance().getMojangAPI().getUUID(name);
+            final Optional<String> uuidTrimmed = nicko.getMojangAPI().getUUID(name);
             if (uuidTrimmed.isPresent()) {
                 final UUID uuid = MojangUtils.fromTrimmed(uuidTrimmed.get());
                 return getData(uuid);

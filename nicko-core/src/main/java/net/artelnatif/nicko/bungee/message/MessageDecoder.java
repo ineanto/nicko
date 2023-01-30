@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.bungee.message;
 
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
 
 import java.io.DataInputStream;
 import java.io.IOException;

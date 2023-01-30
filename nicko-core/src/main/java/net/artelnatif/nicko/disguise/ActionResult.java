@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.disguise;
 
-import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 
 public class ActionResult<R> {
     private final I18NDict errorMessage;

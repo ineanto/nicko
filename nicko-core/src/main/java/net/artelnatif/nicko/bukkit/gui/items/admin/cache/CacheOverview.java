@@ -19,7 +19,7 @@ public class CacheOverview extends BaseItem {
     @Override
     public ItemProvider getItemProvider() {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getMojangAPI().getCache();
+        final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getNicko().getMojangAPI().getCache();
         final CacheStats stats = cache.stats();
         builder.setDisplayName("§6Skin cache §foverview:");
         builder.addLoreLines(

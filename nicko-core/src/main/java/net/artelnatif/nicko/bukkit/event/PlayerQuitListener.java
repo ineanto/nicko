@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.event;
+package net.artelnatif.nicko.bukkit.event;
 
 import net.artelnatif.nicko.bukkit.NickoBukkit;
 import org.bukkit.entity.Player;

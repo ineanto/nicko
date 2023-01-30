@@ -1,9 +1,9 @@
 package net.artelnatif.nicko.bukkit.command.sub;
 
 import net.artelnatif.nicko.bukkit.NickoBukkit;
-import net.artelnatif.nicko.disguise.AppearanceManager;
-import net.artelnatif.nicko.i18n.I18N;
-import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.bukkit.appearance.AppearanceManager;
+import net.artelnatif.nicko.bukkit.i18n.I18N;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

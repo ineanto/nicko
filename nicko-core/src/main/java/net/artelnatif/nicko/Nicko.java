@@ -2,6 +2,7 @@ package net.artelnatif.nicko;
 
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
+import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +15,7 @@ public class Nicko {
     private ConfigurationManager configManager;
     private Logger logger;
     private File dataFolder;
+    private MojangAPI mojangAPI;
     private boolean bungeecord;
     private Configuration config;
 
@@ -35,6 +37,7 @@ public class Nicko {
         configManager = new ConfigurationManager(this);
         configManager.saveDefaultConfig();
 
+        mojangAPI = new MojangAPI(this);
         dataStore = new PlayerDataStore(this);
     }
 
@@ -48,6 +51,10 @@ public class Nicko {
 
     public File getDataFolder() {
         return dataFolder;
+    }
+
+    public MojangAPI getMojangAPI() {
+        return mojangAPI;
     }
 
     public ConfigurationManager getConfigManager() {

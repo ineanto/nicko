@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.i18n;
+package net.artelnatif.nicko.bukkit.i18n;
 
 public record I18NDict(String key) {
     public static class Event {

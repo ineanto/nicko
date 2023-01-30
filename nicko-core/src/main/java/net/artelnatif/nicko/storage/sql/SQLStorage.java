@@ -3,7 +3,7 @@ package net.artelnatif.nicko.storage.sql;
 import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 
 import java.nio.ByteBuffer;

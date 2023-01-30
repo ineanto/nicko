@@ -9,14 +9,15 @@ import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.bukkit.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.config.Configuration;
-import net.artelnatif.nicko.event.PlayerJoinListener;
-import net.artelnatif.nicko.event.PlayerQuitListener;
-import net.artelnatif.nicko.i18n.Locale;
-import net.artelnatif.nicko.i18n.LocaleFileManager;
+import net.artelnatif.nicko.bukkit.event.PlayerJoinListener;
+import net.artelnatif.nicko.bukkit.event.PlayerQuitListener;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.LocaleFileManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
-import net.artelnatif.nicko.placeholder.PlaceHolderHook;
+import net.artelnatif.nicko.bukkit.placeholder.PlaceHolderHook;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -83,7 +84,7 @@ public class NickoBukkit extends JavaPlugin {
                 getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
 
-            mojangAPI = new MojangAPI(this);
+            mojangAPI = new MojangAPI(nicko);
 
             localeFileManager = new LocaleFileManager();
             if (nicko.getConfig().customLocale()) {
@@ -126,7 +127,7 @@ public class NickoBukkit extends JavaPlugin {
         if (!nicko.getDataStore().getStorage().isError()) {
             getLogger().info("Closing persistence...");
             nicko.getDataStore().removeAllNames();
-            nicko.getDataStore().saveAll();
+            Bukkit.getOnlinePlayers().forEach(player -> nicko.getDataStore().saveData(player));
             if (!nicko.getDataStore().getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");
             }
@@ -146,10 +147,6 @@ public class NickoBukkit extends JavaPlugin {
 
     public Nicko getNicko() {
         return nicko;
-    }
-
-    public MojangAPI getMojangAPI() {
-        return mojangAPI;
     }
 
     public LocaleFileManager getLocaleFileManager() {

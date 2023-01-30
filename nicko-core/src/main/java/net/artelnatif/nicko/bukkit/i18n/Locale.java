@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.i18n;
+package net.artelnatif.nicko.bukkit.i18n;
 
 import java.io.Serializable;
 

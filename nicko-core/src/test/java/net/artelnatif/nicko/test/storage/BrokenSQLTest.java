@@ -7,7 +7,7 @@ import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
 import org.junit.jupiter.api.*;
 
 public class BrokenSQLTest {

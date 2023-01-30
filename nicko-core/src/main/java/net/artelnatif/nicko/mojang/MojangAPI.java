@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.Nicko;
 
 import javax.annotation.Nonnull;
 import javax.net.ssl.HttpsURLConnection;
@@ -36,10 +36,10 @@ public class MojangAPI {
             .expireAfterWrite(24, TimeUnit.HOURS)
             .build(loader);
 
-    private final NickoBukkit instance;
+    private final Nicko nicko;
 
-    public MojangAPI(NickoBukkit instance) {
-        this.instance = instance;
+    public MojangAPI(Nicko nicko) {
+        this.nicko = nicko;
     }
 
     public Optional<MojangSkin> getSkin(String uuid) throws IOException, ExecutionException {
@@ -78,11 +78,11 @@ public class MojangAPI {
 
         switch (con.getResponseCode()) {
             case 400 -> {
-                instance.getLogger().warning("Failed to parse request: Invalid Name");
+                nicko.getLogger().warning("Failed to parse request: Invalid Name");
                 return getErrorObject();
             }
             case 429 -> {
-                instance.getLogger().warning("Failed to parse request: The connection is throttled.");
+                nicko.getLogger().warning("Failed to parse request: The connection is throttled.");
                 return getErrorObject();
             }
             case 200 -> {
@@ -97,12 +97,12 @@ public class MojangAPI {
                     final JsonElement jsonElt = JsonParser.parseString(builder.toString());
                     return jsonElt.getAsJsonObject();
                 } catch (JsonParseException | IllegalStateException exception) {
-                    instance.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")!");
+                    nicko.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")!");
                     return getErrorObject();
                 }
             }
             default -> {
-                instance.getLogger().warning("Unhandled response code from Mojang: " + con.getResponseCode());
+                nicko.getLogger().warning("Unhandled response code from Mojang: " + con.getResponseCode());
                 return getErrorObject();
             }
         }

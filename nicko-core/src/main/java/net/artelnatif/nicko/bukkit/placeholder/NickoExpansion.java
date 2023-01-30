@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.placeholder;
+package net.artelnatif.nicko.bukkit.placeholder;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.artelnatif.nicko.bukkit.NickoBukkit;

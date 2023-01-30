@@ -4,8 +4,8 @@ import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
 import net.artelnatif.nicko.bukkit.NickoBukkit;
-import net.artelnatif.nicko.i18n.I18N;
-import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.bukkit.i18n.I18N;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -31,7 +31,7 @@ public class CacheInvalidate extends BaseItem {
         if (clickType.isLeftClick() || clickType.isRightClick()) {
             event.getView().close();
             player.sendMessage(I18N.translate(player, I18NDict.Event.Admin.CACHE_CLEAN));
-            NickoBukkit.getInstance().getMojangAPI().getCache().invalidateAll();
+            NickoBukkit.getInstance().getNicko().getMojangAPI().getCache().invalidateAll();
         }
     }
 }

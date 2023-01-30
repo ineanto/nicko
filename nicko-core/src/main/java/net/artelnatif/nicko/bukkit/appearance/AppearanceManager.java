@@ -1,6 +1,8 @@
-package net.artelnatif.nicko.disguise;
+package net.artelnatif.nicko.bukkit.appearance;
 
 import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.disguise.ActionResult;
+import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

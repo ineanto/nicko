@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.disguise;
 
-import net.artelnatif.nicko.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
 
 public class NickoProfile implements Cloneable {
     public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Locale.ENGLISH, true);

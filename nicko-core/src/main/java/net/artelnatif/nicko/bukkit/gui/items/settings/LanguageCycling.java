@@ -7,7 +7,7 @@ import de.studiocode.invui.item.impl.CycleItem;
 import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

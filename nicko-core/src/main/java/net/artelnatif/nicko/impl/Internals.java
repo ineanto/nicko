@@ -3,7 +3,7 @@ package net.artelnatif.nicko.impl;
 import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.disguise.ActionResult;
-import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public interface Internals {
     default ActionResult<MojangSkin> fetchSkinTextures(NickoProfile profile, boolean reset) {
         Optional<MojangSkin> skin;
         try {
-            final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
+            final MojangAPI mojang = NickoBukkit.getInstance().getNicko().getMojangAPI();
             final Optional<String> uuid = mojang.getUUID(profile.getSkin());
             if (uuid.isPresent()) {
                 skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));

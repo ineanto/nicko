@@ -37,6 +37,7 @@
                   <include>com.github.jsixface:*</include>
                   <include>com.fasterxml.jackson.dataformat</include>
                   <include>com.fasterxml.jackson.core</include>
+                  <include>org.mariadb.jdbc</include>
                 </includes>
               </artifactSet>
               <relocations>
@@ -59,6 +60,10 @@
                 <relocation>
                   <pattern>com.fasterxml.jackson.core</pattern>
                   <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.mariadb.jdbc</pattern>
+                  <shadedPattern>net.artelnatif.libs.mariadb</shadedPattern>
                 </relocation>
               </relocations>
               <minimizeJar>false</minimizeJar>
@@ -160,12 +165,6 @@
           <groupId>org.apache.maven.resolver</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-      <version>3.1.0</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
   <properties>

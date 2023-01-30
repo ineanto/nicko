@@ -150,6 +150,7 @@
                                     <include>com.github.jsixface:*</include>
                                     <include>com.fasterxml.jackson.dataformat</include>
                                     <include>com.fasterxml.jackson.core</include>
+                                    <include>org.mariadb.jdbc</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -172,6 +173,10 @@
                                 <relocation>
                                     <pattern>com.fasterxml.jackson.core</pattern>
                                     <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.mariadb.jdbc</pattern>
+                                    <shadedPattern>net.artelnatif.libs.mariadb</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

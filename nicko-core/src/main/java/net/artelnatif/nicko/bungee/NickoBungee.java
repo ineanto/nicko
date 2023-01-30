@@ -2,7 +2,6 @@ package net.artelnatif.nicko.bungee;
 
 import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bungee.event.UpdateMessageListener;
-import net.artelnatif.nicko.storage.sql.SQLStorageProvider;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class NickoBungee extends Plugin {
@@ -21,20 +20,14 @@ public class NickoBungee extends Plugin {
         nicko.initBungeecord(this);
 
         getLogger().info("Loading persistence...");
-        if (!(nicko.getDataStore().getStorage().getProvider() instanceof SQLStorageProvider)) {
-            getLogger().severe("Nicko does not support local storage in combination with Bungeecord.");
-            getLogger().severe("The plugin will not continue.");
-            nicko.getDataStore().getStorage().setError(true);
-            nicko.setBungeecord(false);
-            onDisable();
-            return;
-        }
-
         if (!nicko.getDataStore().getStorage().isError()) {
             if (!nicko.getDataStore().getStorage().getProvider().init()) {
-                getLogger().severe("Failed to open persistence!");
-                getLogger().severe("Player data transfer is disabled.");
+                getLogger().severe("Failed to load persistence!");
+                getLogger().severe("Nicko can't enable BungeeCord support without SQL storage.");
+                getLogger().severe("The plugin will not continue.");
+                nicko.getDataStore().getStorage().setError(true);
                 nicko.setBungeecord(false);
+                onDisable();
                 return;
             }
 

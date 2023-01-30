@@ -18,10 +18,10 @@
 address: "localhost"
 # SQL database's username.
 # Accepted values: any string
-username: ""
+username: "username"
 # SQL database's password.
 # Accepted values: any string
-password: ""
+password: "password"
 
 #################
 # BUKKIT/SPIGOT #

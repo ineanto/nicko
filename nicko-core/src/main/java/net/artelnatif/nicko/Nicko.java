@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Nicko {
+    private boolean bungeecord = false;
     private ConfigurationManager configManager;
     private Logger logger;
     private File dataFolder;
     private MojangAPI mojangAPI;
-    private boolean bungeecord;
     private Configuration config;
 
     private PlayerDataStore dataStore;
@@ -24,6 +24,7 @@ public class Nicko {
     public void initBungeecord(Plugin bungee) {
         logger = bungee.getLogger();
         dataFolder = bungee.getDataFolder();
+        bungeecord = true;
         initNicko();
     }
 

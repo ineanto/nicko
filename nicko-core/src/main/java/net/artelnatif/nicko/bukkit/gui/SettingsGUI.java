@@ -4,6 +4,7 @@ import de.studiocode.invui.gui.GUI;
 import de.studiocode.invui.gui.builder.GUIBuilder;
 import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
+import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.bukkit.gui.items.settings.LanguageCycling;
 import net.artelnatif.nicko.bukkit.gui.items.common.GoBack;
@@ -22,7 +23,8 @@ public class SettingsGUI {
                 "B # # # # # # # #"
         };
 
-        if (!NickoBukkit.getInstance().getNicko().getConfig().bungeecord()) {
+        final Nicko nicko = NickoBukkit.getInstance().getNicko();
+        if (!nicko.getConfig().bungeecord() && nicko.isBungeecord()) {
             dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
         }
 

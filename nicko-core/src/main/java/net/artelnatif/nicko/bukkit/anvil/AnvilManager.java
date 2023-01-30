@@ -40,6 +40,7 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
+                .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onComplete((completion) -> {
                     if (MojangUtils.isUsernameInvalid(completion.getText())) {
                         return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
@@ -56,6 +57,7 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
+                .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onComplete((completion) -> {
                     if (MojangUtils.isUsernameInvalid(completion.getText())) {
                         return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
@@ -72,6 +74,7 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(true))
+                .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onComplete((completion) -> {
                     if (MojangUtils.isUsernameInvalid(completion.getText())) {
                         return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));

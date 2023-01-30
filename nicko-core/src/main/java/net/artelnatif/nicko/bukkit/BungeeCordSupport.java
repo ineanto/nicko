@@ -1,6 +1,5 @@
-package net.artelnatif.nicko.bungee;
+package net.artelnatif.nicko.bukkit;
 
-import net.artelnatif.nicko.bukkit.NickoBukkit;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.YamlConfiguration;
 

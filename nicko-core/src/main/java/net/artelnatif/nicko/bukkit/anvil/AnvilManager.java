@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
+import java.util.List;
+
 public class AnvilManager {
     private final Player player;
     private final AppearanceManager appearanceManager;
@@ -37,13 +40,13 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
-                .onComplete((anvilPlayer, response) -> {
-                    if (MojangUtils.isUsernameInvalid(response)) {
-                        return AnvilGUI.Response.text("Invalid username!");
+                .onComplete((completion) -> {
+                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
+                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                     } else {
-                        appearanceManager.setName(response);
+                        appearanceManager.setName(completion.getText());
                         openSkinAnvil();
-                        return AnvilGUI.Response.close();
+                        return Collections.singletonList(AnvilGUI.ResponseAction.close());
                     }
                 })
                 .text("New name...");
@@ -53,18 +56,13 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
-                .onComplete((anvilPlayer, response) -> {
-                    if (MojangUtils.isUsernameInvalid(response)) {
-                        return AnvilGUI.Response.text("Invalid username!");
+                .onComplete((completion) -> {
+                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
+                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                     } else {
-                        appearanceManager.setName(response);
-                        final ActionResult actionResult = appearanceManager.updatePlayer(false);
-                        if (!actionResult.isError()) {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
-                        } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
-                        }
-                        return AnvilGUI.Response.close();
+                        appearanceManager.setName(completion.getText());
+                        final ActionResult<Void> actionResult = appearanceManager.updatePlayer(false);
+                        return sendResultAndClose(actionResult);
                     }
                 })
                 .text("New name...");
@@ -74,21 +72,25 @@ public class AnvilManager {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(true))
-                .onComplete((anvilPlayer, response) -> {
-                    if (MojangUtils.isUsernameInvalid(response)) {
-                        return AnvilGUI.Response.text("Invalid username!");
+                .onComplete((completion) -> {
+                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
+                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                     } else {
-                        appearanceManager.setSkin(response);
-                        final ActionResult actionResult = appearanceManager.updatePlayer(true);
-                        if (!actionResult.isError()) {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
-                        } else {
-                            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
-                        }
-                        return AnvilGUI.Response.close();
+                        appearanceManager.setSkin(completion.getText());
+                        final ActionResult<Void> actionResult = appearanceManager.updatePlayer(true);
+                        return sendResultAndClose(actionResult);
                     }
                 })
                 .text("New skin...");
+    }
+
+    private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult<Void> actionResult) {
+        if (!actionResult.isError()) {
+            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
+        } else {
+            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
+        }
+        return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }
 
     private ItemStack getLeftItem(boolean skin) {

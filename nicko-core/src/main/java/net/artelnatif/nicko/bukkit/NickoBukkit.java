@@ -7,7 +7,6 @@ import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bukkit.command.NickoCommand;
 import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.bukkit.pluginchannel.PluginMessageHandler;
-import net.artelnatif.nicko.bungee.BungeeCordSupport;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.event.PlayerJoinListener;

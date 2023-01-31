@@ -65,7 +65,8 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Inventory Lib -->
         <dependency>
@@ -78,12 +79,6 @@
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
             <version>1.6.3-SNAPSHOT</version>
-        </dependency>
-        <!-- Apache Lang3 (LocaleUtils) -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
         </dependency>
         <!-- Google Guava (GSON) -->
         <dependency>
@@ -111,13 +106,11 @@
             <artifactId>yamlconfig</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.14.0-rc1</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>

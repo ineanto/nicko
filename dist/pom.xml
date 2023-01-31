@@ -46,7 +46,16 @@
             <artifactId>core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        <!--
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_13_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_13_R2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
             <artifactId>v1_14_R1</artifactId>
@@ -72,7 +81,6 @@
             <artifactId>v1_16_R3</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        -->
         <dependency>
             <groupId>net.artelnatif</groupId>
             <artifactId>v1_17_R1</artifactId>

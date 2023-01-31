@@ -3,25 +3,21 @@ package net.artelnatif.nicko.impl;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
+import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangSkin;
-import net.minecraft.network.chat.IChatBaseComponent;
-import net.minecraft.network.protocol.game.*;
-import net.minecraft.network.syncher.DataWatcher;
-import net.minecraft.network.syncher.DataWatcherObject;
-import net.minecraft.network.syncher.DataWatcherRegistry;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.EntityPlayer;
-import net.minecraft.world.level.EnumGamemode;
-import net.minecraft.world.level.World;
+import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-public class v1_17_R1 implements Internals {
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+public class v1_16_R3 implements Internals {
     @Override
     public void updateSelf(Player player) {
         final EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
@@ -29,13 +25,13 @@ public class v1_17_R1 implements Internals {
         final CraftWorld world = entityPlayer.getWorld().getWorld();
         final PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(entityPlayer.getWorld().getDimensionManager(),
                 levelResourceKey, world.getSeed(),
-                entityPlayer.c.getGamemode(), entityPlayer.d.c(),
+                entityPlayer.playerInteractManager.c(), entityPlayer.playerInteractManager.getGameMode(),
                 false,
                 false,
                 false);
 
         final boolean wasFlying = player.isFlying();
-        entityPlayer.b.sendPacket(respawn);
+        entityPlayer.playerConnection.sendPacket(respawn);
         player.setFlying(wasFlying);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.updateInventory();
@@ -55,10 +51,10 @@ public class v1_17_R1 implements Internals {
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
             if (onlineEntityPlayer.getBukkitEntity().getUniqueId() != player.getUniqueId()) {
-                onlineEntityPlayer.b.sendPacket(destroy);
-                onlineEntityPlayer.b.sendPacket(spawn);
+                onlineEntityPlayer.playerConnection.sendPacket(destroy);
+                onlineEntityPlayer.playerConnection.sendPacket(spawn);
             }
-            onlineEntityPlayer.b.sendPacket(entityMetadata);
+            onlineEntityPlayer.playerConnection.sendPacket(entityMetadata);
         });
     }
 
@@ -82,20 +78,34 @@ public class v1_17_R1 implements Internals {
             }
         }
 
-        final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
-        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
+        final PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer);
+        final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER);
+        final IChatBaseComponent name = new ChatComponentText(profileName);
 
-        add.b().clear();
-        add.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile,
+        // what the fuck? didn't even KNOW instantiating a new class from an existing object was possible in java
+        final PacketPlayOutPlayerInfo.PlayerInfoData data = remove.new PlayerInfoData(gameProfile,
                 player.getPing(),
-                EnumGamemode.getById(player.getGameMode().ordinal()), IChatBaseComponent.a(profileName)));
+                EnumGamemode.getById(player.getGameMode().ordinal()), name);
+        final ArrayList<PacketPlayOutPlayerInfo.PlayerInfoData> list = new ArrayList<>();
+        list.add(data);
+        spoofPlayerInfoPacket(add, list);
 
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
-            onlineEntityPlayer.b.sendPacket(remove);
-            onlineEntityPlayer.b.sendPacket(add);
+            onlineEntityPlayer.playerConnection.sendPacket(remove);
+            onlineEntityPlayer.playerConnection.sendPacket(add);
         });
         updateOthers(player);
         return new ActionResult<>();
+    }
+
+    private void spoofPlayerInfoPacket(Object object, Object newValue) {
+        try {
+            final Field field = object.getClass().getDeclaredField("b");
+            field.setAccessible(true);
+            field.set(object, newValue);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            NickoBukkit.getInstance().getLogger().warning("Unable to spoof packet, that's bad! (" + e.getMessage() + ")");
+        }
     }
 }

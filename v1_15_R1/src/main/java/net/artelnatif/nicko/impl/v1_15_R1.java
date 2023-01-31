@@ -1,5 +1,6 @@
 package net.artelnatif.nicko.impl;
 
+import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
@@ -7,15 +8,16 @@ import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangSkin;
-import org.bukkit.Bukkit;
 import net.minecraft.server.v1_15_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 
 public class v1_15_R1 implements Internals {
     @Override
@@ -70,7 +72,7 @@ public class v1_15_R1 implements Internals {
                 final MojangSkin skin = skinFetch.getResult();
                 final PropertyMap properties = gameProfile.getProperties();
                 properties.removeAll("textures");
-                properties.put("textures", new Property("textures", skin.value(), skin.signature()));
+                properties.put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
                 updateSelf(player);
             }
         }
@@ -79,12 +81,14 @@ public class v1_15_R1 implements Internals {
         final PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER);
         final IChatBaseComponent name = new ChatComponentText(profileName);
 
-        final PacketPlayOutPlayerInfo.PlayerInfoData data = remove.new PlayerInfoData(gameProfile,
+        final Object infoData = yes(
+                add,
+                gameProfile,
                 entityPlayer.ping,
-                EnumGamemode.getById(player.getGameMode().ordinal()), name);
-        final ArrayList<PacketPlayOutPlayerInfo.PlayerInfoData> list = new ArrayList<>();
-        list.add(data);
-        spoofPlayerInfoPacket(add, list);
+                EnumGamemode.getById(player.getGameMode().ordinal()),
+                name
+        );
+        spoofPlayerInfoPacket(add, Lists.newArrayList(infoData));
 
         Bukkit.getOnlinePlayers().forEach(online -> {
             EntityPlayer onlineEntityPlayer = ((CraftPlayer) online).getHandle();
@@ -102,6 +106,24 @@ public class v1_15_R1 implements Internals {
             field.set(object, newValue);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             NickoBukkit.getInstance().getLogger().warning("Unable to spoof packet, that's bad! (" + e.getMessage() + ")");
+        }
+    }
+
+    public Object yes(PacketPlayOutPlayerInfo packet, GameProfile gameProfile, int ping, EnumGamemode gamemode, IChatBaseComponent name) {
+        try {
+            final Class<?> clazz = Class.forName("net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo$PlayerInfoData");
+            final Constructor<?> infoConstructor = clazz.getDeclaredConstructor(
+                    PacketPlayOutPlayerInfo.class,
+                    GameProfile.class,
+                    int.class,
+                    EnumGamemode.class,
+                    IChatBaseComponent.class
+            );
+            return infoConstructor.newInstance(packet, gameProfile, ping, gamemode, name);
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException |
+                 IllegalAccessException e) {
+            NickoBukkit.getInstance().getLogger().warning("Unable to instantiate PlayerInfoData, that's bad! (" + e.getMessage() + ")");
+            return null;
         }
     }
 }

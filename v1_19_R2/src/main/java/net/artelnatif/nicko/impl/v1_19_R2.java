@@ -82,7 +82,7 @@ public class v1_19_R2 implements Internals {
                 final MojangSkin skin = skinFetch.getResult();
                 final PropertyMap properties = gameProfile.getProperties();
                 properties.removeAll("textures");
-                properties.put("textures", new Property("textures", skin.value(), skin.signature()));
+                properties.put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
                 updateSelf(player);
             }
         }

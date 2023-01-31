@@ -52,7 +52,7 @@ public class LanguageCycling {
 
         final ArrayList<Locale> localesToGenerate = new ArrayList<>();
         Collections.addAll(localesToGenerate, Locale.values());
-        if (!instance.getNicko().getConfig().customLocale()) {
+        if (!instance.getNicko().getConfig().isCustomLocale()) {
             localesToGenerate.remove(Locale.CUSTOM);
         }
         localesToGenerate.forEach(locale -> items.add(generateItem(locale, localesToGenerate)));

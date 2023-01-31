@@ -25,9 +25,9 @@ public class SQLStorageProvider implements StorageProvider {
         try {
             final Configuration config = nicko.getConfig();
             dataSource = new MariaDbDataSource();
-            dataSource.setUrl("jdbc:mariadb://" + config.address());
-            dataSource.setUser(config.username());
-            dataSource.setPassword(config.password());
+            dataSource.setUrl("jdbc:mariadb://" + config.getAddress());
+            dataSource.setUser(config.getUsername());
+            dataSource.setPassword(config.getPassword());
             connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 
@@ -59,15 +59,8 @@ public class SQLStorageProvider implements StorageProvider {
     private void createTable() {
         final Connection connection = getConnection();
 
-        final String query = """
-                CREATE TABLE IF NOT EXISTS %s.DATA (
-                uuid binary(16) NOT NULL,
-                name varchar(16) NOT NULL,
-                skin varchar(16) NOT NULL,
-                bungeecord boolean NOT NULL,
-                PRIMARY KEY (UUID)
-                )
-                """.formatted(schemaName);
+        String query = "CREATE TABLE IF NOT EXISTS %s.DATA (uuid binary(16) NOT NULL,name varchar(16) NOT NULL,skin varchar(16) NOT NULL,bungeecord boolean NOT NULL,PRIMARY KEY (UUID))";
+        query = query.replace("%s", schemaName);
 
         try {
             final PreparedStatement statement = connection.prepareStatement(query);
@@ -82,9 +75,8 @@ public class SQLStorageProvider implements StorageProvider {
     private void createDatabase() {
         final Connection connection = getConnection();
 
-        final String query = """
-                CREATE DATABASE IF NOT EXISTS %s
-                """.formatted(schemaName);
+        String query = "CREATE DATABASE IF NOT EXISTS %s";
+        query = query.replace("%s", schemaName);
 
         try {
             final PreparedStatement statement = connection.prepareStatement(query);

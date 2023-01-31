@@ -20,7 +20,7 @@ public class PlayerDataStore {
 
     public PlayerDataStore(Nicko nicko) {
         this.nicko = nicko;
-        this.storage = nicko.getConfig().local() && !nicko.isBungeecord() ? new JSONStorage(nicko) : new SQLStorage(nicko);
+        this.storage = nicko.getConfig().isLocal() && !nicko.isBungeecord() ? new JSONStorage(nicko) : new SQLStorage(nicko);
     }
 
     public void storeName(Player player) {

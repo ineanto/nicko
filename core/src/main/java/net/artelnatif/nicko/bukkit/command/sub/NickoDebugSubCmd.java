@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class NickoDebugSubCmd {
     public void execute(CommandSender sender, String[] args) {
-        final String prefix = NickoBukkit.getInstance().getNicko().getConfig().prefix();
+        final String prefix = NickoBukkit.getInstance().getNicko().getConfig().getPrefix();
 
         Player target;
         String name, skin;

@@ -29,9 +29,9 @@ public class I18N {
 
         try {
             formatter.applyPattern(translation);
-            return instance.getNicko().getConfig().prefix() + formatter.format(arguments);
+            return instance.getNicko().getConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
-            return instance.getNicko().getConfig().prefix() + key.key();
+            return instance.getNicko().getConfig().getPrefix() + key.key();
         }
     }
 

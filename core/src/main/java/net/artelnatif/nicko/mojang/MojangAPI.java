@@ -23,7 +23,7 @@ public class MojangAPI {
     public static final String URL_NAME = "https://api.mojang.com/users/profiles/minecraft/{name}";
     public static final String URL_SKIN = "https://sessionserver.mojang.com/session/minecraft/profile/{uuid}?unsigned=false";
 
-    private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<>() {
+    private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<String, Optional<MojangSkin>>() {
         @Nonnull
         public Optional<MojangSkin> load(@Nonnull String uuid) throws Exception {
             return getSkinFromMojang(uuid);
@@ -77,15 +77,13 @@ public class MojangAPI {
         con.setRequestMethod("GET");
 
         switch (con.getResponseCode()) {
-            case 400 -> {
+            case 400:
                 nicko.getLogger().warning("Failed to parse request: Invalid Name");
                 return getErrorObject();
-            }
-            case 429 -> {
+            case 429:
                 nicko.getLogger().warning("Failed to parse request: The connection is throttled.");
                 return getErrorObject();
-            }
-            case 200 -> {
+            case 200:
                 final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 final StringBuilder builder = new StringBuilder();
                 String line;
@@ -100,11 +98,9 @@ public class MojangAPI {
                     nicko.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")!");
                     return getErrorObject();
                 }
-            }
-            default -> {
+            default:
                 nicko.getLogger().warning("Unhandled response code from Mojang: " + con.getResponseCode());
                 return getErrorObject();
-            }
         }
     }
 

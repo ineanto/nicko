@@ -1,6 +1,10 @@
 package net.artelnatif.nicko.bukkit.i18n;
 
-public record I18NDict(String key) {
+public class I18NDict {
+    private final String key;
+
+    public I18NDict(String key) { this.key = key; }
+
     public static class Event {
         public static class Admin {
             public static final I18NDict CACHE_CLEAN = new I18NDict("event.admin.cache_clear");
@@ -32,5 +36,9 @@ public record I18NDict(String key) {
         public static final I18NDict UNEXPECTED_ERROR = new I18NDict("error.generic");
         public static final I18NDict SQL_ERROR = new I18NDict("error.sql");
         public static final I18NDict JSON_ERROR = new I18NDict("error.json");
+    }
+
+    public String key() {
+        return key;
     }
 }

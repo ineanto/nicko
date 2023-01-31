@@ -37,12 +37,7 @@ public class SQLStorage extends Storage {
         if (connection == null) return new ActionResult<>(I18NDict.Error.SQL_ERROR);
 
         try {
-            final String sql = """ 
-                    INSERT IGNORE INTO nicko.DATA
-                    (`uuid`, `name`, `skin`, `bungeecord`)
-                    VALUES
-                    (?, ?, ?, ?)
-                    """;
+            final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `bungeecord`) VALUES (?, ?, ?, ?)";
 
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setObject(1, uuidToBin(uuid));

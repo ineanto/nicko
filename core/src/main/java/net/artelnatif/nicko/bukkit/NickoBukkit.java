@@ -87,7 +87,7 @@ public class NickoBukkit extends JavaPlugin {
             mojangAPI = new MojangAPI(nicko);
 
             localeFileManager = new LocaleFileManager();
-            if (nicko.getConfig().customLocale()) {
+            if (nicko.getConfig().isCustomLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
                     getLogger().info("Successfully loaded custom language file.");
                 } else {
@@ -111,7 +111,7 @@ public class NickoBukkit extends JavaPlugin {
 
             final BungeeCordSupport support = new BungeeCordSupport(this);
             support.warnNickoNotHookedToBungeeCord();
-            if (nicko.getConfig().bungeecord()) {
+            if (nicko.getConfig().isBungeecord()) {
                 if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
                     getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageHandler());
@@ -133,7 +133,7 @@ public class NickoBukkit extends JavaPlugin {
             }
         }
 
-        if (nicko.getConfig().bungeecord()) {
+        if (nicko.getConfig().isBungeecord()) {
             getServer().getMessenger().unregisterIncomingPluginChannel(this);
             getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         }

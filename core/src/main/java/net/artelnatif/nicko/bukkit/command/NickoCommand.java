@@ -10,20 +10,25 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class NickoCommand implements CommandExecutor {
-    private String helpMessage = """
-            §cNicko §8§o[{version}] §f- §2Help:
-            §6/nicko §f- §7Open the GUI.
-            §6/nicko help §f- §7Print this help message.
-            """;
+    private String helpMessage = "§cNicko §8§o[{version}] §f- §2Help:\n" +
+                                 "§6/nicko §f- §7Open the GUI.\n" +
+                                 "§6/nicko help §f- §7Print this help message.\n";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player player) {
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
             if (args.length >= 1) {
                 switch (args[0]) {
-                    case "debug" -> new NickoDebugSubCmd().execute(sender, args);
-                    case "check" -> new NickoCheckSubCmd().execute(player, args);
-                    default -> sendHelpMessage(sender);
+                    case "debug":
+                        new NickoDebugSubCmd().execute(player, args);
+                        break;
+                    case "check":
+                        new NickoCheckSubCmd().execute(player, args);
+                        break;
+                    default:
+                        sendHelpMessage(sender);
+                        break;
                 }
                 return false;
             }

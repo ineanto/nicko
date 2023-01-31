@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>nicko-v1_18_R2</artifactId>
+    <artifactId>v1_18_R2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-core</artifactId>
+            <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

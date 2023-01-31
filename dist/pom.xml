@@ -76,32 +76,57 @@
     <dependencies>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-core</artifactId>
+            <artifactId>core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-v1_17_R1</artifactId>
+            <artifactId>v1_14_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-v1_18_R1</artifactId>
+            <artifactId>v1_15_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-v1_18_R2</artifactId>
+            <artifactId>v1_16_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-v1_19_R1</artifactId>
+            <artifactId>v1_16_R2</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.artelnatif</groupId>
-            <artifactId>nicko-v1_19_R2</artifactId>
+            <artifactId>v1_16_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_17_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_18_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_18_R2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_19_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.artelnatif</groupId>
+            <artifactId>v1_19_R2</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

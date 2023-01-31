@@ -3,8 +3,8 @@
 # This is the Nicko configuration file.
 # This file contains all the configuration for
 # the Bukkit AND Bungeecord versions of Nicko.
-# Nicko is smart and will only read its configuration
-# section based on what it's enabled as.
+# Nicko is smart and will only read the configuration
+# section of the version it is enabled as.
 # For example, if Nicko is enabled as a Bukkit plugin,
 # it will only read the "Bukkit" section of the config file.
 # As a result, modifying any other section is useless.

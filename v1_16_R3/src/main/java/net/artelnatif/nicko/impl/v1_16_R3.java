@@ -85,9 +85,9 @@ public class v1_16_R3 implements Internals {
         final IChatBaseComponent name = new ChatComponentText(profileName);
 
         // ok so what the actual fuck
-        // the PlayerDataInfo inner class is NOT public
+        // the PlayerDataInfo inner class is NOT static
         // thus the compiler can't access it when compiling??????
-        // i swear this is so dumb that i have to resort to doing this
+        // i swear this is so dumb that I have to resort to doing this
         final Object infoData = yes(
                 add,
                 gameProfile,

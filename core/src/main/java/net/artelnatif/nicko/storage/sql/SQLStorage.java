@@ -1,13 +1,16 @@
 package net.artelnatif.nicko.storage.sql;
 
+import com.google.common.io.ByteStreams;
 import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.bukkit.i18n.I18NDict;
 import net.artelnatif.nicko.storage.Storage;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -40,7 +43,7 @@ public class SQLStorage extends Storage {
             final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `bungeecord`) VALUES (?, ?, ?, ?)";
 
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setObject(1, uuidToBin(uuid));
+            statement.setBinaryStream(1, uuidToBin(uuid));
             statement.setString(2, profile.getName());
             statement.setString(3, profile.getSkin());
             statement.setBoolean(4, profile.isBungeecordTransfer());
@@ -62,17 +65,20 @@ public class SQLStorage extends Storage {
         return Optional.empty();
     }
 
-    private byte[] uuidToBin(UUID uuid) {
-        final byte[] uuidBytes = new byte[16];
-        final ByteBuffer buffer = ByteBuffer.wrap(uuidBytes)
-                .order(ByteOrder.BIG_ENDIAN)
+    private ByteArrayInputStream uuidToBin(UUID uuid) {
+        byte[] bytes = new byte[16];
+        ByteBuffer.wrap(bytes)
                 .putLong(uuid.getMostSignificantBits())
                 .putLong(uuid.getLeastSignificantBits());
-        return buffer.array();
+        return new ByteArrayInputStream(bytes);
     }
 
-    private UUID binToUUID(byte[] array) {
-        final ByteBuffer buffer = ByteBuffer.wrap(array);
-        return new UUID(buffer.getLong(), buffer.getLong());
+    private UUID binToUUID(InputStream stream) {
+        final ByteBuffer buffer = ByteBuffer.allocate(16);
+        try {
+            buffer.put(ByteStreams.toByteArray(stream));
+            buffer.flip();
+            return new UUID(buffer.getLong(), buffer.getLong());
+        } catch (IOException ignored) { return null; }
     }
 }

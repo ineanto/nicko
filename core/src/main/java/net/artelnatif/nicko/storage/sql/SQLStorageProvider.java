@@ -12,7 +12,6 @@ import java.sql.SQLException;
 public class SQLStorageProvider implements StorageProvider {
     private final Nicko nicko;
     private Connection connection;
-    private MariaDbDataSource dataSource;
 
     private final String schemaName = "nicko";
 
@@ -24,7 +23,7 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final Configuration config = nicko.getConfig();
-            dataSource = new MariaDbDataSource();
+            final MariaDbDataSource dataSource = new MariaDbDataSource();
             dataSource.setUrl("jdbc:mariadb://" + config.getAddress());
             dataSource.setUser(config.getUsername());
             dataSource.setPassword(config.getPassword());
@@ -33,10 +32,7 @@ public class SQLStorageProvider implements StorageProvider {
 
             if (!initialized) return false;
 
-            nicko.getLogger().info("Creating SQL database...");
             createDatabase();
-
-            nicko.getLogger().info("Creating SQL table...");
             createTable();
             return true;
         } catch (SQLException e) {
@@ -56,36 +52,26 @@ public class SQLStorageProvider implements StorageProvider {
         }
     }
 
-    private void createTable() {
+    private void createTable() throws SQLException {
         final Connection connection = getConnection();
 
         String query = "CREATE TABLE IF NOT EXISTS %s.DATA (uuid binary(16) NOT NULL,name varchar(16) NOT NULL,skin varchar(16) NOT NULL,bungeecord boolean NOT NULL,PRIMARY KEY (UUID))";
         query = query.replace("%s", schemaName);
 
-        try {
-            final PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            // TODO: 12/10/22 Handle error
-            throw new RuntimeException(e);
-        }
+        final PreparedStatement statement = connection.prepareStatement(query);
+        statement.executeUpdate();
+        statement.close();
     }
 
-    private void createDatabase() {
+    private void createDatabase() throws SQLException {
         final Connection connection = getConnection();
 
         String query = "CREATE DATABASE IF NOT EXISTS %s";
         query = query.replace("%s", schemaName);
 
-        try {
-            final PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            // TODO: 12/10/22 Handle error
-            throw new RuntimeException(e);
-        }
+        final PreparedStatement statement = connection.prepareStatement(query);
+        statement.executeUpdate();
+        statement.close();
     }
 
     public Connection getConnection() {

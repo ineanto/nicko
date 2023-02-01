@@ -9,10 +9,7 @@ import net.artelnatif.nicko.storage.Storage;
 
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,8 +40,8 @@ public class SQLStorage extends Storage {
 
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setBinaryStream(1, uuidToBin(uuid));
-            statement.setString(2, profile.getName());
-            statement.setString(3, profile.getSkin());
+            statement.setString(2, profile.getName() == null ? null : profile.getName());
+            statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
             statement.setString(4, profile.getLocale().getCode());
             statement.setBoolean(5, profile.isBungeecordTransfer());
             statement.executeUpdate();
@@ -90,13 +87,13 @@ public class SQLStorage extends Storage {
             String skin = "";
             String locale = "";
             boolean bungeecord = false;
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 name = resultSet.getString("name");
                 skin = resultSet.getString("skin");
                 locale = resultSet.getString("locale");
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
-            
+
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);
         } catch (SQLException e) {

@@ -10,9 +10,12 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.bukkit.i18n.Locale;
 import org.junit.jupiter.api.*;
 
+import java.util.Optional;
+
 public class SQLStorageTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
+    private static PlayerMock player;
 
     @BeforeAll
     public static void setup() {
@@ -26,6 +29,7 @@ public class SQLStorageTest {
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
+        player = server.addPlayer();
     }
 
     @Test
@@ -37,10 +41,26 @@ public class SQLStorageTest {
     @Test
     @DisplayName("Store Player Via SQL")
     public void storePlayer() {
-        final PlayerMock playerMock = server.addPlayer();
-        final NickoProfile profile = new NickoProfile("Notch", "Notch", Locale.ENGLISH, true);
-        final ActionResult<Void> storeAction = plugin.getNicko().getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
-        Assertions.assertFalse(storeAction.isError());
+        final Optional<NickoProfile> optionalProfile = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        Assertions.assertTrue(optionalProfile.isPresent());
+
+        final NickoProfile profile = optionalProfile.get();
+        profile.setName("Notch");
+        profile.setSkin("Notch");
+        profile.setLocale(Locale.ENGLISH);
+        profile.setBungeecordTransfer(true);
+        ActionResult<Void> result = plugin.getNicko().getDataStore().saveData(player);
+        Assertions.assertFalse(result.isError());
+    }
+
+    @Test
+    @DisplayName("Retrieve Player Via SQL")
+    public void retrievePlayer() {
+        final Optional<NickoProfile> storeAction = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        Assertions.assertTrue(storeAction.isPresent());
+        final NickoProfile profile = storeAction.get();
+        Assertions.assertEquals("Notch", profile.getName());
+        Assertions.assertEquals(Locale.ENGLISH, profile.getLocale());
     }
 
     @AfterAll

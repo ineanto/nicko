@@ -5,7 +5,7 @@ import java.io.Serializable;
 public enum Locale implements Serializable {
     ENGLISH("en", "English"),
     FRENCH("fr", "Français"),
-    CUSTOM("custom", "Server Custom");
+    CUSTOM("cm", "Server Custom");
 
     public static final Locale FALLBACK_LOCALE = ENGLISH;
 
@@ -15,6 +15,13 @@ public enum Locale implements Serializable {
     Locale(String code, String name) {
         this.code = code;
         this.name = name;
+    }
+
+    public static Locale fromCode(String code) {
+        for (Locale value : values()) {
+            if (code.equals(value.code)) return value;
+        }
+        return ENGLISH;
     }
 
     public String getCode() {

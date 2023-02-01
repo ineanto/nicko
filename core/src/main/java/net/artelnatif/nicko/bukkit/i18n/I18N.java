@@ -16,7 +16,7 @@ public class I18N {
         final NickoBukkit instance = NickoBukkit.getInstance();
         try {
             final Optional<NickoProfile> profile = instance.getNicko().getDataStore().getData(player.getUniqueId());
-            return profile.isEmpty() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();
+            return !profile.isPresent() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();
         } catch (IllegalArgumentException exception) {
             instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
             return Locale.FALLBACK_LOCALE;

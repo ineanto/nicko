@@ -1,6 +1,8 @@
 package net.artelnatif.nicko.storage;
 
 import net.artelnatif.nicko.Nicko;
+import net.artelnatif.nicko.bukkit.i18n.I18NDict;
+import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.storage.json.JSONStorage;
@@ -76,12 +78,13 @@ public class PlayerDataStore {
         }
     }
 
-    public void saveData(Player player) {
-        if (storage.isError()) { return; }
-        if (!profiles.containsKey(player.getUniqueId())) { return; }
+    public ActionResult<Void> saveData(Player player) {
+        if (storage.isError()) { return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR); }
+        if (!profiles.containsKey(player.getUniqueId())) { return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR); }
 
-        storage.store(player.getUniqueId(), profiles.get(player.getUniqueId()));
+        final ActionResult<Void> store = storage.store(player.getUniqueId(), profiles.get(player.getUniqueId()));
         profiles.remove(player.getUniqueId());
+        return store;
     }
 
     public Storage getStorage() {

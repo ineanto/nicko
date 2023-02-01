@@ -30,7 +30,7 @@ public class CacheDetailledGUI {
         final List<String> loadedSkins = skins.entrySet().stream()
                 .filter(entry -> entry.getValue().isPresent())
                 .map(Map.Entry::getKey)
-                .toList();
+                .collect(Collectors.toList());
 
         final List<Item> items = loadedSkins.stream()
                 .map(SkinPlaceholder::new)

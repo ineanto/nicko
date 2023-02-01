@@ -7,12 +7,14 @@ import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
-import net.artelnatif.nicko.bukkit.i18n.Locale;
 import org.junit.jupiter.api.*;
+
+import java.util.Optional;
 
 public class BrokenSQLTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
+    private static PlayerMock player;
 
     @BeforeAll
     public static void setup() {
@@ -26,6 +28,7 @@ public class BrokenSQLTest {
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
+        player = server.addPlayer();
     }
 
     @Test
@@ -37,10 +40,17 @@ public class BrokenSQLTest {
     @Test
     @DisplayName("Fail to Store Player Via SQL")
     public void storePlayer() {
-        final PlayerMock playerMock = server.addPlayer();
-        final NickoProfile profile = new NickoProfile("Notch", "Notch", Locale.ENGLISH, true);
-        final ActionResult<Void> storeAction = plugin.getNicko().getDataStore().getStorage().store(playerMock.getUniqueId(), profile);
-        Assertions.assertTrue(storeAction.isError());
+        final Optional<NickoProfile> optionalProfile = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        Assertions.assertFalse(optionalProfile.isPresent());
+        ActionResult<Void> result = plugin.getNicko().getDataStore().saveData(player);
+        Assertions.assertTrue(result.isError());
+    }
+
+    @Test
+    @DisplayName("Fail to Retrieve Player Via SQL")
+    public void retrievePlayer() {
+        final Optional<NickoProfile> storeAction = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        Assertions.assertFalse(storeAction.isPresent());
     }
 
     @AfterAll

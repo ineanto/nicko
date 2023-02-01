@@ -7,16 +7,18 @@ public class ActionResult<R> {
     private boolean error = false;
     private R result;
 
-    public ActionResult(I18NDict errorMessage) {
-        this.error = true;
-        this.errorMessage = errorMessage;
-    }
-
     public ActionResult() {
         this.errorMessage = null;
     }
 
-    public void setResult(R result) {
+    public ActionResult(I18NDict errorMessage) {
+        this.errorMessage = errorMessage;
+        this.error = true;
+        this.result = null;
+    }
+
+    public ActionResult(R result) {
+        this.errorMessage = null;
         this.result = result;
     }
 

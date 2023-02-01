@@ -26,13 +26,7 @@ public interface Internals {
             final Optional<String> uuid = mojang.getUUID(profile.getSkin());
             if (uuid.isPresent()) {
                 skin = (reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get()));
-                if (skin.isEmpty()) {
-                    return new ActionResult<>(I18NDict.Error.SKIN_FAIL_MOJANG);
-                }
-
-                final ActionResult<MojangSkin> actionResult = new ActionResult<>();
-                actionResult.setResult(skin.get());
-                return actionResult;
+                return skin.map(ActionResult::new).orElseGet(() -> new ActionResult<>(I18NDict.Error.SKIN_FAIL_MOJANG));
             }
             return new ActionResult<>(I18NDict.Error.NAME_FAIL_MOJANG);
         } catch (ExecutionException e) {

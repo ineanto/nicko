@@ -55,7 +55,13 @@ public class SQLStorageProvider implements StorageProvider {
     private void createTable() throws SQLException {
         final Connection connection = getConnection();
 
-        String query = "CREATE TABLE IF NOT EXISTS %s.DATA (uuid binary(16) NOT NULL,name varchar(16) NOT NULL,skin varchar(16) NOT NULL,bungeecord boolean NOT NULL,PRIMARY KEY (UUID))";
+        String query = "CREATE TABLE IF NOT EXISTS %s.DATA " +
+                       "(uuid binary(16) NOT NULL," +
+                       "name varchar(16) NOT NULL," +
+                       "skin varchar(16) NOT NULL," +
+                       "locale char(2) NOT NULL," +
+                       "bungeecord boolean NOT NULL," +
+                       "PRIMARY KEY (UUID))";
         query = query.replace("%s", schemaName);
 
         final PreparedStatement statement = connection.prepareStatement(query);

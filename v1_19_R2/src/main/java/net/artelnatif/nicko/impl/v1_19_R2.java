@@ -26,7 +26,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import java.lang.reflect.Field;
 import java.util.*;
 
-@Unstable
 public class v1_19_R2 implements Internals {
     @Override
     public void updateSelf(Player player) {

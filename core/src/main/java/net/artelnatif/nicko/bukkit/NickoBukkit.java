@@ -48,12 +48,8 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-
-        if (isUnitTesting()) {
-            onUnitTestingStartup();
-        } else {
-            onPluginStartup();
-        }
+        if (unitTesting) onUnitTestingStartup();
+        else onPluginStartup();
     }
 
     public void onUnitTestingStartup() {
@@ -147,10 +143,6 @@ public class NickoBukkit extends JavaPlugin {
 
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;
-    }
-
-    public boolean isUnitTesting() {
-        return unitTesting;
     }
 
     public Internals getInternals() {

@@ -5,18 +5,17 @@ import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bukkit.command.NickoCommand;
+import net.artelnatif.nicko.bukkit.event.PlayerJoinListener;
+import net.artelnatif.nicko.bukkit.event.PlayerQuitListener;
 import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
+import net.artelnatif.nicko.bukkit.i18n.Locale;
+import net.artelnatif.nicko.bukkit.i18n.LocaleFileManager;
+import net.artelnatif.nicko.bukkit.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.bukkit.pluginchannel.PluginMessageHandler;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.config.Configuration;
-import net.artelnatif.nicko.bukkit.event.PlayerJoinListener;
-import net.artelnatif.nicko.bukkit.event.PlayerQuitListener;
-import net.artelnatif.nicko.bukkit.i18n.Locale;
-import net.artelnatif.nicko.bukkit.i18n.LocaleFileManager;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
-import net.artelnatif.nicko.mojang.MojangAPI;
-import net.artelnatif.nicko.bukkit.placeholder.PlaceHolderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -32,7 +31,6 @@ public class NickoBukkit extends JavaPlugin {
     private final Nicko nicko = new Nicko();
     private final boolean unitTesting;
 
-    private MojangAPI mojangAPI;
     private LocaleFileManager localeFileManager;
 
     public NickoBukkit() { this.unitTesting = false; }
@@ -83,8 +81,6 @@ public class NickoBukkit extends JavaPlugin {
                 nicko.getDataStore().getStorage().setError(true);
                 getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
-
-            mojangAPI = new MojangAPI(nicko);
 
             localeFileManager = new LocaleFileManager();
             if (nicko.getConfig().isCustomLocale()) {

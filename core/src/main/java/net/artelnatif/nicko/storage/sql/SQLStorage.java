@@ -36,14 +36,8 @@ public class SQLStorage extends Storage {
         if (connection == null) return new ActionResult<>(I18NDict.Error.SQL_ERROR);
 
         try {
-            final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `bungeecord`) VALUES (?, ?, ?, ?, ?)";
-
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setBinaryStream(1, uuidToBin(uuid));
-            statement.setString(2, profile.getName() == null ? null : profile.getName());
-            statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
-            statement.setString(4, profile.getLocale().getCode());
-            statement.setBoolean(5, profile.isBungeecordTransfer());
+            final PreparedStatement statement = isStored(uuid) ?
+                    getUpdateStatement(connection, uuid, profile) : getInsertStatement(connection, uuid, profile);
             statement.executeUpdate();
             return new ActionResult<>();
         } catch (SQLException e) {
@@ -100,6 +94,28 @@ public class SQLStorage extends Storage {
             nicko.getLogger().warning("Couldn't fetch profile: " + e.getMessage());
             return Optional.empty();
         }
+    }
+
+    private PreparedStatement getInsertStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
+        final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `bungeecord`) VALUES (?, ?, ?, ?, ?)";
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setBinaryStream(1, uuidToBin(uuid));
+        statement.setString(2, profile.getName() == null ? null : profile.getName());
+        statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
+        statement.setString(4, profile.getLocale().getCode());
+        statement.setBoolean(5, profile.isBungeecordTransfer());
+        return statement;
+    }
+
+    private PreparedStatement getUpdateStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
+        final String sql = "UPDATE nicko.DATA SET name = ?, skin = ?, locale = ?, bungeecord = ? WHERE uuid = ?";
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, profile.getName() == null ? null : profile.getName());
+        statement.setString(2, profile.getSkin() == null ? null : profile.getSkin());
+        statement.setString(3, profile.getLocale().getCode());
+        statement.setBoolean(4, profile.isBungeecordTransfer());
+        statement.setBinaryStream(5, uuidToBin(uuid));
+        return statement;
     }
 
     private ByteArrayInputStream uuidToBin(UUID uuid) {

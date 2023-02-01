@@ -48,13 +48,13 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        nicko.initBukkit(this);
+
         if (unitTesting) onUnitTestingStartup();
         else onPluginStartup();
     }
 
     public void onUnitTestingStartup() {
-        nicko.initBukkit(this);
-
         if (!nicko.getDataStore().getStorage().getProvider().init()) {
             nicko.getDataStore().getStorage().setError(true);
             getLogger().severe("Failed to open persistence, data will NOT be saved!");
@@ -62,8 +62,6 @@ public class NickoBukkit extends JavaPlugin {
     }
 
     public void onPluginStartup() {
-        nicko.initBukkit(this);
-
         getLogger().info("Loading internals...");
         if (getInternals() == null) {
             getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");

@@ -51,6 +51,10 @@ public class NickoBungee extends Plugin {
         }
     }
 
+    public Nicko getNicko() {
+        return nicko;
+    }
+
     public static NickoBungee getInstance() {
         return plugin;
     }

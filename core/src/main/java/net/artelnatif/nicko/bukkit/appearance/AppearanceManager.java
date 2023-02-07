@@ -68,7 +68,7 @@ public class AppearanceManager {
     }
 
     public ActionResult<Void> reset() {
-        final String defaultName = instance.getNicko().getDataStore().getStoredName(player);
+        final String defaultName = dataStore.getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
         final ActionResult<Void> actionResult = resetPlayer();

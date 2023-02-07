@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Nicko {
-    private boolean bungeecord = false;
     private ConfigurationManager configManager;
     private Logger logger;
     private File dataFolder;
@@ -24,7 +23,6 @@ public class Nicko {
     public void initBungeecord(Plugin bungee) {
         logger = bungee.getLogger();
         dataFolder = bungee.getDataFolder();
-        bungeecord = true;
         initNicko();
     }
 
@@ -74,13 +72,5 @@ public class Nicko {
 
     public void setConfig(Configuration config) {
         this.config = config;
-    }
-
-    public boolean isBungeecord() {
-        return bungeecord;
-    }
-
-    public void setBungeecord(boolean bungeecord) {
-        this.bungeecord = bungeecord;
     }
 }

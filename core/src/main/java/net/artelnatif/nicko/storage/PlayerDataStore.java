@@ -22,7 +22,7 @@ public class PlayerDataStore {
 
     public PlayerDataStore(Nicko nicko) {
         this.nicko = nicko;
-        this.storage = nicko.getConfig().isLocal() && !nicko.isBungeecord() ? new JSONStorage(nicko) : new SQLStorage(nicko);
+        this.storage = nicko.getConfig().isLocal() && !nicko.getConfig().isBungeecord() ? new JSONStorage(nicko) : new SQLStorage(nicko);
     }
 
     public void storeName(Player player) {
@@ -41,6 +41,15 @@ public class PlayerDataStore {
 
     public void removeAllNames() {
         names.clear();
+    }
+
+    public void performProfileUpdate(UUID uuid, NickoProfile profile) {
+        if (!profiles.containsKey(uuid)) {
+            profiles.put(uuid, profile);
+            return;
+        }
+
+        profiles.replace(uuid, profile);
     }
 
     public Optional<NickoProfile> getData(UUID uuid) {

@@ -1,10 +1,13 @@
 package net.artelnatif.nicko.bukkit.event;
 
+import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.bukkit.NickoBukkit;
 import net.artelnatif.nicko.bukkit.appearance.AppearanceManager;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.bukkit.i18n.I18N;
 import net.artelnatif.nicko.bukkit.i18n.I18NDict;
+import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,11 +18,18 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        NickoBukkit.getInstance().getNicko().getDataStore().storeName(player);
+        final Nicko nicko = NickoBukkit.getInstance().getNicko();
+        final PlayerDataStore dataStore = nicko.getDataStore();
+        dataStore.storeName(player);
+
+        if (nicko.getConfig().isBungeecord()) {
+
+        }
+
+        dataStore.performProfileUpdate(player.getUniqueId(), NickoProfile.EMPTY_PROFILE);
+
         Bukkit.getScheduler().runTaskLater(NickoBukkit.getInstance(), () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
-
-            // TODO: 12/5/22 Update from BungeeCord
 
             if (appearanceManager.hasData()) {
                 final ActionResult<Void> actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());

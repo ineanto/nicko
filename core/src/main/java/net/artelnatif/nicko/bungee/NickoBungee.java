@@ -26,7 +26,6 @@ public class NickoBungee extends Plugin {
                 getLogger().severe("Nicko can't enable BungeeCord support without SQL storage.");
                 getLogger().severe("The plugin will not continue.");
                 nicko.getDataStore().getStorage().setError(true);
-                nicko.setBungeecord(false);
                 onDisable();
                 return;
             }

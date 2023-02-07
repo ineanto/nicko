@@ -24,7 +24,7 @@ public class SettingsGUI {
         };
 
         final Nicko nicko = NickoBukkit.getInstance().getNicko();
-        if (!nicko.getConfig().isBungeecord() && nicko.isBungeecord()) {
+        if (!nicko.getConfig().isBungeecord()) {
             dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
         }
 

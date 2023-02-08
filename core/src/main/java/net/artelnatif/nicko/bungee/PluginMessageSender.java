@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.bungee.message;
+package net.artelnatif.nicko.bungee;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;

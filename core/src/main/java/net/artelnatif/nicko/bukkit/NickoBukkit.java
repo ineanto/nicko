@@ -11,7 +11,7 @@ import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.bukkit.i18n.Locale;
 import net.artelnatif.nicko.bukkit.i18n.LocaleFileManager;
 import net.artelnatif.nicko.bukkit.placeholder.PlaceHolderHook;
-import net.artelnatif.nicko.bukkit.pluginchannel.PluginMessageHandler;
+import net.artelnatif.nicko.bukkit.messaging.PluginMessageEvent;
 import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.impl.Internals;
@@ -104,7 +104,7 @@ public class NickoBukkit extends JavaPlugin {
             if (nicko.getConfig().isBungeecord()) {
                 if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
-                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageHandler());
+                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageEvent());
                 }
             }
 

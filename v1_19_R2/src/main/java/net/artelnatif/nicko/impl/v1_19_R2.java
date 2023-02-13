@@ -59,7 +59,7 @@ public class v1_19_R2 implements Internals {
         final ClientboundSetEntityDataPacket entityMetadata = new ClientboundSetEntityDataPacket(serverPlayer.getBukkitEntity().getEntityId(), entityData.getNonDefaultValues());
 
         Bukkit.getOnlinePlayers().forEach(online -> {
-            ServerPlayer onlineServerPlayer = ((CraftPlayer) online).getHandle();
+            final ServerPlayer onlineServerPlayer = ((CraftPlayer) online).getHandle();
             if (onlineServerPlayer.getBukkitEntity().getUniqueId() != player.getUniqueId()) {
                 onlineServerPlayer.connection.send(remove);
                 onlineServerPlayer.connection.send(add);
@@ -93,7 +93,7 @@ public class v1_19_R2 implements Internals {
                         ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY,
                         ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED),
                 Collections.singletonList(serverPlayer));
-        final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(List.of(player.getUniqueId()));
+        final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(Collections.singletonList(player.getUniqueId()));
 
         RemoteChatSession chatSession;
 
@@ -107,7 +107,7 @@ public class v1_19_R2 implements Internals {
             chatSession = new RemoteChatSession(uuid, ppk);
         }
 
-        spoofPlayerInfoPacket(init, List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
+        spoofPlayerInfoPacket(init, Collections.singletonList(new ClientboundPlayerInfoUpdatePacket.Entry(
                 player.getUniqueId(),
                 gameProfile,
                 true,

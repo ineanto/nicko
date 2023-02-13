@@ -3,12 +3,13 @@ package net.artelnatif.nicko.bungee;
 import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.cache2k.Cache;
+import org.cache2k.Cache2kBuilder;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class NickoBungee extends Plugin {
-    private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
+    private final Cache<UUID, NickoProfile> profileCache = Cache2kBuilder.of(UUID.class, NickoProfile.class).build();
     private final Nicko nicko = new Nicko();
 
     private static NickoBungee plugin;
@@ -29,6 +30,8 @@ public class NickoBungee extends Plugin {
                 return;
             }
 
+            getProxy().registerChannel(Nicko.MESSAGE_FETCH);
+            getProxy().registerChannel(Nicko.MESSAGE_UPDATE);
             getLogger().info("Nicko (Bungee) has been enabled.");
         }
     }
@@ -36,9 +39,13 @@ public class NickoBungee extends Plugin {
     @Override
     public void onDisable() {
         if (!nicko.getDataStore().getStorage().isError()) {
+            getProxy().unregisterChannel(Nicko.MESSAGE_FETCH);
+            getProxy().unregisterChannel(Nicko.MESSAGE_UPDATE);
             getLogger().info("Nicko (Bungee) has been disabled.");
         }
     }
+
+    public Cache<UUID, NickoProfile> getProfileCache() { return profileCache; }
 
     public Nicko getNicko() {
         return nicko;

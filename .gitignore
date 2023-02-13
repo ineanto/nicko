@@ -44,3 +44,6 @@ v1_19_R1/target
 
 # Build folder
 target
+
+# Maven Dependency Reduced Pom
+core/dependency-reduced-pom.xml

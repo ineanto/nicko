@@ -11,8 +11,6 @@ import net.artelnatif.nicko.bukkit.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.bukkit.i18n.Locale;
 import net.artelnatif.nicko.bukkit.i18n.LocaleFileManager;
 import net.artelnatif.nicko.bukkit.placeholder.PlaceHolderHook;
-import net.artelnatif.nicko.bukkit.messaging.PluginMessageEvent;
-import net.artelnatif.nicko.bungee.NickoBungee;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
@@ -50,31 +48,22 @@ public class NickoBukkit extends JavaPlugin {
         plugin = this;
         nicko.initBukkit(this);
 
-        if (unitTesting) onUnitTestingStartup();
-        else onPluginStartup();
-    }
-
-    public void onUnitTestingStartup() {
-        if (!nicko.getDataStore().getStorage().getProvider().init()) {
-            nicko.getDataStore().getStorage().setError(true);
-            getLogger().severe("Failed to open persistence, data will NOT be saved!");
-        }
-    }
-
-    public void onPluginStartup() {
-        getLogger().info("Loading internals...");
-        if (getInternals() == null) {
-            getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
-            nicko.getDataStore().getStorage().setError(true);
-            getServer().getPluginManager().disablePlugin(this);
-        }
-
-        if (getServer().getPluginManager().isPluginEnabled(this) && !nicko.getDataStore().getStorage().isError()) {
+        if (!nicko.getDataStore().getStorage().isError()) {
             getLogger().info("Loading persistence...");
             if (!nicko.getDataStore().getStorage().getProvider().init()) {
                 nicko.getDataStore().getStorage().setError(true);
                 getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
+        }
+
+        if (!unitTesting) {
+            getLogger().info("Loading internals...");
+            if (getInternals() == null) {
+                getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
+                nicko.getDataStore().getStorage().setError(true);
+                getServer().getPluginManager().disablePlugin(this);
+            }
+
 
             localeFileManager = new LocaleFileManager();
             if (nicko.getConfig().isCustomLocale()) {
@@ -104,11 +93,18 @@ public class NickoBukkit extends JavaPlugin {
             if (nicko.getConfig().isBungeecord()) {
                 if (support.stopIfBungeeCordIsNotEnabled()) {
                     getLogger().info("Enabling BungeeCord support...");
-                    getServer().getMessenger().registerIncomingPluginChannel(this, NickoBungee.PROXY_UPDATE, new PluginMessageEvent());
+                    //TODO: Enable BungeeCord
                 }
             }
 
             getLogger().info("Nicko (Bukkit) has been enabled.");
+        }
+    }
+
+    public void onUnitTestingStartup() {
+        if (!nicko.getDataStore().getStorage().getProvider().init()) {
+            nicko.getDataStore().getStorage().setError(true);
+            getLogger().severe("Failed to open persistence, data will NOT be saved!");
         }
     }
 

@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Nicko {
+    public static final String CHANNEL = "nicko:";
+    public static final String MESSAGE_UPDATE = CHANNEL + "update";
+    public static final String MESSAGE_FETCH = CHANNEL + "fetch";
+
     private ConfigurationManager configManager;
     private Logger logger;
     private File dataFolder;

@@ -4,17 +4,17 @@ import de.studiocode.invui.gui.structure.Structure;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.command.NickoCommand;
+import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
 import net.artelnatif.nicko.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.i18n.LocaleFileManager;
-import net.artelnatif.nicko.mojang.MojangAPI;
-import net.artelnatif.nicko.placeholder.PlaceHolderHook;
-import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.impl.Internals;
 import net.artelnatif.nicko.impl.InternalsProvider;
+import net.artelnatif.nicko.mojang.MojangAPI;
+import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,13 +25,11 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
 
-    private ConfigurationManager configManager;
-    private Logger logger;
+    private ConfigurationManager configurationManager;
     private File dataFolder;
     private MojangAPI mojangAPI;
     private Configuration configuration;
@@ -55,11 +53,11 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        configManager = new ConfigurationManager(getDataFolder());
-        configManager.saveDefaultConfig();
+        configurationManager = new ConfigurationManager(getDataFolder());
+        configurationManager.saveDefaultConfig();
 
         mojangAPI = new MojangAPI();
-        dataStore = new PlayerDataStore(mojangAPI, configuration);
+        dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
 
         if (!getDataStore().getStorage().isError()) {
             getLogger().info("Loading persistence...");
@@ -125,10 +123,10 @@ public class NickoBukkit extends JavaPlugin {
 
     public Configuration getNickoConfig() {
         try {
-            if (configuration == null) { return configuration = configManager.load(); }
+            if (configuration == null) { return configuration = configurationManager.load(); }
             return configuration;
         } catch (IOException e) {
-            logger.severe("Failed to load configuration file: " + e.getMessage());
+            getLogger().severe("Failed to load configuration file: " + e.getMessage());
             return null;
         }
     }

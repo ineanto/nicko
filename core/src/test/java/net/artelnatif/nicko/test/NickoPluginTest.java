@@ -25,7 +25,7 @@ public class NickoPluginTest {
     @DisplayName("Plugin Initialization")
     public void testPluginInitialization() {
         Assertions.assertNotNull(plugin.getDataStore().getStorage().getProvider());
-        Assertions.assertNotNull(plugin.getConfig());
+        Assertions.assertNotNull(plugin.getNickoConfig());
     }
 
     @AfterAll

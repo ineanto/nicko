@@ -36,11 +36,6 @@ prefix: "§8[§6Nicko§8] "
 # Accepted values: false (Disabled), true (Enabled)
 local: true
 
-# Enables Bungeecord support, switching
-# servers will transfer player's disguise.
-# Accepted values: false (Disabled), true (Enabled)
-bungeecord: false
-
 # Nicko will copy the English locale as "lang.yml"
 # and will use the translations in that file when "Server Custom"
 # is selected as the player's locale.

@@ -29,13 +29,12 @@ import java.io.IOException;
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
 
-    private ConfigurationManager configurationManager;
-    private File dataFolder;
-    private MojangAPI mojangAPI;
-    private Configuration configuration;
-    private PlayerDataStore dataStore;
     private final boolean unitTesting;
 
+    private MojangAPI mojangAPI;
+    private PlayerDataStore dataStore;
+    private ConfigurationManager configurationManager;
+    private Configuration configuration;
     private LocaleFileManager localeFileManager;
 
     public NickoBukkit() { this.unitTesting = false; }

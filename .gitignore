@@ -46,4 +46,5 @@ v1_19_R1/target
 target
 
 # Maven Dependency Reduced Pom
+dist/dependency-reduced-pom.xml
 core/dependency-reduced-pom.xml

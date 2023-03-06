@@ -6,21 +6,19 @@ public class Configuration {
     private final String password;
     private final String prefix;
     private final Boolean local;
-    private final Boolean bungeecord;
     private final Boolean customLocale;
 
-    public Configuration(String address, String username, String password, String prefix, Boolean local, Boolean bungeecord, Boolean customLocale) {
+    public Configuration(String address, String username, String password, String prefix, Boolean local, Boolean customLocale) {
         this.address = address;
         this.username = username;
         this.password = password;
         this.prefix = prefix;
         this.local = local;
-        this.bungeecord = bungeecord;
         this.customLocale = customLocale;
     }
 
     public Configuration() {
-        this("", "", "", "", false, false, false);
+        this("", "", "", "", false, false);
     }
 
     public String getAddress() {
@@ -41,10 +39,6 @@ public class Configuration {
 
     public Boolean isLocal() {
         return local;
-    }
-
-    public Boolean isBungeecord() {
-        return bungeecord;
     }
 
     public Boolean isCustomLocale() {

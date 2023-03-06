@@ -1,4 +1,0 @@
-name: ${project.parent.name}
-main: net.artelnatif.nicko.bungee.NickoBungee
-version: ${project.version}
-author: Aro

@@ -160,18 +160,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.cache2k</groupId>
-      <artifactId>cache2k-api</artifactId>
-      <version>2.6.1.Final</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.cache2k</groupId>
-      <artifactId>cache2k-core</artifactId>
-      <version>2.6.1.Final</version>
-      <scope>runtime</scope>
-    </dependency>
   </dependencies>
   <properties>
     <cache2k-version>2.6.1.Final</cache2k-version>

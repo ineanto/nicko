@@ -1,9 +1,10 @@
 package net.artelnatif.nicko.storage;
 
-import net.artelnatif.nicko.Nicko;
-import net.artelnatif.nicko.bukkit.i18n.I18NDict;
+import net.artelnatif.nicko.config.Configuration;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import net.artelnatif.nicko.storage.json.JSONStorage;
 import net.artelnatif.nicko.storage.sql.SQLStorage;
@@ -16,13 +17,13 @@ import java.util.UUID;
 
 public class PlayerDataStore {
     private final Storage storage;
-    private final Nicko nicko;
+    private final MojangAPI mojangAPI;
     private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
     private final HashMap<UUID, String> names = new HashMap<>();
 
-    public PlayerDataStore(Nicko nicko) {
-        this.nicko = nicko;
-        this.storage = nicko.getConfig().isLocal() && !nicko.getConfig().isBungeecord() ? new JSONStorage(nicko) : new SQLStorage(nicko);
+    public PlayerDataStore(MojangAPI mojangAPI, Configuration configuration) {
+        this.mojangAPI = mojangAPI;
+        this.storage = configuration.isLocal() ? new JSONStorage() : new SQLStorage(configuration);
     }
 
     public void storeName(Player player) {
@@ -76,7 +77,7 @@ public class PlayerDataStore {
         }
 
         try {
-            final Optional<String> uuidTrimmed = nicko.getMojangAPI().getUUID(name);
+            final Optional<String> uuidTrimmed = mojangAPI.getUUID(name);
             if (uuidTrimmed.isPresent()) {
                 final UUID uuid = MojangUtils.fromTrimmed(uuidTrimmed.get());
                 return getData(uuid);

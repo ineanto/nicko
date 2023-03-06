@@ -2,21 +2,18 @@ package net.artelnatif.nicko.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import net.artelnatif.nicko.Nicko;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.Logger;
 
 public class ConfigurationManager {
-    private final Nicko nicko;
+    private final Logger logger = Logger.getLogger("ConfigurationManager");
     private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-    private final File directory;
     private final File file;
 
-    public ConfigurationManager(Nicko nicko) {
-        this.nicko = nicko;
-        this.directory = nicko.getDataFolder();
+    public ConfigurationManager(File directory) {
         this.file = new File(directory, "config.yml");
     }
 
@@ -32,7 +29,7 @@ public class ConfigurationManager {
             try {
                 final InputStream input = getClass().getResourceAsStream("/config.yml");
                 if (input != null) {
-                    nicko.getLogger().info("Saved default configuration as config.yml");
+                    logger.info("Saved default configuration as config.yml");
                     Files.createDirectories(file.getParentFile().toPath());
                     Files.createFile(file.toPath());
                     Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);

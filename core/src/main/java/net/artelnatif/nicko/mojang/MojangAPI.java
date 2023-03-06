@@ -7,7 +7,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import net.artelnatif.nicko.Nicko;
 
 import javax.annotation.Nonnull;
 import javax.net.ssl.HttpsURLConnection;
@@ -18,10 +17,13 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class MojangAPI {
     public static final String URL_NAME = "https://api.mojang.com/users/profiles/minecraft/{name}";
     public static final String URL_SKIN = "https://sessionserver.mojang.com/session/minecraft/profile/{uuid}?unsigned=false";
+
+    private final Logger logger = Logger.getLogger("MojangAPI");
 
     private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<String, Optional<MojangSkin>>() {
         @Nonnull
@@ -35,12 +37,6 @@ public class MojangAPI {
             .recordStats()
             .expireAfterWrite(24, TimeUnit.HOURS)
             .build(loader);
-
-    private final Nicko nicko;
-
-    public MojangAPI(Nicko nicko) {
-        this.nicko = nicko;
-    }
 
     public Optional<MojangSkin> getSkin(String uuid) throws IOException, ExecutionException {
         return cache.get(uuid);
@@ -78,10 +74,10 @@ public class MojangAPI {
 
         switch (con.getResponseCode()) {
             case 400:
-                nicko.getLogger().warning("Failed to parse request: Invalid Name");
+                logger.warning("Failed to parse request: Invalid Name");
                 return getErrorObject();
             case 429:
-                nicko.getLogger().warning("Failed to parse request: The connection is throttled.");
+                logger.warning("Failed to parse request: The connection is throttled.");
                 return getErrorObject();
             case 200:
                 final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -95,11 +91,11 @@ public class MojangAPI {
                     final JsonElement jsonElt = JsonParser.parseString(builder.toString());
                     return jsonElt.getAsJsonObject();
                 } catch (JsonParseException | IllegalStateException exception) {
-                    nicko.getLogger().warning("Failed to parse request (" + parametrizedUrl + ")!");
+                    logger.warning("Failed to parse request (" + parametrizedUrl + ")!");
                     return getErrorObject();
                 }
             default:
-                nicko.getLogger().warning("Unhandled response code from Mojang: " + con.getResponseCode());
+                logger.warning("Unhandled response code from Mojang: " + con.getResponseCode());
                 return getErrorObject();
         }
     }

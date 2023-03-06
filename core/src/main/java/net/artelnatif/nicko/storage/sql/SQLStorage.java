@@ -1,31 +1,36 @@
 package net.artelnatif.nicko.storage.sql;
 
-import net.artelnatif.nicko.Nicko;
-import net.artelnatif.nicko.bukkit.i18n.I18NDict;
-import net.artelnatif.nicko.bukkit.i18n.Locale;
+import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.I18NDict;
+import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.storage.Storage;
 
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class SQLStorage extends Storage {
-    private final Nicko nicko;
+    private final Logger logger = Logger.getLogger("SQLStorage");
+    private final Configuration configuration;
 
     private SQLStorageProvider provider;
 
-    public SQLStorage(Nicko nicko) {
-        this.nicko = nicko;
+    public SQLStorage(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public SQLStorageProvider getProvider() {
         if (provider == null) {
-            provider = new SQLStorageProvider(nicko);
+            provider = new SQLStorageProvider(configuration);
         }
         return provider;
     }
@@ -41,7 +46,7 @@ public class SQLStorage extends Storage {
             statement.executeUpdate();
             return new ActionResult<>();
         } catch (SQLException e) {
-            nicko.getLogger().warning("Couldn't send SQL Request: " + e.getMessage());
+            logger.warning("Couldn't send SQL Request: " + e.getMessage());
             return new ActionResult<>(I18NDict.Error.SQL_ERROR);
         }
     }
@@ -60,7 +65,7 @@ public class SQLStorage extends Storage {
             final ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            nicko.getLogger().warning("Couldn't check if data is present: " + e.getMessage());
+            logger.warning("Couldn't check if data is present: " + e.getMessage());
             return false;
         }
     }
@@ -91,7 +96,7 @@ public class SQLStorage extends Storage {
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);
         } catch (SQLException e) {
-            nicko.getLogger().warning("Couldn't fetch profile: " + e.getMessage());
+            logger.warning("Couldn't fetch profile: " + e.getMessage());
             return Optional.empty();
         }
     }

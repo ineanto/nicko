@@ -3,7 +3,7 @@ package net.artelnatif.nicko.test.storage;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
@@ -24,7 +24,6 @@ public class BrokenSQLTest {
                 "INVALID_PASSWORD",
                 "",
                 false,
-                false,
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
@@ -34,22 +33,22 @@ public class BrokenSQLTest {
     @Test
     @DisplayName("Fail to create Tables")
     public void createSQLTables() {
-        Assertions.assertTrue(plugin.getNicko().getDataStore().getStorage().isError());
+        Assertions.assertTrue(plugin.getDataStore().getStorage().isError());
     }
 
     @Test
     @DisplayName("Fail to Store Player Via SQL")
     public void storePlayer() {
-        final Optional<NickoProfile> optionalProfile = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         Assertions.assertFalse(optionalProfile.isPresent());
-        ActionResult<Void> result = plugin.getNicko().getDataStore().saveData(player);
+        ActionResult<Void> result = plugin.getDataStore().saveData(player);
         Assertions.assertTrue(result.isError());
     }
 
     @Test
     @DisplayName("Fail to Retrieve Player Via SQL")
     public void retrievePlayer() {
-        final Optional<NickoProfile> storeAction = plugin.getNicko().getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> storeAction = plugin.getDataStore().getData(player.getUniqueId());
         Assertions.assertFalse(storeAction.isPresent());
     }
 

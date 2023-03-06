@@ -1,6 +1,5 @@
 package net.artelnatif.nicko.storage.sql;
 
-import net.artelnatif.nicko.Nicko;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.storage.StorageProvider;
 import org.mariadb.jdbc.MariaDbDataSource;
@@ -8,25 +7,27 @@ import org.mariadb.jdbc.MariaDbDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class SQLStorageProvider implements StorageProvider {
-    private final Nicko nicko;
+    private final Logger logger = Logger.getLogger("SQLStorageProvider");
+    private final Configuration configuration;
+
     private Connection connection;
 
     private final String schemaName = "nicko";
 
-    public SQLStorageProvider(Nicko nicko) {
-        this.nicko = nicko;
+    public SQLStorageProvider(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public boolean init() {
         try {
-            final Configuration config = nicko.getConfig();
             final MariaDbDataSource dataSource = new MariaDbDataSource();
-            dataSource.setUrl("jdbc:mariadb://" + config.getAddress());
-            dataSource.setUser(config.getUsername());
-            dataSource.setPassword(config.getPassword());
+            dataSource.setUrl("jdbc:mariadb://" + configuration.getAddress());
+            dataSource.setUser(configuration.getUsername());
+            dataSource.setPassword(configuration.getPassword());
             connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 
@@ -36,7 +37,7 @@ public class SQLStorageProvider implements StorageProvider {
             createTable();
             return true;
         } catch (SQLException e) {
-            nicko.getLogger().severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
+            logger.severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
             return false;
         }
     }

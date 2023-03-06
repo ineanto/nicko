@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.test;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import net.artelnatif.nicko.bukkit.NickoBukkit;
+import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.Configuration;
 import org.junit.jupiter.api.*;
 
@@ -16,7 +16,6 @@ public class NickoPluginTest {
                 "",
                 "",
                 true,
-                false,
                 false);
         MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
@@ -25,8 +24,8 @@ public class NickoPluginTest {
     @Test
     @DisplayName("Plugin Initialization")
     public void testPluginInitialization() {
-        Assertions.assertNotNull(plugin.getNicko().getDataStore().getStorage().getProvider());
-        Assertions.assertNotNull(plugin.getNicko().getConfig());
+        Assertions.assertNotNull(plugin.getDataStore().getStorage().getProvider());
+        Assertions.assertNotNull(plugin.getConfig());
     }
 
     @AfterAll

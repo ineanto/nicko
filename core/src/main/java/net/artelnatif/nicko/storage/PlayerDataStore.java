@@ -40,7 +40,7 @@ public class PlayerDataStore {
         return names.containsKey(player.getUniqueId());
     }
 
-    public void removeAllNames() {
+    public void clearStoredNames() {
         names.clear();
     }
 

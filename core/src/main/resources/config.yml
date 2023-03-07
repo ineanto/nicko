@@ -1,12 +1,20 @@
 # Nicko ${project.version} - Config:
 
 ###########
-# GENERAL #
+# STORAGE #
 ###########
+
+# Indicates wherever the data will be stored
+# locally through a .json file or a (My)SQL database.
+# Accepted values: false (Disabled), true (Enabled)
+local: true
 
 # SQL database's address
 # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
 address: "localhost"
+# SQL database's port
+# Accepted values: valid integer (e.g. 3306, 25565)
+port: 3306
 # SQL database's username.
 # Accepted values: any string
 username: "username"
@@ -14,18 +22,33 @@ username: "username"
 # Accepted values: any string
 password: "password"
 
-#################
-# BUKKIT/SPIGOT #
-#################
+# This configuration section manages Redis (BungeeCord support).
+# It is used to transfer data between multiple servers.
+redis:
+  # Indicates wherever the data will be stored through
+  # Redis to transfer whenever a player switches server.
+  # Accepted values: false (Disabled), true (Enabled)
+  enabled: false
+  # Redis server's address
+  # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
+  address: "localhost"
+  # Redis server's port
+  # Accepted values: valid integer (e.g. 3306, 25565)
+  port: 6379
+  # Redis server's username
+  # Accepted values: any string
+  username: "username"
+  # Redis server's password
+  # Accepted values: any string
+  password: "password"
+
+###########
+# DISPLAY #
+###########
 
 # Nicko's messages prefix.
 # Accepted values: any string
-prefix: "§8[§6Nicko§8] "
-
-# Indicates wherever the data will be stored
-# locally through a .json file or a (My)SQL database.
-# Accepted values: false (Disabled), true (Enabled)
-local: true
+prefix: "§5Nicko §8§l｜ §r"
 
 # Nicko will copy the English locale as "lang.yml"
 # and will use the translations in that file when "Server Custom"

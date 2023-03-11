@@ -12,6 +12,9 @@ import org.junit.jupiter.api.*;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SQLStorageTest {
     private static ServerMock server;
@@ -36,7 +39,7 @@ public class SQLStorageTest {
     @DisplayName("Create SQL Tables")
     @Order(1)
     public void createSQLTables() {
-        Assertions.assertFalse(plugin.getDataStore().getStorage().isError());
+        assertFalse(plugin.getDataStore().getStorage().isError());
     }
 
     @Test
@@ -44,7 +47,7 @@ public class SQLStorageTest {
     @Order(2)
     public void storePlayer() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(optionalProfile.isPresent());
+        assertTrue(optionalProfile.isPresent());
     }
 
     @Test
@@ -52,7 +55,7 @@ public class SQLStorageTest {
     @Order(3)
     public void retrievePlayer() {
         final Optional<NickoProfile> storeAction = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(storeAction.isPresent());
+        assertTrue(storeAction.isPresent());
     }
 
     @Test
@@ -60,13 +63,13 @@ public class SQLStorageTest {
     @Order(4)
     public void updatePlayer() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(optionalProfile.isPresent());
+        assertTrue(optionalProfile.isPresent());
 
         final NickoProfile profile = optionalProfile.get();
         Assertions.assertNull(profile.getName());
         Assertions.assertNull(profile.getSkin());
         Assertions.assertEquals(profile.getLocale(), Locale.ENGLISH);
-        Assertions.assertTrue(profile.isBungeecordTransfer());
+        assertTrue(profile.isBungeecordTransfer());
 
         profile.setName("Notch");
         profile.setSkin("Notch");
@@ -74,15 +77,15 @@ public class SQLStorageTest {
         profile.setBungeecordTransfer(false);
 
         final ActionResult<Void> result = plugin.getDataStore().saveData(player);
-        Assertions.assertFalse(result.isError());
+        assertFalse(result.isError());
 
         final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(optionalUpdatedProfile.isPresent());
+        assertTrue(optionalUpdatedProfile.isPresent());
         final NickoProfile updatedProfile = optionalProfile.get();
         Assertions.assertEquals(updatedProfile.getName(), "Notch");
         Assertions.assertEquals(updatedProfile.getSkin(), "Notch");
         Assertions.assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
-        Assertions.assertFalse(updatedProfile.isBungeecordTransfer());
+        assertFalse(updatedProfile.isBungeecordTransfer());
     }
 
     @Test
@@ -90,7 +93,7 @@ public class SQLStorageTest {
     @Order(5)
     public void removePlayerDisguise() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(optionalProfile.isPresent());
+        assertTrue(optionalProfile.isPresent());
 
         final NickoProfile profile = optionalProfile.get();
 
@@ -98,10 +101,10 @@ public class SQLStorageTest {
         profile.setSkin(null);
 
         final ActionResult<Void> result = plugin.getDataStore().saveData(player);
-        Assertions.assertFalse(result.isError());
+        assertFalse(result.isError());
 
         final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());
-        Assertions.assertTrue(optionalUpdatedProfile.isPresent());
+        assertTrue(optionalUpdatedProfile.isPresent());
         final NickoProfile updatedProfile = optionalProfile.get();
         Assertions.assertNull(updatedProfile.getName());
         Assertions.assertNull(updatedProfile.getSkin());

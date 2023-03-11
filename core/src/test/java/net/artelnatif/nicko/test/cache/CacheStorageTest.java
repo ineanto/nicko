@@ -36,6 +36,7 @@ public class CacheStorageTest {
     public void cachePlayerData() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         assertTrue(optionalProfile.isPresent());
+        //assertTrue(plugin.getDataStore().isCached(player.getUniqueId()));
     }
 
     @AfterAll

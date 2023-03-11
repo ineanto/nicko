@@ -16,6 +16,7 @@ import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.storage.PlayerDataStore;
+import net.artelnatif.nicko.storage.name.PlayerNameStore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -36,6 +37,7 @@ public class NickoBukkit extends JavaPlugin {
     private ConfigurationManager configurationManager;
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
+    private PlayerNameStore nameStore;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -57,11 +59,12 @@ public class NickoBukkit extends JavaPlugin {
 
         mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
+        nameStore = new PlayerNameStore();
 
-        if (!getDataStore().getStorage().isError()) {
+        if (!dataStore.getStorage().isError()) {
             getLogger().info("Loading persistence...");
-            if (!getDataStore().getStorage().getProvider().init()) {
-                getDataStore().getStorage().setError(true);
+            if (!dataStore.getStorage().getProvider().init()) {
+                dataStore.getStorage().setError(true);
                 getLogger().severe("Failed to open persistence, data will NOT be saved!");
             }
         }
@@ -70,13 +73,13 @@ public class NickoBukkit extends JavaPlugin {
             getLogger().info("Loading internals...");
             if (getInternals() == null) {
                 getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
-                getDataStore().getStorage().setError(true);
+                dataStore.getStorage().setError(true);
                 getServer().getPluginManager().disablePlugin(this);
             }
 
 
             localeFileManager = new LocaleFileManager();
-            if (getNickoConfig().isCustomLocale()) {
+            if (configuration.isCustomLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
                     getLogger().info("Successfully loaded custom language file.");
                 } else {
@@ -106,9 +109,9 @@ public class NickoBukkit extends JavaPlugin {
     public void onDisable() {
         if (!getDataStore().getStorage().isError()) {
             getLogger().info("Closing persistence...");
-            getDataStore().clearStoredNames();
-            Bukkit.getOnlinePlayers().forEach(player -> getDataStore().saveData(player));
-            if (!getDataStore().getStorage().getProvider().close()) {
+            nameStore.clearStoredNames();
+            Bukkit.getOnlinePlayers().forEach(player -> dataStore.saveData(player));
+            if (!dataStore.getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");
             }
         }
@@ -132,6 +135,10 @@ public class NickoBukkit extends JavaPlugin {
 
     public PlayerDataStore getDataStore() {
         return dataStore;
+    }
+
+    public PlayerNameStore getNameStore() {
+        return nameStore;
     }
 
     public MojangAPI getMojangAPI() {

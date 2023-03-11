@@ -19,29 +19,10 @@ public class PlayerDataStore {
     private final Storage storage;
     private final MojangAPI mojangAPI;
     private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
-    private final HashMap<UUID, String> names = new HashMap<>();
 
     public PlayerDataStore(MojangAPI mojangAPI, Configuration configuration) {
         this.mojangAPI = mojangAPI;
         this.storage = configuration.isLocal() ? new JSONStorage() : new SQLStorage(configuration);
-    }
-
-    public void storeName(Player player) {
-        if (!isNameStored(player)) {
-            names.put(player.getUniqueId(), player.getName());
-        }
-    }
-
-    public String getStoredName(Player player) {
-        return names.get(player.getUniqueId());
-    }
-
-    private boolean isNameStored(Player player) {
-        return names.containsKey(player.getUniqueId());
-    }
-
-    public void clearStoredNames() {
-        names.clear();
     }
 
     public void performProfileUpdate(UUID uuid, NickoProfile profile) {

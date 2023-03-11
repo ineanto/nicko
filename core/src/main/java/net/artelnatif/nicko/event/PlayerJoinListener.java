@@ -7,6 +7,7 @@ import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.storage.PlayerDataStore;
+import net.artelnatif.nicko.storage.name.PlayerNameStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,15 +18,17 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
-        dataStore.storeName(player);
+        final NickoBukkit instance = NickoBukkit.getInstance();
+
+        final PlayerDataStore dataStore = instance.getDataStore();
+        final PlayerNameStore nameStore = instance.getNameStore();
+        nameStore.storeName(player);
 
         // TODO: 2/20/23 BungeeCord transfer
 
         dataStore.performProfileUpdate(player.getUniqueId(), NickoProfile.EMPTY_PROFILE);
-        Bukkit.getScheduler().runTaskLater(NickoBukkit.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(instance, () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
-
             if (appearanceManager.hasData()) {
                 final ActionResult<Void> actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());
                 if (!actionResult.isError()) {

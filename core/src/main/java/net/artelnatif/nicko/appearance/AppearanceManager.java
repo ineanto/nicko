@@ -4,6 +4,7 @@ import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.storage.PlayerDataStore;
+import net.artelnatif.nicko.storage.name.PlayerNameStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -14,6 +15,7 @@ public class AppearanceManager {
     private final Player player;
     private final NickoBukkit instance = NickoBukkit.getInstance();
     private final PlayerDataStore dataStore = instance.getDataStore();
+    private final PlayerNameStore nameStore = instance.getNameStore();
 
     private AppearanceManager(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
@@ -68,7 +70,7 @@ public class AppearanceManager {
     }
 
     public ActionResult<Void> reset() {
-        final String defaultName = dataStore.getStoredName(player);
+        final String defaultName = nameStore.getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
         final ActionResult<Void> actionResult = resetPlayer();

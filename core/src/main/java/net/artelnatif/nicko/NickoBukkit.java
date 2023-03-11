@@ -106,7 +106,7 @@ public class NickoBukkit extends JavaPlugin {
     public void onDisable() {
         if (!getDataStore().getStorage().isError()) {
             getLogger().info("Closing persistence...");
-            getDataStore().removeAllNames();
+            getDataStore().clearStoredNames();
             Bukkit.getOnlinePlayers().forEach(player -> getDataStore().saveData(player));
             if (!getDataStore().getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");

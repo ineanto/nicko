@@ -22,7 +22,7 @@ public class CacheStorageTest {
         final Configuration config = new Configuration(
                 "127.0.0.1",
                 "root",
-                "INVALID_PASSWORD",
+                "12345",
                 "",
                 false,
                 false);

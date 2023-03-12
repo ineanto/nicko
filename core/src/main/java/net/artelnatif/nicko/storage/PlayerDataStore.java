@@ -1,11 +1,13 @@
 package net.artelnatif.nicko.storage;
 
 import net.artelnatif.nicko.config.Configuration;
-import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.disguise.ActionResult;
 import net.artelnatif.nicko.disguise.NickoProfile;
+import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangUtils;
+import net.artelnatif.nicko.storage.cache.Cache;
+import net.artelnatif.nicko.storage.cache.redis.RedisCache;
 import net.artelnatif.nicko.storage.json.JSONStorage;
 import net.artelnatif.nicko.storage.sql.SQLStorage;
 import org.bukkit.entity.Player;
@@ -17,12 +19,14 @@ import java.util.UUID;
 
 public class PlayerDataStore {
     private final Storage storage;
+    private final Cache cache;
     private final MojangAPI mojangAPI;
     private final HashMap<UUID, NickoProfile> profiles = new HashMap<>();
 
     public PlayerDataStore(MojangAPI mojangAPI, Configuration configuration) {
         this.mojangAPI = mojangAPI;
         this.storage = configuration.isLocal() ? new JSONStorage() : new SQLStorage(configuration);
+        this.cache = new RedisCache(); // The only option for now!
     }
 
     public void performProfileUpdate(UUID uuid, NickoProfile profile) {
@@ -80,5 +84,9 @@ public class PlayerDataStore {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    public Cache getCache() {
+        return cache;
     }
 }

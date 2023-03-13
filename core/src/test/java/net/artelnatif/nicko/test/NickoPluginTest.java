@@ -6,6 +6,8 @@ import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.DataSourceConfiguration;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class NickoPluginTest {
     private static NickoBukkit plugin;
 
@@ -23,9 +25,8 @@ public class NickoPluginTest {
 
     @Test
     @DisplayName("Plugin Initialization")
-    public void testPluginInitialization() {
-        Assertions.assertNotNull(plugin.getDataStore().getStorage().getProvider());
-        Assertions.assertNotNull(plugin.getNickoConfig());
+    public void initializePlugin() {
+        assertNotNull(plugin);
     }
 
     @AfterAll

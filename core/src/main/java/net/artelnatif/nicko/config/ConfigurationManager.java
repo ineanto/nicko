@@ -1,5 +1,6 @@
 package net.artelnatif.nicko.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
@@ -15,6 +16,7 @@ public class ConfigurationManager {
 
     public ConfigurationManager(File directory) {
         this.file = new File(directory, "config.yml");
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public void save(Configuration configuration) throws IOException {

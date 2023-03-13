@@ -9,18 +9,20 @@
 # Accepted values: false (Disabled), true (Enabled)
 local: true
 
-# SQL database's address
-# Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
-address: "localhost"
-# SQL database's port
-# Accepted values: valid integer (e.g. 3306, 25565)
-port: 3306
-# SQL database's username.
-# Accepted values: any string
-username: "username"
-# SQL database's password.
-# Accepted values: any string
-password: "password"
+# This configuration section manages SQL.
+sql:
+  # SQL database's address
+  # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
+  address: "localhost"
+  # SQL database's port
+  # Accepted values: valid integer (e.g. 3306, 25565)
+  port: 3306
+  # SQL database's username.
+  # Accepted values: any string
+  username: "username"
+  # SQL database's password.
+  # Accepted values: any string
+  password: "password"
 
 # This configuration section manages Redis (BungeeCord support).
 # It is used to transfer data between multiple servers.

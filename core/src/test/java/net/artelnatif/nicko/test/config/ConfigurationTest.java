@@ -1,12 +1,17 @@
-package net.artelnatif.nicko.test;
+package net.artelnatif.nicko.test.config;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.DataSourceConfiguration;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-public class NickoPluginTest {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ConfigurationTest {
     private static NickoBukkit plugin;
 
     @BeforeAll
@@ -22,10 +27,10 @@ public class NickoPluginTest {
     }
 
     @Test
-    @DisplayName("Plugin Initialization")
-    public void testPluginInitialization() {
-        Assertions.assertNotNull(plugin.getDataStore().getStorage().getProvider());
-        Assertions.assertNotNull(plugin.getNickoConfig());
+    @DisplayName("Read configuration")
+    public void readConfiguration() {
+        final Configuration configuration = plugin.getNickoConfig();
+        assertTrue(configuration.isLocal());
     }
 
     @AfterAll

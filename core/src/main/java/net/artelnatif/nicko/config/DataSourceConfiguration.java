@@ -1,12 +1,15 @@
 package net.artelnatif.nicko.config;
 
 public class DataSourceConfiguration {
+    public static final DataSourceConfiguration SQL_EMPTY = new DataSourceConfiguration("127.0.0.1", 3306, "root", "");
+    public static final DataSourceConfiguration REDIS_EMPTY = new DataSourceConfiguration("127.0.0.1", 6379, "", "");
+
     private final String address;
-    private final String port;
+    private final Integer port;
     private final String username;
     private final String password;
 
-    public DataSourceConfiguration(String address, String port, String username, String password) {
+    public DataSourceConfiguration(String address, Integer port, String username, String password) {
         this.address = address;
         this.port = port;
         this.username = username;
@@ -17,7 +20,7 @@ public class DataSourceConfiguration {
         return address;
     }
 
-    public String getPort() {
+    public Integer getPort() {
         return port;
     }
 

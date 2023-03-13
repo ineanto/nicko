@@ -1,36 +1,40 @@
 package net.artelnatif.nicko.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Configuration {
-    private final String address;
-    private final String username;
-    private final String password;
+    @JsonProperty("sql")
+    private final DataSourceConfiguration sqlConfiguration;
+    @JsonProperty("redis")
+    private final DataSourceConfiguration redisConfiguration;
     private final String prefix;
     private final Boolean local;
     private final Boolean customLocale;
 
-    public Configuration(String address, String username, String password, String prefix, Boolean local, Boolean customLocale) {
-        this.address = address;
-        this.username = username;
-        this.password = password;
+    public Configuration(DataSourceConfiguration sqlConfiguration, DataSourceConfiguration redisConfiguration, String prefix, Boolean local, Boolean customLocale) {
+        this.sqlConfiguration = sqlConfiguration;
+        this.redisConfiguration = redisConfiguration;
         this.prefix = prefix;
         this.local = local;
         this.customLocale = customLocale;
     }
 
     public Configuration() {
-        this("", "", "", "", false, false);
+        this(
+                new DataSourceConfiguration("", 3306, "", ""),
+                new DataSourceConfiguration("", 6379, "", ""),
+                "",
+                false,
+                false
+        );
     }
 
-    public String getAddress() {
-        return address;
+    public DataSourceConfiguration getSqlConfiguration() {
+        return sqlConfiguration;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
+    public DataSourceConfiguration getRedisConfiguration() {
+        return redisConfiguration;
     }
 
     public String getPrefix() {

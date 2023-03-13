@@ -4,6 +4,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import net.artelnatif.nicko.NickoBukkit;
+import net.artelnatif.nicko.config.DataSourceConfiguration;
 import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.disguise.ActionResult;
@@ -24,9 +25,8 @@ public class SQLStorageTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                "127.0.0.1",
-                "root",
-                "12345",
+                new DataSourceConfiguration("127.0.0.1", 3306, "root", "12345"),
+                DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false,
                 false);

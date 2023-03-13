@@ -1,6 +1,7 @@
 package net.artelnatif.nicko.storage.sql;
 
 import net.artelnatif.nicko.config.Configuration;
+import net.artelnatif.nicko.config.DataSourceConfiguration;
 import net.artelnatif.nicko.storage.StorageProvider;
 import org.mariadb.jdbc.MariaDbDataSource;
 
@@ -25,9 +26,10 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final MariaDbDataSource dataSource = new MariaDbDataSource();
-            dataSource.setUrl("jdbc:mariadb://" + configuration.getAddress());
-            dataSource.setUser(configuration.getUsername());
-            dataSource.setPassword(configuration.getPassword());
+            final DataSourceConfiguration dataSourceConfiguration = configuration.getSqlConfiguration();
+            dataSource.setUrl("jdbc:mariadb://" + dataSourceConfiguration.getAddress() + ":" + dataSourceConfiguration.getPort());
+            dataSource.setUser(dataSourceConfiguration.getUsername());
+            dataSource.setPassword(dataSourceConfiguration.getPassword());
             connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 

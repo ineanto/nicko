@@ -128,7 +128,10 @@ public class NickoBukkit extends JavaPlugin {
             if (configuration == null) { return configuration = configurationManager.load(); }
             return configuration;
         } catch (IOException e) {
-            getLogger().severe("Failed to load configuration file: " + e.getMessage());
+            getLogger().severe("Failed to load the configuration file!");
+            getLogger().severe("It may be have been generated with an older version of Nicko.");
+            getLogger().severe("Delete the configuration and restart the server please :)");
+            getLogger().severe("(" + e.getMessage() + ")");
             return null;
         }
     }

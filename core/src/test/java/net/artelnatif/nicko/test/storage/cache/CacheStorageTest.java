@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.test.cache;
+package net.artelnatif.nicko.test.storage.cache;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;

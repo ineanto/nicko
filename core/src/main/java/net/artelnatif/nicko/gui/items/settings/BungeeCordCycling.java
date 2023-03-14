@@ -20,7 +20,7 @@ public class BungeeCordCycling {
     };
 
     public BaseItem get(Player player) {
-        Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int startingState = nickoProfile.isBungeecordTransfer() ? 0 : 1;

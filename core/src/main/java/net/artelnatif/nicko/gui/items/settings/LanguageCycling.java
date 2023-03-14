@@ -18,8 +18,7 @@ public class LanguageCycling {
     private final ItemProvider[] providers = getItems();
 
     public BaseItem get(Player player) {
-        final NickoBukkit instance = NickoBukkit.getInstance();
-        Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();

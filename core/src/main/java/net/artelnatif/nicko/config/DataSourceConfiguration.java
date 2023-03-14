@@ -16,6 +16,8 @@ public class DataSourceConfiguration {
         this.password = password;
     }
 
+    public DataSourceConfiguration() { this("", 0, "", ""); }
+
     public String getAddress() {
         return address;
     }

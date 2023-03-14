@@ -44,6 +44,13 @@ public class NickoBukkit extends JavaPlugin {
     /**
      * Used by MockBukkit
      */
+    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        this(loader, description, dataFolder, file, null);
+    }
+
+    /**
+     * Used by MockBukkit
+     */
     protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, Configuration configuration) {
         super(loader, description, dataFolder, file);
         unitTesting = true;

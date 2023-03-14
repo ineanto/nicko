@@ -50,7 +50,7 @@ redis:
 
 # Nicko's messages prefix.
 # Accepted values: any string
-prefix: "§5Nicko §8§l｜ §r"
+prefix: "§6Nicko §8§l| §r"
 
 # Nicko will copy the English locale as "lang.yml"
 # and will use the translations in that file when "Server Custom"

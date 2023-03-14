@@ -87,12 +87,7 @@ public class v1_19_R2 implements Internals {
             }
         }
 
-        final ClientboundPlayerInfoUpdatePacket init = new ClientboundPlayerInfoUpdatePacket(
-                EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
-                        ClientboundPlayerInfoUpdatePacket.Action.INITIALIZE_CHAT,
-                        ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY,
-                        ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED),
-                Collections.singletonList(serverPlayer));
+        final ClientboundPlayerInfoUpdatePacket init = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(Collections.singletonList(serverPlayer));
         final ClientboundPlayerInfoRemovePacket remove = new ClientboundPlayerInfoRemovePacket(Collections.singletonList(player.getUniqueId()));
 
         RemoteChatSession chatSession;

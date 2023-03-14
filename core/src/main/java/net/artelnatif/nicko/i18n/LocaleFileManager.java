@@ -5,6 +5,7 @@ import de.studiocode.invui.util.IOUtils;
 import net.artelnatif.nicko.NickoBukkit;
 
 import java.io.*;
+import java.nio.file.Files;
 
 public class LocaleFileManager {
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
@@ -12,7 +13,7 @@ public class LocaleFileManager {
 
     public String get(String key) {
         if (!file.exists()) return key;
-        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
+        try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
             final YamlConfig yamlConfig = YamlConfig.load(inputStream);
             return yamlConfig.getString(key);
         } catch (IOException e) {

@@ -2,7 +2,7 @@ name: Nicko
 main: net.artelnatif.nicko.NickoBukkit
 version: 1.0-SNAPSHOT
 author: Aro
-api-version: 1.19
+api-version: 1.13
 softdepend: [ PlaceholderAPI ]
 commands:
   nicko:

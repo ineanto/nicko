@@ -1,9 +1,11 @@
 package net.artelnatif.nicko.gui;
 
 import net.artelnatif.nicko.gui.items.main.AdminSubGUI;
-import net.artelnatif.nicko.gui.items.main.AppearanceManagerSubGUI;
 import net.artelnatif.nicko.gui.items.main.ResetAppearance;
 import net.artelnatif.nicko.gui.items.main.SettingsSubGUI;
+import net.artelnatif.nicko.gui.items.skin.ChangeName;
+import net.artelnatif.nicko.gui.items.skin.ChangeNameAndSkin;
+import net.artelnatif.nicko.gui.items.skin.ChangeSkin;
 import org.bukkit.entity.Player;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
@@ -15,19 +17,19 @@ public class MainGUI {
     public MainGUI(Player player) {
         final String[] dynamicStructure = new String[]{
                 "# # # # # # # # #",
-                "# % % % A % % % #",
-                "# % # R S P # % #",
-                "# % % % % % % % #",
-                "E # # # # # # # #"};
+                "# # # N B S # # #",
+                "E P A # # # # # R"};
 
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {
-            dynamicStructure[3] = dynamicStructure[3].replace("A", "#");
+            dynamicStructure[2] = dynamicStructure[2].replace("A", "#");
         }
 
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
                 .addIngredient('R', new ResetAppearance())
-                .addIngredient('S', new AppearanceManagerSubGUI())
+                .addIngredient('N', new ChangeName())
+                .addIngredient('B', new ChangeNameAndSkin())
+                .addIngredient('S', new ChangeSkin(player))
                 .addIngredient('P', new SettingsSubGUI())
                 .addIngredient('A', new AdminSubGUI())
                 .build();
@@ -39,6 +41,6 @@ public class MainGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle("Nicko").open(player);
+        Window.single().setGui(gui).setTitle("Nicko - Home").open(player);
     }
 }

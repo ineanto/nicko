@@ -15,6 +15,7 @@ public class GoBack extends SuppliedItem {
             return builder;
         }, click -> {
             click.getEvent().getView().close();
+            // TODO: 4/1/23 Get title of parent GUI
             Window.single().setGui(gui).setTitle("Nicko").open(click.getPlayer());
             return true;
         });

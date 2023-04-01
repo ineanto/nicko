@@ -20,11 +20,13 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-public class CacheDetailledGUI {
+public class CacheDetailedGUI {
+    public static final String TITLE = "... > Cache > Invalidate";
+    
     private final Player player;
     private final Gui gui;
 
-    public CacheDetailledGUI(Player player) {
+    public CacheDetailedGUI(Player player) {
         final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getCache().asMap();
         final List<String> loadedSkins = skins.entrySet().stream()
                 .filter(entry -> entry.getValue().isPresent())
@@ -36,12 +38,13 @@ public class CacheDetailledGUI {
                 .collect(Collectors.toList());
 
         gui = ScrollGui.items(guiItemBuilder -> {
-            guiItemBuilder.setStructure("% # # # # # # # %",
+            guiItemBuilder.setStructure(
+                    "# # # # # # # # #",
                     "# x x x x x x U #",
                     "# x x x x x x # #",
-                    "# x x x x x x D #",
                     "# x x x x x x # #",
-                    "B # # # # # # # %");
+                    "# x x x x x x D #",
+                    "B # # # # # # # #");
             guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
             guiItemBuilder.addIngredient('U', new ScrollUp());
             guiItemBuilder.addIngredient('D', new ScrollDown());
@@ -53,6 +56,6 @@ public class CacheDetailledGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle("Nicko").open(player);
+        Window.single().setGui(gui).setTitle(TITLE).open(player);
     }
 }

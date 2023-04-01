@@ -1,16 +1,16 @@
 package net.artelnatif.nicko.gui.items.skin;
 
 import net.artelnatif.nicko.anvil.AnvilManager;
-import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
 public class ChangeSkin extends SuppliedItem {
-    public ChangeSkin() {
+    public ChangeSkin(Player player) {
         super(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.ENDER_PEARL);
-            builder.setDisplayName("§6Skin §fchange");
+            final SkullBuilder builder = new SkullBuilder(player.getName());
+            builder.setDisplayName("§fChange §6skin");
             builder.addLoreLines("§7Only change your skin.");
             return builder;
         }, click -> {

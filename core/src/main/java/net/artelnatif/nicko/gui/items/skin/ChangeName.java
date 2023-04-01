@@ -10,7 +10,7 @@ public class ChangeName extends SuppliedItem {
     public ChangeName() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.NAME_TAG);
-            builder.setDisplayName("§6Name §fchange");
+            builder.setDisplayName("§fChange §6name");
             builder.addLoreLines("§7Only change your name.");
             return builder;
         }, click -> {

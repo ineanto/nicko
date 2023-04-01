@@ -1,5 +1,6 @@
 package net.artelnatif.nicko;
 
+import net.artelnatif.nicko.gui.items.common.OptionUnavailable;
 import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
@@ -101,6 +102,7 @@ public class NickoBukkit extends JavaPlugin {
 
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" ")));
+            Structure.addGlobalIngredient('U', new OptionUnavailable());
             Structure.addGlobalIngredient('E', new ExitGUI());
 
             new PlaceHolderHook(this).hook();

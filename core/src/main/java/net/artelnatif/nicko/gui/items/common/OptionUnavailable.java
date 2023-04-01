@@ -1,4 +1,4 @@
-package net.artelnatif.nicko.gui.items.settings;
+package net.artelnatif.nicko.gui.items.common;
 
 import org.bukkit.Material;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -8,9 +8,8 @@ public class OptionUnavailable extends SuppliedItem {
     public OptionUnavailable() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.RED_TERRACOTTA);
-            builder.setDisplayName("§cOption unavailable :(");
-            builder.addLoreLines("§7This option is disabled due to the",
-                    "§7feature it controls being disabled.");
+            builder.setDisplayName("§cFeature unavailable :(");
+            builder.addLoreLines("§7This button is disabled.");
             return builder;
         }, click -> true);
     }

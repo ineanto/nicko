@@ -7,6 +7,8 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class AdminGUI {
+    public static final String TITLE = "Nicko > Administration";
+
     private final Player player;
     private final Gui gui;
 
@@ -14,7 +16,7 @@ public class AdminGUI {
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# % % X X S % % #",
+                        "# # # S U U # # #",
                         "B # # # # # # # #"
                 )
                 .addIngredient('S', new ManageCache())
@@ -28,6 +30,6 @@ public class AdminGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle("Nicko").open(player);
+        Window.single().setGui(gui).setTitle(TITLE).open(player);
     }
 }

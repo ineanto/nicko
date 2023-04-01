@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.gui.items.admin.cache;
 
-import net.artelnatif.nicko.gui.admin.cache.CacheDetailledGUI;
+import net.artelnatif.nicko.gui.admin.cache.CacheDetailedGUI;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -17,7 +17,7 @@ public class CacheDetailed extends SuppliedItem {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {
                 click.getEvent().getView().close();
-                new CacheDetailledGUI(click.getPlayer()).open();
+                new CacheDetailedGUI(click.getPlayer()).open();
                 return true;
             }
             return false;

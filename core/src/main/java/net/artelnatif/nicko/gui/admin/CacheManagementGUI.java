@@ -10,6 +10,8 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class CacheManagementGUI {
+    public static final String TITLE = "Nicko > Admin... > Cache";
+
     private final Player player;
     private final Gui gui;
 
@@ -29,6 +31,6 @@ public class CacheManagementGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle("Nicko").open(player);
+        Window.single().setGui(gui).setTitle(TITLE).open(player);
     }
 }

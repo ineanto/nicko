@@ -89,6 +89,7 @@ public class v1_19_R3 implements Internals {
                 final PropertyMap properties = gameProfile.getProperties();
                 properties.removeAll("textures");
                 properties.put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
+                updateSelf(player);
             }
         }
 
@@ -122,7 +123,6 @@ public class v1_19_R3 implements Internals {
             onlinePlayer.connection.send(remove);
             onlinePlayer.connection.send(init);
         });
-        updateSelf(player);
         // TODO: 3/17/23 Update signature to avoid duplicate for loop
         updateOthers(player);
         return new ActionResult<>();

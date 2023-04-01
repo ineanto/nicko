@@ -1,33 +1,30 @@
 package net.artelnatif.nicko.gui.items.main;
 
-import de.studiocode.invui.item.ItemProvider;
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.BaseItem;
 import net.artelnatif.nicko.gui.AdminGUI;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
-import org.jetbrains.annotations.NotNull;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class AdminSubGUI extends BaseItem {
-    @Override
-    public ItemProvider getItemProvider() {
-        final ItemBuilder builder = new ItemBuilder(Material.COMMAND_BLOCK);
-        builder.addEnchantment(Enchantment.DAMAGE_ALL, 1, false);
-        builder.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        builder.setDisplayName("§cAdministration panel...");
-        builder.addLoreLines("§7Access the administration panel.");
-        return builder;
-    }
-
-    @Override
-    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
-        if (clickType.isLeftClick() || clickType.isRightClick()) {
-            event.getView().close();
-            new AdminGUI(player).open();
-        }
+public class AdminSubGUI extends SuppliedItem {
+    public AdminSubGUI() {
+        super(() -> {
+            final ItemBuilder builder = new ItemBuilder(Material.COMMAND_BLOCK);
+            builder.addEnchantment(Enchantment.DAMAGE_ALL, 1, false);
+            builder.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            builder.setDisplayName("§cAdministration panel...");
+            builder.addLoreLines("§7Access the administration panel.");
+            return builder;
+        }, click -> {
+            final ClickType clickType = click.getClickType();
+            if (clickType.isLeftClick() || clickType.isRightClick()) {
+                click.getEvent().getView().close();
+                new AdminGUI(click.getPlayer()).open();
+                return true;
+            }
+            return false;
+        });
     }
 }

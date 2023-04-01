@@ -1,9 +1,9 @@
 package net.artelnatif.nicko.gui.items.admin.cache;
 
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.builder.SkullBuilder;
-import de.studiocode.invui.item.impl.AsyncItem;
 import org.bukkit.Material;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.builder.SkullBuilder;
+import xyz.xenondevs.invui.item.impl.AsyncItem;
 
 import java.util.UUID;
 

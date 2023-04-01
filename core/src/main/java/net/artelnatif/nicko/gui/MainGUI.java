@@ -1,18 +1,16 @@
 package net.artelnatif.nicko.gui;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.gui.items.main.AdminSubGUI;
 import net.artelnatif.nicko.gui.items.main.AppearanceManagerSubGUI;
 import net.artelnatif.nicko.gui.items.main.ResetAppearance;
 import net.artelnatif.nicko.gui.items.main.SettingsSubGUI;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.window.Window;
 
 public class MainGUI {
     private final Player player;
-    private final GUI gui;
+    private final Gui gui;
 
     public MainGUI(Player player) {
         final String[] dynamicStructure = new String[]{
@@ -26,7 +24,7 @@ public class MainGUI {
             dynamicStructure[3] = dynamicStructure[3].replace("A", "#");
         }
 
-        this.gui = new GUIBuilder<>(GUIType.NORMAL)
+        this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
                 .addIngredient('R', new ResetAppearance())
                 .addIngredient('S', new AppearanceManagerSubGUI())
@@ -36,11 +34,11 @@ public class MainGUI {
         this.player = player;
     }
 
-    public GUI getGUI() {
+    public Gui getGUI() {
         return gui;
     }
 
     public void open() {
-        new SimpleWindow(player, "Nicko", gui).show();
+        Window.single().setGui(gui).setTitle("Nicko").open(player);
     }
 }

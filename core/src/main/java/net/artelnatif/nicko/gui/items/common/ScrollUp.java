@@ -1,10 +1,10 @@
 package net.artelnatif.nicko.gui.items.common;
 
-import de.studiocode.invui.gui.impl.ScrollGUI;
-import de.studiocode.invui.item.ItemProvider;
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.controlitem.ScrollItem;
 import org.bukkit.Material;
+import xyz.xenondevs.invui.gui.ScrollGui;
+import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.controlitem.ScrollItem;
 
 public class ScrollUp extends ScrollItem {
 
@@ -13,7 +13,7 @@ public class ScrollUp extends ScrollItem {
     }
 
     @Override
-    public ItemProvider getItemProvider(ScrollGUI gui) {
+    public ItemProvider getItemProvider(ScrollGui gui) {
         ItemBuilder builder = new ItemBuilder(Material.RED_STAINED_GLASS_PANE);
         builder.setDisplayName("§7Scroll up");
         if (!gui.canScroll(-1))

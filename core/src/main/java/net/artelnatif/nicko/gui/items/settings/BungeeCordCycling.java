@@ -1,15 +1,15 @@
 package net.artelnatif.nicko.gui.items.settings;
 
-import de.studiocode.invui.item.ItemProvider;
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.BaseItem;
-import de.studiocode.invui.item.impl.CycleItem;
-import de.studiocode.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.disguise.NickoProfile;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.AbstractItem;
+import xyz.xenondevs.invui.item.impl.CycleItem;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public class BungeeCordCycling {
             getItemProviderForValue(false)
     };
 
-    public BaseItem get(Player player) {
+    public AbstractItem get(Player player) {
         final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();

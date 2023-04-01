@@ -1,18 +1,16 @@
 package net.artelnatif.nicko.gui;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.gui.items.common.GoBack;
 import net.artelnatif.nicko.gui.items.settings.BungeeCordCycling;
 import net.artelnatif.nicko.gui.items.settings.LanguageCycling;
 import net.artelnatif.nicko.gui.items.settings.OptionUnavailable;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.window.Window;
 
 public class SettingsGUI {
     private final Player player;
-    private final GUI gui;
+    private final Gui gui;
 
     public SettingsGUI(Player player) {
         final String[] dynamicStructure = new String[]{
@@ -24,7 +22,7 @@ public class SettingsGUI {
         // TODO: 3/6/23 Replace when Redis is not enabled
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
-        this.gui = new GUIBuilder<>(GUIType.NORMAL)
+        this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
                 .addIngredient('B', new GoBack(new MainGUI(player).getGUI()))
                 .addIngredient('L', new LanguageCycling().get(player))
@@ -35,6 +33,6 @@ public class SettingsGUI {
     }
 
     public void open() {
-        new SimpleWindow(player, "Nicko", gui).show();
+        Window.single().setGui(gui).setTitle("Nicko").open(player);
     }
 }

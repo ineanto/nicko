@@ -1,19 +1,17 @@
 package net.artelnatif.nicko.gui;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
-import net.artelnatif.nicko.gui.items.common.GoBack;
 import net.artelnatif.nicko.gui.items.admin.ManageCache;
+import net.artelnatif.nicko.gui.items.common.GoBack;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.window.Window;
 
 public class AdminGUI {
     private final Player player;
-    private final GUI gui;
+    private final Gui gui;
 
     public AdminGUI(Player player) {
-        this.gui = new GUIBuilder<>(GUIType.NORMAL)
+        this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
                         "# % % X X S % % #",
@@ -25,11 +23,11 @@ public class AdminGUI {
         this.player = player;
     }
 
-    public GUI getGUI() {
+    public Gui getGUI() {
         return gui;
     }
 
     public void open() {
-        new SimpleWindow(player, "Nicko", gui).show();
+        Window.single().setGui(gui).setTitle("Nicko").open(player);
     }
 }

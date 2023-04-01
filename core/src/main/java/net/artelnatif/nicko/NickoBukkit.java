@@ -1,8 +1,8 @@
 package net.artelnatif.nicko;
 
-import de.studiocode.invui.gui.structure.Structure;
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.gui.structure.Structure;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;

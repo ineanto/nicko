@@ -1,22 +1,20 @@
 package net.artelnatif.nicko.gui.admin;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.artelnatif.nicko.gui.AdminGUI;
 import net.artelnatif.nicko.gui.items.admin.cache.CacheDetailed;
 import net.artelnatif.nicko.gui.items.admin.cache.CacheInvalidate;
 import net.artelnatif.nicko.gui.items.admin.cache.CacheOverview;
 import net.artelnatif.nicko.gui.items.common.GoBack;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.window.Window;
 
 public class CacheManagementGUI {
     private final Player player;
-    private final GUI gui;
+    private final Gui gui;
 
     public CacheManagementGUI(Player player) {
-        this.gui = new GUIBuilder<>(GUIType.NORMAL)
+        this.gui = Gui.normal()
                 .setStructure("B # S A D")
                 .addIngredient('B', new GoBack(new AdminGUI(player).getGUI()))
                 .addIngredient('S', new CacheOverview())
@@ -26,11 +24,11 @@ public class CacheManagementGUI {
         this.player = player;
     }
 
-    public GUI getGUI() {
+    public Gui getGUI() {
         return gui;
     }
 
     public void open() {
-        new SimpleWindow(player, "Nicko", gui).show();
+        Window.single().setGui(gui).setTitle("Nicko").open(player);
     }
 }

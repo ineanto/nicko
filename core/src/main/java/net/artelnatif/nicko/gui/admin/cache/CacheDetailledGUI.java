@@ -1,11 +1,9 @@
 package net.artelnatif.nicko.gui.admin.cache;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.gui.structure.Markers;
-import de.studiocode.invui.item.Item;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.gui.ScrollGui;
+import xyz.xenondevs.invui.gui.structure.Markers;
+import xyz.xenondevs.invui.item.Item;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.gui.items.admin.cache.SkinPlaceholder;
 import net.artelnatif.nicko.gui.admin.CacheManagementGUI;
@@ -14,6 +12,7 @@ import net.artelnatif.nicko.gui.items.common.ScrollDown;
 import net.artelnatif.nicko.gui.items.common.ScrollUp;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.invui.window.Window;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class CacheDetailledGUI {
     private final Player player;
-    private final GUI gui;
+    private final Gui gui;
 
     public CacheDetailledGUI(Player player) {
         final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getCache().asMap();
@@ -36,29 +35,24 @@ public class CacheDetailledGUI {
                 .map(SkinPlaceholder::new)
                 .collect(Collectors.toList());
 
-        this.gui = new GUIBuilder<>(GUIType.SCROLL_ITEMS)
-                .setStructure(
-                        "% # # # # # # # %",
-                        "# x x x x x x U #",
-                        "# x x x x x x # #",
-                        "# x x x x x x # #",
-                        "# x x x x x x D #",
-                        "B # # # # # # # %"
-                )
-                .addIngredient('x', Markers.ITEM_LIST_SLOT_HORIZONTAL)
-                .addIngredient('U', new ScrollUp())
-                .addIngredient('D', new ScrollDown())
-                .addIngredient('B', new GoBack(new CacheManagementGUI(player).getGUI()))
-                .setItems(items)
-                .build();
+        gui = ScrollGui.items(guiItemBuilder -> {
+            guiItemBuilder.setStructure("% # # # # # # # %",
+                    "# x x x x x x U #",
+                    "# x x x x x x # #",
+                    "# x x x x x x D #",
+                    "# x x x x x x # #",
+                    "B # # # # # # # %");
+            guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
+            guiItemBuilder.addIngredient('U', new ScrollUp());
+            guiItemBuilder.addIngredient('D', new ScrollDown());
+            guiItemBuilder.addIngredient('B', new GoBack(new CacheManagementGUI(player).getGUI()));
+            guiItemBuilder.setContent(items);
+        });
+
         this.player = player;
     }
 
-    public GUI getGUI() {
-        return gui;
-    }
-
     public void open() {
-        new SimpleWindow(player, "Nicko", gui).show();
+        Window.single().setGui(gui).setTitle("Nicko").open(player);
     }
 }

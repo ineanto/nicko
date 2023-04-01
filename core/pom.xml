@@ -128,7 +128,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>net.wesjd:anvilgui</include>
-                                    <include>de.studiocode.invui:*</include>
+                                    <include>xyz.xenondevs.invui:*</include>
                                     <include>com.github.jsixface:*</include>
                                     <include>com.fasterxml.jackson.dataformat</include>
                                     <include>com.fasterxml.jackson.core</include>
@@ -141,7 +141,7 @@
                                     <shadedPattern>net.artelnatif.libs.anvilgui</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>de.studiocode.invui</pattern>
+                                    <pattern>xyz.xenondevs.invui</pattern>
                                     <shadedPattern>net.artelnatif.libs.invui</shadedPattern>
                                 </relocation>
                                 <relocation>

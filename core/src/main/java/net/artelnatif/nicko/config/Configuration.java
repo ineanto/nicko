@@ -2,6 +2,10 @@ package net.artelnatif.nicko.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * TODO: 4/2/23 Convert using Bukkit YAML API
+ * <a href="https://www.spigotmc.org/threads/tutorial-bukkit-custom-serialization.148781/">Link</a>
+ **/
 public class Configuration {
     @JsonProperty("sql")
     private final DataSourceConfiguration sqlConfiguration;

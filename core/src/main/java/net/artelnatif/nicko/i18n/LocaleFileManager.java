@@ -1,8 +1,8 @@
 package net.artelnatif.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
-import xyz.xenondevs.invui.util.IOUtils;
 import net.artelnatif.nicko.NickoBukkit;
+import xyz.xenondevs.invui.util.IOUtils;
 
 import java.io.*;
 import java.nio.file.Files;

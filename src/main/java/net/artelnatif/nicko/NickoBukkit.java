@@ -1,7 +1,5 @@
 package net.artelnatif.nicko;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
@@ -39,7 +37,6 @@ public class NickoBukkit extends JavaPlugin {
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
-    private ProtocolManager protocolManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -66,7 +63,6 @@ public class NickoBukkit extends JavaPlugin {
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 
-        protocolManager = ProtocolLibrary.getProtocolManager();
         mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
@@ -154,6 +150,4 @@ public class NickoBukkit extends JavaPlugin {
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;
     }
-
-    public ProtocolManager getProtocolManager() { return protocolManager; }
 }

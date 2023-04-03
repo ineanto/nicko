@@ -5,17 +5,182 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.artelnatif</groupId>
-    <artifactId>nicko-parent</artifactId>
+    <artifactId>nicko</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Nicko</name>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>core</module>
-    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>5.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- PlaceHolder API -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Spigot API -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Inventory Lib -->
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>invui</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- AnvilGUI -->
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.6.3-SNAPSHOT</version>
+        </dependency>
+        <!-- Google Guava (GSON) -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- MockBukkit 1.19 (Bukkit Unit Tests) -->
+        <dependency>
+            <groupId>com.github.seeseemelk</groupId>
+            <artifactId>MockBukkit-v1.19</artifactId>
+            <version>2.29.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- MariaDB JDBC Driver -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <!-- YAML Reader -->
+        <dependency>
+            <groupId>com.github.jsixface</groupId>
+            <artifactId>yamlconfig</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <!-- Redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>net.wesjd:anvilgui</include>
+                                    <include>xyz.xenondevs.invui:*</include>
+                                    <include>com.github.jsixface:*</include>
+                                    <include>com.fasterxml.jackson.dataformat</include>
+                                    <include>com.fasterxml.jackson.core</include>
+                                    <include>org.mariadb.jdbc</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>net.wesjd.anvilgui</pattern>
+                                    <shadedPattern>net.artelnatif.libs.anvilgui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>xyz.xenondevs.invui</pattern>
+                                    <shadedPattern>net.artelnatif.libs.invui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.github.jsixface</pattern>
+                                    <shadedPattern>net.artelnatif.libs.yaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.fasterxml.jackson.dataformat</pattern>
+                                    <shadedPattern>net.artelnatif.libs.jackson.yaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.fasterxml.jackson.core</pattern>
+                                    <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.mariadb.jdbc</pattern>
+                                    <shadedPattern>net.artelnatif.libs.mariadb</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <!-- Prevents breaking AnvilGUI's VersionWrapper. -->
+                            <minimizeJar>false</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+            </resource>
+        </resources>
+    </build>
 </project>

@@ -34,7 +34,7 @@ public class PlayerJoinListener implements Listener {
                 if (!actionResult.isError()) {
                     player.sendMessage(I18N.translate(player, I18NDict.Event.PreviousSkin.SUCCESS));
                 } else {
-                    player.sendMessage(I18N.translate(player, I18NDict.Event.PreviousSkin.FAIL, I18N.translate(player, actionResult.getErrorMessage())));
+                    player.sendMessage(I18N.translate(player, I18NDict.Event.PreviousSkin.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
                 }
             }
         }, 20L);

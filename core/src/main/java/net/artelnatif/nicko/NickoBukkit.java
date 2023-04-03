@@ -1,19 +1,16 @@
 package net.artelnatif.nicko;
 
-import net.artelnatif.nicko.gui.items.common.OptionUnavailable;
-import xyz.xenondevs.invui.gui.structure.Structure;
-import xyz.xenondevs.invui.item.builder.ItemBuilder;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
 import net.artelnatif.nicko.event.PlayerJoinListener;
 import net.artelnatif.nicko.event.PlayerQuitListener;
+import net.artelnatif.nicko.gui.items.common.OptionUnavailable;
 import net.artelnatif.nicko.gui.items.main.ExitGUI;
 import net.artelnatif.nicko.i18n.Locale;
 import net.artelnatif.nicko.i18n.LocaleFileManager;
-import net.artelnatif.nicko.impl.Internals;
-import net.artelnatif.nicko.impl.InternalsProvider;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.storage.PlayerDataStore;
@@ -24,6 +21,9 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import xyz.xenondevs.invui.gui.structure.Structure;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +39,7 @@ public class NickoBukkit extends JavaPlugin {
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
+    private ProtocolManager protocolManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -65,6 +66,7 @@ public class NickoBukkit extends JavaPlugin {
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 
+        protocolManager = ProtocolLibrary.getProtocolManager();
         mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
@@ -78,14 +80,6 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (!unitTesting) {
-            getLogger().info("Loading internals...");
-            if (getInternals() == null) {
-                getLogger().severe("Nicko could not find a valid implementation for this server version. Is your server supported?");
-                dataStore.getStorage().setError(true);
-                getServer().getPluginManager().disablePlugin(this);
-            }
-
-
             localeFileManager = new LocaleFileManager();
             if (configuration.isCustomLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
@@ -161,7 +155,5 @@ public class NickoBukkit extends JavaPlugin {
         return localeFileManager;
     }
 
-    public Internals getInternals() {
-        return InternalsProvider.getInternals();
-    }
+    public ProtocolManager getProtocolManager() { return protocolManager; }
 }

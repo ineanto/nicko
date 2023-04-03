@@ -1,9 +1,10 @@
 name: Nicko
 main: net.artelnatif.nicko.NickoBukkit
 version: 1.0-SNAPSHOT
-author: Aro
+author: Ineanto
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
+depend: [ ProtocolLib ]
 commands:
   nicko:
     description: "Opens Nicko's GUI."

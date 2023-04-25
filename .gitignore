@@ -47,3 +47,6 @@ target
 
 # Maven Dependency Reduced Pom
 dependency-reduced-pom.xml
+
+# Kept for convenience
+v1_19_R3

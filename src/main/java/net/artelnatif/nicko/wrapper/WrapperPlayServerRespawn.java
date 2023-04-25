@@ -26,11 +26,11 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     //.............
     // Dimension Field (1.8 - Present)
-    // The dimension field has changed types,
-    // numerous times. Version 1.8 through 1.15 need an integer,
-    // 1.15 through 1.18 need a (NBT Tag) Identifier and
-    // 1.19.2 and beyond require a Holder of a DimensionManager Identifier (???).
-    // (Wiki.vg still refers this as an Identifier)
+    // The dimension field has changed numerous times:
+    // - Version 1.8 through 1.15 need an integer,
+    // - 1.15 through 1.18 need a (NBT Tag) Identifier and
+    // - 1.19.2 and beyond require a Holder of a DimensionManager Identifier (???).
+    // (Wiki.vg still refers to this as an "Identifier")
     //
     // n.b.: this field is a nightmare please mojang stop refactoring
     // your code to change things that were working perfectly fine before

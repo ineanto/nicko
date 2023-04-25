@@ -1,29 +1,20 @@
-package net.artelnatif.nicko.appearance;
+package net.artelnatif.nicko.disguise;
 
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.protocol.player.TextureProperty;
-import com.github.retrooper.packetevents.protocol.player.UserProfile;
-import com.github.retrooper.packetevents.protocol.world.Difficulty;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerRespawn;
-import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.disguise.ActionResult;
-import net.artelnatif.nicko.disguise.NickoProfile;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.storage.name.PlayerNameStore;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -105,16 +96,17 @@ public class AppearanceManager {
     public ActionResult<Void> updatePlayer(boolean skinChange) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
         Bukkit.broadcastMessage("Building UserProfile");
-        final UserProfile userProfile = new UserProfile(player.getUniqueId(), displayName);
+        final WrappedGameProfile gameProfile = new WrappedGameProfile(player.getUniqueId(), displayName);
 
-        final ActionResult<Void> result = updateGameProfileSkin(userProfile, skinChange);
+        final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange);
         if (!result.isError()) {
-            updateTabList(userProfile, displayName);
+            updateTabList(gameProfile, displayName);
+            respawnPlayer();
         }
         return new ActionResult<>();
     }
 
-    private ActionResult<Void> updateGameProfileSkin(UserProfile userProfile, boolean skinChange) {
+    private ActionResult<Void> updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
 
         if (skinChange || changeOnlyName) {
@@ -126,14 +118,12 @@ public class AppearanceManager {
                     skin = mojang.getSkin(uuid.get());
                     if (skin.isPresent()) {
                         final MojangSkin skinResult = skin.get();
-                        final List<TextureProperty> properties = userProfile.getTextureProperties();
+                        final Collection<WrappedSignedProperty> properties = gameProfile.getProperties().values();
                         properties.clear();
-                        properties.add(new TextureProperty("textures", skinResult.getValue(), skinResult.getSignature()));
+                        properties.add(new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
                         Bukkit.broadcastMessage("Modified properties");
                     }
                 }
-                Bukkit.broadcastMessage("Respawning player");
-                respawnPlayer();
                 return new ActionResult<>();
             } catch (ExecutionException e) {
                 return new ActionResult<>(I18NDict.Error.SKIN_FAIL_CACHE);
@@ -145,43 +135,16 @@ public class AppearanceManager {
     }
 
     private void respawnPlayer() {
+        Bukkit.broadcastMessage("Respawning player");
         final World world = player.getWorld();
-        final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn(
-                SpigotConversionUtil.fromBukkitWorld(world),
-                world.getName(),
-                Difficulty.getById(world.getDifficulty().ordinal()),
-                world.getSeed(),
-                SpigotConversionUtil.fromBukkitGameMode(player.getGameMode()),
-                null,
-                false,
-                false,
-                false,
-                null,
-                null
-        );
-        PacketEvents.getAPI().getPlayerManager().sendPacket(player, respawn);
+        // TODO (Ineanto, 4/23/23): Respawn Packet
+        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
-    private void updateTabList(UserProfile userProfile, String displayName) {
-        final WrapperPlayServerPlayerInfoUpdate infoAdd = new WrapperPlayServerPlayerInfoUpdate(EnumSet.of(
-                WrapperPlayServerPlayerInfoUpdate.Action.ADD_PLAYER,
-                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_GAME_MODE,
-                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_DISPLAY_NAME,
-                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LISTED,
-                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LATENCY
-        ), new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(
-                userProfile,
-                true,
-                0,
-                SpigotConversionUtil.fromBukkitGameMode(player.getGameMode()),
-                Component.text(displayName),
-                null
-        ));
-
-        final WrapperPlayServerPlayerInfoRemove infoRemove = new WrapperPlayServerPlayerInfoRemove(player.getUniqueId());
+    private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
+        // TODO (Ineanto, 4/23/23): Update player info packet
+        // TODO (Ineanto, 4/23/23): Remove player info packet
         Bukkit.broadcastMessage("Updating tablist");
-        PacketEvents.getAPI().getPlayerManager().sendPacket(player, infoRemove);
-        PacketEvents.getAPI().getPlayerManager().sendPacket(player, infoAdd);
-
+        // TODO (Ineanto, 4/23/23): Send packets
     }
 }

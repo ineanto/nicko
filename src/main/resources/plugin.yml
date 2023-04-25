@@ -5,7 +5,6 @@ author: Ineanto
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
 load: POSTWORLD
-depend: [ packetevents ]
 commands:
   nicko:
     description: "Opens Nicko's GUI."

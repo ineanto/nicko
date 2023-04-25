@@ -1,6 +1,6 @@
 package net.artelnatif.nicko.gui.items.main;
 
-import net.artelnatif.nicko.appearance.AppearanceManager;
+import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.i18n.I18N;
 import net.artelnatif.nicko.i18n.I18NDict;
 import org.bukkit.Material;

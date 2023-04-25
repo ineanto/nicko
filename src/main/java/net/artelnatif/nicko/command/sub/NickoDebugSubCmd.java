@@ -1,7 +1,7 @@
 package net.artelnatif.nicko.command.sub;
 
 import net.artelnatif.nicko.NickoBukkit;
-import net.artelnatif.nicko.appearance.AppearanceManager;
+import net.artelnatif.nicko.disguise.AppearanceManager;
 import net.artelnatif.nicko.mojang.MojangUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;

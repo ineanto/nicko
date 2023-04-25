@@ -25,7 +25,7 @@ public class MojangAPI {
 
     private final Logger logger = Logger.getLogger("MojangAPI");
 
-    private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<>() {
+    private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<String, Optional<MojangSkin>>() {
         @Nonnull
         public Optional<MojangSkin> load(@Nonnull String uuid) throws Exception {
             return getSkinFromMojang(uuid);

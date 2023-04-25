@@ -107,6 +107,7 @@ public class NickoBukkit extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
+            // For debug purposes
             protocolManager.addPacketListener(new PacketAdapter(
                     this,
                     ListenerPriority.NORMAL,

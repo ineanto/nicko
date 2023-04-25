@@ -1,7 +1,9 @@
 package net.artelnatif.nicko;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.*;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
@@ -27,6 +29,7 @@ import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
@@ -103,6 +106,27 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+            protocolManager.addPacketListener(new PacketAdapter(
+                    this,
+                    ListenerPriority.NORMAL,
+                    PacketType.Play.Server.PLAYER_INFO) {
+                @Override
+                public void onPacketReceiving(PacketEvent event) {
+                }
+
+                @Override
+                public void onPacketSending(PacketEvent event) {
+                    final PacketContainer packet = event.getPacket();
+                    packet.getStructures().getFields().forEach(fieldAccessor -> {
+                        final Field field = fieldAccessor.getField();
+                        getLogger().info("field=[" +
+                                         "name=" + field.getName() + "," +
+                                         "type=" + field.getType().getSimpleName() +
+                                         "]");
+                    });
+                }
+            });
 
             getLogger().info("Nicko (Bukkit) has been enabled.");
         }

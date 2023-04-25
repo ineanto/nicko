@@ -1,20 +1,23 @@
 package net.artelnatif.nicko.disguise;
 
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import com.comphenix.protocol.wrappers.WrappedSignedProperty;
+import com.comphenix.protocol.wrappers.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import net.artelnatif.nicko.NickoBukkit;
 import net.artelnatif.nicko.i18n.I18NDict;
 import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.mojang.MojangSkin;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.storage.name.PlayerNameStore;
+import net.artelnatif.nicko.wrapper.WrapperPlayServerRespawn;
+import net.artelnatif.nicko.wrapper.WrapperPlayerServerPlayerInfo;
+import net.artelnatif.nicko.wrapper.WrapperPlayerServerPlayerInfoRemove;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -95,9 +98,9 @@ public class AppearanceManager {
 
     public ActionResult<Void> updatePlayer(boolean skinChange) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
-        Bukkit.broadcastMessage("Building UserProfile");
-        final WrappedGameProfile gameProfile = new WrappedGameProfile(player.getUniqueId(), displayName);
 
+        Bukkit.broadcastMessage("Building UserProfile");
+        final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange);
         if (!result.isError()) {
             updateTabList(gameProfile, displayName);
@@ -118,9 +121,9 @@ public class AppearanceManager {
                     skin = mojang.getSkin(uuid.get());
                     if (skin.isPresent()) {
                         final MojangSkin skinResult = skin.get();
-                        final Collection<WrappedSignedProperty> properties = gameProfile.getProperties().values();
-                        properties.clear();
-                        properties.add(new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
+                        final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
+                        properties.get("textures").clear();
+                        properties.put("textures", new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
                         Bukkit.broadcastMessage("Modified properties");
                     }
                 }
@@ -137,14 +140,32 @@ public class AppearanceManager {
     private void respawnPlayer() {
         Bukkit.broadcastMessage("Respawning player");
         final World world = player.getWorld();
-        // TODO (Ineanto, 4/23/23): Respawn Packet
-        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+        final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
+        respawn.setGameMode(player.getGameMode());
+        respawn.setDifficulty(world.getDifficulty());
+        respawn.setDimension(world);
+        respawn.setSeed(world.getSeed());
+        respawn.sendPacket(player);
     }
 
     private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
-        // TODO (Ineanto, 4/23/23): Update player info packet
-        // TODO (Ineanto, 4/23/23): Remove player info packet
         Bukkit.broadcastMessage("Updating tablist");
-        // TODO (Ineanto, 4/23/23): Send packets
+        final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
+        remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
+
+        final WrapperPlayerServerPlayerInfo update = new WrapperPlayerServerPlayerInfo();
+        update.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER,
+                EnumWrappers.PlayerInfoAction.UPDATE_LISTED,
+                EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
+                EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
+                EnumWrappers.PlayerInfoAction.UPDATE_LATENCY));
+        update.setData(ImmutableList.of(new PlayerInfoData(
+                gameProfile,
+                player.getPing(),
+                EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()),
+                WrappedChatComponent.fromText(displayName)
+        )));
+        remove.sendPacket(player);
+        update.sendPacket(player);
     }
 }

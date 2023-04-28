@@ -2,10 +2,8 @@ package net.artelnatif.nicko.wrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.BlockPosition;
-import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
@@ -28,6 +26,8 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         handle.getModifier().writeDefaults();
     }
 
+    public WrapperPlayServerRespawn(PacketContainer container) { super(container, TYPE); }
+
     //.............
     // Dimension Field (1.8 - Present)
     // The dimension field has changed numerous times:
@@ -42,11 +42,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public World getDimension() {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            // 1.19 and above
-            return handle.getHolders(
-                    MinecraftReflection.getDimensionManager(),
-                    BukkitConverters.getDimensionConverter()
-            ).read(0);
+            return handle.getWorldKeys().read(0);
         }
 
         return handle.getDimensionTypes().read(0);
@@ -58,7 +54,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
             handle.getWorldKeys().write(0, value);
             return;
         }
-        // 1.18 and below
+
         handle.getDimensionTypes().write(0, value);
     }
 
@@ -72,6 +68,30 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setGameMode(GameMode value) {
         handle.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(value));
+    }
+
+    //.............
+    // Previous GameMode Field
+    //.............
+
+    public void getPreviousGameMode() {
+        handle.getGameModes().read(1);
+    }
+
+    public void setPreviousGameMode(GameMode value) {
+        handle.getGameModes().write(1, EnumWrappers.NativeGameMode.fromBukkit(value));
+    }
+
+    //.............
+    // Copy Metadata Field
+    //.............
+
+    public boolean isCopyMetadata() {
+        return handle.getBytes().read(0) != 0;
+    }
+
+    public void setCopyMetadata(boolean value) {
+        handle.getBytes().write(0, ((byte) (value ? 1 : 0)));
     }
 
     //.............

@@ -1,12 +1,7 @@
 package net.artelnatif.nicko;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
 import net.artelnatif.nicko.command.NickoCommand;
 import net.artelnatif.nicko.config.Configuration;
 import net.artelnatif.nicko.config.ConfigurationManager;
@@ -20,7 +15,6 @@ import net.artelnatif.nicko.mojang.MojangAPI;
 import net.artelnatif.nicko.placeholder.PlaceHolderHook;
 import net.artelnatif.nicko.storage.PlayerDataStore;
 import net.artelnatif.nicko.storage.name.PlayerNameStore;
-import net.artelnatif.nicko.wrapper.WrapperPlayServerRespawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -109,35 +103,6 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
-            // For debug purposes
-            protocolManager.addPacketListener(new PacketAdapter(
-                    this,
-                    ListenerPriority.NORMAL,
-                    PacketType.Play.Server.RESPAWN) {
-                @Override
-                public void onPacketReceiving(PacketEvent event) {
-                }
-
-                @Override
-                public void onPacketSending(PacketEvent event) {
-                    final PacketContainer packet = event.getPacket();
-                    final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn(packet);
-                    getLogger().info(respawn.getDimension().getName());
-                    getLogger().info(String.valueOf(respawn.isCopyMetadata()));
-                    getLogger().info(String.valueOf(respawn.getSeed()));
-                    getLogger().info(String.valueOf(respawn.getLastDeathLocation().isPresent()));
-                    /**
-                     * packet.getStructures().getFields().forEach(fieldAccessor -> {
-                     *                         final Field field = fieldAccessor.getField();
-                     *                         getLogger().info("field=[" +
-                     *                                          "name=" + field.getName() + "," +
-                     *                                          "type=" + field.getType().getSimpleName() +
-                     *                                          "]");
-                     *                     });
-                     */
-                }
-            });
 
             getLogger().info("Nicko (Bukkit) has been enabled.");
         }

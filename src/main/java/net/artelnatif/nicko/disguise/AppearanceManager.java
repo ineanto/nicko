@@ -142,16 +142,15 @@ public class AppearanceManager {
 
         final World world = player.getWorld();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
+        respawn.setDimension(world);
+        respawn.setSeed(world.getSeed());
         respawn.setGameMode(player.getGameMode());
         respawn.setPreviousGameMode(player.getGameMode());
         respawn.setDifficulty(world.getDifficulty());
-        respawn.setDimension(world);
-        respawn.setSeed(world.getSeed());
-        respawn.setLastDeathLocation(player.getLocation());
         respawn.setCopyMetadata(false);
         respawn.getHandle().getBooleans().write(0, false); // is debug
         respawn.getHandle().getBooleans().write(1, false); // is flat
-        respawn.sendPacket(player);
+        respawn.broadcastPacket();
         /*final EntityPlayer cp = ((CraftPlayer) player).getHandle();
         final PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(cp.cG().Z(), cp.P(), player.getWorld().getSeed(), EnumGamemode.a, EnumGamemode.a, true, true, (byte) 0x00, Optional.empty());
         cp.b.a(respawn);*/

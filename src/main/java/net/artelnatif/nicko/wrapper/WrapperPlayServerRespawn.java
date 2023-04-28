@@ -26,8 +26,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         handle.getModifier().writeDefaults();
     }
 
-    public WrapperPlayServerRespawn(PacketContainer container) { super(container, TYPE); }
-
     //.............
     // Dimension Field (1.8 - Present)
     // The dimension field has changed numerous times:
@@ -62,8 +60,8 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // GameMode Field
     //.............
 
-    public void getGameMode() {
-        handle.getGameModes().read(0);
+    public GameMode getGameMode() {
+        return handle.getGameModes().read(0).toBukkit();
     }
 
     public void setGameMode(GameMode value) {
@@ -74,8 +72,8 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // Previous GameMode Field
     //.............
 
-    public void getPreviousGameMode() {
-        handle.getGameModes().read(1);
+    public GameMode getPreviousGameMode() {
+        return handle.getGameModes().read(1).toBukkit();
     }
 
     public void setPreviousGameMode(GameMode value) {
@@ -97,6 +95,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     //.............
     // Last death location Field
     // Added in 1.19.
+    // (useless?)
     //.............
 
     public Optional<BlockPosition> getLastDeathLocation() {

@@ -111,7 +111,7 @@ public class NickoBukkit extends JavaPlugin {
             protocolManager.addPacketListener(new PacketAdapter(
                     this,
                     ListenerPriority.NORMAL,
-                    PacketType.Play.Server.PLAYER_INFO) {
+                    PacketType.Play.Server.RESPAWN) {
                 @Override
                 public void onPacketReceiving(PacketEvent event) {
                 }

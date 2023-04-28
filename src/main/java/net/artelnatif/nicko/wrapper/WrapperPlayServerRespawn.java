@@ -4,11 +4,15 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
+import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
+
+import java.util.Optional;
 
 /**
  * Up-to-date version of the Wrapper class
@@ -51,10 +55,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     public void setDimension(World value) {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             // 1.19 and above
-            handle.getWorldKeys().withParamType(
-                    MinecraftReflection.getResourceKey(),
-                    BukkitConverters.getWorldKeyConverter()
-            ).write(0, value);
+            handle.getWorldKeys().write(0, value);
             return;
         }
         // 1.18 and below
@@ -66,13 +67,31 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     //.............
 
     public void getGameMode() {
-        // Present since 1.8, we're good!
         handle.getGameModes().read(0);
     }
 
     public void setGameMode(GameMode value) {
-        // Present since 1.8, we're good!
         handle.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(value));
+    }
+
+    //.............
+    // Last death location Field
+    // Added in 1.19.
+    //.............
+
+    public Optional<BlockPosition> getLastDeathLocation() {
+        if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
+            return handle.getOptionals(BlockPosition.getConverter()).read(0);
+        }
+        return Optional.empty();
+    }
+
+    public void setLastDeathLocation(Location value) {
+        if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
+            final BlockPosition locationToBlockPosition = BlockPosition.getConverter().getSpecific(value);
+            final Optional<BlockPosition> blockPosition = Optional.ofNullable(locationToBlockPosition);
+            handle.getOptionals(BlockPosition.getConverter()).write(0, blockPosition);
+        }
     }
 
     //.............

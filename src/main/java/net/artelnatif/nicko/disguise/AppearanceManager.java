@@ -145,6 +145,9 @@ public class AppearanceManager {
         respawn.setDifficulty(world.getDifficulty());
         respawn.setDimension(world);
         respawn.setSeed(world.getSeed());
+        respawn.setLastDeathLocation(player.getLocation());
+        respawn.getHandle().getBooleans().write(0, false); // is debug
+        respawn.getHandle().getBooleans().write(1, false); // is flat
         respawn.sendPacket(player);
     }
 

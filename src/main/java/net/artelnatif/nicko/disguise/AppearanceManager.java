@@ -99,7 +99,6 @@ public class AppearanceManager {
     public ActionResult<Void> updatePlayer(boolean skinChange) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
 
-        Bukkit.broadcastMessage("Building UserProfile");
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange);
         if (!result.isError()) {
@@ -124,7 +123,6 @@ public class AppearanceManager {
                         final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
                         properties.get("textures").clear();
                         properties.put("textures", new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
-                        Bukkit.broadcastMessage("Modified properties");
                     }
                 }
                 return new ActionResult<>();
@@ -138,8 +136,6 @@ public class AppearanceManager {
     }
 
     private void respawnPlayer() {
-        Bukkit.broadcastMessage("Respawning player");
-
         final World world = player.getWorld();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
         respawn.setDimension(world);
@@ -149,15 +145,11 @@ public class AppearanceManager {
         respawn.setDifficulty(world.getDifficulty());
         respawn.setCopyMetadata(false);
         respawn.getHandle().getBooleans().write(0, false); // is debug
-        respawn.getHandle().getBooleans().write(1, true); // is flat
+        respawn.getHandle().getBooleans().write(1, false); // is flat
         respawn.sendPacket(player);
-        /*final EntityPlayer cp = ((CraftPlayer) player).getHandle();
-        final PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(cp.cG().Z(), cp.P(), player.getWorld().getSeed(), EnumGamemode.a, EnumGamemode.a, true, true, (byte) 0x00, Optional.empty());
-        cp.b.a(respawn);*/
     }
 
     private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
-        Bukkit.broadcastMessage("Updating tablist");
         final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
         remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
 

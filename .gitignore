@@ -50,3 +50,5 @@ dependency-reduced-pom.xml
 
 # Kept for convenience
 v1_19_R3
+# MockBukkit logs
+logs

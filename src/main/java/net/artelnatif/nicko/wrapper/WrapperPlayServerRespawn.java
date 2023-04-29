@@ -2,9 +2,12 @@ package net.artelnatif.nicko.wrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.BlockPosition;
+import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.google.common.hash.Hashing;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -27,12 +30,11 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     }
 
     //.............
-    // Dimension Field (1.8 - Present)
+    // Dimension/World Field
     // The dimension field has changed numerous times:
-    // - Version 1.8 through 1.15 need an integer,
-    // - 1.15 through 1.18 need a (NBT Tag) Identifier and
-    // - 1.19.2 and beyond require a Holder of a DimensionManager Identifier (???).
-    // (Wiki.vg still refers to this as an "Identifier")
+    // - 1.8 through 1.17 (?) need an integer,
+    // - 1.18 need a Holder of a World ResourceKey,
+    // - 1.19.2 reverted 1.18 and simply need a World ResourceKey.
     //
     // n.b.: this field is a nightmare please mojang stop refactoring
     // your code to change things that were working perfectly fine before
@@ -50,10 +52,16 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             // 1.19 and above
             handle.getWorldKeys().write(0, value);
-            return;
+        } else if (MinecraftVersion.CAVES_CLIFFS_2.atOrAbove()) {
+            // 1.18
+            handle.getHolders(
+                    MinecraftReflection.getDimensionManager(),
+                    BukkitConverters.getDimensionConverter()
+            ).write(0, value);
+        } else {
+            // 1.17 and below (untested)
+            handle.getDimensions().write(0, value.getEnvironment().ordinal());
         }
-
-        handle.getDimensionTypes().write(0, value);
     }
 
     //.............
@@ -89,13 +97,12 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     }
 
     public void setCopyMetadata(boolean value) {
-        handle.getBytes().write(0, ((byte) (value ? 1 : 0)));
+        handle.getBytes().write(0, ((byte) (value ? 0x01 : 0x00)));
     }
 
     //.............
     // Last death location Field
     // Added in 1.19.
-    // (useless?)
     //.............
 
     public Optional<BlockPosition> getLastDeathLocation() {
@@ -127,7 +134,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setSeed(long value) {
         if (MinecraftVersion.BEE_UPDATE.atOrAbove()) {
-            handle.getLongs().write(0, value);
+            handle.getLongs().write(0, Hashing.sha256().hashLong(value).asLong());
         }
     }
 

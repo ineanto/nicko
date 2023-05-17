@@ -1,5 +1,5 @@
 name: Nicko
-main: net.artelnatif.nicko.NickoBukkit
+main: xyz.atnrch.nicko.NickoBukkit
 version: 1.0-SNAPSHOT
 author: Ineanto
 api-version: 1.13

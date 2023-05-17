@@ -1,10 +1,10 @@
 error:
-  couldnt_get_name_from_mojang: "Impossible de récupérer le nom d''utilisateur depuis Mojang"
-  couldnt_get_skin_from_cache: "Impossible de récupérer le skin depuis le cache"
-  couldnt_get_skin_from_mojang: "Impossible de récupérer le skin depuis Mojang"
+  couldnt_get_name_from_mojang: "Impossible de récupérer le nom d''utilisateur depuis Mojang."
+  couldnt_get_skin_from_cache: "Impossible de récupérer le skin depuis le cache."
+  couldnt_get_skin_from_mojang: "Impossible de récupérer le skin depuis Mojang."
   generic: "Erreur inconnue"
-  invalid_username: "§cLe pseudo spécifié n''est pas un pseudo Minecraft valide."
-  player_offline: "§c{0} §fest hors-ligne, veuillez réessayer."
+  invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
+  player_offline: "§c{0} §fest hors-ligne!."
   sql: "Erreur SQL"
   json: "Erreur JSON"
 event:
@@ -14,9 +14,9 @@ event:
     fail: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
     success: "§aDéguisement appliqué !"
   previous_skin_applied:
-    fail: "§cImpossible d''appliquer votre déguisement précédent. §7§o({0})"
-    success: "§aVotre précédent déguisement a été réappliqué."
+    fail: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
+    success: "§aVotre précédent déguisement a été appliqué."
   undisguise:
-    fail: "§cImpossible de retier votre déguisement. Il sera remis par défaut à votre prochaine reconnexion. Désolé !"
+    fail: "§cImpossible de retier votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
     none: "§cVous n''avez pas de déguisement."
     success: "§aDéguisement retiré."

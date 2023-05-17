@@ -1,10 +1,10 @@
 error:
-  couldnt_get_name_from_mojang: "Failed to get username from Mojang"
-  couldnt_get_skin_from_cache: "Failed to get skin from cache"
-  couldnt_get_skin_from_mojang: "Failed to get skin from Mojang"
+  couldnt_get_name_from_mojang: "Unable to get username from Mojang."
+  couldnt_get_skin_from_cache: "Unable to get skin from the cache."
+  couldnt_get_skin_from_mojang: "Unable to get skin from Mojang."
   generic: "Unknown error"
-  invalid_username: "§cThe specified username is not a valid Minecraft username."
-  player_offline: "§c{0} §fis offline, please try again."
+  invalid_username: "§cThis is not a valid Minecraft username."
+  player_offline: "§c{0} §fis offline!"
   sql: "SQL Error"
   json: "JSON Error"
 event:
@@ -14,9 +14,9 @@ event:
     fail: "§cUnable to apply your disguise. §7§o({0})"
     success: "§aDisguise applied!"
   previous_skin_applied:
-    fail: "§cFailed to apply your previous disguise back. §7§o({0})"
-    success: "§aYour previous active disguise has been applied back."
+    fail: "§cUnable to apply your previous disguise back. §7§o({0})"
+    success: "§aYour previous active disguise has been applied."
   undisguise:
-    fail: "§cUnable to remove your disguise. It will be set back to default on your next login. Sorry!"
-    none: "§cYou do not have an active disguise."
+    fail: "§cUnable to remove your disguise. It will be reset on your next login."
+    none: "§cYou are not under a disguise."
     success: "§aDisguise removed."

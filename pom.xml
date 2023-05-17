@@ -39,24 +39,17 @@
     </repositories>
 
     <dependencies>
-            <dependency>
-                <groupId>com.comphenix.protocol</groupId>
-                <artifactId>ProtocolLib</artifactId>
-                <version>5.0.0-SNAPSHOT</version>
-            </dependency>
-            <!-- And so on -->
+        <!-- ProtocolLib -->
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>5.0.0-SNAPSHOT</version>
+        </dependency>
         <!-- PlaceHolder API -->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Spigot API -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Inventory Lib -->
@@ -97,15 +90,22 @@
             <artifactId>yamlconfig</artifactId>
             <version>1.1.2</version>
         </dependency>
+        <!-- Jackson Core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.13.3</version>
+            <version>2.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.13.3</version>
+            <version>2.14.2</version>
         </dependency>
         <!-- Redis -->
         <dependency>

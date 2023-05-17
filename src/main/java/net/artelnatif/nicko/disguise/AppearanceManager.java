@@ -102,11 +102,13 @@ public class AppearanceManager {
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange);
         if (!result.isError()) {
+            updateMetadata();
             updateTabList(gameProfile, displayName);
             respawnPlayer();
         }
         return new ActionResult<>();
     }
+
 
     private ActionResult<Void> updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
@@ -135,6 +137,11 @@ public class AppearanceManager {
         return new ActionResult<>();
     }
 
+    private void updateMetadata() {
+        final WrappedDataWatcher entityWatcher = WrappedDataWatcher.getEntityWatcher(player);
+        entityWatcher.setObject(17, (byte) 0x7f, true);
+    }
+
     private void respawnPlayer() {
         final World world = player.getWorld();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
@@ -145,7 +152,7 @@ public class AppearanceManager {
         respawn.setDifficulty(world.getDifficulty());
         respawn.setCopyMetadata(false);
         respawn.getHandle().getBooleans().write(0, false); // is debug
-        respawn.getHandle().getBooleans().write(1, false); // is flat
+        respawn.getHandle().getBooleans().write(0, false); // is flat
         respawn.sendPacket(player);
     }
 
@@ -155,15 +162,20 @@ public class AppearanceManager {
 
         final WrapperPlayerServerPlayerInfo update = new WrapperPlayerServerPlayerInfo();
         update.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER,
+                EnumWrappers.PlayerInfoAction.INITIALIZE_CHAT,
                 EnumWrappers.PlayerInfoAction.UPDATE_LISTED,
                 EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
                 EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
                 EnumWrappers.PlayerInfoAction.UPDATE_LATENCY));
         update.setData(ImmutableList.of(new PlayerInfoData(
-                gameProfile,
+                player.getUniqueId(),
                 player.getPing(),
+                true,
                 EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()),
-                WrappedChatComponent.fromText(displayName)
+                gameProfile,
+                WrappedChatComponent.fromText(displayName),
+                new WrappedRemoteChatSessionData(UUID.randomUUID(),
+                        WrappedProfilePublicKey.ofPlayer(player).getKeyData())
         )));
         remove.sendPacket(player);
         update.sendPacket(player);

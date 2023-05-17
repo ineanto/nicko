@@ -1,19 +1,17 @@
 package net.artelnatif.nicko.wrapper;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
-import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.MinecraftKey;
 import com.google.common.hash.Hashing;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.World;
-
-import java.util.Optional;
 
 /**
  * Up-to-date version of the Wrapper class
@@ -50,7 +48,12 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setDimension(World value) {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            // 1.19 and above
+            // 1.19 to 1.19.4
+            // Thank you lukalt!
+            final InternalStructure dimensionType = handle.getStructures().read(0);
+            dimensionType.getMinecraftKeys().write(0, new MinecraftKey("minecraft", "dimension_type"));
+            dimensionType.getMinecraftKeys().write(1, new MinecraftKey("minecraft", "overworld"));
+            handle.getStructures().write(0, dimensionType);
             handle.getWorldKeys().write(0, value);
         } else if (MinecraftVersion.CAVES_CLIFFS_2.atOrAbove()) {
             // 1.18
@@ -98,26 +101,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setCopyMetadata(boolean value) {
         handle.getBytes().write(0, ((byte) (value ? 0x01 : 0x00)));
-    }
-
-    //.............
-    // Last death location Field
-    // Added in 1.19.
-    //.............
-
-    public Optional<BlockPosition> getLastDeathLocation() {
-        if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            return handle.getOptionals(BlockPosition.getConverter()).read(0);
-        }
-        return Optional.empty();
-    }
-
-    public void setLastDeathLocation(Location value) {
-        if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            final BlockPosition locationToBlockPosition = BlockPosition.getConverter().getSpecific(value);
-            final Optional<BlockPosition> blockPosition = Optional.ofNullable(locationToBlockPosition);
-            handle.getOptionals(BlockPosition.getConverter()).write(0, blockPosition);
-        }
     }
 
     //.............

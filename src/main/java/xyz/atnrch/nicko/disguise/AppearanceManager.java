@@ -3,6 +3,7 @@ package xyz.atnrch.nicko.disguise;
 import com.comphenix.protocol.wrappers.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
@@ -85,15 +86,12 @@ public class AppearanceManager {
         final String defaultName = nameStore.getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
-        final ActionResult<Void> actionResult = resetPlayer();
-        this.profile.setSkin(null);
-        this.profile.setName(null);
+        final ActionResult<Void> actionResult = updatePlayer(true);
+        if (!actionResult.isError()) {
+            this.profile.setSkin(null);
+            this.profile.setName(null);
+        }
         return actionResult;
-    }
-
-    public ActionResult<Void> resetPlayer() {
-        // TODO: 4/3/23 Reset player
-        return new ActionResult<>();
     }
 
     public ActionResult<Void> updatePlayer(boolean skinChange) {
@@ -106,6 +104,7 @@ public class AppearanceManager {
             updateTabList(gameProfile, displayName);
             respawnPlayer();
         }
+        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         return new ActionResult<>();
     }
 
@@ -159,7 +158,6 @@ public class AppearanceManager {
     private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
         final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
         remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
-
         final WrapperPlayerServerPlayerInfo update = new WrapperPlayerServerPlayerInfo();
         update.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER,
                 EnumWrappers.PlayerInfoAction.INITIALIZE_CHAT,
@@ -173,9 +171,11 @@ public class AppearanceManager {
                 true,
                 EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()),
                 gameProfile,
-                WrappedChatComponent.fromText(displayName),
-                new WrappedRemoteChatSessionData(UUID.randomUUID(),
-                        WrappedProfilePublicKey.ofPlayer(player).getKeyData())
+                WrappedChatComponent.fromText(displayName)
+                // Yes, I skip providing chat session data.
+                // Yes, this will cause players to get kicked as soon as they send a message.
+                // No, I'll not waste another day fixing their mess. Go cry about it to Mojang.
+                // (Long live NoEncryption!)
         )));
         remove.sendPacket(player);
         update.sendPacket(player);

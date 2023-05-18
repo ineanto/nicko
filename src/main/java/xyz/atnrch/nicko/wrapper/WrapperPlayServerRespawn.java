@@ -32,7 +32,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // The dimension field has changed numerous times:
     // - 1.8 through 1.17 (?) need an integer,
     // - 1.18 need a Holder of a World ResourceKey,
-    // - 1.19.2 reverted 1.18 and simply need a World ResourceKey.
+    // - 1.19 and beyond don't require a Holder.
     //
     // n.b.: this field is a nightmare please mojang stop refactoring
     // your code to change things that were working perfectly fine before

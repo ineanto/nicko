@@ -3,6 +3,7 @@ package xyz.atnrch.nicko.storage.cache.redis;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
+import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.disguise.ActionResult;
 import xyz.atnrch.nicko.disguise.NickoProfile;
 import xyz.atnrch.nicko.storage.cache.Cache;
@@ -12,13 +13,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class RedisCache extends Cache {
-    private final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .create();
+    private final Configuration configuration;
     private RedisCacheProvider provider;
+
+    public RedisCache(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
     @Override
     public CacheProvider getProvider() {
         if (provider == null) {
-            provider = new RedisCacheProvider();
+            provider = new RedisCacheProvider(configuration);
         }
         return provider;
     }

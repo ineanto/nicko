@@ -70,12 +70,16 @@ public class NickoBukkit extends JavaPlugin {
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
 
-        if (!dataStore.getStorage().isError()) {
-            getLogger().info("Loading persistence...");
-            if (!dataStore.getStorage().getProvider().init()) {
-                dataStore.getStorage().setError(true);
-                getLogger().severe("Failed to open persistence, data will NOT be saved!");
-            }
+        getLogger().info("Loading persistence...");
+        if (!dataStore.getStorage().getProvider().init()) {
+            dataStore.getStorage().setError(true);
+            getLogger().severe("Failed to open persistence, data will NOT be saved!");
+        }
+
+        getLogger().info("Loading cache...");
+        if (!dataStore.getCache().getProvider().init()) {
+            dataStore.getCache().setError(true);
+            getLogger().severe("Failed to open cache, data will NOT be saved!");
         }
 
         if (!unitTesting) {

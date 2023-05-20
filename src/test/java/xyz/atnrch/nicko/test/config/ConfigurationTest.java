@@ -1,14 +1,14 @@
 package xyz.atnrch.nicko.test.config;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.config.Configuration;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.config.Configuration;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ConfigurationTest {
     private static NickoBukkit plugin;
@@ -23,7 +23,8 @@ public class ConfigurationTest {
     @DisplayName("Read configuration")
     public void readConfiguration() {
         final Configuration configuration = plugin.getNickoConfig();
-        assertTrue(configuration.isLocal());
+        assertFalse(configuration.getSqlConfiguration().isEnabled());
+        assertFalse(configuration.getRedisConfiguration().isEnabled());
     }
 
     @AfterAll

@@ -24,10 +24,9 @@ public class CacheStorageTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                new DataSourceConfiguration("127.0.0.1", 3306, "root", "12345"),
+                new DataSourceConfiguration(false, "127.0.0.1", 3306, "root", "12345"),
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
-                false,
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
@@ -39,7 +38,7 @@ public class CacheStorageTest {
     public void cachePlayerData() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         assertTrue(optionalProfile.isPresent());
-        //assertTrue(plugin.getDataStore().isCached(player.getUniqueId()));
+        assertTrue(plugin.getDataStore().getCache().isCached(player.getUniqueId()));
     }
 
     @AfterAll

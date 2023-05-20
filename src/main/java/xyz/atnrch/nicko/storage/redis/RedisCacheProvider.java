@@ -1,7 +1,7 @@
-package xyz.atnrch.nicko.storage.cache.redis;
+package xyz.atnrch.nicko.storage.redis;
 
 import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.storage.cache.CacheProvider;
+import xyz.atnrch.nicko.storage.CacheProvider;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 

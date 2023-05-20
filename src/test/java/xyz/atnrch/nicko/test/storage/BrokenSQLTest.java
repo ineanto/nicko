@@ -23,10 +23,9 @@ public class BrokenSQLTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                DataSourceConfiguration.SQL_EMPTY,
+                new DataSourceConfiguration(true, "127.0.0.1", 3306, "root", ""),
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
-                false,
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);

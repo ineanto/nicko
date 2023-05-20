@@ -1,18 +1,17 @@
 package xyz.atnrch.nicko.event;
 
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.AppearanceManager;
-import xyz.atnrch.nicko.disguise.ActionResult;
-import xyz.atnrch.nicko.disguise.NickoProfile;
-import xyz.atnrch.nicko.i18n.I18N;
-import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.storage.PlayerDataStore;
-import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.disguise.ActionResult;
+import xyz.atnrch.nicko.disguise.AppearanceManager;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
+import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
@@ -25,8 +24,6 @@ public class PlayerJoinListener implements Listener {
         nameStore.storeName(player);
 
         // TODO: 2/20/23 BungeeCord transfer
-
-        dataStore.performProfileUpdate(player.getUniqueId(), NickoProfile.EMPTY_PROFILE);
         Bukkit.getScheduler().runTaskLater(instance, () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
             if (appearanceManager.hasData()) {

@@ -12,23 +12,20 @@ public class Configuration {
     @JsonProperty("redis")
     private final DataSourceConfiguration redisConfiguration;
     private final String prefix;
-    private final Boolean local;
     private final Boolean customLocale;
 
-    public Configuration(DataSourceConfiguration sqlConfiguration, DataSourceConfiguration redisConfiguration, String prefix, Boolean local, Boolean customLocale) {
+    public Configuration(DataSourceConfiguration sqlConfiguration, DataSourceConfiguration redisConfiguration, String prefix, Boolean customLocale) {
         this.sqlConfiguration = sqlConfiguration;
         this.redisConfiguration = redisConfiguration;
         this.prefix = prefix;
-        this.local = local;
         this.customLocale = customLocale;
     }
 
     public Configuration() {
         this(
-                new DataSourceConfiguration("", 3306, "", ""),
-                new DataSourceConfiguration("", 6379, "", ""),
+                new DataSourceConfiguration(false, "", 3306, "", ""),
+                new DataSourceConfiguration(false, "", 6379, "", ""),
                 "",
-                false,
                 false
         );
     }
@@ -43,10 +40,6 @@ public class Configuration {
 
     public String getPrefix() {
         return prefix;
-    }
-
-    public Boolean isLocal() {
-        return local;
     }
 
     public Boolean isCustomLocale() {

@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.storage.cache;
+package xyz.atnrch.nicko.storage;
 
 public interface CacheProvider {
     boolean init();

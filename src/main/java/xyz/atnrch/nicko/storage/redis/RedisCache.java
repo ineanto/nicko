@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.storage.cache.redis;
+package xyz.atnrch.nicko.storage.redis;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,8 +6,8 @@ import redis.clients.jedis.Jedis;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.disguise.ActionResult;
 import xyz.atnrch.nicko.disguise.NickoProfile;
-import xyz.atnrch.nicko.storage.cache.Cache;
-import xyz.atnrch.nicko.storage.cache.CacheProvider;
+import xyz.atnrch.nicko.storage.Cache;
+import xyz.atnrch.nicko.storage.CacheProvider;
 
 import java.util.Optional;
 import java.util.UUID;

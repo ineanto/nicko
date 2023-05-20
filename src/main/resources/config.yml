@@ -1,16 +1,29 @@
 # Nicko ${project.version} - Config:
 
+############
+# LANGUAGE #
+############
+
+# Nicko's messages prefix.
+# Accepted values: any string
+prefix: "§6Nicko §8§l| §r"
+
+# Nicko will copy the English locale as "lang.yml"
+# and will use the translations in that file when "Server Custom"
+# is selected as the player's locale.
+# Accepted values: false (Disabled), true (Enabled)
+customLocale: false
+
 ###########
 # STORAGE #
 ###########
 
-# Indicates wherever the data will be stored
-# locally through a .json file or a (My)SQL database.
-# Accepted values: false (Disabled), true (Enabled)
-local: true
-
 # This configuration section manages SQL.
 sql:
+  # Indicates wherever the data will be stored locally
+  # inside a .json file or in a SQL database.
+  # Accepted values: false (Disabled), true (Enabled)
+  enabled: false
   # SQL database's address
   # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
   address: "localhost"
@@ -43,17 +56,3 @@ redis:
   # Redis server's password
   # Accepted values: any string
   password: "password"
-
-###########
-# DISPLAY #
-###########
-
-# Nicko's messages prefix.
-# Accepted values: any string
-prefix: "§6Nicko §8§l| §r"
-
-# Nicko will copy the English locale as "lang.yml"
-# and will use the translations in that file when "Server Custom"
-# is selected as the player's locale.
-# Accepted values: false (Disabled), true (Enabled)
-customLocale: false

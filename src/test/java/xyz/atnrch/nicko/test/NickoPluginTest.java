@@ -14,10 +14,9 @@ public class NickoPluginTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                DataSourceConfiguration.SQL_EMPTY,
+                new DataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345"),
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
-                true,
                 false);
         MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);

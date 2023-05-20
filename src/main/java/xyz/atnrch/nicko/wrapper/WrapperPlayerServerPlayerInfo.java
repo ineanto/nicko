@@ -40,7 +40,6 @@ public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
     }
 
     public void setData(List<PlayerInfoData> value) {
-        //handle.getSets(PlayerInfoData.getConverter()).write(0, value);
         handle.getPlayerInfoDataLists().write(1, value);
     }
 }

@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.storage.cache;
+package xyz.atnrch.nicko.storage;
 
 import xyz.atnrch.nicko.disguise.ActionResult;
 import xyz.atnrch.nicko.disguise.NickoProfile;

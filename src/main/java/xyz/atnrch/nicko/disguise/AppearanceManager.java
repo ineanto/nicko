@@ -1,8 +1,12 @@
 package xyz.atnrch.nicko.disguise;
 
+import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18NDict;
@@ -13,9 +17,6 @@ import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 import xyz.atnrch.nicko.wrapper.WrapperPlayServerRespawn;
 import xyz.atnrch.nicko.wrapper.WrapperPlayerServerPlayerInfo;
 import xyz.atnrch.nicko.wrapper.WrapperPlayerServerPlayerInfoRemove;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -157,14 +158,15 @@ public class AppearanceManager {
 
     private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
         final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
-        remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
         final WrapperPlayerServerPlayerInfo update = new WrapperPlayerServerPlayerInfo();
-        update.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER,
+        final EnumSet<EnumWrappers.PlayerInfoAction> actions = EnumSet.of(
+                EnumWrappers.PlayerInfoAction.REMOVE_PLAYER, // Necessary for 1.19.2 and below
+                EnumWrappers.PlayerInfoAction.ADD_PLAYER,
                 EnumWrappers.PlayerInfoAction.INITIALIZE_CHAT,
                 EnumWrappers.PlayerInfoAction.UPDATE_LISTED,
                 EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
                 EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
-                EnumWrappers.PlayerInfoAction.UPDATE_LATENCY));
+                EnumWrappers.PlayerInfoAction.UPDATE_LATENCY);
         update.setData(ImmutableList.of(new PlayerInfoData(
                 player.getUniqueId(),
                 player.getPing(),
@@ -177,7 +179,12 @@ public class AppearanceManager {
                 // No, I'll not waste another day fixing their mess. Go cry about it to Mojang.
                 // (Long live NoEncryption!)
         )));
-        remove.sendPacket(player);
+        if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
+            actions.remove(EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+            remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
+            remove.sendPacket(player);
+        }
+        update.setActions(actions);
         update.sendPacket(player);
     }
 }

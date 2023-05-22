@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.test.storage.cache;
+package xyz.atnrch.nicko.test.storage.map;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CacheStorageTest {
+public class MapCacheTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
     private static PlayerMock player;
@@ -24,7 +24,7 @@ public class CacheStorageTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                new DataSourceConfiguration(false, "127.0.0.1", 3306, "root", "12345"),
+                DataSourceConfiguration.SQL_EMPTY,
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false);

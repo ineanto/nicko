@@ -21,6 +21,7 @@ public class RedisCache extends Cache {
     private RedisCacheProvider provider;
 
     public RedisCache(Configuration configuration) {
+        System.out.println("Loaded REDIS CACHE");
         this.configuration = configuration;
     }
 

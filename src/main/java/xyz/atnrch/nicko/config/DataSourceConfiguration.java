@@ -39,4 +39,15 @@ public class DataSourceConfiguration {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return "DataSourceConfiguration{" +
+               "enabled=" + enabled +
+               ", address='" + address + '\'' +
+               ", port=" + port +
+               ", username='" + username + '\'' +
+               ", password='" + password + '\'' +
+               '}';
+    }
 }

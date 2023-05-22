@@ -26,10 +26,10 @@ public class SQLStorageProvider implements StorageProvider {
     public boolean init() {
         try {
             final MariaDbDataSource dataSource = new MariaDbDataSource();
-            final DataSourceConfiguration dataSourceConfiguration = configuration.getSqlConfiguration();
-            dataSource.setUrl("jdbc:mariadb://" + dataSourceConfiguration.getAddress() + ":" + dataSourceConfiguration.getPort());
-            dataSource.setUser(dataSourceConfiguration.getUsername());
-            dataSource.setPassword(dataSourceConfiguration.getPassword());
+            final DataSourceConfiguration sqlConfiguration = configuration.getSqlConfiguration();
+            dataSource.setUrl("jdbc:mariadb://" + sqlConfiguration.getAddress() + ":" + sqlConfiguration.getPort());
+            dataSource.setUser(sqlConfiguration.getUsername());
+            dataSource.setPassword(sqlConfiguration.getPassword());
             connection = dataSource.getConnection();
             final boolean initialized = connection != null && !connection.isClosed();
 

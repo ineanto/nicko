@@ -17,10 +17,7 @@ public class RedisCacheProvider implements CacheProvider {
     @Override
     public boolean init() {
         final DataSourceConfiguration redisConfiguration = configuration.getRedisConfiguration();
-        pool = new JedisPool(
-                redisConfiguration.getAddress(),
-                redisConfiguration.getPort()
-        );
+        pool = new JedisPool(redisConfiguration.getAddress(), redisConfiguration.getPort());
         return !pool.isClosed() && pool.getResource() != null;
     }
 

@@ -2,6 +2,7 @@ package xyz.atnrch.nicko.wrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 
@@ -32,7 +33,11 @@ public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
     }
 
     public void setActions(Set<EnumWrappers.PlayerInfoAction> value) {
-        handle.getPlayerInfoActions().write(0, value);
+        if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
+            handle.getPlayerInfoActions().write(0, value);
+        } else {
+            handle.getPlayerInfoAction().write(0, value.stream().iterator().next()); // Get the first Value.
+        }
     }
 
     public List<PlayerInfoData> getData() {
@@ -40,6 +45,6 @@ public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
     }
 
     public void setData(List<PlayerInfoData> value) {
-        handle.getPlayerInfoDataLists().write(1, value);
+        handle.getPlayerInfoDataLists().write(0, value);
     }
 }

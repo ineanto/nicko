@@ -150,24 +150,32 @@ public class AppearanceManager {
         respawn.setGameMode(player.getGameMode());
         respawn.setPreviousGameMode(player.getGameMode());
         respawn.setDifficulty(world.getDifficulty());
-        respawn.setCopyMetadata(false);
-        respawn.getHandle().getBooleans().write(0, false); // is debug
-        respawn.getHandle().getBooleans().write(0, false); // is flat
+        respawn.setCopyMetadata(true);
         respawn.sendPacket(player);
     }
 
     private void updateTabList(WrappedGameProfile gameProfile, String displayName) {
-        final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
-        final WrapperPlayerServerPlayerInfo update = new WrapperPlayerServerPlayerInfo();
-        final EnumSet<EnumWrappers.PlayerInfoAction> actions = EnumSet.of(
-                EnumWrappers.PlayerInfoAction.REMOVE_PLAYER, // Necessary for 1.19.2 and below
-                EnumWrappers.PlayerInfoAction.ADD_PLAYER,
-                EnumWrappers.PlayerInfoAction.INITIALIZE_CHAT,
-                EnumWrappers.PlayerInfoAction.UPDATE_LISTED,
-                EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
-                EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
-                EnumWrappers.PlayerInfoAction.UPDATE_LATENCY);
-        update.setData(ImmutableList.of(new PlayerInfoData(
+        final WrapperPlayerServerPlayerInfo add = new WrapperPlayerServerPlayerInfo();
+        if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
+            final WrapperPlayerServerPlayerInfoRemove remove = new WrapperPlayerServerPlayerInfoRemove();
+            final EnumSet<EnumWrappers.PlayerInfoAction> actions = EnumSet.of(
+                    EnumWrappers.PlayerInfoAction.ADD_PLAYER,
+                    EnumWrappers.PlayerInfoAction.INITIALIZE_CHAT,
+                    EnumWrappers.PlayerInfoAction.UPDATE_LISTED,
+                    EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
+                    EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
+                    EnumWrappers.PlayerInfoAction.UPDATE_LATENCY);
+            remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
+            remove.sendPacket(player);
+            add.setActions(actions);
+        } else {
+            final WrapperPlayerServerPlayerInfo remove = new WrapperPlayerServerPlayerInfo();
+            remove.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.REMOVE_PLAYER));
+            add.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER));
+            remove.sendPacket(player);
+        }
+
+        add.setData(ImmutableList.of(new PlayerInfoData(
                 player.getUniqueId(),
                 player.getPing(),
                 true,
@@ -180,12 +188,6 @@ public class AppearanceManager {
                 // No, I'll not waste another day fixing their mess. Go cry about it to Mojang.
                 // (Long live NoEncryption!)
         )));
-        if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
-            actions.remove(EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
-            remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
-            remove.sendPacket(player);
-        }
-        update.setActions(actions);
-        update.sendPacket(player);
+        add.sendPacket(player);
     }
 }

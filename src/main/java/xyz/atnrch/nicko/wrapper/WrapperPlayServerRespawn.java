@@ -100,7 +100,11 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     }
 
     public void setCopyMetadata(boolean value) {
-        handle.getBytes().write(0, ((byte) (value ? 0x01 : 0x00)));
+        if(MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
+            handle.getBytes().write(0, ((byte) (value ? 0x01 : 0x00)));
+        } else {
+            handle.getBooleans().write(0, value);
+        }
     }
 
     //.............

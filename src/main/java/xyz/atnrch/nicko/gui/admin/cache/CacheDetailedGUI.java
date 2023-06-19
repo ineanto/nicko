@@ -37,6 +37,7 @@ public class CacheDetailedGUI {
                 .map(EntryPlaceholder::new)
                 .collect(Collectors.toList());
 
+        final CacheManagementGUI parent = new CacheManagementGUI(player);
         gui = ScrollGui.items(guiItemBuilder -> {
             guiItemBuilder.setStructure(
                     "# # # # # # # # #",
@@ -48,7 +49,7 @@ public class CacheDetailedGUI {
             guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
             guiItemBuilder.addIngredient('U', new ScrollUp());
             guiItemBuilder.addIngredient('D', new ScrollDown());
-            guiItemBuilder.addIngredient('B', new GoBack(new CacheManagementGUI(player).getGUI()));
+            guiItemBuilder.addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()));
             guiItemBuilder.setContent(items);
         });
 

@@ -10,15 +10,15 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class CacheManagementGUI {
-    public static final String TITLE = "Nicko > Admin... > Cache";
-
+    private final String title = "Nicko > Admin... > Cache";
     private final Player player;
     private final Gui gui;
 
     public CacheManagementGUI(Player player) {
+        final AdminGUI parent = new AdminGUI(player);
         this.gui = Gui.normal()
                 .setStructure("B # S A D")
-                .addIngredient('B', new GoBack(new AdminGUI(player).getGUI()))
+                .addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()))
                 .addIngredient('S', new CacheOverview())
                 .addIngredient('A', new InvalidateCompleteCache())
                 .addIngredient('D', new InvalidateSpecificEntry())
@@ -30,7 +30,11 @@ public class CacheManagementGUI {
         return gui;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void open() {
-        Window.single().setGui(gui).setTitle(TITLE).open(player);
+        Window.single().setGui(gui).setTitle(title).open(player);
     }
 }

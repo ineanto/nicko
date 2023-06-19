@@ -7,7 +7,7 @@ import xyz.xenondevs.invui.item.impl.SuppliedItem;
 import xyz.xenondevs.invui.window.Window;
 
 public class GoBack extends SuppliedItem {
-    public GoBack(Gui gui) {
+    public GoBack(Gui gui, String parentTitle) {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.ARROW);
             builder.setDisplayName("Go back");
@@ -15,8 +15,7 @@ public class GoBack extends SuppliedItem {
             return builder;
         }, click -> {
             click.getEvent().getView().close();
-            // TODO: 4/1/23 Get title of parent GUI
-            Window.single().setGui(gui).setTitle("Nicko").open(click.getPlayer());
+            Window.single().setGui(gui).setTitle(parentTitle).open(click.getPlayer());
             return true;
         });
     }

@@ -11,6 +11,7 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class MainGUI {
+    private final String title = "Nicko - Home";
     private final Player player;
     private final Gui gui;
 
@@ -40,7 +41,11 @@ public class MainGUI {
         return gui;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void open() {
-        Window.single().setGui(gui).setTitle("Nicko - Home").open(player);
+        Window.single().setGui(gui).setTitle(title).open(player);
     }
 }

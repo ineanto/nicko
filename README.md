@@ -1,6 +1,6 @@
 # _Nicko_ <img style="vertical-align:middle" src="./img/LOGO.png" alt="" width="50"/>
 
-## The next generation, feature packed disguise plugin for Minecraft.
+## The feature packed, next generation disguise plugin for Minecraft.
 
 ### Download:
 

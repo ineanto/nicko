@@ -23,9 +23,10 @@ public class SettingsGUI {
         // TODO: 3/6/23 Replace when Redis is not enabled
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
+        final MainGUI parent = new MainGUI(player);
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
-                .addIngredient('B', new GoBack(new MainGUI(player).getGUI()))
+                .addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()))
                 .addIngredient('L', new LanguageCycling().get(player))
                 .addIngredient('T', new BungeeCordCycling().get(player))
                 .build();

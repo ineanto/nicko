@@ -7,12 +7,12 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class AdminGUI {
-    public static final String TITLE = "Nicko > Administration";
-
+    private final String title = "Nicko > Administration";
     private final Player player;
     private final Gui gui;
 
     public AdminGUI(Player player) {
+        final MainGUI parent = new MainGUI(player);
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
@@ -20,7 +20,7 @@ public class AdminGUI {
                         "B # # # # # # # #"
                 )
                 .addIngredient('S', new ManageCache())
-                .addIngredient('B', new GoBack(new MainGUI(player).getGUI()))
+                .addIngredient('B', new GoBack(parent.getGUI(), title))
                 .build();
         this.player = player;
     }
@@ -29,7 +29,11 @@ public class AdminGUI {
         return gui;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void open() {
-        Window.single().setGui(gui).setTitle(TITLE).open(player);
+        Window.single().setGui(gui).setTitle(title).open(player);
     }
 }

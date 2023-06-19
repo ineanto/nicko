@@ -158,6 +158,4 @@ public class NickoBukkit extends JavaPlugin {
     public LocaleFileManager getLocaleFileManager() {
         return localeFileManager;
     }
-
-    public ProtocolManager getProtocolManager() { return protocolManager; }
 }

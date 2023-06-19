@@ -17,6 +17,14 @@ event:
     fail: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
     success: "§aVotre précédent déguisement a été appliqué."
   undisguise:
-    fail: "§cImpossible de retier votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
+    fail: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
     none: "§cVous n''avez pas de déguisement."
     success: "§aDéguisement retiré."
+gui:
+  common:
+    exit: "Quitter"
+    back: "Retour"
+    l1_back: "Retournez à la fenêtre précédente."
+    not_available: "Option indisponible :("
+    l1_not_available: "Ce bouton est désactivé."
+

@@ -3,13 +3,13 @@ package xyz.atnrch.nicko.test.storage;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.config.Configuration;
+import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.disguise.ActionResult;
 import xyz.atnrch.nicko.disguise.NickoProfile;
-import org.junit.jupiter.api.*;
+import xyz.atnrch.nicko.i18n.Locale;
 
 import java.util.Optional;
 

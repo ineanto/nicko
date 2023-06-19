@@ -8,7 +8,7 @@ import xyz.xenondevs.invui.gui.ScrollGui;
 import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.gui.items.admin.cache.SkinPlaceholder;
+import xyz.atnrch.nicko.gui.items.admin.cache.EntryPlaceholder;
 import xyz.atnrch.nicko.gui.admin.CacheManagementGUI;
 import xyz.atnrch.nicko.gui.items.common.ScrollDown;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class CacheDetailedGUI {
                 .collect(Collectors.toList());
 
         final List<Item> items = loadedSkins.stream()
-                .map(SkinPlaceholder::new)
+                .map(EntryPlaceholder::new)
                 .collect(Collectors.toList());
 
         gui = ScrollGui.items(guiItemBuilder -> {

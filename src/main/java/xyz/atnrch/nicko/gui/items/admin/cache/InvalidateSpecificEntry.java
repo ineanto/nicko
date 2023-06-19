@@ -6,8 +6,8 @@ import org.bukkit.event.inventory.ClickType;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class CacheDetailed extends SuppliedItem {
-    public CacheDetailed() {
+public class InvalidateSpecificEntry extends SuppliedItem {
+    public InvalidateSpecificEntry() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.PAPER);
             builder.setDisplayName("§6Invalidate specific skin...");

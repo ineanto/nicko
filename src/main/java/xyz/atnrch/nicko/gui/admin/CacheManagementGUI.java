@@ -1,8 +1,8 @@
 package xyz.atnrch.nicko.gui.admin;
 
 import xyz.atnrch.nicko.gui.AdminGUI;
-import xyz.atnrch.nicko.gui.items.admin.cache.CacheDetailed;
-import xyz.atnrch.nicko.gui.items.admin.cache.CacheInvalidate;
+import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateSpecificEntry;
+import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateCompleteCache;
 import xyz.atnrch.nicko.gui.items.admin.cache.CacheOverview;
 import xyz.atnrch.nicko.gui.items.common.GoBack;
 import org.bukkit.entity.Player;
@@ -20,8 +20,8 @@ public class CacheManagementGUI {
                 .setStructure("B # S A D")
                 .addIngredient('B', new GoBack(new AdminGUI(player).getGUI()))
                 .addIngredient('S', new CacheOverview())
-                .addIngredient('A', new CacheInvalidate())
-                .addIngredient('D', new CacheDetailed())
+                .addIngredient('A', new InvalidateCompleteCache())
+                .addIngredient('D', new InvalidateSpecificEntry())
                 .build();
         this.player = player;
     }

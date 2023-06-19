@@ -9,8 +9,8 @@ import org.bukkit.event.inventory.ClickType;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class CacheInvalidate extends SuppliedItem {
-    public CacheInvalidate() {
+public class InvalidateCompleteCache extends SuppliedItem {
+    public InvalidateCompleteCache() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
             builder.setDisplayName("§fInvalidate §6skin cache");

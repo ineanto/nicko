@@ -178,7 +178,8 @@ public class AppearanceManager {
         // Yes, I skip providing chat session data.
         // Yes, this will cause players to get kicked
         // as soon as they send a message on versions above 1.19.2.
-        // No, I'll not waste another day fixing their mess. Go cry about it to Mojang.
+        // No, I'll not waste another day fixing their mess.
+        // Go cry about it to Mojang.
         // (Long live NoEncryption!)
         add.setData(ImmutableList.of(new PlayerInfoData(
                 player.getUniqueId(),

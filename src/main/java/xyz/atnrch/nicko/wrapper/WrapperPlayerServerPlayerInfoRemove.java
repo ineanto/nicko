@@ -21,14 +21,6 @@ public class WrapperPlayerServerPlayerInfoRemove extends AbstractPacket {
         handle.getModifier().writeDefaults();
     }
 
-    public WrapperPlayerServerPlayerInfoRemove(PacketContainer packet) {
-        super(packet, TYPE);
-    }
-
-    public List<UUID> getUUIDs() {
-        return handle.getUUIDLists().read(0);
-    }
-
     public void setUUIDs(List<UUID> value) {
         handle.getUUIDLists().write(0, value);
     }

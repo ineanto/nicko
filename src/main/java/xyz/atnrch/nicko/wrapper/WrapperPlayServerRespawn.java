@@ -38,14 +38,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // your code to change things that were working perfectly fine before
     //.............
 
-    public World getDimension() {
-        if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            return handle.getWorldKeys().read(0);
-        }
-
-        return handle.getDimensionTypes().read(0);
-    }
-
     public void setDimension(World value) {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             // 1.19 to 1.19.4
@@ -71,10 +63,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // GameMode Field
     //.............
 
-    public GameMode getGameMode() {
-        return handle.getGameModes().read(0).toBukkit();
-    }
-
     public void setGameMode(GameMode value) {
         handle.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(value));
     }
@@ -83,10 +71,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // Previous GameMode Field
     //.............
 
-    public GameMode getPreviousGameMode() {
-        return handle.getGameModes().read(1).toBukkit();
-    }
-
     public void setPreviousGameMode(GameMode value) {
         handle.getGameModes().write(1, EnumWrappers.NativeGameMode.fromBukkit(value));
     }
@@ -94,10 +78,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     //.............
     // Copy Metadata Field
     //.............
-
-    public boolean isCopyMetadata() {
-        return handle.getBytes().read(0) != 0;
-    }
 
     public void setCopyMetadata(boolean value) {
         if(MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
@@ -112,13 +92,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // Added in 1.15.
     //.............
 
-    public long getSeed() {
-        if (MinecraftVersion.BEE_UPDATE.atOrAbove()) {
-            return handle.getLongs().read(0);
-        }
-        return -1;
-    }
-
     public void setSeed(long value) {
         if (MinecraftVersion.BEE_UPDATE.atOrAbove()) {
             handle.getLongs().write(0, Hashing.sha256().hashLong(value).asLong());
@@ -129,15 +102,6 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     // Difficulty Field
     // Removed in 1.14.
     //.............
-
-    public Difficulty getDifficulty() {
-        if (MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
-            return null;
-        }
-
-        final EnumWrappers.Difficulty difficulty = handle.getDifficulties().read(0);
-        return difficulty == null ? null : Difficulty.valueOf(difficulty.name());
-    }
 
     public void setDifficulty(Difficulty difficulty) {
         if (difficulty != null && !MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {

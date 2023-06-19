@@ -24,24 +24,12 @@ public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
         handle.getModifier().writeDefaults();
     }
 
-    public WrapperPlayerServerPlayerInfo(PacketContainer packet) {
-        super(packet, TYPE);
-    }
-
-    public Set<EnumWrappers.PlayerInfoAction> getActions() {
-        return handle.getPlayerInfoActions().read(0);
-    }
-
     public void setActions(Set<EnumWrappers.PlayerInfoAction> value) {
         if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
             handle.getPlayerInfoActions().write(0, value);
         } else {
             handle.getPlayerInfoAction().write(0, value.stream().iterator().next()); // Get the first Value.
         }
-    }
-
-    public List<PlayerInfoData> getData() {
-        return handle.getPlayerInfoDataLists().read(1);
     }
 
     public void setData(List<PlayerInfoData> value) {

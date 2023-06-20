@@ -20,7 +20,7 @@ public class AdminGUI {
                         "B # # # # # # # #"
                 )
                 .addIngredient('S', new ManageCache())
-                .addIngredient('B', new GoBack(parent.getGUI(), title))
+                .addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;
     }

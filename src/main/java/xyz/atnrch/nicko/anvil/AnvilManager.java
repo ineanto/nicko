@@ -39,6 +39,7 @@ public class AnvilManager {
     public AnvilGUI.Builder getNameThenSkinAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
+                .preventClose()
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -59,6 +60,7 @@ public class AnvilManager {
     public AnvilGUI.Builder getNameAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
+                .preventClose()
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {

@@ -18,8 +18,8 @@ public class MainGUI {
     public MainGUI(Player player) {
         final String[] dynamicStructure = new String[]{
                 "# # # # # # # # #",
-                "# # # N B S # # #",
-                "E P A # # # # # R"};
+                "A # # N B S # # #",
+                "E P # # # # # # R"};
 
         if (!player.hasPermission("nicko.admin") || !player.isOp()) {
             dynamicStructure[2] = dynamicStructure[2].replace("A", "#");

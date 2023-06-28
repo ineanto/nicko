@@ -2,13 +2,25 @@
 
 ## The feature packed, next generation disguise plugin for Minecraft.
 
-### Download:
+---
+
+## Download:
 
 Coming soon! ⏳
 
+---
+
+## Q/A
+
+Q: Players are getting kicked when they send a message on versions above 1.19.2!
+
+A: Install [NoEncryption](https://www.spigotmc.org/resources/noencryption.102902/).
+
+---
+
 #### Version compatibility table
 
-| Version   | Supported                                                                  |
-|-----------|----------------------------------------------------------------------------|
-| < 1.12.2  | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/) |
-| \> 1.12.2 | Supported                                                                  |
+| Version  | Plugin                                                                     |
+|----------|----------------------------------------------------------------------------|
+| < 1.12.2 | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/) |
+| > 1.12.2 | Use Nicko                                                                  |

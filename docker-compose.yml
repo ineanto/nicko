@@ -6,7 +6,7 @@ services:
 
   db:
     image: mariadb
-    restart: always
+    restart: no
     environment:
       MARIADB_ROOT_PASSWORD: 12345
     ports:
@@ -14,12 +14,12 @@ services:
 
   adminer:
     image: adminer
-    restart: always
+    restart: no
     ports:
       - "8080:8080"
 
   redis:
     image: redis
-    restart: always
+    restart: no
     ports:
       - "6379:6379"

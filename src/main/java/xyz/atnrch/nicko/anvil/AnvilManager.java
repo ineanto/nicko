@@ -41,14 +41,17 @@ public class AnvilManager {
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
-                .onComplete((completion) -> {
-                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
-                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
-                    } else {
-                        appearanceManager.setName(completion.getText());
-                        openSkinAnvil();
-                        return Collections.singletonList(AnvilGUI.ResponseAction.close());
+                .onClick((slot, snapshot) -> {
+                    if (slot == AnvilGUI.Slot.OUTPUT) {
+                        if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
+                            return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
+                        } else {
+                            appearanceManager.setName(snapshot.getText());
+                            openSkinAnvil();
+                            return Collections.singletonList(AnvilGUI.ResponseAction.close());
+                        }
                     }
+                    return Collections.emptyList();
                 })
                 .text("New name...");
     }
@@ -58,14 +61,17 @@ public class AnvilManager {
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
-                .onComplete((completion) -> {
-                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
-                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
-                    } else {
-                        appearanceManager.setName(completion.getText());
-                        final ActionResult<Void> actionResult = appearanceManager.updatePlayer(false);
-                        return sendResultAndClose(actionResult);
+                .onClick((slot, snapshot) -> {
+                    if (slot == AnvilGUI.Slot.OUTPUT) {
+                        if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
+                            return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
+                        } else {
+                            appearanceManager.setName(snapshot.getText());
+                            final ActionResult<Void> actionResult = appearanceManager.updatePlayer(false);
+                            return sendResultAndClose(actionResult);
+                        }
                     }
+                    return Collections.emptyList();
                 })
                 .text("New name...");
     }
@@ -75,14 +81,17 @@ public class AnvilManager {
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(true))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
-                .onComplete((completion) -> {
-                    if (MojangUtils.isUsernameInvalid(completion.getText())) {
-                        return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
-                    } else {
-                        appearanceManager.setSkin(completion.getText());
-                        final ActionResult<Void> actionResult = appearanceManager.updatePlayer(true);
-                        return sendResultAndClose(actionResult);
+                .onClick((slot, snapshot) -> {
+                    if (slot == AnvilGUI.Slot.OUTPUT) {
+                        if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
+                            return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
+                        } else {
+                            appearanceManager.setSkin(snapshot.getText());
+                            final ActionResult<Void> actionResult = appearanceManager.updatePlayer(true);
+                            return sendResultAndClose(actionResult);
+                        }
                     }
+                    return Collections.emptyList();
                 })
                 .text("New skin...");
     }
@@ -99,7 +108,7 @@ public class AnvilManager {
     private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§0New " + (skin ? "skin" : "name") + "...");
+        if (meta != null) meta.setDisplayName("§0New " + (skin ? "skin" : "name") + "...");
         item.setItemMeta(meta);
         return item;
     }

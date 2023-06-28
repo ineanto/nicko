@@ -39,7 +39,6 @@ public class AnvilManager {
     public AnvilGUI.Builder getNameThenSkinAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
-                .preventClose()
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -60,7 +59,6 @@ public class AnvilManager {
     public AnvilGUI.Builder getNameAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
-                .preventClose()
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -99,10 +97,12 @@ public class AnvilManager {
     }
 
     private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult<Void> actionResult) {
+        final I18N i18n = new I18N(player);
         if (!actionResult.isError()) {
-            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.SUCCESS));
+            player.sendMessage(i18n.translate(I18NDict.Event.Disguise.SUCCESS));
         } else {
-            player.sendMessage(I18N.translate(player, I18NDict.Event.Disguise.FAIL, I18N.translateWithoutPrefix(player, actionResult.getErrorMessage())));
+            // TODO (Ineanto, 6/28/23): Check weirdness with error message not being translated sometimes
+            player.sendMessage(i18n.translate(I18NDict.Event.Disguise.FAIL, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

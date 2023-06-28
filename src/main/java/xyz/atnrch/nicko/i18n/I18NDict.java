@@ -1,44 +1,36 @@
 package xyz.atnrch.nicko.i18n;
 
 public class I18NDict {
-    private final String key;
-
-    public I18NDict(String key) { this.key = key; }
-
     public static class Event {
         public static class Admin {
-            public static final I18NDict CACHE_CLEAN = new I18NDict("event.admin.cache_clear");
+            public static final String CACHE_CLEAN = "event.admin.cache_clear";
         }
 
         public static class Disguise {
-            public static final I18NDict SUCCESS = new I18NDict("event.disguise.success");
-            public static final I18NDict FAIL = new I18NDict("event.disguise.fail");
+            public static final String SUCCESS = "event.disguise.success";
+            public static final String FAIL = "event.disguise.fail";
         }
 
         public static class Undisguise {
-            public static final I18NDict SUCCESS = new I18NDict("event.undisguise.success");
-            public static final I18NDict FAIL = new I18NDict("event.undisguise.fail");
-            public static final I18NDict NONE = new I18NDict("event.undisguise.none");
+            public static final String SUCCESS = "event.undisguise.success";
+            public static final String FAIL = "event.undisguise.fail";
+            public static final String NONE = "event.undisguise.none";
         }
 
         public static class PreviousSkin {
-            public static final I18NDict SUCCESS = new I18NDict("event.previous_skin_applied.success");
-            public static final I18NDict FAIL = new I18NDict("event.previous_skin_applied.fail");
+            public static final String SUCCESS = "event.previous_skin_applied.success";
+            public static final String FAIL = "event.previous_skin_applied.fail";
         }
     }
 
     public static class Error {
-        public static final I18NDict PLAYER_OFFLINE = new I18NDict("error.player_offline");
-        public static final I18NDict SKIN_FAIL_MOJANG = new I18NDict("error.couldnt_get_skin_from_mojang");
-        public static final I18NDict SKIN_FAIL_CACHE = new I18NDict("error.couldnt_get_skin_from_cache");
-        public static final I18NDict NAME_FAIL_MOJANG = new I18NDict("error.couldnt_get_name_from_mojang");
-        public static final I18NDict INVALID_USERNAME = new I18NDict("error.invalid_username");
-        public static final I18NDict UNEXPECTED_ERROR = new I18NDict("error.generic");
-        public static final I18NDict SQL_ERROR = new I18NDict("error.sql");
-        public static final I18NDict JSON_ERROR = new I18NDict("error.json");
-    }
-
-    public String key() {
-        return key;
+        public static final String UNEXPECTED_ERROR = "error.invalid_name";
+        public static final String PLAYER_OFFLINE = "error.player_offline";
+        public static final String SKIN_FAIL_MOJANG = "error.couldnt_get_skin_from_mojang";
+        public static final String SKIN_FAIL_CACHE = "error.couldnt_get_skin_from_cache";
+        public static final String NAME_FAIL_MOJANG = "error.couldnt_get_name_from_mojang";
+        public static final String INVALID_USERNAME = "error.invalid_username";
+        public static final String SQL_ERROR = "error.sql";
+        public static final String JSON_ERROR = "error.json";
     }
 }

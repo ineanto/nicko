@@ -1,5 +1,5 @@
 error:
-  couldnt_get_name_from_mojang: "Unable to get username from Mojang."
+  invalid_name: "Unable to get username from Mojang."
   couldnt_get_skin_from_cache: "Unable to get skin from the cache."
   couldnt_get_skin_from_mojang: "Unable to get skin from Mojang."
   generic: "Unknown error"

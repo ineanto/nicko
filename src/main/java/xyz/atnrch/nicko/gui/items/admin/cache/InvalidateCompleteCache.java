@@ -25,8 +25,9 @@ public class InvalidateCompleteCache extends SuppliedItem {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {
                 final Player player = click.getPlayer();
+                final I18N i18n = new I18N(player);
                 click.getEvent().getView().close();
-                player.sendMessage(I18N.translate(player, I18NDict.Event.Admin.CACHE_CLEAN));
+                player.sendMessage(i18n.translate(I18NDict.Event.Admin.CACHE_CLEAN));
                 NickoBukkit.getInstance().getMojangAPI().getCache().invalidateAll();
                 return true;
             }

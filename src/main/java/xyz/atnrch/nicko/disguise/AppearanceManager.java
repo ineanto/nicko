@@ -4,6 +4,7 @@ import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import it.unimi.dsi.fastutil.ints.IntList;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -14,9 +15,7 @@ import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangSkin;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
-import xyz.atnrch.nicko.wrapper.WrapperPlayServerRespawn;
-import xyz.atnrch.nicko.wrapper.WrapperPlayerServerPlayerInfo;
-import xyz.atnrch.nicko.wrapper.WrapperPlayerServerPlayerInfoRemove;
+import xyz.atnrch.nicko.wrapper.*;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -104,9 +103,23 @@ public class AppearanceManager {
             updateMetadata();
             updateTabList(gameProfile, displayName);
             respawnPlayer();
+            updateOthers();
         }
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         return new ActionResult<>();
+    }
+
+    public void updateOthers() {
+        WrapperPlayServerEntityDestroy destroy = new WrapperPlayServerEntityDestroy();
+        WrapperPlayServerNamedEntitySpawn spawn = new WrapperPlayServerNamedEntitySpawn();
+        destroy.setEntityIds(IntList.of(player.getEntityId()));
+        spawn.setEntityId(player.getEntityId());
+        spawn.setLocation(player.getLocation());
+        spawn.setPlayerId(player.getUniqueId());
+        Bukkit.getOnlinePlayers().stream().filter(receiver -> receiver.getUniqueId() != player.getUniqueId()).forEach(receiver -> {
+            destroy.sendPacket(receiver);
+            spawn.sendPacket(receiver);
+        });
     }
 
 
@@ -154,7 +167,6 @@ public class AppearanceManager {
         respawn.setCopyMetadata(true);
         respawn.sendPacket(player);
         player.setFlying(wasFlying);
-        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.updateInventory();
     }
 
@@ -171,13 +183,13 @@ public class AppearanceManager {
                     EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
                     EnumWrappers.PlayerInfoAction.UPDATE_LATENCY);
             remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
-            remove.sendPacket(player);
+            remove.broadcastPacket();
             add.setActions(actions);
         } else {
             final WrapperPlayerServerPlayerInfo remove = new WrapperPlayerServerPlayerInfo();
             remove.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.REMOVE_PLAYER));
             add.setActions(EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER));
-            remove.sendPacket(player);
+            remove.broadcastPacket();
         }
 
         // Yes, I skip providing chat session data.
@@ -194,6 +206,6 @@ public class AppearanceManager {
                 gameProfile,
                 WrappedChatComponent.fromText(displayName)
         )));
-        add.sendPacket(player);
+        add.broadcastPacket();
     }
 }

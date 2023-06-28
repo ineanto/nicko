@@ -14,10 +14,11 @@ public class NickoCheckSubCmd {
     public void execute(Player player, String[] args) {
         final String targetName = args[1];
         final Player target = Bukkit.getPlayerExact(targetName);
+        final I18N i18n = new I18N(player);
 
         AppearanceManager appearanceManager;
         if (MojangUtils.isUsernameInvalid(targetName)) {
-            player.sendMessage(I18N.translate(player, I18NDict.Error.INVALID_USERNAME));
+            player.sendMessage(i18n.translate(I18NDict.Error.INVALID_USERNAME));
             return;
         }
 
@@ -28,15 +29,16 @@ public class NickoCheckSubCmd {
         }
 
         final StringJoiner builder = new StringJoiner("\n");
-        builder.add("§c" + NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§6Check for: §f§o" + targetName);
-        if (!appearanceManager.hasData()) {
-            builder.add("§cThis player has not data.");
+        builder.add("§c" + NickoBukkit.getInstance().getNickoConfig().getPrefix() + "§cCheck for: §f§o" + targetName);
+        if (appearanceManager.hasData()) {
+            builder.add("§cNicked: §a✔");
+            builder.add("§cName: §6" + appearanceManager.getName());
+            builder.add("§cSkin: §6" + appearanceManager.getSkin());
         } else {
-            builder.add("§7- §fNicked: §a✔");
-            builder.add("§7- §fName: §6" + appearanceManager.getName());
-            builder.add("§7- §fSkin: §6" + appearanceManager.getSkin());
+            builder.add("§cNicked: §c❌");
+            builder.add("§cName: §7N/A");
+            builder.add("§cSkin: §7N/A");
         }
-
         player.sendMessage(builder.toString());
     }
 }

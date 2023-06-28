@@ -98,8 +98,10 @@ public class NickoBukkit extends JavaPlugin {
                 command.setExecutor(new NickoCommand());
             }
 
-            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
-            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" ")));
+            //new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" "))
+            //new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" "))
+            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
+            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.AIR)));
             Structure.addGlobalIngredient('U', new OptionUnavailable());
             Structure.addGlobalIngredient('E', new ExitGUI());
 

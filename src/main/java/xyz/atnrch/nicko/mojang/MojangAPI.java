@@ -73,6 +73,7 @@ public class MojangAPI {
         con.setRequestMethod("GET");
 
         switch (con.getResponseCode()) {
+            case 404:
             case 400:
                 logger.warning("Failed to parse request: Invalid Name");
                 return getErrorObject();

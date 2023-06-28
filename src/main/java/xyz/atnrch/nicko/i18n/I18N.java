@@ -11,8 +11,51 @@ import java.util.Optional;
 
 public class I18N {
     private final static MessageFormat formatter = new MessageFormat("");
+    private final Player player;
+    private final Locale playerLocale;
 
-    private static Locale getLocale(Player player) {
+    public I18N(Player player) {
+        this.player = player;
+        this.playerLocale = getPlayerLocale();
+    }
+
+    public String translate(String key, Object... arguments) {
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        final String string = readString(key);
+
+        try {
+            formatter.applyPattern(string);
+            return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
+        } catch (Exception e) {
+            return instance.getNickoConfig().getPrefix() + key;
+        }
+    }
+
+    public String translateWithoutPrefix(String key, Object... arguments) {
+        final String translation = readString(key);
+        try {
+            formatter.applyPattern(translation);
+            return formatter.format(arguments);
+        } catch (Exception e) {
+            return key;
+        }
+    }
+
+    private String readString(String key) {
+        final NickoBukkit instance = NickoBukkit.getInstance();
+        String string;
+        if (playerLocale == Locale.CUSTOM) {
+            string = instance.getLocaleFileManager().get(key);
+        } else {
+            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
+            final YamlConfig yamlConfig = YamlConfig.load(resource);
+            string = yamlConfig.getString(key);
+        }
+
+        return string;
+    }
+
+    private Locale getPlayerLocale() {
         final NickoBukkit instance = NickoBukkit.getInstance();
         try {
             final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
@@ -21,42 +64,5 @@ public class I18N {
             instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
             return Locale.FALLBACK_LOCALE;
         }
-    }
-
-    public static String translate(Player player, I18NDict key, Object... arguments) {
-        final NickoBukkit instance = NickoBukkit.getInstance();
-        final String translation = findTranslation(player, key);
-
-        try {
-            formatter.applyPattern(translation);
-            return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
-        } catch (Exception e) {
-            return instance.getNickoConfig().getPrefix() + key.key();
-        }
-    }
-
-    public static String translateWithoutPrefix(Player player, I18NDict key, Object... arguments) {
-        final String translation = findTranslation(player, key);
-        try {
-            formatter.applyPattern(translation);
-            return formatter.format(arguments);
-        } catch (Exception e) {
-            return key.key();
-        }
-    }
-
-    private static String findTranslation(Player player, I18NDict key) {
-        final NickoBukkit instance = NickoBukkit.getInstance();
-        final Locale locale = getLocale(player);
-        String translation;
-        if (locale == Locale.CUSTOM) {
-            translation = instance.getLocaleFileManager().get(key.key());
-        } else {
-            final InputStream resource = instance.getResource(locale.getCode() + ".yml");
-            final YamlConfig yamlConfig = YamlConfig.load(resource);
-            translation = yamlConfig.getString(key.key());
-        }
-
-        return translation;
     }
 }

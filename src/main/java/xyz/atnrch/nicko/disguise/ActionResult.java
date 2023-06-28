@@ -1,24 +1,22 @@
 package xyz.atnrch.nicko.disguise;
 
-import xyz.atnrch.nicko.i18n.I18NDict;
-
 public class ActionResult<R> {
-    private final I18NDict errorMessage;
+    private final String errorKey;
     private boolean error = false;
     private R result;
 
     public ActionResult() {
-        this.errorMessage = null;
+        this.errorKey = null;
     }
 
-    public ActionResult(I18NDict errorMessage) {
-        this.errorMessage = errorMessage;
+    public ActionResult(String errorMessage) {
+        this.errorKey = errorMessage;
         this.error = true;
         this.result = null;
     }
 
     public ActionResult(R result) {
-        this.errorMessage = null;
+        this.errorKey = null;
         this.result = result;
     }
 
@@ -30,7 +28,7 @@ public class ActionResult<R> {
         return error;
     }
 
-    public I18NDict getErrorMessage() {
-        return errorMessage;
+    public String getErrorKey() {
+        return errorKey;
     }
 }

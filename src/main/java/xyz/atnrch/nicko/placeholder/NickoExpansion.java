@@ -24,7 +24,7 @@ public class NickoExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getAuthor() {
-        return "Aro";
+        return "Ineanto";
     }
 
     @Override

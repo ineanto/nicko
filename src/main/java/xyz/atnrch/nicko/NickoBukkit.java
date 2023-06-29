@@ -18,7 +18,7 @@ import xyz.atnrch.nicko.gui.items.main.ExitGUI;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.i18n.LocaleFileManager;
 import xyz.atnrch.nicko.mojang.MojangAPI;
-import xyz.atnrch.nicko.placeholder.PlaceHolderHook;
+import xyz.atnrch.nicko.placeholder.NickoExpansion;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 import xyz.xenondevs.invui.gui.structure.Structure;
@@ -105,7 +105,10 @@ public class NickoBukkit extends JavaPlugin {
             Structure.addGlobalIngredient('U', new OptionUnavailable());
             Structure.addGlobalIngredient('E', new ExitGUI());
 
-            new PlaceHolderHook(this).hook();
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                getLogger().info("Enabling PlaceHolderAPI support...");
+                new NickoExpansion(this).register();
+            }
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);

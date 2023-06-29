@@ -1,10 +1,10 @@
 error:
-  invalid_name: "Unable to get username from Mojang."
-  couldnt_get_skin_from_cache: "Unable to get skin from the cache."
-  couldnt_get_skin_from_mojang: "Unable to get skin from Mojang."
   generic: "Unknown error"
   invalid_username: "§cThis is not a valid Minecraft username."
-  player_offline: "§c{0} §fis offline!"
+  mojang_name: "Unable to get username from Mojang."
+  mojang_skin: "Unable to get skin from Mojang."
+  offline: "§c{0} §fis offline!"
+  cache: "Unable to get skin from the cache."
   sql: "SQL Error"
   json: "JSON Error"
 event:

@@ -63,10 +63,10 @@ public class PlayerDataStore {
     }
 
     public ActionResult<Void> saveData(Player player) {
-        if (storage.isError()) return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR);
-        if (!cache.isCached(player.getUniqueId())) return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR);
+        if (storage.isError()) return new ActionResult<>(I18NDict.Error.GENERIC);
+        if (!cache.isCached(player.getUniqueId())) return new ActionResult<>(I18NDict.Error.GENERIC);
         if (!cache.retrieve(player.getUniqueId()).isPresent())
-            return new ActionResult<>(I18NDict.Error.UNEXPECTED_ERROR);
+            return new ActionResult<>(I18NDict.Error.GENERIC);
 
         // TODO (Ineanto, 5/20/23): Remove value from cache
         //profiles.remove(player.getUniqueId());

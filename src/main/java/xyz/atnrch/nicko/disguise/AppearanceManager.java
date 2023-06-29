@@ -142,9 +142,9 @@ public class AppearanceManager {
                 }
                 return new ActionResult<>();
             } catch (ExecutionException e) {
-                return new ActionResult<>(I18NDict.Error.SKIN_FAIL_CACHE);
+                return new ActionResult<>(I18NDict.Error.CACHE);
             } catch (IOException e) {
-                return new ActionResult<>(I18NDict.Error.NAME_FAIL_MOJANG);
+                return new ActionResult<>(I18NDict.Error.MOJANG_NAME);
             }
         }
         return new ActionResult<>();

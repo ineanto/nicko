@@ -24,11 +24,11 @@ public class I18NDict {
     }
 
     public static class Error {
-        public static final String UNEXPECTED_ERROR = "error.invalid_name";
-        public static final String PLAYER_OFFLINE = "error.player_offline";
-        public static final String SKIN_FAIL_MOJANG = "error.couldnt_get_skin_from_mojang";
-        public static final String SKIN_FAIL_CACHE = "error.couldnt_get_skin_from_cache";
-        public static final String NAME_FAIL_MOJANG = "error.couldnt_get_name_from_mojang";
+        public static final String GENERIC = "error.generic";
+        public static final String PLAYER_OFFLINE = "error.offline";
+        public static final String CACHE = "error.cache";
+        public static final String MOJANG_NAME = "error.mojang_name";
+        public static final String MOJANG_SKIN = "error.mojang_skin";
         public static final String INVALID_USERNAME = "error.invalid_username";
         public static final String SQL_ERROR = "error.sql";
         public static final String JSON_ERROR = "error.json";

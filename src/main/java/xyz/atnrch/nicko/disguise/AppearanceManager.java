@@ -141,6 +141,8 @@ public class AppearanceManager {
                         final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
                         properties.get("textures").clear();
                         properties.put("textures", new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
+                    } else {
+                        return new ActionResult<>(I18NDict.Error.MOJANG_SKIN);
                     }
                 }
                 return new ActionResult<>();

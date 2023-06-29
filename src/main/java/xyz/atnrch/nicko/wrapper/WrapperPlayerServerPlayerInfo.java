@@ -15,7 +15,6 @@ import java.util.Set;
  *
  * @author ineanto, based on work from dmulloy2 and Kristian S. Strangeland
  */
-
 public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.PLAYER_INFO;
 

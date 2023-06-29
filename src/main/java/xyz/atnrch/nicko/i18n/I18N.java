@@ -10,7 +10,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 
 public class I18N {
-    private final static MessageFormat formatter = new MessageFormat("");
+    private final MessageFormat formatter = new MessageFormat("");
     private final Player player;
     private final Locale playerLocale;
 

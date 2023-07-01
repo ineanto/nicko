@@ -1,7 +1,9 @@
 package xyz.atnrch.nicko.command.sub;
 
 import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.disguise.ActionResult;
 import xyz.atnrch.nicko.disguise.AppearanceManager;
+import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.mojang.MojangUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -35,14 +37,25 @@ public class NickoDebugSubCmd {
             }
         }
 
-        final AppearanceManager appearanceManager = AppearanceManager.get(target.getPlayer());
-
-        if (MojangUtils.isUsernameInvalid(name) || MojangUtils.isUsernameInvalid(skin)) {
+        if (MojangUtils.isUsernameInvalid(name)) {
             sender.sendMessage(prefix + "§cSpecified username is invalid.");
+            return;
         }
 
+        if (MojangUtils.isUsernameInvalid(skin)) {
+            sender.sendMessage(prefix + "§cSpecified skin is invalid.");
+            return;
+        }
+
+        final AppearanceManager appearanceManager = AppearanceManager.get(target.getPlayer());
         appearanceManager.setNameAndSkin(name, skin);
-        target.sendMessage(prefix + "§aWhoosh!");
-        target.playSound(target.getLocation(), Sound.ENTITY_ITEM_FRAME_PLACE, 1, 1);
+        final ActionResult result = appearanceManager.updatePlayer(true, false);
+        if (!result.isError()) {
+            target.sendMessage(prefix + "§aWhoosh!");
+            target.playSound(target.getLocation(), Sound.ENTITY_ITEM_FRAME_PLACE, 1, 1);
+        } else {
+            final I18N i18n = new I18N(target);
+            target.sendMessage(prefix + "§cWhoops. Something happened: " + i18n.translateWithoutPrefix(result.getErrorKey()));
+        }
     }
 }

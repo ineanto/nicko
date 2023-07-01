@@ -1,8 +1,8 @@
 error:
   generic: "Unknown error"
   invalid_username: "§cThis is not a valid Minecraft username."
-  mojang_name: "Unable to get username from Mojang."
-  mojang_skin: "Unable to get skin from Mojang."
+  mojang_name: "There is no Minecraft account with this name."
+  mojang_skin: "This Minecraft account has no skin."
   offline: "§c{0} §fis offline!"
   cache: "Unable to get skin from the cache."
   sql: "SQL Error"

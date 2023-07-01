@@ -1,8 +1,8 @@
 error:
   generic: Erreur inconnue"
   invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
-  mojang_name: "Impossible de récupérer le nom d''utilisateur depuis Mojang."
-  mojang_skin: "Impossible de récupérer le skin depuis Mojang."
+  mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
+  mojang_skin: "Ce compte Minecraft n'a pas de skin."
   offline: "§c{0} §fest hors-ligne!"
   cache: "Impossible de récupérer le skin depuis le cache."
   sql: "Erreur SQL"

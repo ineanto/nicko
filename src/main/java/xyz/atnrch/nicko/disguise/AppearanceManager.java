@@ -79,7 +79,6 @@ public class AppearanceManager {
     public void setNameAndSkin(String name, String skin) {
         this.profile.setName(name);
         this.profile.setSkin(skin);
-        updatePlayer(true, false);
     }
 
     public ActionResult reset() {
@@ -105,11 +104,11 @@ public class AppearanceManager {
             updateTabList(gameProfile, displayName);
             respawnPlayer();
             updateOthers();
+            player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+            player.setFlying(wasFlying);
+            player.updateInventory();
         }
-        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
-        player.setFlying(wasFlying);
-        player.updateInventory();
-        return ActionResult.ok();
+        return result;
     }
 
     public void updateOthers() {
@@ -144,6 +143,8 @@ public class AppearanceManager {
                     } else {
                         return ActionResult.error(I18NDict.Error.MOJANG_SKIN);
                     }
+                } else {
+                    return ActionResult.error(I18NDict.Error.MOJANG_NAME);
                 }
                 return ActionResult.ok();
             } catch (ExecutionException e) {

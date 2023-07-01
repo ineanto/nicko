@@ -79,14 +79,14 @@ public class AppearanceManager {
     public void setNameAndSkin(String name, String skin) {
         this.profile.setName(name);
         this.profile.setSkin(skin);
-        updatePlayer(true);
+        updatePlayer(true, false);
     }
 
     public ActionResult<Void> reset() {
         final String defaultName = nameStore.getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
-        final ActionResult<Void> actionResult = updatePlayer(true);
+        final ActionResult<Void> actionResult = updatePlayer(true, true);
         if (!actionResult.isError()) {
             this.profile.setSkin(null);
             this.profile.setName(null);
@@ -94,11 +94,11 @@ public class AppearanceManager {
         return actionResult;
     }
 
-    public ActionResult<Void> updatePlayer(boolean skinChange) {
+    public ActionResult<Void> updatePlayer(boolean skinChange, boolean reset) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
 
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
-        final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange);
+        final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange, reset);
         final boolean wasFlying = player.isFlying();
         if (!result.isError()) {
             updateMetadata();
@@ -126,7 +126,7 @@ public class AppearanceManager {
     }
 
 
-    private ActionResult<Void> updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange) {
+    private ActionResult<Void> updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
 
         if (skinChange || changeOnlyName) {
@@ -135,7 +135,7 @@ public class AppearanceManager {
                 final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
                 final Optional<String> uuid = mojang.getUUID(profile.getSkin());
                 if (uuid.isPresent()) {
-                    skin = mojang.getSkin(uuid.get());
+                    skin = reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get());
                     if (skin.isPresent()) {
                         final MojangSkin skinResult = skin.get();
                         final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();

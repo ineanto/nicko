@@ -30,7 +30,7 @@ public class JSONStorage extends Storage {
     }
 
     @Override
-    public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
+    public ActionResult store(UUID uuid, NickoProfile profile) {
         final String profileToJson = gson.toJson(profile);
         final File file = new File(directory, uuid.toString() + ".json");
 
@@ -42,15 +42,15 @@ public class JSONStorage extends Storage {
                     }
                 } catch (IOException e) {
                     logger.warning("Could not write to file.");
-                    return new ActionResult<>(I18NDict.Error.JSON_ERROR);
+                    return ActionResult.error(I18NDict.Error.JSON_ERROR);
                 }
             }
         } catch (IOException e) {
             logger.warning("Could not create file.");
-            return new ActionResult<>(I18NDict.Error.JSON_ERROR);
+            return ActionResult.error(I18NDict.Error.JSON_ERROR);
         }
 
-        return new ActionResult<>();
+        return ActionResult.ok();
     }
 
     @Override

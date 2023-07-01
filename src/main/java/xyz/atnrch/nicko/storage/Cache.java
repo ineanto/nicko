@@ -11,7 +11,7 @@ public abstract class Cache {
 
     public abstract CacheProvider getProvider();
 
-    public abstract ActionResult<Void> cache(UUID uuid, NickoProfile profile);
+    public abstract ActionResult cache(UUID uuid, NickoProfile profile);
 
     public abstract boolean isCached(UUID uuid);
 

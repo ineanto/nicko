@@ -82,11 +82,11 @@ public class AppearanceManager {
         updatePlayer(true, false);
     }
 
-    public ActionResult<Void> reset() {
+    public ActionResult reset() {
         final String defaultName = nameStore.getStoredName(player);
         this.profile.setName(defaultName);
         this.profile.setSkin(defaultName);
-        final ActionResult<Void> actionResult = updatePlayer(true, true);
+        final ActionResult actionResult = updatePlayer(true, true);
         if (!actionResult.isError()) {
             this.profile.setSkin(null);
             this.profile.setName(null);
@@ -94,11 +94,11 @@ public class AppearanceManager {
         return actionResult;
     }
 
-    public ActionResult<Void> updatePlayer(boolean skinChange, boolean reset) {
+    public ActionResult updatePlayer(boolean skinChange, boolean reset) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
 
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
-        final ActionResult<Void> result = updateGameProfileSkin(gameProfile, skinChange, reset);
+        final ActionResult result = updateGameProfileSkin(gameProfile, skinChange, reset);
         final boolean wasFlying = player.isFlying();
         if (!result.isError()) {
             updateMetadata();
@@ -109,7 +109,7 @@ public class AppearanceManager {
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.setFlying(wasFlying);
         player.updateInventory();
-        return new ActionResult<>();
+        return ActionResult.ok();
     }
 
     public void updateOthers() {
@@ -126,7 +126,7 @@ public class AppearanceManager {
     }
 
 
-    private ActionResult<Void> updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
+    private ActionResult updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
         final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
 
         if (skinChange || changeOnlyName) {
@@ -142,17 +142,17 @@ public class AppearanceManager {
                         properties.get("textures").clear();
                         properties.put("textures", new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
                     } else {
-                        return new ActionResult<>(I18NDict.Error.MOJANG_SKIN);
+                        return ActionResult.error(I18NDict.Error.MOJANG_SKIN);
                     }
                 }
-                return new ActionResult<>();
+                return ActionResult.ok();
             } catch (ExecutionException e) {
-                return new ActionResult<>(I18NDict.Error.CACHE);
+                return ActionResult.error(I18NDict.Error.CACHE);
             } catch (IOException e) {
-                return new ActionResult<>(I18NDict.Error.MOJANG_NAME);
+                return ActionResult.error(I18NDict.Error.MOJANG_NAME);
             }
         }
-        return new ActionResult<>();
+        return ActionResult.ok();
     }
 
     private void updateMetadata() {

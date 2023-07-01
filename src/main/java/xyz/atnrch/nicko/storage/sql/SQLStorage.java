@@ -36,18 +36,18 @@ public class SQLStorage extends Storage {
     }
 
     @Override
-    public ActionResult<Void> store(UUID uuid, NickoProfile profile) {
+    public ActionResult store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
-        if (connection == null) return new ActionResult<>(I18NDict.Error.SQL_ERROR);
+        if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
 
         try {
             final PreparedStatement statement = isStored(uuid) ?
                     getUpdateStatement(connection, uuid, profile) : getInsertStatement(connection, uuid, profile);
             statement.executeUpdate();
-            return new ActionResult<>();
+            return ActionResult.ok();
         } catch (SQLException e) {
             logger.warning("Couldn't send SQL Request: " + e.getMessage());
-            return new ActionResult<>(I18NDict.Error.SQL_ERROR);
+            return ActionResult.error(I18NDict.Error.SQL_ERROR);
         }
     }
 

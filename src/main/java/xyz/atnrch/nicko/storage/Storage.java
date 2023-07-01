@@ -11,7 +11,7 @@ public abstract class Storage {
 
     public abstract StorageProvider getProvider();
 
-    public abstract ActionResult<Void> store(UUID uuid, NickoProfile profile);
+    public abstract ActionResult store(UUID uuid, NickoProfile profile);
 
     public abstract boolean isStored(UUID uuid);
 

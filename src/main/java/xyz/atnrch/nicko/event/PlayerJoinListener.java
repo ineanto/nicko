@@ -25,7 +25,7 @@ public class PlayerJoinListener implements Listener {
         Bukkit.getScheduler().runTaskLater(instance, () -> {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
             if (appearanceManager.hasData()) {
-                final ActionResult<Void> actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange());
+                final ActionResult actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange(), true);
                 if (!actionResult.isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.PreviousSkin.SUCCESS));
                 } else {

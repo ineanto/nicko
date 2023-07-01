@@ -1,27 +1,24 @@
 package xyz.atnrch.nicko.disguise;
 
-public class ActionResult<R> {
+public class ActionResult {
     private final String errorKey;
     private boolean error = false;
-    private R result;
 
-    public ActionResult() {
+    public static ActionResult ok() {
+        return new ActionResult();
+    }
+
+    public static ActionResult error(String errorMessage) {
+        return new ActionResult(errorMessage);
+    }
+
+    private ActionResult() {
         this.errorKey = null;
     }
 
-    public ActionResult(String errorMessage) {
+    private ActionResult(String errorMessage) {
         this.errorKey = errorMessage;
         this.error = true;
-        this.result = null;
-    }
-
-    public ActionResult(R result) {
-        this.errorKey = null;
-        this.result = result;
-    }
-
-    public R getResult() {
-        return result;
     }
 
     public boolean isError() {

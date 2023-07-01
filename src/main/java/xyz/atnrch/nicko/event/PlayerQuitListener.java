@@ -11,7 +11,7 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
-        final ActionResult<Void> result = NickoBukkit.getInstance().getDataStore().saveData(player);
+        final ActionResult result = NickoBukkit.getInstance().getDataStore().saveData(player);
         if (result.isError()) {
             NickoBukkit.getInstance().getLogger().warning("Failed to save data for " + player.getName());
         }

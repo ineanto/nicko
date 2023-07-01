@@ -34,10 +34,10 @@ public class RedisCache extends Cache {
     }
 
     @Override
-    public ActionResult<Void> cache(UUID uuid, NickoProfile profile) {
+    public ActionResult cache(UUID uuid, NickoProfile profile) {
         final Jedis jedis = provider.getJedis();
         jedis.set("nicko:" + uuid.toString(), gson.toJson(profile));
-        return new ActionResult<>();
+        return ActionResult.ok();
     }
 
     @Override

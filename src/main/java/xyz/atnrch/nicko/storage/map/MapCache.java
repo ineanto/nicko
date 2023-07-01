@@ -21,10 +21,10 @@ public class MapCache extends Cache {
     }
 
     @Override
-    public ActionResult<Void> cache(UUID uuid, NickoProfile profile) {
+    public ActionResult cache(UUID uuid, NickoProfile profile) {
         final HashMap<UUID, NickoProfile> profiles = provider.getMap();
         profiles.put(uuid, profile);
-        return new ActionResult<>();
+        return ActionResult.ok();
     }
 
     @Override

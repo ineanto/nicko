@@ -17,7 +17,11 @@ public class CacheManagementGUI {
     public CacheManagementGUI(Player player) {
         final AdminGUI parent = new AdminGUI(player);
         this.gui = Gui.normal()
-                .setStructure("B # S A D")
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# # # S A D # # #",
+                        "B # # # # # # # #"
+                )
                 .addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()))
                 .addIngredient('S', new CacheOverview())
                 .addIngredient('A', new InvalidateCompleteCache())

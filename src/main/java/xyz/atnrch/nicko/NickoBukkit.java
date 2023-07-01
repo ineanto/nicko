@@ -1,7 +1,5 @@
 package xyz.atnrch.nicko;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -39,7 +37,6 @@ public class NickoBukkit extends JavaPlugin {
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
-    private ProtocolManager protocolManager;
 
     public NickoBukkit() { this.unitTesting = false; }
 
@@ -83,7 +80,6 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (!unitTesting) {
-            protocolManager = ProtocolLibrary.getProtocolManager();
             localeFileManager = new LocaleFileManager();
             if (configuration.isCustomLocale()) {
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
@@ -98,10 +94,8 @@ public class NickoBukkit extends JavaPlugin {
                 command.setExecutor(new NickoCommand());
             }
 
-            //new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" "))
-            //new SimpleItem(new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName(" "))
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
-            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.AIR)));
+            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
             Structure.addGlobalIngredient('U', new OptionUnavailable());
             Structure.addGlobalIngredient('E', new ExitGUI());
 

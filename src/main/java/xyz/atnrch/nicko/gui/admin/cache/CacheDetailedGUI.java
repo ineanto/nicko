@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class CacheDetailedGUI {
     public static final String TITLE = "... > Cache > Invalidate";
-    
+
     private final Player player;
     private final Gui gui;
 
@@ -40,12 +40,12 @@ public class CacheDetailedGUI {
         final CacheManagementGUI parent = new CacheManagementGUI(player);
         gui = ScrollGui.items(guiItemBuilder -> {
             guiItemBuilder.setStructure(
-                    "# # # # # # # # #",
-                    "# x x x x x x U #",
-                    "# x x x x x x # #",
-                    "# x x x x x x # #",
-                    "# x x x x x x D #",
-                    "B # # # # # # # #");
+                    "x x x x x x x x U",
+                    "x x x x x x x x #",
+                    "x x x x x x x x #",
+                    "x x x x x x x x #",
+                    "x x x x x x x x D",
+                    "B % % % % % % % %");
             guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
             guiItemBuilder.addIngredient('U', new ScrollUp());
             guiItemBuilder.addIngredient('D', new ScrollDown());

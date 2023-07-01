@@ -8,7 +8,7 @@ import xyz.xenondevs.invui.gui.ScrollGui;
 import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.gui.items.admin.cache.EntryPlaceholder;
+import xyz.atnrch.nicko.gui.items.admin.cache.CacheEntry;
 import xyz.atnrch.nicko.gui.admin.CacheManagementGUI;
 import xyz.atnrch.nicko.gui.items.common.ScrollDown;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class CacheDetailedGUI {
                 .collect(Collectors.toList());
 
         final List<Item> items = loadedSkins.stream()
-                .map(EntryPlaceholder::new)
+                .map(CacheEntry::new)
                 .collect(Collectors.toList());
 
         final CacheManagementGUI parent = new CacheManagementGUI(player);

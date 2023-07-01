@@ -67,7 +67,7 @@ public class AnvilManager {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
                             appearanceManager.setName(snapshot.getText());
-                            final ActionResult<Void> actionResult = appearanceManager.updatePlayer(false);
+                            final ActionResult actionResult = appearanceManager.updatePlayer(false, false);
                             return sendResultAndClose(actionResult);
                         }
                     }
@@ -87,7 +87,7 @@ public class AnvilManager {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
                             appearanceManager.setSkin(snapshot.getText());
-                            final ActionResult<Void> actionResult = appearanceManager.updatePlayer(true);
+                            final ActionResult actionResult = appearanceManager.updatePlayer(true, false);
                             return sendResultAndClose(actionResult);
                         }
                     }
@@ -96,7 +96,7 @@ public class AnvilManager {
                 .text("New skin...");
     }
 
-    private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult<Void> actionResult) {
+    private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult actionResult) {
         final I18N i18n = new I18N(player);
         if (!actionResult.isError()) {
             player.sendMessage(i18n.translate(I18NDict.Event.Disguise.SUCCESS));

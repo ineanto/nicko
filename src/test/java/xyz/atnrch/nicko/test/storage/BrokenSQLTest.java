@@ -43,7 +43,7 @@ public class BrokenSQLTest {
     public void storePlayer() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         assertFalse(optionalProfile.isPresent());
-        ActionResult<Void> result = plugin.getDataStore().saveData(player);
+        ActionResult result = plugin.getDataStore().saveData(player);
         assertTrue(result.isError());
     }
 

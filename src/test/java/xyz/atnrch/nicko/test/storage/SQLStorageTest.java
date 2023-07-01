@@ -75,7 +75,7 @@ public class SQLStorageTest {
         profile.setLocale(Locale.FRENCH);
         profile.setBungeecordTransfer(false);
 
-        final ActionResult<Void> result = plugin.getDataStore().saveData(player);
+        final ActionResult result = plugin.getDataStore().saveData(player);
         assertFalse(result.isError());
 
         final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());
@@ -99,7 +99,7 @@ public class SQLStorageTest {
         profile.setName(null);
         profile.setSkin(null);
 
-        final ActionResult<Void> result = plugin.getDataStore().saveData(player);
+        final ActionResult result = plugin.getDataStore().saveData(player);
         assertFalse(result.isError());
 
         final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());

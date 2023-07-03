@@ -95,18 +95,13 @@ public class AppearanceManager {
 
     public ActionResult updatePlayer(boolean skinChange, boolean reset) {
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
-
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult result = updateGameProfileSkin(gameProfile, skinChange, reset);
-        final boolean wasFlying = player.isFlying();
         if (!result.isError()) {
             updateMetadata();
             updateTabList(gameProfile, displayName);
             respawnPlayer();
             updateOthers();
-            player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
-            player.setFlying(wasFlying);
-            player.updateInventory();
         }
         return result;
     }
@@ -163,6 +158,7 @@ public class AppearanceManager {
 
     private void respawnPlayer() {
         final World world = player.getWorld();
+        final boolean wasFlying = player.isFlying();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
         respawn.setDimension(world);
         respawn.setSeed(world.getSeed());
@@ -171,6 +167,9 @@ public class AppearanceManager {
         respawn.setDifficulty(world.getDifficulty());
         respawn.setCopyMetadata(true);
         respawn.sendPacket(player);
+        player.setFlying(wasFlying);
+        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+        player.updateInventory();
     }
 
     @SuppressWarnings("deprecation")

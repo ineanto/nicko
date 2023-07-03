@@ -64,6 +64,7 @@ public class PlayerDataStore {
 
     public ActionResult saveData(Player player) {
         if (storage.isError()) return ActionResult.error(I18NDict.Error.GENERIC);
+        if (cache.isError()) return ActionResult.error(I18NDict.Error.CACHE);
         if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.GENERIC);
         if (!cache.retrieve(player.getUniqueId()).isPresent())
             return ActionResult.error(I18NDict.Error.GENERIC);

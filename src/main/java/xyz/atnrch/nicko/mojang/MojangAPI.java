@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,8 @@ public class MojangAPI {
     public static final String URL_SKIN = "https://sessionserver.mojang.com/session/minecraft/profile/{uuid}?unsigned=false";
 
     private final Logger logger = Logger.getLogger("MojangAPI");
+
+    private final HashMap<String, String> uuidToName = new HashMap<>();
 
     private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<String, Optional<MojangSkin>>() {
         @Nonnull
@@ -50,9 +53,17 @@ public class MojangAPI {
         final String parametrizedUrl = URL_NAME.replace("{name}", name);
         final JsonObject object = getRequestToUrl(parametrizedUrl);
         if (hasNoError(object)) {
-            return Optional.of(object.get("id").getAsString());
+            final JsonElement idObject = object.get("id");
+            final String id = idObject.getAsString();
+            uuidToName.put(id, name);
+            return Optional.of(id);
         }
         return Optional.empty();
+    }
+
+    public void eraseFromCache(String uuid) {
+        cache.invalidate(uuid);
+        uuidToName.remove(uuid);
     }
 
     private Optional<MojangSkin> getSkinFromMojang(String uuid) throws IOException {
@@ -64,6 +75,10 @@ public class MojangAPI {
         }
         System.out.println("got empty optional !!!");
         return Optional.empty();
+    }
+
+    public String getUUIDName(String uuid) {
+        return uuidToName.get(uuid);
     }
 
     private JsonObject getRequestToUrl(String parametrizedUrl) throws IOException {

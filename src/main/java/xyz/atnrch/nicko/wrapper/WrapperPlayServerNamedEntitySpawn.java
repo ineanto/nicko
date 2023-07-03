@@ -155,6 +155,7 @@ public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
     public Location getLocation(@Nullable World world) {
         return new Location(world, getX(), getY(), getZ(), angleToDegrees(getYRotRaw()), angleToDegrees(getXRotRaw()));
     }
+
     public void setLocation(@Nonnull Location location) {
         setX(location.getX());
         setY(location.getY());

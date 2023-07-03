@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
+    private final NickoBukkit instance = NickoBukkit.getInstance();
     private final Player player;
     private final Locale playerLocale;
 
@@ -20,7 +21,6 @@ public class I18N {
     }
 
     public String translate(String key, Object... arguments) {
-        final NickoBukkit instance = NickoBukkit.getInstance();
         final String string = readString(key);
 
         try {
@@ -42,7 +42,6 @@ public class I18N {
     }
 
     private String readString(String key) {
-        final NickoBukkit instance = NickoBukkit.getInstance();
         String string;
         if (playerLocale == Locale.CUSTOM) {
             string = instance.getLocaleFileManager().get(key);
@@ -56,7 +55,6 @@ public class I18N {
     }
 
     private Locale getPlayerLocale() {
-        final NickoBukkit instance = NickoBukkit.getInstance();
         try {
             final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
             return !profile.isPresent() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();

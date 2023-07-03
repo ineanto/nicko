@@ -11,8 +11,7 @@ import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.ConfigurationManager;
 import xyz.atnrch.nicko.event.PlayerJoinListener;
 import xyz.atnrch.nicko.event.PlayerQuitListener;
-import xyz.atnrch.nicko.gui.items.common.OptionUnavailable;
-import xyz.atnrch.nicko.gui.items.main.ExitGUI;
+import xyz.atnrch.nicko.gui.items.common.UnavailableItem;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.i18n.LocaleFileManager;
 import xyz.atnrch.nicko.mojang.MojangAPI;
@@ -38,7 +37,9 @@ public class NickoBukkit extends JavaPlugin {
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
 
-    public NickoBukkit() { this.unitTesting = false; }
+    public NickoBukkit() {
+        this.unitTesting = false;
+    }
 
     /**
      * Used by MockBukkit
@@ -96,8 +97,7 @@ public class NickoBukkit extends JavaPlugin {
 
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
-            Structure.addGlobalIngredient('U', new OptionUnavailable());
-            Structure.addGlobalIngredient('E', new ExitGUI());
+            Structure.addGlobalIngredient('U', new UnavailableItem());
 
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 getLogger().info("Enabling PlaceHolderAPI support...");
@@ -106,9 +106,9 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
-            getLogger().info("Nicko (Bukkit) has been enabled.");
         }
+
+        getLogger().info("Nicko (Bukkit) has been enabled.");
     }
 
     @Override

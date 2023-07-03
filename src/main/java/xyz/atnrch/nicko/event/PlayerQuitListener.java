@@ -1,7 +1,7 @@
 package xyz.atnrch.nicko.event;
 
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.ActionResult;
+import xyz.atnrch.nicko.appearance.ActionResult;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

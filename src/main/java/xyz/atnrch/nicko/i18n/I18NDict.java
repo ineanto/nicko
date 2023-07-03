@@ -2,24 +2,38 @@ package xyz.atnrch.nicko.i18n;
 
 public class I18NDict {
     public static class Event {
+        public static final String EVENT_KEY = "event.";
+
         public static class Admin {
-            public static final String CACHE_CLEAN = "event.admin.cache_clear";
+            public static final String ADMIN_KEY = "admin.";
+
+            public static final String CACHE_CLEAN = ADMIN_KEY + "cache_clear";
         }
 
-        public static class Disguise {
-            public static final String SUCCESS = "event.disguise.success";
-            public static final String FAIL = "event.disguise.fail";
-        }
+        public static class Appearance {
+            public static final String APPEARANCE_KEY = EVENT_KEY + "appearance.";
 
-        public static class Undisguise {
-            public static final String SUCCESS = "event.undisguise.success";
-            public static final String FAIL = "event.undisguise.fail";
-            public static final String NONE = "event.undisguise.none";
-        }
+            public static class Set {
+                public static final String SET_KEY = APPEARANCE_KEY + "set.";
 
-        public static class PreviousSkin {
-            public static final String SUCCESS = "event.previous_skin_applied.success";
-            public static final String FAIL = "event.previous_skin_applied.fail";
+                public static final String OK = SET_KEY + "ok";
+                public static final String ERROR = SET_KEY + "error";
+            }
+
+            public static class Remove {
+                public static final String REMOVE_KEY = APPEARANCE_KEY + "remove.";
+
+                public static final String OK = REMOVE_KEY + "ok";
+                public static final String MISSING = REMOVE_KEY + "missing";
+                public static final String ERROR = REMOVE_KEY + "error";
+            }
+
+            public static class Restore {
+                public static final String RESTORE_KEY = APPEARANCE_KEY + "restore.";
+
+                public static final String OK = RESTORE_KEY + "success";
+                public static final String ERROR = RESTORE_KEY + "fail";
+            }
         }
     }
 

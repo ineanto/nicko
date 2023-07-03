@@ -1,8 +1,8 @@
 package xyz.atnrch.nicko.gui;
 
-import xyz.atnrch.nicko.gui.items.common.GoBack;
-import xyz.atnrch.nicko.gui.items.settings.BungeeCordCycling;
-import xyz.atnrch.nicko.gui.items.settings.LanguageCycling;
+import xyz.atnrch.nicko.gui.items.common.GoBackItem;
+import xyz.atnrch.nicko.gui.items.settings.BungeeCordCyclingItem;
+import xyz.atnrch.nicko.gui.items.settings.LanguageCyclingItem;
 import org.bukkit.entity.Player;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
@@ -23,12 +23,12 @@ public class SettingsGUI {
         // TODO: 3/6/23 Replace when Redis is not enabled
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
-        final MainGUI parent = new MainGUI(player);
+        final HomeGUI parent = new HomeGUI(player);
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
-                .addIngredient('B', new GoBack(parent.getGUI(), parent.getTitle()))
-                .addIngredient('L', new LanguageCycling().get(player))
-                .addIngredient('T', new BungeeCordCycling().get(player))
+                .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
+                .addIngredient('L', new LanguageCyclingItem().get(player))
+                .addIngredient('T', new BungeeCordCyclingItem().get(player))
                 .build();
         this.player = player;
     }

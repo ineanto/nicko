@@ -3,7 +3,7 @@ package xyz.atnrch.nicko.command;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.command.sub.NickoCheckSubCmd;
 import xyz.atnrch.nicko.command.sub.NickoDebugSubCmd;
-import xyz.atnrch.nicko.gui.MainGUI;
+import xyz.atnrch.nicko.gui.HomeGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,7 +33,7 @@ public class NickoCommand implements CommandExecutor {
                 return false;
             }
 
-            new MainGUI(player).open();
+            new HomeGUI(player).open();
             return false;
         }
 

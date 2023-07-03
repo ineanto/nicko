@@ -6,8 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.ActionResult;
-import xyz.atnrch.nicko.disguise.AppearanceManager;
+import xyz.atnrch.nicko.appearance.ActionResult;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
@@ -27,9 +27,9 @@ public class PlayerJoinListener implements Listener {
             if (appearanceManager.hasData()) {
                 final ActionResult actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange(), false);
                 if (!actionResult.isError()) {
-                    player.sendMessage(i18n.translate(I18NDict.Event.PreviousSkin.SUCCESS));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK));
                 } else {
-                    player.sendMessage(i18n.translate(I18NDict.Event.PreviousSkin.FAIL, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.ERROR, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
                 }
             }
         }, 20L);

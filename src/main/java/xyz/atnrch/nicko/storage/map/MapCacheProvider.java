@@ -1,6 +1,6 @@
 package xyz.atnrch.nicko.storage.map;
 
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 import xyz.atnrch.nicko.storage.CacheProvider;
 
 import java.util.HashMap;

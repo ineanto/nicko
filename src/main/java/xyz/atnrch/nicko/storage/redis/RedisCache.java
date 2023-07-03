@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
 import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.disguise.ActionResult;
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.ActionResult;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 import xyz.atnrch.nicko.storage.Cache;
 import xyz.atnrch.nicko.storage.CacheProvider;
 

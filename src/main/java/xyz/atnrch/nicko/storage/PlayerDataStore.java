@@ -2,8 +2,8 @@ package xyz.atnrch.nicko.storage;
 
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.disguise.ActionResult;
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.ActionResult;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangUtils;

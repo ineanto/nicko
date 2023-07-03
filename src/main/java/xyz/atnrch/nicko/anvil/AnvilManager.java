@@ -1,8 +1,8 @@
 package xyz.atnrch.nicko.anvil;
 
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.AppearanceManager;
-import xyz.atnrch.nicko.disguise.ActionResult;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
+import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangUtils;
@@ -99,10 +99,10 @@ public class AnvilManager {
     private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult actionResult) {
         final I18N i18n = new I18N(player);
         if (!actionResult.isError()) {
-            player.sendMessage(i18n.translate(I18NDict.Event.Disguise.SUCCESS));
+            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK));
         } else {
             // TODO (Ineanto, 6/28/23): Check weirdness with error message not being translated sometimes
-            player.sendMessage(i18n.translate(I18NDict.Event.Disguise.FAIL, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
+            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

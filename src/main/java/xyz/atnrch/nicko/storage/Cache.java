@@ -1,7 +1,7 @@
 package xyz.atnrch.nicko.storage;
 
-import xyz.atnrch.nicko.disguise.ActionResult;
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.ActionResult;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 
 import java.util.Optional;
 import java.util.UUID;

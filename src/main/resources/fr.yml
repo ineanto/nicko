@@ -7,24 +7,18 @@ error:
   cache: "Impossible de récupérer le skin depuis le cache."
   sql: "Erreur SQL"
   json: "Erreur JSON"
+
 event:
+  appearance:
+    set:
+      error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
+      ok: "§aDéguisement appliqué !"
+    restore:
+      error: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
+      ok: "§aVotre précédent déguisement a été appliqué."
+    remove:
+      error: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
+      missing: "§cVous n''avez pas de déguisement."
+      ok: "§aDéguisement retiré."
   admin:
     cache_clear: "§aCache des skins nettoyé."
-  disguise:
-    fail: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
-    success: "§aDéguisement appliqué !"
-  previous_skin_applied:
-    fail: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
-    success: "§aVotre précédent déguisement a été appliqué."
-  undisguise:
-    fail: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
-    none: "§cVous n''avez pas de déguisement."
-    success: "§aDéguisement retiré."
-gui:
-  common:
-    exit: "Quitter"
-    back: "Retour"
-    l1_back: "Retournez à la fenêtre précédente."
-    not_available: "Option indisponible :("
-    l1_not_available: "Ce bouton est désactivé."
-

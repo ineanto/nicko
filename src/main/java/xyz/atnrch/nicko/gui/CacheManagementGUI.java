@@ -1,26 +1,30 @@
 package xyz.atnrch.nicko.gui;
 
-import xyz.atnrch.nicko.gui.items.admin.ManageCacheItem;
-import xyz.atnrch.nicko.gui.items.common.GoBackItem;
 import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.gui.items.admin.cache.CacheOverviewItem;
+import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateCacheItem;
+import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateEntryItem;
+import xyz.atnrch.nicko.gui.items.common.GoBackItem;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
-public class AdminGUI {
-    private final String title = "Nicko > Administration";
+public class CacheManagementGUI {
+    private final String title = "Nicko > Admin... > Cache";
     private final Player player;
     private final Gui gui;
 
-    public AdminGUI(Player player) {
-        final HomeGUI parent = new HomeGUI(player);
+    public CacheManagementGUI(Player player) {
+        final AdminGUI parent = new AdminGUI(player);
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # S U U # # #",
+                        "# # # S A D # # #",
                         "B # # # # # # # #"
                 )
-                .addIngredient('S', new ManageCacheItem())
                 .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
+                .addIngredient('S', new CacheOverviewItem())
+                .addIngredient('A', new InvalidateCacheItem())
+                .addIngredient('D', new InvalidateEntryItem())
                 .build();
         this.player = player;
     }

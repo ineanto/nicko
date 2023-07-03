@@ -2,7 +2,7 @@ package xyz.atnrch.nicko.placeholder;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

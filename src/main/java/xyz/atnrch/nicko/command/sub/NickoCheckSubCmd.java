@@ -1,7 +1,7 @@
 package xyz.atnrch.nicko.command.sub;
 
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.AppearanceManager;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangUtils;

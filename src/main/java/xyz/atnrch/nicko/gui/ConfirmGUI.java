@@ -2,9 +2,9 @@ package xyz.atnrch.nicko.gui;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import xyz.atnrch.nicko.gui.items.confirm.ActionCallback;
-import xyz.atnrch.nicko.gui.items.confirm.Cancel;
-import xyz.atnrch.nicko.gui.items.confirm.Confirm;
+import xyz.atnrch.nicko.gui.items.common.confirm.ChoiceCallback;
+import xyz.atnrch.nicko.gui.items.common.confirm.CancelItem;
+import xyz.atnrch.nicko.gui.items.common.confirm.ConfirmItem;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
@@ -14,15 +14,15 @@ public class ConfirmGUI {
     private final Player player;
     private final Gui gui;
 
-    public ConfirmGUI(Player player, ActionCallback callback) {
+    public ConfirmGUI(Player player, ChoiceCallback callback) {
         this.gui = Gui.normal()
                 .setStructure(
                         "@ @ @ @ % & & & &",
                         "@ @ @ @ I & & & &",
                         "@ @ @ @ % & & & &"
                 )
-                .addIngredient('@', new Confirm(callback))
-                .addIngredient('&', new Cancel(callback))
+                .addIngredient('@', new ConfirmItem(callback))
+                .addIngredient('&', new CancelItem(callback))
                 .addIngredient('I', new SimpleItem(new ItemBuilder(Material.PAPER).setDisplayName("§6Select an option").get()))
                 .build();
         this.player = player;

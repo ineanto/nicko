@@ -2,7 +2,7 @@ package xyz.atnrch.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.disguise.NickoProfile;
+import xyz.atnrch.nicko.appearance.NickoProfile;
 import org.bukkit.entity.Player;
 
 import java.io.InputStream;

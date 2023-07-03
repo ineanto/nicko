@@ -7,16 +7,18 @@ error:
   cache: "Unable to get skin from the cache."
   sql: "SQL Error"
   json: "JSON Error"
+
 event:
+  appearance:
+    set:
+      error: "§cUnable to apply your disguise. §7§o({0})"
+      ok: "§aDisguise applied!"
+    restore:
+      error: "§cUnable to apply your previous disguise back. §7§o({0})"
+      ok: "§aYour previous active disguise has been applied."
+    remove:
+      error: "§cUnable to remove your disguise. It will be reset on your next login."
+      missing: "§cYou are not under a disguise."
+      ok: "§aDisguise removed."
   admin:
     cache_clear: "§aSkin cache cleaned."
-  disguise:
-    fail: "§cUnable to apply your disguise. §7§o({0})"
-    success: "§aDisguise applied!"
-  previous_skin_applied:
-    fail: "§cUnable to apply your previous disguise back. §7§o({0})"
-    success: "§aYour previous active disguise has been applied."
-  undisguise:
-    fail: "§cUnable to remove your disguise. It will be reset on your next login."
-    none: "§cYou are not under a disguise."
-    success: "§aDisguise removed."

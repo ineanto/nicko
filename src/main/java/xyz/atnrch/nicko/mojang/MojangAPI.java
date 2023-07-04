@@ -73,7 +73,6 @@ public class MojangAPI {
             final MojangSkin skin = MojangSkin.buildFromJson(object);
             return Optional.of(skin);
         }
-        System.out.println("got empty optional !!!");
         return Optional.empty();
     }
 

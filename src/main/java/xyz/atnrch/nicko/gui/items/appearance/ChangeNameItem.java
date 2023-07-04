@@ -11,7 +11,7 @@ public class ChangeNameItem extends SuppliedItem {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.NAME_TAG);
             builder.setDisplayName("§fChange §6name");
-            builder.addLoreLines("§7Only change your name.");
+            builder.addLoreLines("§7Will open a GUI to change your name only.");
             return builder;
         }, click -> {
             final ClickType clickType = click.getClickType();

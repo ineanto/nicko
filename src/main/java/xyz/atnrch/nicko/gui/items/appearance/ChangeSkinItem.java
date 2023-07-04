@@ -11,7 +11,7 @@ public class ChangeSkinItem extends SuppliedItem {
         super(() -> {
             final SkullBuilder builder = new SkullBuilder(player.getName());
             builder.setDisplayName("§fChange §6skin");
-            builder.addLoreLines("§7Only change your skin.");
+            builder.addLoreLines("§7Will open a GUI to change your skin only.");
             return builder;
         }, click -> {
             final ClickType clickType = click.getClickType();

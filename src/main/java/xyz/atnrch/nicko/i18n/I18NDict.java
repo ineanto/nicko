@@ -5,9 +5,15 @@ public class I18NDict {
         public static final String EVENT_KEY = "event.";
 
         public static class Admin {
-            public static final String ADMIN_KEY = "admin.";
+            public static final String ADMIN_KEY = EVENT_KEY + "admin.";
 
-            public static final String CACHE_CLEAN = ADMIN_KEY + "cache_clear";
+            public static class Cache {
+                public static final String CACHE_KEY = ADMIN_KEY + "cache.";
+
+                public static final String INVALIDATE_ALL = CACHE_KEY + "invalidate_all";
+                public static final String INVALIDATE_ENTRY = CACHE_KEY + "invalidate_entry";
+
+            }
         }
 
         public static class Appearance {
@@ -31,8 +37,8 @@ public class I18NDict {
             public static class Restore {
                 public static final String RESTORE_KEY = APPEARANCE_KEY + "restore.";
 
-                public static final String OK = RESTORE_KEY + "success";
-                public static final String ERROR = RESTORE_KEY + "fail";
+                public static final String OK = RESTORE_KEY + "ok";
+                public static final String ERROR = RESTORE_KEY + "error";
             }
         }
     }

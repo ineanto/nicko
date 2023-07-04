@@ -13,7 +13,7 @@ public class InvalidateCacheItem extends SuppliedItem {
     public InvalidateCacheItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
-            builder.setDisplayName("§fInvalidate §6skin cache");
+            builder.setDisplayName("§fInvalidate cache");
             builder.addLoreLines(
                     "§c§oNOT RECOMMENDED",
                     "§7Invalidates every skin entry present in the cache.",
@@ -24,10 +24,11 @@ public class InvalidateCacheItem extends SuppliedItem {
         }, (click) -> {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {
+                click.getEvent().getView().close();
+
                 final Player player = click.getPlayer();
                 final I18N i18n = new I18N(player);
-                click.getEvent().getView().close();
-                player.sendMessage(i18n.translate(I18NDict.Event.Admin.CACHE_CLEAN));
+                player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ALL));
                 NickoBukkit.getInstance().getMojangAPI().getCache().invalidateAll();
                 return true;
             }

@@ -15,9 +15,9 @@ public class ScrollDownItem extends ScrollItem {
     @Override
     public ItemProvider getItemProvider(ScrollGui gui) {
         ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
-        builder.setDisplayName("§7Scroll down");
+        builder.setDisplayName("§fScroll down");
         if (!gui.canScroll(1))
-            builder.addLoreLines("§cYou can't scroll further down");
+            builder.addLoreLines("§7§o(You can't scroll further down.)");
 
         return builder;
     }

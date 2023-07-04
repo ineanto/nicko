@@ -11,7 +11,7 @@ public class ChangeBothItem extends SuppliedItem {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.END_PORTAL_FRAME);
             builder.setDisplayName("§6Skin §fand §6name §fchange");
-            builder.addLoreLines("§7Change both your skin and name.");
+            builder.addLoreLines("§7Will open a GUI to change both your name and your skin.");
             return builder;
         }, click -> {
             final ClickType clickType = click.getClickType();

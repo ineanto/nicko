@@ -9,6 +9,8 @@ import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.gui.ConfirmGUI;
 import xyz.atnrch.nicko.gui.CacheDetailedGUI;
 import xyz.atnrch.nicko.gui.items.common.confirm.ChoiceCallback;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
@@ -41,8 +43,9 @@ public class CacheEntryItem extends AsyncItem {
             new ConfirmGUI(player, new ChoiceCallback() {
                 @Override
                 public void onConfirm() {
+                    final I18N i18n = new I18N(player);
+                    player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, name));
                     mojangAPI.eraseFromCache(uuid);
-                    player.sendMessage(name + " has been erased from the cache.");
                 }
 
                 @Override

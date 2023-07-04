@@ -36,7 +36,7 @@ public class LanguageCyclingItem {
 
     private ItemProvider generateItem(Locale locale, List<Locale> locales) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        builder.setDisplayName("§6Select your language:");
+        builder.setDisplayName("§fLanguage");
         for (Locale value : locales) {
             if (locale != value) {
                 builder.addLoreLines("§7> " + value.getName());

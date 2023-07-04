@@ -12,13 +12,15 @@ event:
   appearance:
     set:
       error: "§cUnable to apply your disguise. §7§o({0})"
-      ok: "§aDisguise applied!"
+      ok: "§fDisguise applied."
     restore:
       error: "§cUnable to apply your previous disguise back. §7§o({0})"
       ok: "§aYour previous active disguise has been applied."
     remove:
       error: "§cUnable to remove your disguise. It will be reset on your next login."
       missing: "§cYou are not under a disguise."
-      ok: "§aDisguise removed."
+      ok: "§fDisguise removed."
   admin:
-    cache_clear: "§aSkin cache cleaned."
+    cache:
+      invalidate_cache: "§fComplete cache invalidated."
+      invalidate_entry: "§6{0} §fhas been invalidated."

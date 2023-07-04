@@ -12,13 +12,15 @@ event:
   appearance:
     set:
       error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
-      ok: "§aDéguisement appliqué !"
+      ok: "§fDéguisement appliqué."
     restore:
       error: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
       ok: "§aVotre précédent déguisement a été appliqué."
     remove:
       error: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
       missing: "§cVous n''avez pas de déguisement."
-      ok: "§aDéguisement retiré."
+      ok: "§fDéguisement retiré."
   admin:
-    cache_clear: "§aCache des skins nettoyé."
+    cache:
+      invalidate_cache: "§fCache complet invalidé."
+      invalidate_entry: "§6{0} §fa été invalidé."

@@ -14,8 +14,8 @@ public class AdminAccessItem extends SuppliedItem {
             final ItemBuilder builder = new ItemBuilder(Material.COMMAND_BLOCK);
             builder.addEnchantment(Enchantment.DAMAGE_ALL, 1, false);
             builder.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            builder.setDisplayName("§cAdministration panel...");
-            builder.addLoreLines("§7Access the administration panel.");
+            builder.setDisplayName("§cAdministration panel");
+            builder.addLoreLines("§7Configure and and manage Nicko.");
             return builder;
         }, click -> {
             final ClickType clickType = click.getClickType();

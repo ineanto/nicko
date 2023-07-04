@@ -10,18 +10,17 @@ import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
 import java.util.Optional;
 
-public class CacheOverviewItem extends SuppliedItem {
-    public CacheOverviewItem() {
+public class CacheStatisticsItem extends SuppliedItem {
+    public CacheStatisticsItem() {
         super(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
+            final ItemBuilder builder = new ItemBuilder(Material.BOOK);
             final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getMojangAPI().getCache();
             final CacheStats stats = cache.stats();
-            builder.setDisplayName("§6Skin cache §foverview:");
+            builder.setDisplayName("§fStatistics");
             builder.addLoreLines(
-                    "Request Count: §2" + stats.requestCount(),
-                    "Skin Cached: §2" + Math.round(cache.size()),
-                    "§7§oCache is cleared every 24 hours.",
-                    "§7§o(Click to refresh)");
+                    "Request Count: §b" + stats.requestCount(),
+                    "Skin Cached: §b" + Math.round(cache.size()),
+                    "§8§oCache is cleared every 24 hours.");
             return builder;
         }, (event) -> true);
     }

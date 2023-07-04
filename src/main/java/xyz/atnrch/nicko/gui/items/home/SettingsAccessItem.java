@@ -10,8 +10,8 @@ public class SettingsAccessItem extends SuppliedItem {
     public SettingsAccessItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.COMPARATOR);
-            builder.setDisplayName("§fSettings...");
-            builder.addLoreLines("§7Adjust your preferences.");
+            builder.setDisplayName("§fSettings");
+            builder.addLoreLines("§7Configure your experience.");
             return builder;
         }, click -> {
             final ClickType clickType = click.getClickType();

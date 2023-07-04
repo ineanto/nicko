@@ -13,8 +13,8 @@ public class ResetItem extends SuppliedItem {
     public ResetItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
-            builder.setDisplayName("§fReset");
-            builder.addLoreLines("§7Get rid of your disguise.");
+            builder.setDisplayName("§fReset appearance");
+            builder.addLoreLines("§7Completely remove your disguise.");
             return builder;
         }, (event) -> {
             final Player player = event.getPlayer();

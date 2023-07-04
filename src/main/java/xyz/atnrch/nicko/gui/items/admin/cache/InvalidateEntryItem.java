@@ -10,7 +10,7 @@ public class InvalidateEntryItem extends SuppliedItem {
     public InvalidateEntryItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.PAPER);
-            builder.setDisplayName("§6Invalidate specific skin...");
+            builder.setDisplayName("§fInvalidate specific entry");
             builder.addLoreLines("§7Select a specific skin to invalidate.");
             return builder;
         }, (click) -> {

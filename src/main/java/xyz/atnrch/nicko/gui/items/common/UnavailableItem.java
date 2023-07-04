@@ -8,8 +8,8 @@ public class UnavailableItem extends SuppliedItem {
     public UnavailableItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.RED_TERRACOTTA);
-            builder.setDisplayName("§cFeature unavailable :(");
-            builder.addLoreLines("§7This button is disabled.");
+            builder.setDisplayName("§fUnavailable");
+            builder.addLoreLines("§7§oThis button is disabled.");
             return builder;
         }, click -> true);
     }

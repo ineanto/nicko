@@ -1,7 +1,7 @@
 package xyz.atnrch.nicko.gui;
 
 import org.bukkit.entity.Player;
-import xyz.atnrch.nicko.gui.items.admin.cache.CacheOverviewItem;
+import xyz.atnrch.nicko.gui.items.admin.cache.CacheStatisticsItem;
 import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateCacheItem;
 import xyz.atnrch.nicko.gui.items.admin.cache.InvalidateEntryItem;
 import xyz.atnrch.nicko.gui.items.common.GoBackItem;
@@ -22,7 +22,7 @@ public class CacheManagementGUI {
                         "B # # # # # # # #"
                 )
                 .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
-                .addIngredient('S', new CacheOverviewItem())
+                .addIngredient('S', new CacheStatisticsItem())
                 .addIngredient('A', new InvalidateCacheItem())
                 .addIngredient('D', new InvalidateEntryItem())
                 .build();

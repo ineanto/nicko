@@ -65,14 +65,15 @@ public class MojangAPI {
     }
 
     private Optional<String> getUUIDFromMojang(String name) throws IOException {
-        // TODO (Ineanto, 7/6/23): store uuid
         final String parametrizedUrl = URL_NAME.replace("{name}", name);
         final JsonObject object = getRequestToUrl(parametrizedUrl);
         if (hasNoError(object)) {
             final JsonElement idObject = object.get("id");
-            final String id = idObject.getAsString();
-            uuidToName.put(id, name);
-            return Optional.of(id);
+            final String uuid = idObject.getAsString();
+            final Optional<String> uuidOptional = Optional.of(uuid);
+            uuidCache.put(name, uuidOptional);
+            uuidToName.put(uuid, name);
+            return uuidOptional;
         }
         return Optional.empty();
     }
@@ -80,6 +81,7 @@ public class MojangAPI {
     public void eraseFromCache(String uuid) {
         skinCache.invalidate(uuid);
         uuidToName.remove(uuid);
+        uuidCache.invalidate(uuid);
     }
 
     private Optional<MojangSkin> getSkinFromMojang(String uuid) throws IOException {

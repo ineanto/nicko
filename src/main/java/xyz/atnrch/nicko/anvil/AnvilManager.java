@@ -101,7 +101,6 @@ public class AnvilManager {
         if (!actionResult.isError()) {
             player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK));
         } else {
-            // TODO (Ineanto, 6/28/23): Check weirdness with error message not being translated sometimes
             player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());

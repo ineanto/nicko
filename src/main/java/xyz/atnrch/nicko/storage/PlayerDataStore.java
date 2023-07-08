@@ -15,6 +15,7 @@ import xyz.atnrch.nicko.storage.sql.SQLStorage;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 public class PlayerDataStore {
     private final Storage storage;
@@ -57,7 +58,7 @@ public class PlayerDataStore {
                 return getData(uuid);
             }
             return Optional.empty();
-        } catch (IOException e) {
+        } catch (IOException | ExecutionException e) {
             return Optional.empty();
         }
     }

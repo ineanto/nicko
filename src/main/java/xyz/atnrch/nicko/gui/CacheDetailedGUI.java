@@ -26,7 +26,7 @@ public class CacheDetailedGUI {
     private final Gui gui;
 
     public CacheDetailedGUI(Player player) {
-        final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getCache().asMap();
+        final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getSkinCache().asMap();
         final List<String> loadedSkins = skins.entrySet().stream()
                 .filter(entry -> entry.getValue().isPresent())
                 .map(Map.Entry::getKey)

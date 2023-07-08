@@ -17,9 +17,7 @@ public class InvalidateCacheItem extends SuppliedItem {
             builder.addLoreLines(
                     "§c§oNOT RECOMMENDED",
                     "§7Invalidates every skin entry present in the cache.",
-                    "§7Does not reset player disguises.",
-                    "§7Could be useful if a skin has been updated",
-                    "§7recently and the cache is now outdated.");
+                    "§7Does not reset player disguises.");
             return builder;
         }, (click) -> {
             final ClickType clickType = click.getClickType();
@@ -29,7 +27,7 @@ public class InvalidateCacheItem extends SuppliedItem {
                 final Player player = click.getPlayer();
                 final I18N i18n = new I18N(player);
                 player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ALL));
-                NickoBukkit.getInstance().getMojangAPI().getCache().invalidateAll();
+                NickoBukkit.getInstance().getMojangAPI().getSkinCache().invalidateAll();
                 return true;
             }
             return false;

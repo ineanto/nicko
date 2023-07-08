@@ -25,31 +25,47 @@ public class MojangAPI {
     public static final String URL_SKIN = "https://sessionserver.mojang.com/session/minecraft/profile/{uuid}?unsigned=false";
 
     private final Logger logger = Logger.getLogger("MojangAPI");
-
     private final HashMap<String, String> uuidToName = new HashMap<>();
 
-    private final CacheLoader<String, Optional<MojangSkin>> loader = new CacheLoader<String, Optional<MojangSkin>>() {
+    private final CacheLoader<String, Optional<MojangSkin>> skinLoader = new CacheLoader<String, Optional<MojangSkin>>() {
         @Nonnull
         public Optional<MojangSkin> load(@Nonnull String uuid) throws Exception {
             return getSkinFromMojang(uuid);
         }
     };
 
-    private final LoadingCache<String, Optional<MojangSkin>> cache = CacheBuilder
+    private final LoadingCache<String, Optional<MojangSkin>> skinCache = CacheBuilder
             .newBuilder()
             .recordStats()
             .expireAfterWrite(24, TimeUnit.HOURS)
-            .build(loader);
+            .build(skinLoader);
+
+    private final CacheLoader<String, Optional<String>> uuidLoader = new CacheLoader<String, Optional<String>>() {
+        @Nonnull
+        public Optional<String> load(@Nonnull String name) throws Exception {
+            return getUUIDFromMojang(name);
+        }
+    };
+
+    private final LoadingCache<String, Optional<String>> uuidCache = CacheBuilder
+            .newBuilder()
+            .expireAfterWrite(2, TimeUnit.DAYS)
+            .build(uuidLoader);
 
     public Optional<MojangSkin> getSkin(String uuid) throws IOException, ExecutionException {
-        return cache.get(uuid);
+        return skinCache.get(uuid);
     }
 
     public Optional<MojangSkin> getSkinWithoutCaching(String uuid) throws IOException {
         return getSkinFromMojang(uuid);
     }
 
-    public Optional<String> getUUID(String name) throws IOException {
+    public Optional<String> getUUID(String name) throws IOException, ExecutionException {
+        return uuidCache.get(name);
+    }
+
+    private Optional<String> getUUIDFromMojang(String name) throws IOException {
+        // TODO (Ineanto, 7/6/23): store uuid
         final String parametrizedUrl = URL_NAME.replace("{name}", name);
         final JsonObject object = getRequestToUrl(parametrizedUrl);
         if (hasNoError(object)) {
@@ -62,7 +78,7 @@ public class MojangAPI {
     }
 
     public void eraseFromCache(String uuid) {
-        cache.invalidate(uuid);
+        skinCache.invalidate(uuid);
         uuidToName.remove(uuid);
     }
 
@@ -125,7 +141,7 @@ public class MojangAPI {
         return object.get("error") == null;
     }
 
-    public LoadingCache<String, Optional<MojangSkin>> getCache() {
-        return cache;
+    public LoadingCache<String, Optional<MojangSkin>> getSkinCache() {
+        return skinCache;
     }
 }

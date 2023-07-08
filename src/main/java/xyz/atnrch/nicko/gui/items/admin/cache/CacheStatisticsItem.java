@@ -14,7 +14,7 @@ public class CacheStatisticsItem extends SuppliedItem {
     public CacheStatisticsItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.BOOK);
-            final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getMojangAPI().getCache();
+            final LoadingCache<String, Optional<MojangSkin>> cache = NickoBukkit.getInstance().getMojangAPI().getSkinCache();
             final CacheStats stats = cache.stats();
             builder.setDisplayName("§fStatistics");
             builder.addLoreLines(

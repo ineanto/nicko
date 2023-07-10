@@ -11,11 +11,11 @@ load: POSTWORLD
 commands:
   nicko:
     description: "Opens Nicko's GUI."
-    permission: nicko.admin
+    permission: nicko.use
 permissions:
   nicko.*:
     default: op
     children:
       - nicko.use
   nicko.use:
-    default: op
+    default: false

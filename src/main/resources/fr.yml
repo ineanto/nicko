@@ -1,5 +1,6 @@
 error:
   generic: "Erreur inconnue"
+  permission: "§cVous ne possédez pas la permission."
   invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
   mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
   mojang_skin: "Ce compte Minecraft n'a pas de skin."

@@ -1,5 +1,6 @@
 error:
   generic: "Unknown error"
+  permission: "§cYou do not have the required permission."
   invalid_username: "§cThis is not a valid Minecraft username."
   mojang_name: "There is no Minecraft account with this name."
   mojang_skin: "This Minecraft account has no skin."

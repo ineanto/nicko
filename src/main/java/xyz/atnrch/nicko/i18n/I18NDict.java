@@ -10,7 +10,7 @@ public class I18NDict {
             public static class Cache {
                 public static final String CACHE_KEY = ADMIN_KEY + "cache.";
 
-                public static final String INVALIDATE_ALL = CACHE_KEY + "invalidate_all";
+                public static final String INVALIDATE_CACHE = CACHE_KEY + "invalidate_cache";
                 public static final String INVALIDATE_ENTRY = CACHE_KEY + "invalidate_entry";
 
             }

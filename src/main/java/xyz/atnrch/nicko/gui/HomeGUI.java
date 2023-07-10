@@ -18,11 +18,11 @@ public class HomeGUI {
 
     public HomeGUI(Player player) {
         final String[] dynamicStructure = new String[]{
-                "# # # # # # # # #",
-                "A # # N B S # # #",
-                "E P # # # # # # R"};
+                "# # # # # # # # P",
+                "# # # N B S # # #",
+                "E A # # # # # # R"};
 
-        if (!player.hasPermission("nicko.admin") || !player.isOp()) {
+        if (!player.isOp() || !player.hasPermission("nicko.admin")) {
             dynamicStructure[2] = dynamicStructure[2].replace("A", "#");
         }
 

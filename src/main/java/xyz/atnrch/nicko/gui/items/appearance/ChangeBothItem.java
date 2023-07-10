@@ -9,7 +9,7 @@ import xyz.xenondevs.invui.item.impl.SuppliedItem;
 public class ChangeBothItem extends SuppliedItem {
     public ChangeBothItem() {
         super(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.END_PORTAL_FRAME);
+            final ItemBuilder builder = new ItemBuilder(Material.TOTEM_OF_UNDYING);
             builder.setDisplayName("§6Skin §fand §6name §fchange");
             builder.addLoreLines("§7Will open a GUI to change both your name and your skin.");
             return builder;

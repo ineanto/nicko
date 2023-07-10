@@ -8,6 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
 
 public class NickoCommand implements CommandExecutor {
     private String helpMessage = "§cNicko §8§o[{version}] §f- §2Help:\n" +
@@ -17,7 +19,7 @@ public class NickoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
+            final Player player = (Player) sender;
             if (args.length >= 1) {
                 switch (args[0]) {
                     case "debug":
@@ -33,7 +35,12 @@ public class NickoCommand implements CommandExecutor {
                 return false;
             }
 
-            new HomeGUI(player).open();
+            if(player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
+                new HomeGUI(player).open();
+            } else {
+                final I18N i18N = new I18N(player);
+                player.sendMessage(i18N.translate(I18NDict.Error.PERMISSION));
+            }
             return false;
         }
 

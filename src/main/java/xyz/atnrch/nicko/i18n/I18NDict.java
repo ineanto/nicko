@@ -45,6 +45,7 @@ public class I18NDict {
 
     public static class Error {
         public static final String GENERIC = "error.generic";
+        public static final String PERMISSION = "error.permission";
         public static final String PLAYER_OFFLINE = "error.offline";
         public static final String CACHE = "error.cache";
         public static final String MOJANG_NAME = "error.mojang_name";

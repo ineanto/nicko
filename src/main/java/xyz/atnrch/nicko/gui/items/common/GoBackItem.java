@@ -10,7 +10,7 @@ public class GoBackItem extends SuppliedItem {
     public GoBackItem(Gui gui, String parentTitle) {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.ARROW);
-            builder.setDisplayName("§fGo back");
+            builder.setDisplayName("Go back");
             builder.addLoreLines("§7Return to the previous window.");
             return builder;
         }, click -> {

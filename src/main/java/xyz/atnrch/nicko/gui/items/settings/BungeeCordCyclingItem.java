@@ -35,7 +35,7 @@ public class BungeeCordCyclingItem {
 
     private ItemProvider getItemProviderForValue(boolean enabled) {
         final ItemBuilder builder = new ItemBuilder(Material.COMPASS);
-        builder.setDisplayName("§fBungeeCord transfer");
+        builder.setDisplayName("BungeeCord transfer");
         if (enabled) {
             builder.addLoreLines("§7> §cDisabled");
             builder.addLoreLines("§6§l> §a§lEnabled");

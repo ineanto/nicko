@@ -13,7 +13,7 @@ public class ResetItem extends SuppliedItem {
     public ResetItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
-            builder.setDisplayName("§fReset appearance");
+            builder.setDisplayName("Reset appearance");
             builder.addLoreLines("§7Completely remove your disguise.");
             return builder;
         }, (event) -> {

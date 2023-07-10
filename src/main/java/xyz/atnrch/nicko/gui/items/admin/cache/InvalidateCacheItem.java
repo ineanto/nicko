@@ -13,7 +13,7 @@ public class InvalidateCacheItem extends SuppliedItem {
     public InvalidateCacheItem() {
         super(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
-            builder.setDisplayName("§fInvalidate cache");
+            builder.setDisplayName("Invalidate cache");
             builder.addLoreLines(
                     "§c§oNOT RECOMMENDED",
                     "§7Invalidates every skin entry present in the cache.",

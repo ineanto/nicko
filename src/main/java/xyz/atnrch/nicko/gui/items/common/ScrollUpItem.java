@@ -15,7 +15,7 @@ public class ScrollUpItem extends ScrollItem {
     @Override
     public ItemProvider getItemProvider(ScrollGui gui) {
         ItemBuilder builder = new ItemBuilder(Material.RED_STAINED_GLASS_PANE);
-        builder.setDisplayName("§fScroll up");
+        builder.setDisplayName("Scroll up");
         if (!gui.canScroll(-1))
             builder.addLoreLines("§7§o(You've reached the top.)");
 

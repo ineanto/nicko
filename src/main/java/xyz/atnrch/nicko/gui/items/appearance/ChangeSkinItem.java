@@ -10,7 +10,7 @@ public class ChangeSkinItem extends SuppliedItem {
     public ChangeSkinItem(Player player) {
         super(() -> {
             final SkullBuilder builder = new SkullBuilder(player.getName());
-            builder.setDisplayName("§fChange §6skin");
+            builder.setDisplayName("Change §6skin");
             builder.addLoreLines("§7Will open a GUI to change your skin only.");
             return builder;
         }, click -> {

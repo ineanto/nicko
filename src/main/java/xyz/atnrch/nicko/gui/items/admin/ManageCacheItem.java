@@ -13,11 +13,11 @@ import org.jetbrains.annotations.NotNull;
 public class ManageCacheItem extends AsyncItem {
     public ManageCacheItem() {
         super(new ItemBuilder(Material.PAINTING)
-                        .setDisplayName("§fManage skin cache...")
+                        .setDisplayName("Manage §6skin §fcache...")
                         .addLoreLines("§7Access the skin cache management panel."),
                 () -> {
                     final SkullBuilder builder = new SkullBuilder("Notch");
-                    builder.setDisplayName("§fManage §6skin §fcache...");
+                    builder.setDisplayName("Manage §6skin §fcache...");
                     builder.addLoreLines("§7Access the skin cache management panel.");
                     return builder;
                 });

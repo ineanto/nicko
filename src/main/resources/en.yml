@@ -1,15 +1,16 @@
 error:
-  generic: "Unknown error"
+  generic: "An unknown error occurred."
   permission: "§cYou do not have the required permission."
   invalid_username: "§cThis is not a valid Minecraft username."
   mojang_name: "There is no Minecraft account with this name."
   mojang_skin: "This Minecraft account has no skin."
-  offline: "§c{0} §fis offline!"
   cache: "Unable to get skin from the cache."
   sql: "SQL Error"
   json: "JSON Error"
 
 event:
+  settings:
+    error: "§cUnable to update your settings. §7§o({0})"
   appearance:
     set:
       error: "§cUnable to apply your disguise. §7§o({0})"

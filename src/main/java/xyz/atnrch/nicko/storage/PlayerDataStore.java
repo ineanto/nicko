@@ -3,7 +3,7 @@ package xyz.atnrch.nicko.storage;
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangUtils;
@@ -28,8 +28,17 @@ public class PlayerDataStore {
         this.cache = configuration.getRedisConfiguration().isEnabled() ? new RedisCache(configuration) : new MapCache();
     }
 
+    public ActionResult updateCache(UUID uuid, NickoProfile profile) {
+        final Optional<NickoProfile> retrieved = getData(uuid);
+        if (retrieved.isPresent()) {
+            getCache().cache(uuid, profile);
+            return ActionResult.ok();
+        }
+        return ActionResult.error(I18NDict.Error.CACHE);
+    }
+
     public Optional<NickoProfile> getData(UUID uuid) {
-        if (storage.isError()) {
+        if (storage.isError() || cache.isError()) {
             return Optional.empty();
         }
 

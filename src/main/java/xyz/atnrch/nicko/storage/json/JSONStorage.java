@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.storage.Storage;
 import xyz.atnrch.nicko.storage.StorageProvider;

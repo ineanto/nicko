@@ -6,7 +6,7 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

@@ -2,7 +2,7 @@ package xyz.atnrch.nicko.storage.sql;
 
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.storage.Storage;

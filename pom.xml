@@ -138,9 +138,11 @@
                                     <include>net.wesjd:anvilgui</include>
                                     <include>xyz.xenondevs.invui:*</include>
                                     <include>com.github.jsixface:*</include>
-                                    <include>com.fasterxml.jackson.dataformat</include>
-                                    <include>com.fasterxml.jackson.core</include>
-                                    <include>org.mariadb.jdbc</include>
+                                    <include>com.fasterxml.jackson.dataformat:*</include>
+                                    <include>com.fasterxml.jackson.core:*</include>
+                                    <include>org.mariadb.jdbc:*</include>
+                                    <include>redis.clients:*</include>
+                                    <include>org.apache.commons:commons-pool2</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -167,6 +169,14 @@
                                 <relocation>
                                     <pattern>org.mariadb.jdbc</pattern>
                                     <shadedPattern>net.artelnatif.libs.mariadb</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>redis.clients</pattern>
+                                    <shadedPattern>net.artelnatif.libs.redis</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.commons.pool2</pattern>
+                                    <shadedPattern>net.artelnatif.libs.pool2</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

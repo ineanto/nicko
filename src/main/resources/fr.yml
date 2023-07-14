@@ -1,10 +1,9 @@
 error:
-  generic: "Erreur inconnue"
+  generic: "Une erreur inconnue c'est produite."
   permission: "§cVous ne possédez pas la permission."
   invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
   mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
   mojang_skin: "Ce compte Minecraft n'a pas de skin."
-  offline: "§c{0} §fest hors-ligne!"
   cache: "Impossible de récupérer le skin depuis le cache."
   sql: "Erreur SQL"
   json: "Erreur JSON"

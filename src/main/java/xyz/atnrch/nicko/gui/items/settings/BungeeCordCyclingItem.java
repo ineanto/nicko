@@ -1,7 +1,7 @@
 package xyz.atnrch.nicko.gui.items.settings;
 
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

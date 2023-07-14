@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.profile;
+package xyz.atnrch.nicko.appearance;
 
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.*;
@@ -14,6 +14,7 @@ import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangSkin;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 import xyz.atnrch.nicko.wrapper.*;
@@ -24,7 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-public class ProfileManager {
+public class AppearanceManager {
     private final NickoProfile profile;
     private final Player player;
     private final UUID uuid;
@@ -32,24 +33,24 @@ public class ProfileManager {
     private final PlayerDataStore dataStore = instance.getDataStore();
     private final PlayerNameStore nameStore = instance.getNameStore();
 
-    private ProfileManager(UUID uuid) {
+    private AppearanceManager(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
         this.uuid = uuid;
         this.profile = dataStore.getData(uuid).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    private ProfileManager(String name) {
+    private AppearanceManager(String name) {
         this.player = null;
         this.uuid = null;
         this.profile = dataStore.getOfflineData(name).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    public static ProfileManager get(Player player) {
-        return new ProfileManager(player.getUniqueId());
+    public static AppearanceManager get(Player player) {
+        return new AppearanceManager(player.getUniqueId());
     }
 
-    public static ProfileManager get(String name) {
-        return new ProfileManager(name);
+    public static AppearanceManager get(String name) {
+        return new AppearanceManager(name);
     }
 
     public boolean hasData() {

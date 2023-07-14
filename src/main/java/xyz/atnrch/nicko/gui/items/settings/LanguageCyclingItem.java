@@ -1,11 +1,14 @@
 package xyz.atnrch.nicko.gui.items.settings;
 
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.NickoProfile;
-import xyz.atnrch.nicko.i18n.Locale;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
@@ -21,13 +24,19 @@ public class LanguageCyclingItem {
     private final ItemProvider[] providers = getItems();
 
     public AbstractItem get(Player player) {
-        final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+        final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+        final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
+                if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
+                    final I18N i18n = new I18N(player);
+                    player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
+                    player.getOpenInventory().close();
+                }
             }, localeOrdinal, providers);
         }
 

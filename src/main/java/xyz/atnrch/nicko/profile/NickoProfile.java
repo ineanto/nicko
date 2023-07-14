@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.appearance;
+package xyz.atnrch.nicko.profile;
 
 import xyz.atnrch.nicko.i18n.Locale;
 

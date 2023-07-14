@@ -8,7 +8,7 @@ import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.appearance.NickoProfile;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.Locale;
 
 import java.util.Optional;

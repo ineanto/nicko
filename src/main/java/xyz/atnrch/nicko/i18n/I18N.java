@@ -1,13 +1,12 @@
 package xyz.atnrch.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.NickoProfile;
 import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.Optional;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
@@ -56,8 +55,8 @@ public class I18N {
 
     private Locale getPlayerLocale() {
         try {
-            final Optional<NickoProfile> profile = instance.getDataStore().getData(player.getUniqueId());
-            return !profile.isPresent() ? Locale.FALLBACK_LOCALE : profile.get().getLocale();
+            final AppearanceManager appearanceManager = AppearanceManager.get(player);
+            return !appearanceManager.hasData() ? Locale.FALLBACK_LOCALE : appearanceManager.getLocale();
         } catch (IllegalArgumentException exception) {
             instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
             return Locale.FALLBACK_LOCALE;

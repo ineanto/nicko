@@ -1,10 +1,10 @@
 package xyz.atnrch.nicko.storage.sql;
 
-import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.Storage;
 
 import java.io.ByteArrayInputStream;
@@ -98,6 +98,23 @@ public class SQLStorage extends Storage {
         } catch (SQLException e) {
             logger.warning("Couldn't fetch profile: " + e.getMessage());
             return Optional.empty();
+        }
+    }
+
+    @Override
+    public ActionResult delete(UUID uuid) {
+        final Connection connection = getProvider().getConnection();
+        if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
+
+        try {
+            final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setBinaryStream(1, uuidToBin(uuid));
+            statement.executeUpdate();
+            return ActionResult.ok();
+        } catch (SQLException e) {
+            logger.warning("Couldn't fetch profile: " + e.getMessage());
+            return ActionResult.error(I18NDict.Error.SQL_ERROR);
         }
     }
 

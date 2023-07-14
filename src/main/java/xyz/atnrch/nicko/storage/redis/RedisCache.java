@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.config.Configuration;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.Cache;
 import xyz.atnrch.nicko.storage.CacheProvider;
 
@@ -54,6 +54,14 @@ public class RedisCache extends Cache {
             final String data = jedis.get("nicko:" + uuid.toString());
             final NickoProfile profile = gson.fromJson(data, NickoProfile.class);
             return Optional.of(profile);
+        }
+    }
+
+    @Override
+    public ActionResult delete(UUID uuid) {
+        try (Jedis jedis = provider.getJedis()) {
+            jedis.del("nicko:" + uuid.toString());
+            return ActionResult.ok();
         }
     }
 }

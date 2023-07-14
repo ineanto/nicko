@@ -41,4 +41,11 @@ public class MapCache extends Cache {
         }
         return Optional.empty();
     }
+
+    @Override
+    public ActionResult delete(UUID uuid) {
+        final HashMap<UUID, NickoProfile> profiles = provider.getMap();
+        profiles.remove(uuid);
+        return ActionResult.ok();
+    }
 }

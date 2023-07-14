@@ -74,6 +74,16 @@ public class JSONStorage extends Storage {
         }
     }
 
+    @Override
+    public ActionResult delete(UUID uuid) {
+        final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+        final File file = new File(directory, uuid.toString() + ".json");
+        if (file.delete() || !file.exists()) {
+            return ActionResult.ok();
+        }
+        return ActionResult.error(I18NDict.Error.JSON_ERROR);
+    }
+
     private boolean checkFileExists(File file) throws IOException {
         if (!file.exists()) {
             return file.createNewFile();

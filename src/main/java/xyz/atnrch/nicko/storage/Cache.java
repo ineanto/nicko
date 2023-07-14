@@ -17,6 +17,8 @@ public abstract class Cache {
 
     public abstract Optional<NickoProfile> retrieve(UUID uuid);
 
+    public abstract ActionResult delete(UUID uuid);
+
     public boolean isError() {
         return error;
     }

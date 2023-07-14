@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.appearance;
+package xyz.atnrch.nicko.profile;
 
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.*;
@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangSkin;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
@@ -23,29 +24,32 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-public class AppearanceManager {
+public class ProfileManager {
     private final NickoProfile profile;
     private final Player player;
+    private final UUID uuid;
     private final NickoBukkit instance = NickoBukkit.getInstance();
     private final PlayerDataStore dataStore = instance.getDataStore();
     private final PlayerNameStore nameStore = instance.getNameStore();
 
-    private AppearanceManager(UUID uuid) {
+    private ProfileManager(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
+        this.uuid = uuid;
         this.profile = dataStore.getData(uuid).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    private AppearanceManager(String name) {
+    private ProfileManager(String name) {
         this.player = null;
+        this.uuid = null;
         this.profile = dataStore.getOfflineData(name).orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    public static AppearanceManager get(Player player) {
-        return new AppearanceManager(player.getUniqueId());
+    public static ProfileManager get(Player player) {
+        return new ProfileManager(player.getUniqueId());
     }
 
-    public static AppearanceManager get(String name) {
-        return new AppearanceManager(name);
+    public static ProfileManager get(String name) {
+        return new ProfileManager(name);
     }
 
     public boolean hasData() {
@@ -54,6 +58,7 @@ public class AppearanceManager {
 
     public void setSkin(String skin) {
         profile.setSkin(skin);
+        dataStore.getCache().cache(uuid, profile);
     }
 
     public String getSkin() {
@@ -66,10 +71,20 @@ public class AppearanceManager {
 
     public void setName(String name) {
         profile.setName(name);
+        dataStore.getCache().cache(uuid, profile);
     }
 
     public String getName() {
         return profile.getName();
+    }
+
+    public void setLocale(Locale locale) {
+        profile.setLocale(locale);
+        dataStore.getCache().cache(uuid, profile);
+    }
+
+    public Locale getLocale() {
+        return profile.getLocale();
     }
 
     public NickoProfile getProfile() {
@@ -79,6 +94,7 @@ public class AppearanceManager {
     public void setNameAndSkin(String name, String skin) {
         this.profile.setName(name);
         this.profile.setSkin(skin);
+        dataStore.getCache().cache(uuid, profile);
     }
 
     public ActionResult reset() {

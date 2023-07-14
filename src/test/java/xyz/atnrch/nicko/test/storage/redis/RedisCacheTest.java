@@ -5,6 +5,7 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
@@ -13,9 +14,9 @@ import xyz.atnrch.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RedisCacheTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
@@ -35,6 +36,7 @@ public class RedisCacheTest {
 
     @Test
     @DisplayName("Cache Profile")
+    @Order(1)
     public void cacheProfile() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         assertTrue(optionalProfile.isPresent());
@@ -43,7 +45,8 @@ public class RedisCacheTest {
 
     @Test
     @DisplayName("Update Cache Profile")
-    public void updatePlayerCache() {
+    @Order(2)
+    public void updateCache() {
         final PlayerDataStore dataStore = plugin.getDataStore();
         final AppearanceManager appearanceManager = AppearanceManager.get(player);
         appearanceManager.setName("Notch");
@@ -52,6 +55,15 @@ public class RedisCacheTest {
         assertTrue(retrieve.isPresent());
         final NickoProfile retrieved = retrieve.get();
         assertEquals(retrieved.getName(), "Notch");
+    }
+
+    @Test
+    @DisplayName("Delete Cache Profile")
+    @Order(3)
+    public void deleteCache() {
+        final PlayerDataStore dataStore = plugin.getDataStore();
+        final ActionResult cacheDelete = dataStore.getCache().delete(player.getUniqueId());
+        assertFalse(cacheDelete.isError());
     }
 
     @AfterAll

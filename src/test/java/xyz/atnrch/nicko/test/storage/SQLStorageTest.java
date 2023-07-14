@@ -10,11 +10,11 @@ import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SQLStorageTest {
@@ -35,39 +35,29 @@ public class SQLStorageTest {
     }
 
     @Test
-    @DisplayName("Create SQL Tables")
+    @DisplayName("Create tables")
     @Order(1)
-    public void createSQLTables() {
+    public void createTables() {
         assertFalse(plugin.getDataStore().getStorage().isError());
     }
 
     @Test
-    @DisplayName("Store Player Via SQL")
+    @DisplayName("Store empty profile")
     @Order(2)
-    public void storePlayer() {
+    public void storeEmptyProfile() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
         assertTrue(optionalProfile.isPresent());
     }
 
     @Test
-    @DisplayName("Retrieve Player Via SQL")
+    @DisplayName("Update profile")
     @Order(3)
-    public void retrievePlayer() {
-        final Optional<NickoProfile> storeAction = plugin.getDataStore().getData(player.getUniqueId());
-        assertTrue(storeAction.isPresent());
-    }
-
-    @Test
-    @DisplayName("Update Player Via SQL")
-    @Order(4)
-    public void updatePlayer() {
+    public void updateProfile() {
         final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
-        assertTrue(optionalProfile.isPresent());
-
         final NickoProfile profile = optionalProfile.get();
-        Assertions.assertNull(profile.getName());
-        Assertions.assertNull(profile.getSkin());
-        Assertions.assertEquals(profile.getLocale(), Locale.ENGLISH);
+        assertNull(profile.getName());
+        assertNull(profile.getSkin());
+        assertEquals(profile.getLocale(), Locale.ENGLISH);
         assertTrue(profile.isBungeecordTransfer());
 
         profile.setName("Notch");
@@ -77,36 +67,29 @@ public class SQLStorageTest {
 
         final ActionResult result = plugin.getDataStore().saveData(player);
         assertFalse(result.isError());
+    }
 
-        final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());
-        assertTrue(optionalUpdatedProfile.isPresent());
-        final NickoProfile updatedProfile = optionalProfile.get();
-        Assertions.assertEquals(updatedProfile.getName(), "Notch");
-        Assertions.assertEquals(updatedProfile.getSkin(), "Notch");
-        Assertions.assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
+    @Test
+    @DisplayName("Get updated profile")
+    @Order(4)
+    public void hasProfileBeenUpdated() {
+        final Optional<NickoProfile> profile = plugin.getDataStore().getData(player.getUniqueId());
+        assertTrue(profile.isPresent());
+
+        final NickoProfile updatedProfile = profile.get();
+        assertEquals(updatedProfile.getName(), "Notch");
+        assertEquals(updatedProfile.getSkin(), "Notch");
+        assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
         assertFalse(updatedProfile.isBungeecordTransfer());
     }
 
     @Test
-    @DisplayName("Remove Player Disguise Via SQL")
+    @DisplayName("Delete profile")
     @Order(5)
-    public void removePlayerDisguise() {
-        final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
-        assertTrue(optionalProfile.isPresent());
-
-        final NickoProfile profile = optionalProfile.get();
-
-        profile.setName(null);
-        profile.setSkin(null);
-
-        final ActionResult result = plugin.getDataStore().saveData(player);
-        assertFalse(result.isError());
-
-        final Optional<NickoProfile> optionalUpdatedProfile = plugin.getDataStore().getData(player.getUniqueId());
-        assertTrue(optionalUpdatedProfile.isPresent());
-        final NickoProfile updatedProfile = optionalProfile.get();
-        Assertions.assertNull(updatedProfile.getName());
-        Assertions.assertNull(updatedProfile.getSkin());
+    public void deleteProfile() {
+        final PlayerDataStore dataStore = plugin.getDataStore();
+        final ActionResult sqlDelete = dataStore.getStorage().delete(player.getUniqueId());
+        assertFalse(sqlDelete.isError());
     }
 
     @AfterAll

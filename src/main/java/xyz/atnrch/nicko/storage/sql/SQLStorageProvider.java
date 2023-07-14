@@ -59,7 +59,7 @@ public class SQLStorageProvider implements StorageProvider {
         final Connection connection = getConnection();
 
         String query = "CREATE TABLE IF NOT EXISTS %s.DATA " +
-                       "(uuid binary(16) NOT NULL," +
+                       "(uuid varchar(36) NOT NULL," +
                        "name varchar(16)," +
                        "skin varchar(16)," +
                        "locale char(2) NOT NULL," +

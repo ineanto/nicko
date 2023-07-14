@@ -44,6 +44,7 @@ public class SQLStorage extends Storage {
             final PreparedStatement statement = isStored(uuid) ?
                     getUpdateStatement(connection, uuid, profile) : getInsertStatement(connection, uuid, profile);
             statement.executeUpdate();
+            statement.close();
             return ActionResult.ok();
         } catch (SQLException e) {
             logger.warning("Couldn't send SQL Request: " + e.getMessage());
@@ -60,9 +61,10 @@ public class SQLStorage extends Storage {
             final String sql = "SELECT * FROM nicko.DATA WHERE uuid = ?";
 
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setBinaryStream(1, uuidToBin(uuid));
+            statement.setString(1, uuid.toString());
 
             final ResultSet resultSet = statement.executeQuery();
+            statement.close();
             return resultSet.next();
         } catch (SQLException e) {
             logger.warning("Couldn't check if data is present: " + e.getMessage());
@@ -79,7 +81,7 @@ public class SQLStorage extends Storage {
             final String sql = "SELECT * FROM nicko.DATA WHERE uuid = ?";
 
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setBinaryStream(1, uuidToBin(uuid));
+            statement.setString(1, uuid.toString());
 
             final ResultSet resultSet = statement.executeQuery();
             String name = "";
@@ -92,6 +94,7 @@ public class SQLStorage extends Storage {
                 locale = resultSet.getString("locale");
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
+            statement.close();
 
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);
@@ -109,11 +112,12 @@ public class SQLStorage extends Storage {
         try {
             final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setBinaryStream(1, uuidToBin(uuid));
-            statement.executeUpdate();
-            return ActionResult.ok();
+            statement.setString(1, uuid.toString());
+            int rows = statement.executeUpdate();
+            statement.close();
+            return (rows == 1 ? ActionResult.ok() : ActionResult.error(I18NDict.Error.SQL_ERROR));
         } catch (SQLException e) {
-            logger.warning("Couldn't fetch profile: " + e.getMessage());
+            logger.warning("Couldn't delete profile: " + e.getMessage());
             return ActionResult.error(I18NDict.Error.SQL_ERROR);
         }
     }
@@ -121,7 +125,7 @@ public class SQLStorage extends Storage {
     private PreparedStatement getInsertStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
         final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `bungeecord`) VALUES (?, ?, ?, ?, ?)";
         final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setBinaryStream(1, uuidToBin(uuid));
+        statement.setString(1, uuid.toString());
         statement.setString(2, profile.getName() == null ? null : profile.getName());
         statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
         statement.setString(4, profile.getLocale().getCode());
@@ -136,7 +140,7 @@ public class SQLStorage extends Storage {
         statement.setString(2, profile.getSkin() == null ? null : profile.getSkin());
         statement.setString(3, profile.getLocale().getCode());
         statement.setBoolean(4, profile.isBungeecordTransfer());
-        statement.setBinaryStream(5, uuidToBin(uuid));
+        statement.setString(5, uuid.toString());
         return statement;
     }
 

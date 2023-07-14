@@ -9,10 +9,7 @@ import xyz.atnrch.nicko.storage.Storage;
 
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -44,7 +41,6 @@ public class SQLStorage extends Storage {
             final PreparedStatement statement = isStored(uuid) ?
                     getUpdateStatement(connection, uuid, profile) : getInsertStatement(connection, uuid, profile);
             statement.executeUpdate();
-            statement.close();
             return ActionResult.ok();
         } catch (SQLException e) {
             logger.warning("Couldn't send SQL Request: " + e.getMessage());
@@ -64,7 +60,6 @@ public class SQLStorage extends Storage {
             statement.setString(1, uuid.toString());
 
             final ResultSet resultSet = statement.executeQuery();
-            statement.close();
             return resultSet.next();
         } catch (SQLException e) {
             logger.warning("Couldn't check if data is present: " + e.getMessage());
@@ -94,7 +89,6 @@ public class SQLStorage extends Storage {
                 locale = resultSet.getString("locale");
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
-            statement.close();
 
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);
@@ -110,11 +104,10 @@ public class SQLStorage extends Storage {
         if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
 
         try {
-            final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
+            final String sql = "DELETE FROM nicko.DATA WHERE uuid = ? LIMIT 1";
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
             int rows = statement.executeUpdate();
-            statement.close();
             return (rows == 1 ? ActionResult.ok() : ActionResult.error(I18NDict.Error.SQL_ERROR));
         } catch (SQLException e) {
             logger.warning("Couldn't delete profile: " + e.getMessage());

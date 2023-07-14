@@ -21,6 +21,7 @@ public class SQLStorageTest {
     private static ServerMock server;
     private static NickoBukkit plugin;
     private static PlayerMock player;
+    private static PlayerDataStore dataStore;
 
     @BeforeAll
     public static void setup() {
@@ -31,6 +32,7 @@ public class SQLStorageTest {
                 false);
         server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
+        dataStore = plugin.getDataStore();
         player = server.addPlayer();
     }
 
@@ -38,14 +40,14 @@ public class SQLStorageTest {
     @DisplayName("Create tables")
     @Order(1)
     public void createTables() {
-        assertFalse(plugin.getDataStore().getStorage().isError());
+        assertFalse(dataStore.getStorage().isError());
     }
 
     @Test
     @DisplayName("Store empty profile")
     @Order(2)
     public void storeEmptyProfile() {
-        final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
         assertTrue(optionalProfile.isPresent());
     }
 
@@ -53,7 +55,7 @@ public class SQLStorageTest {
     @DisplayName("Update profile")
     @Order(3)
     public void updateProfile() {
-        final Optional<NickoProfile> optionalProfile = plugin.getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
         final NickoProfile profile = optionalProfile.get();
         assertNull(profile.getName());
         assertNull(profile.getSkin());
@@ -65,7 +67,7 @@ public class SQLStorageTest {
         profile.setLocale(Locale.FRENCH);
         profile.setBungeecordTransfer(false);
 
-        final ActionResult result = plugin.getDataStore().saveData(player);
+        final ActionResult result = dataStore.saveData(player);
         assertFalse(result.isError());
     }
 
@@ -73,7 +75,7 @@ public class SQLStorageTest {
     @DisplayName("Get updated profile")
     @Order(4)
     public void hasProfileBeenUpdated() {
-        final Optional<NickoProfile> profile = plugin.getDataStore().getData(player.getUniqueId());
+        final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
         assertTrue(profile.isPresent());
 
         final NickoProfile updatedProfile = profile.get();
@@ -87,7 +89,6 @@ public class SQLStorageTest {
     @DisplayName("Delete profile")
     @Order(5)
     public void deleteProfile() {
-        final PlayerDataStore dataStore = plugin.getDataStore();
         final ActionResult sqlDelete = dataStore.getStorage().delete(player.getUniqueId());
         assertFalse(sqlDelete.isError());
     }

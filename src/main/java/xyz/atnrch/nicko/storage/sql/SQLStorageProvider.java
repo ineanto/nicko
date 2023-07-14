@@ -1,9 +1,9 @@
 package xyz.atnrch.nicko.storage.sql;
 
+import org.mariadb.jdbc.MariaDbDataSource;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.storage.StorageProvider;
-import org.mariadb.jdbc.MariaDbDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +31,7 @@ public class SQLStorageProvider implements StorageProvider {
             dataSource.setUser(sqlConfiguration.getUsername());
             dataSource.setPassword(sqlConfiguration.getPassword());
             connection = dataSource.getConnection();
+            connection.setAutoCommit(true);
             final boolean initialized = connection != null && !connection.isClosed();
 
             if (!initialized) return false;
@@ -69,7 +70,6 @@ public class SQLStorageProvider implements StorageProvider {
 
         final PreparedStatement statement = connection.prepareStatement(query);
         statement.executeUpdate();
-        statement.close();
     }
 
     private void createDatabase() throws SQLException {
@@ -80,7 +80,6 @@ public class SQLStorageProvider implements StorageProvider {
 
         final PreparedStatement statement = connection.prepareStatement(query);
         statement.executeUpdate();
-        statement.close();
     }
 
     public Connection getConnection() {

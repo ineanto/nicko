@@ -11,7 +11,7 @@ public class LocaleFileManager {
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
     private final File file = new File(folder, "lang.yml");
 
-    public String get(String key) {
+    public String getString(String key) {
         if (!file.exists()) return key;
         try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
             final YamlConfig yamlConfig = YamlConfig.load(inputStream);

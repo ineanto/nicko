@@ -29,7 +29,7 @@ public class PlayerJoinListener implements Listener {
                 if (!actionResult.isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK));
                 } else {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.ERROR, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.ERROR, i18n.translatePrefixless(actionResult.getErrorKey())));
                 }
             }
         }, 20L);

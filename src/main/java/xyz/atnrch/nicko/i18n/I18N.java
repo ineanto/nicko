@@ -7,6 +7,9 @@ import xyz.atnrch.nicko.appearance.AppearanceManager;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
@@ -17,6 +20,21 @@ public class I18N {
     public I18N(Player player) {
         this.player = player;
         this.playerLocale = getPlayerLocale();
+    }
+
+    public List<String> translateItem(String key, Object... arguments) {
+        final ArrayList<String> lines = new ArrayList<>();
+        final String itemNameKey = readString(key + ".name");
+        final List<String> itemLoreKey = readString(key + ".lore");
+        try {
+            // Item Name
+            formatter.applyPattern(itemNameKey);
+            final String itemNameTranslated = formatter.format(arguments);
+            lines.add(itemNameTranslated);
+            return lines;
+        } catch (Exception e) {
+            return Collections.singletonList(key);
+        }
     }
 
     public String translate(String key, Object... arguments) {
@@ -30,7 +48,7 @@ public class I18N {
         }
     }
 
-    public String translateWithoutPrefix(String key, Object... arguments) {
+    public String translatePrefixless(String key, Object... arguments) {
         final String translation = readString(key);
         try {
             formatter.applyPattern(translation);
@@ -43,7 +61,20 @@ public class I18N {
     private String readString(String key) {
         String string;
         if (playerLocale == Locale.CUSTOM) {
-            string = instance.getLocaleFileManager().get(key);
+            string = instance.getLocaleFileManager().getString(key);
+        } else {
+            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
+            final YamlConfig yamlConfig = YamlConfig.load(resource);
+            string = yamlConfig.getString(key);
+        }
+
+        return string;
+    }
+
+    private List<String> readList(String key) {
+        String string;
+        if (playerLocale == Locale.CUSTOM) {
+            string = instance.getLocaleFileManager().getString(key);
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
             final YamlConfig yamlConfig = YamlConfig.load(resource);

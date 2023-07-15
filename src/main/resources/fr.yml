@@ -24,3 +24,33 @@ event:
     cache:
       invalidate_cache: "§fCache complet invalidé."
       invalidate_entry: "§6{0} §fa été invalidé."
+
+gui:
+  exit: "Quitter"
+  home:
+    admin:
+      name: "Panel d'administration"
+      lore:
+        - "Configurez et gérez Nicko."
+    settings:
+      name: "Paramètres"
+      lore:
+        - "Configurez votre expérience."
+    change_name:
+      name: "Changer le §6pseudo"
+    change_skin:
+      name: "Changer le §6skin"
+    change_both:
+      name: "Changer les §6deux"
+    reset:
+      name: "Réinitialiser l'apparence"
+      lore:
+        - "Supprime complètement votre déguisement."
+  settings:
+    language:
+      name: "Language"
+      lore:
+        # The language values will be filled at {0}
+        - "{0}"
+        - "§7§oParcourez les valeurs"
+        - "§7§oavec un clique gauche/droit."

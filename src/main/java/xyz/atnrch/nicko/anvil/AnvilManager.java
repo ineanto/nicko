@@ -107,7 +107,7 @@ public class AnvilManager {
         if (!actionResult.isError()) {
             player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK));
         } else {
-            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, i18n.translateWithoutPrefix(actionResult.getErrorKey())));
+            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, i18n.translatePrefixless(actionResult.getErrorKey())));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

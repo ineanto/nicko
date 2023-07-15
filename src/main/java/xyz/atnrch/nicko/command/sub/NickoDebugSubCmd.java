@@ -55,7 +55,7 @@ public class NickoDebugSubCmd {
             target.playSound(target.getLocation(), Sound.ENTITY_ITEM_FRAME_PLACE, 1, 1);
         } else {
             final I18N i18n = new I18N(target);
-            target.sendMessage(prefix + "§cWhoops. Something happened: " + i18n.translateWithoutPrefix(result.getErrorKey()));
+            target.sendMessage(prefix + "§cWhoops. Something happened: " + i18n.translatePrefixless(result.getErrorKey()));
         }
     }
 }

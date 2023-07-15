@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BrokenSQLTest {
-    private static ServerMock server;
     private static NickoBukkit plugin;
     private static PlayerMock player;
 
@@ -27,7 +26,7 @@ public class BrokenSQLTest {
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false);
-        server = MockBukkit.mock();
+        final ServerMock server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
         player = server.addPlayer();
     }

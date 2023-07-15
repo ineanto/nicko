@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RedisCacheTest {
-    private static ServerMock server;
     private static NickoBukkit plugin;
     private static PlayerMock player;
 
@@ -29,7 +28,7 @@ public class RedisCacheTest {
                 new DataSourceConfiguration(true, "127.0.0.1", 6379, "", ""),
                 "",
                 false);
-        server = MockBukkit.mock();
+        final ServerMock server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
         player = server.addPlayer();
     }

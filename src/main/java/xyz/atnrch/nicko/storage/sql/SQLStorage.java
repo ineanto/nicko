@@ -7,9 +7,10 @@ import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.Storage;
 
-import java.io.ByteArrayInputStream;
-import java.nio.ByteBuffer;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -54,7 +55,7 @@ public class SQLStorage extends Storage {
         if (connection == null) return false;
 
         try {
-            final String sql = "SELECT * FROM nicko.DATA WHERE uuid = ?";
+            final String sql = "SELECT uuid FROM nicko.DATA WHERE uuid = ?";
 
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
@@ -71,6 +72,7 @@ public class SQLStorage extends Storage {
     public Optional<NickoProfile> retrieve(UUID uuid) {
         final Connection connection = getProvider().getConnection();
         if (connection == null) return Optional.empty();
+        if (!isStored(uuid)) return Optional.empty();
 
         try {
             final String sql = "SELECT * FROM nicko.DATA WHERE uuid = ?";
@@ -89,6 +91,9 @@ public class SQLStorage extends Storage {
                 locale = resultSet.getString("locale");
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
+            System.out.println("name = " + name);
+            System.out.println("skin = " + skin);
+            System.out.println("locale = " + locale);
 
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);
@@ -104,7 +109,7 @@ public class SQLStorage extends Storage {
         if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
 
         try {
-            final String sql = "DELETE FROM nicko.DATA WHERE uuid = ? LIMIT 1";
+            final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
             int rows = statement.executeUpdate();
@@ -135,13 +140,5 @@ public class SQLStorage extends Storage {
         statement.setBoolean(4, profile.isBungeecordTransfer());
         statement.setString(5, uuid.toString());
         return statement;
-    }
-
-    private ByteArrayInputStream uuidToBin(UUID uuid) {
-        byte[] bytes = new byte[16];
-        ByteBuffer.wrap(bytes)
-                .putLong(uuid.getMostSignificantBits())
-                .putLong(uuid.getLeastSignificantBits());
-        return new ByteArrayInputStream(bytes);
     }
 }

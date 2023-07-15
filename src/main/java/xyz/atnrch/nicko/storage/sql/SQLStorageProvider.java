@@ -65,7 +65,7 @@ public class SQLStorageProvider implements StorageProvider {
                        "skin varchar(16)," +
                        "locale char(2) NOT NULL," +
                        "bungeecord boolean NOT NULL," +
-                       "PRIMARY KEY (UUID))";
+                       "PRIMARY KEY (uuid))";
         query = query.replace("%s", schemaName);
 
         final PreparedStatement statement = connection.prepareStatement(query);

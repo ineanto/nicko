@@ -1,27 +1,24 @@
 package xyz.atnrch.nicko.test.storage;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SQLStorageTest {
-    private static ServerMock server;
-    private static NickoBukkit plugin;
-    private static PlayerMock player;
     private static PlayerDataStore dataStore;
+    private static UUID uuid;
 
     @BeforeAll
     public static void setup() {
@@ -30,10 +27,12 @@ public class SQLStorageTest {
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false);
-        server = MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+
+        MockBukkit.mock();
+
+        final NickoBukkit plugin = MockBukkit.load(NickoBukkit.class, config);
         dataStore = plugin.getDataStore();
-        player = server.addPlayer();
+        uuid = UUID.randomUUID();
     }
 
     @Test
@@ -47,7 +46,7 @@ public class SQLStorageTest {
     @DisplayName("Store empty profile")
     @Order(2)
     public void storeEmptyProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
         assertTrue(optionalProfile.isPresent());
     }
 
@@ -55,7 +54,7 @@ public class SQLStorageTest {
     @DisplayName("Update profile")
     @Order(3)
     public void updateProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
         final NickoProfile profile = optionalProfile.get();
         assertNull(profile.getName());
         assertNull(profile.getSkin());
@@ -67,7 +66,7 @@ public class SQLStorageTest {
         profile.setLocale(Locale.FRENCH);
         profile.setBungeecordTransfer(false);
 
-        final ActionResult result = dataStore.saveData(player);
+        final ActionResult result = dataStore.getStorage().store(uuid, profile);
         assertFalse(result.isError());
     }
 
@@ -75,7 +74,7 @@ public class SQLStorageTest {
     @DisplayName("Get updated profile")
     @Order(4)
     public void hasProfileBeenUpdated() {
-        final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
+        final Optional<NickoProfile> profile = dataStore.getData(uuid);
         assertTrue(profile.isPresent());
 
         final NickoProfile updatedProfile = profile.get();
@@ -89,7 +88,7 @@ public class SQLStorageTest {
     @DisplayName("Delete profile")
     @Order(5)
     public void deleteProfile() {
-        final ActionResult sqlDelete = dataStore.getStorage().delete(player.getUniqueId());
+        final ActionResult sqlDelete = dataStore.getStorage().delete(uuid);
         assertFalse(sqlDelete.isError());
     }
 

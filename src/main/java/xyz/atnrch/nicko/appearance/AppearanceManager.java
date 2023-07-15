@@ -106,6 +106,7 @@ public class AppearanceManager {
         if (!actionResult.isError()) {
             this.profile.setSkin(null);
             this.profile.setName(null);
+            dataStore.getCache().cache(uuid, profile);
         }
         return actionResult;
     }

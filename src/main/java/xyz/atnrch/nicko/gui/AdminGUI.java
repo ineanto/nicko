@@ -1,6 +1,7 @@
 package xyz.atnrch.nicko.gui;
 
 import xyz.atnrch.nicko.gui.items.admin.ManageCacheItem;
+import xyz.atnrch.nicko.gui.items.admin.ManagePlayerItem;
 import xyz.atnrch.nicko.gui.items.common.GoBackItem;
 import org.bukkit.entity.Player;
 import xyz.xenondevs.invui.gui.Gui;
@@ -16,10 +17,11 @@ public class AdminGUI {
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # S U U # # #",
+                        "# # # S C U # # #",
                         "B # # # # # # # #"
                 )
                 .addIngredient('S', new ManageCacheItem())
+                .addIngredient('C', new ManagePlayerItem())
                 .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;

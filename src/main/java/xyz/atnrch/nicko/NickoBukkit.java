@@ -84,7 +84,7 @@ public class NickoBukkit extends JavaPlugin {
             try {
                 Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
                 getLogger().warning("Nicko has not been tested against Folia and might not work at all!");
-                getLogger().warning("Issues regarding Nicko on Folia will not be ignored for now.");
+                getLogger().warning("Issues regarding Nicko on Folia will be ignored for now.");
             } catch (ClassNotFoundException ignored) { }
 
             localeFileManager = new LocaleFileManager();

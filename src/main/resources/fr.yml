@@ -29,13 +29,17 @@ gui:
   exit: "Quitter"
   home:
     admin:
-      name: "Panel d'administration"
+      name: "Panel d''administration"
       lore:
-        - "Configurez et gérez Nicko."
+        length: 1
+        content:
+          - "Configurez et gérez Nicko."
     settings:
       name: "Paramètres"
       lore:
-        - "Configurez votre expérience."
+        length: 1
+        content:
+          "Configurez votre expérience."
     change_name:
       name: "Changer le §6pseudo"
     change_skin:

@@ -1,6 +1,17 @@
 package xyz.atnrch.nicko.i18n;
 
 public class I18NDict {
+    public static class Error {
+        public static final String GENERIC = "error.generic";
+        public static final String PERMISSION = "error.permission";
+        public static final String CACHE = "error.cache";
+        public static final String MOJANG_NAME = "error.mojang_name";
+        public static final String MOJANG_SKIN = "error.mojang_skin";
+        public static final String INVALID_USERNAME = "error.invalid_username";
+        public static final String SQL_ERROR = "error.sql";
+        public static final String JSON_ERROR = "error.json";
+    }
+
     public static class Event {
         private static final String EVENT_KEY = "event.";
 
@@ -49,14 +60,15 @@ public class I18NDict {
         }
     }
 
-    public static class Error {
-        public static final String GENERIC = "error.generic";
-        public static final String PERMISSION = "error.permission";
-        public static final String CACHE = "error.cache";
-        public static final String MOJANG_NAME = "error.mojang_name";
-        public static final String MOJANG_SKIN = "error.mojang_skin";
-        public static final String INVALID_USERNAME = "error.invalid_username";
-        public static final String SQL_ERROR = "error.sql";
-        public static final String JSON_ERROR = "error.json";
+    public static class GUI {
+        private static final String GUI_KEY = "gui.";
+
+        public static final String EXIT = GUI_KEY + "exit";
+
+        public static class Home {
+            private static final String HOME_KEY = GUI_KEY + "home.";
+
+            public static final String ADMIN = HOME_KEY + "admin";
+        }
     }
 }

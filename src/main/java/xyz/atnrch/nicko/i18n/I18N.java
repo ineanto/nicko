@@ -22,10 +22,15 @@ public class I18N {
         this.playerLocale = getPlayerLocale();
     }
 
+    public I18N(Locale locale) {
+        this.player = null;
+        this.playerLocale = locale;
+    }
+
     public List<String> translateItem(String key, Object... arguments) {
         final ArrayList<String> lines = new ArrayList<>();
         final String itemNameKey = readString(key + ".name");
-        final List<String> itemLoreKey = readString(key + ".lore");
+        final ArrayList<String> itemLoreKey = readList(key + ".lore");
         try {
             // Item Name
             formatter.applyPattern(itemNameKey);
@@ -59,29 +64,35 @@ public class I18N {
     }
 
     private String readString(String key) {
-        String string;
+        YamlConfig yamlFile;
         if (playerLocale == Locale.CUSTOM) {
-            string = instance.getLocaleFileManager().getString(key);
+            yamlFile = instance.getLocaleFileManager().getYamlFile();
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            final YamlConfig yamlConfig = YamlConfig.load(resource);
-            string = yamlConfig.getString(key);
+            yamlFile = YamlConfig.load(resource);
         }
-
-        return string;
+        return yamlFile.getString(key);
     }
 
-    private List<String> readList(String key) {
-        String string;
+    private ArrayList<String> readList(String key) {
+        final ArrayList<String> lines = new ArrayList<>();
+        YamlConfig yamlFile;
         if (playerLocale == Locale.CUSTOM) {
-            string = instance.getLocaleFileManager().getString(key);
+            yamlFile = instance.getLocaleFileManager().getYamlFile();
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            final YamlConfig yamlConfig = YamlConfig.load(resource);
-            string = yamlConfig.getString(key);
+            yamlFile = YamlConfig.load(resource);
         }
 
-        return string;
+        // 9 is a magic number
+        for (int i = 0; i < yamlFile.getInt(key + ".length"); i++) {
+            final String line = yamlFile.getString(key + ".content[" + i + "]");
+            System.out.println("line = " + line);
+            if (line != null && !line.equals("{" + i + "}")) {
+                lines.add(line);
+            }
+        }
+        return lines;
     }
 
     private Locale getPlayerLocale() {

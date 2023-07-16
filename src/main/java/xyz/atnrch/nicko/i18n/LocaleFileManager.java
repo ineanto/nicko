@@ -10,6 +10,7 @@ import java.nio.file.Files;
 public class LocaleFileManager {
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
     private final File file = new File(folder, "lang.yml");
+    private YamlConfig yamlFile;
 
     public String getString(String key) {
         if (!file.exists()) return key;
@@ -38,5 +39,16 @@ public class LocaleFileManager {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public YamlConfig getYamlFile() {
+        if (yamlFile == null) {
+            try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
+                yamlFile = YamlConfig.load(inputStream);
+            } catch (IOException ignored) {
+                return null;
+            }
+        }
+        return yamlFile;
     }
 }

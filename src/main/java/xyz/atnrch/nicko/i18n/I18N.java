@@ -13,6 +13,7 @@ import java.util.List;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
+    private final YamlConfig yamlConfig;
     private final NickoBukkit instance = NickoBukkit.getInstance();
     private final Player player;
     private final Locale playerLocale;
@@ -20,11 +21,13 @@ public class I18N {
     public I18N(Player player) {
         this.player = player;
         this.playerLocale = getPlayerLocale();
+        this.yamlConfig = getYamlConfig();
     }
 
     public I18N(Locale locale) {
         this.player = null;
         this.playerLocale = locale;
+        this.yamlConfig = getYamlConfig();
     }
 
     public List<String> translateItem(String key, Object... arguments) {
@@ -64,35 +67,20 @@ public class I18N {
     }
 
     private String readString(String key) {
-        YamlConfig yamlFile;
-        if (playerLocale == Locale.CUSTOM) {
-            yamlFile = instance.getLocaleFileManager().getYamlFile();
-        } else {
-            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            yamlFile = YamlConfig.load(resource);
-        }
-        return yamlFile.getString(key);
+        return yamlConfig.getString(key);
     }
 
     private ArrayList<String> readList(String key) {
-        final ArrayList<String> lines = new ArrayList<>();
-        YamlConfig yamlFile;
+        return yamlConfig.getStringList(key);
+    }
+
+    private YamlConfig getYamlConfig() {
         if (playerLocale == Locale.CUSTOM) {
-            yamlFile = instance.getLocaleFileManager().getYamlFile();
+            return instance.getLocaleFileManager().getYamlFile();
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            yamlFile = YamlConfig.load(resource);
+            return new YamlConfig(resource);
         }
-
-        // 9 is a magic number
-        for (int i = 0; i < yamlFile.getInt(key + ".length"); i++) {
-            final String line = yamlFile.getString(key + ".content[" + i + "]");
-            System.out.println("line = " + line);
-            if (line != null && !line.equals("{" + i + "}")) {
-                lines.add(line);
-            }
-        }
-        return lines;
     }
 
     private Locale getPlayerLocale() {

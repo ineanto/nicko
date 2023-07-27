@@ -8,8 +8,7 @@ import xyz.atnrch.nicko.appearance.AppearanceManager;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Iterator;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
@@ -30,19 +29,31 @@ public class I18N {
         this.yamlConfig = getYamlConfig();
     }
 
-    public List<String> translateItem(String key, Object... arguments) {
-        final ArrayList<String> lines = new ArrayList<>();
-        final String itemNameKey = readString(key + ".name");
-        final ArrayList<String> itemLoreKey = readList(key + ".lore");
-        try {
-            // Item Name
-            formatter.applyPattern(itemNameKey);
-            final String itemNameTranslated = formatter.format(arguments);
-            lines.add(itemNameTranslated);
-            return lines;
-        } catch (Exception e) {
-            return Collections.singletonList(key);
+    public ItemTranslation translateItem(String key, String... args) {
+        final String name = readString(key + ".name");
+        final ArrayList<String> lore = readList(key + ".lore");
+
+        // Add all elements to a list
+        final ArrayList<String> toTranslate = new ArrayList<>();
+        toTranslate.add(name);
+        toTranslate.addAll(lore);
+
+        // Set starting index to 0
+        int index = 0;
+
+        // While iterator next value exists/isn't null
+        final Iterator<String> iterator = toTranslate.iterator();
+        while (!iterator.hasNext() || iterator.next() == null) {
+            // Get the current line
+            final String currentLine = toTranslate.get(index);
+
+            // Replace with the corresponding varargs index
+            toTranslate.set(index, currentLine.replace("{" + index + "}", args[index]));
+
+            // Increment the index
+            index++;
         }
+        return new ItemTranslation(toTranslate.get(0), toTranslate.subList(1, toTranslate.size()));
     }
 
     public String translate(String key, Object... arguments) {

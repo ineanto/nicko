@@ -15,7 +15,7 @@ public class LocaleFileManager {
     public String getString(String key) {
         if (!file.exists()) return key;
         try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
-            final YamlConfig yamlConfig = YamlConfig.load(inputStream);
+            final YamlConfig yamlConfig = new YamlConfig(inputStream);
             return yamlConfig.getString(key);
         } catch (IOException e) {
             return key;
@@ -44,7 +44,7 @@ public class LocaleFileManager {
     public YamlConfig getYamlFile() {
         if (yamlFile == null) {
             try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
-                yamlFile = YamlConfig.load(inputStream);
+                yamlFile = new YamlConfig(inputStream);
             } catch (IOException ignored) {
                 return null;
             }

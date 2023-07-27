@@ -31,15 +31,11 @@ gui:
     admin:
       name: "Panel d''administration"
       lore:
-        length: 1
-        content:
-          - "Configurez et gérez Nicko."
+        - "Configurez et gérez Nicko."
     settings:
       name: "Paramètres"
       lore:
-        length: 1
-        content:
-          "Configurez votre expérience."
+        - "Configurez votre expérience."
     change_name:
       name: "Changer le §6pseudo"
     change_skin:
@@ -52,9 +48,13 @@ gui:
         - "Supprime complètement votre déguisement."
   settings:
     language:
-      name: "Language"
+      name: "Langage"
       lore:
-        # The language values will be filled at {0}
         - "{0}"
         - "§7§oParcourez les valeurs"
         - "§7§oavec un clique gauche/droit."
+    bungeecord:
+      name: "Bungeecord Transfer"
+      lore:
+        - "§7§oGet through the values"
+        - "§7§oby left or right clicking."

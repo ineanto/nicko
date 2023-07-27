@@ -14,8 +14,4 @@ public class ExitItem extends SimpleItem {
             }
         });
     }
-
-    public ItemBuilder getItemBuilder() {
-        return null;
-    }
 }

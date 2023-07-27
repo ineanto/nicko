@@ -12,9 +12,8 @@ import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.i18n.Locale;
-
-import java.util.List;
 
 public class I18NLoreTest {
     private static NickoBukkit plugin;
@@ -35,8 +34,9 @@ public class I18NLoreTest {
     @DisplayName("Translate Item Lore")
     public void translateItemLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        List<String> strings = i18n.translateItem(I18NDict.GUI.Home.ADMIN);
-        System.out.println("strings = " + strings);
+        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Home.ADMIN);
+        System.out.println("name = " + translation.getName());
+        System.out.println("lore = " + translation.getLore());
     }
 
     @AfterAll

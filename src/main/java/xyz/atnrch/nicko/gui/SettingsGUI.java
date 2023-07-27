@@ -24,11 +24,15 @@ public class SettingsGUI {
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
         final HomeGUI parent = new HomeGUI(player);
+        final LanguageCyclingItem languageItem = new LanguageCyclingItem(player);
+        final BungeeCordCyclingItem bungeeCordItem = new BungeeCordCyclingItem(player);
+        final GoBackItem backItem = new GoBackItem(player);
+
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
-                .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
-                .addIngredient('L', new LanguageCyclingItem().get(player))
-                .addIngredient('T', new BungeeCordCyclingItem().get(player))
+                .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
+                .addIngredient('L', languageItem.get())
+                .addIngredient('T', bungeeCordItem.get())
                 .build();
         this.player = player;
     }

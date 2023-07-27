@@ -64,11 +64,21 @@ public class I18NDict {
         private static final String GUI_KEY = "gui.";
 
         public static final String EXIT = GUI_KEY + "exit";
+        public static final String GO_BACK = GUI_KEY + "go_back";
 
         public static class Home {
             private static final String HOME_KEY = GUI_KEY + "home.";
 
             public static final String ADMIN = HOME_KEY + "admin";
         }
+
+        public static class Settings {
+            private static final String SETTINGS_KEY = GUI_KEY + "settings.";
+
+            public static final String LANGUAGE = SETTINGS_KEY + "language";
+            public static final String BUNGEECORD = SETTINGS_KEY + "bungeecord";
+        }
+
+
     }
 }

@@ -14,6 +14,8 @@ public class AdminGUI {
 
     public AdminGUI(Player player) {
         final HomeGUI parent = new HomeGUI(player);
+        final GoBackItem backItem = new GoBackItem(player);
+
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
@@ -22,7 +24,7 @@ public class AdminGUI {
                 )
                 .addIngredient('S', new ManageCacheItem())
                 .addIngredient('C', new ManagePlayerItem())
-                .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
+                .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;
     }

@@ -29,6 +29,8 @@ public class PlayerCheckGUI {
                 .collect(Collectors.toList());
 
         final AdminGUI parent = new AdminGUI(player);
+        final GoBackItem backItem = new GoBackItem(player);
+
         gui = ScrollGui.items(guiItemBuilder -> {
             guiItemBuilder.setStructure(
                     "x x x x x x x x U",
@@ -40,7 +42,7 @@ public class PlayerCheckGUI {
             guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
             guiItemBuilder.addIngredient('U', new ScrollUpItem());
             guiItemBuilder.addIngredient('D', new ScrollDownItem());
-            guiItemBuilder.addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()));
+            guiItemBuilder.addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()));
             guiItemBuilder.setContent(items);
         });
 

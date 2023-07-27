@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
@@ -21,9 +22,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class LanguageCyclingItem {
-    private final ItemProvider[] providers = getItems();
+    private final Player player;
+    private final ItemProvider[] providers;
+    private final I18N i18n;
 
-    public AbstractItem get(Player player) {
+    public LanguageCyclingItem(Player player) {
+        this.player = player;
+        this.i18n = new I18N(player);
+        this.providers = getItems();
+    }
+
+    public AbstractItem get() {
         final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
         final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
         if (profile.isPresent()) {
@@ -46,7 +55,9 @@ public class LanguageCyclingItem {
 
     private ItemProvider generateItem(Locale locale, List<Locale> locales) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        builder.setDisplayName("Language");
+        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.LANGUAGE);
+
+        builder.setDisplayName(translation.getName());
         for (Locale value : locales) {
             if (locale != value) {
                 builder.addLoreLines("§7> " + value.getName());
@@ -61,8 +72,8 @@ public class LanguageCyclingItem {
     private ItemProvider[] getItems() {
         final NickoBukkit instance = NickoBukkit.getInstance();
         final ArrayList<ItemProvider> items = new ArrayList<>();
-
         final ArrayList<Locale> localesToGenerate = new ArrayList<>();
+
         Collections.addAll(localesToGenerate, Locale.values());
         if (!instance.getNickoConfig().isCustomLocale()) {
             localesToGenerate.remove(Locale.CUSTOM);

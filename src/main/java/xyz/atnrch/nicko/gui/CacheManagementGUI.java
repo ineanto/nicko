@@ -15,13 +15,15 @@ public class CacheManagementGUI {
 
     public CacheManagementGUI(Player player) {
         final AdminGUI parent = new AdminGUI(player);
+        final GoBackItem backItem = new GoBackItem(player);
+
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
                         "# # # S A D # # #",
                         "B # # # # # # # #"
                 )
-                .addIngredient('B', new GoBackItem(parent.getGUI(), parent.getTitle()))
+                .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .addIngredient('S', new CacheStatisticsItem())
                 .addIngredient('A', new InvalidateCacheItem())
                 .addIngredient('D', new InvalidateEntryItem())

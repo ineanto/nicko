@@ -9,11 +9,16 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
-    private final YamlConfig yamlConfig;
+    private final Logger logger = Logger.getLogger("I18N");
     private final NickoBukkit instance = NickoBukkit.getInstance();
+    private final Pattern replacementPattern = Pattern.compile("\\{\\d+}");
+    private final YamlConfig yamlConfig;
     private final Player player;
     private final Locale playerLocale;
 
@@ -30,37 +35,63 @@ public class I18N {
     }
 
     public ItemTranslation translateItem(String key, String... args) {
-        final String name = readString(key + ".name");
-        final ArrayList<String> lore = readList(key + ".lore");
+        final String nameKey = key + ".name";
+        final String loreKey = key + ".lore";
+        final String name = readString(nameKey);
+        final ArrayList<String> lore = readList(loreKey);
+
+        if (name == null) {
+            logger.warning(nameKey + " doesn't exists! Please translate this entry.");
+            return new ItemTranslation(nameKey, new ArrayList<String>() {{
+                add(loreKey);
+            }});
+        }
 
         // Add all elements to a list
         final ArrayList<String> toTranslate = new ArrayList<>();
         toTranslate.add(name);
-        toTranslate.addAll(lore);
+        if (lore != null && !lore.isEmpty()) {
+            toTranslate.addAll(lore);
+        }
 
         // Set starting index to 0
-        int index = 0;
+        int lineIndex = 0;
+        int replacementIndex = 0;
 
         // While iterator next value exists/isn't null
         final Iterator<String> iterator = toTranslate.iterator();
-        while (!iterator.hasNext() || iterator.next() == null) {
+        while (iterator.hasNext() && iterator.next() != null) {
             // Get the current line
-            final String currentLine = toTranslate.get(index);
+            final String currentLine = toTranslate.get(lineIndex);
 
-            // Replace with the corresponding varargs index
-            toTranslate.set(index, currentLine.replace("{" + index + "}", args[index]));
+            // If the line doesn't contain {i}, skip it
+            final Matcher matcher = replacementPattern.matcher(currentLine);
+            if (!matcher.matches()) {
+                lineIndex++;
+                continue;
+            }
+
+            // If it does, replace the content with the args at position replacementIndex
+            if (replacementIndex < args.length && args[replacementIndex] != null) {
+                // Replace with the corresponding varargs index
+                toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex]));
+                replacementIndex++;
+            }
 
             // Increment the index
-            index++;
+            lineIndex++;
         }
-        return new ItemTranslation(toTranslate.get(0), toTranslate.subList(1, toTranslate.size()));
+
+        if (lore == null || lore.isEmpty()) {
+            return new ItemTranslation(toTranslate.get(0), new ArrayList<>());
+        }
+        return new ItemTranslation(toTranslate.get(0), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
     }
 
     public String translate(String key, Object... arguments) {
-        final String string = readString(key);
-
+        final String translation = readString(key);
         try {
-            formatter.applyPattern(string);
+            formatter.applyPattern(translation);
             return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
             return instance.getNickoConfig().getPrefix() + key;
@@ -94,7 +125,7 @@ public class I18N {
         }
     }
 
-    private Locale getPlayerLocale() {
+    public Locale getPlayerLocale() {
         try {
             final AppearanceManager appearanceManager = AppearanceManager.get(player);
             return !appearanceManager.hasData() ? Locale.FALLBACK_LOCALE : appearanceManager.getLocale();

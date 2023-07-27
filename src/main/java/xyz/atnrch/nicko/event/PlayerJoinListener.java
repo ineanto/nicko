@@ -33,5 +33,6 @@ public class PlayerJoinListener implements Listener {
                 }
             }
         }, 20L);
+        System.out.println("i18n.getPlayerLocale().getCode() = " + i18n.getPlayerLocale().getCode());
     }
 }

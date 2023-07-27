@@ -43,9 +43,10 @@ public class LanguageCyclingItem {
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
                 // TODO (Ineanto, 7/14/23): This checks a 2nd time for the profile.
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
-                    final I18N i18n = new I18N(player);
                     player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
                     player.getOpenInventory().close();
+                } else {
+                    player.sendMessage("Updated language to " + nickoProfile.getLocale().getCode());
                 }
             }, localeOrdinal, providers);
         }

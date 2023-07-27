@@ -1,7 +1,6 @@
 package xyz.atnrch.nicko.test.i18n;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,8 +14,10 @@ import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.i18n.Locale;
 
-public class I18NLoreTest {
-    private static NickoBukkit plugin;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class I18NItemTranslationTest {
     private static PlayerMock player;
 
     @BeforeAll
@@ -26,17 +27,25 @@ public class I18NLoreTest {
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false);
-        final ServerMock server = MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        MockBukkit.mock();
+        MockBukkit.load(NickoBukkit.class, config);
     }
 
     @Test
-    @DisplayName("Translate Item Lore")
+    @DisplayName("Translate Item Without Lore")
+    public void translateItemTranslationWithoutLore() {
+        final I18N i18n = new I18N(Locale.FRENCH);
+        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.GO_BACK);
+        assertTrue(translation.getLore().isEmpty());
+        assertEquals(translation.getName(), "Retour");
+    }
+
+    @Test
+    @DisplayName("Translate Item")
     public void translateItemLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Home.ADMIN);
-        System.out.println("name = " + translation.getName());
-        System.out.println("lore = " + translation.getLore());
+        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.BUNGEECORD, "Test");
+        assertEquals("Test", translation.getLore().get(0));
     }
 
     @AfterAll

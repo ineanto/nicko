@@ -1,12 +1,12 @@
 package xyz.atnrch.nicko.i18n;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ItemTranslation {
     private final String name;
-    private final List<String> lore;
+    private final ArrayList<String> lore;
 
-    public ItemTranslation(String name, List<String> lore) {
+    public ItemTranslation(String name, ArrayList<String> lore) {
         this.name = name;
         this.lore = lore;
     }
@@ -15,7 +15,7 @@ public class ItemTranslation {
         return name;
     }
 
-    public List<String> getLore() {
+    public ArrayList<String> getLore() {
         return lore;
     }
 }

@@ -11,20 +11,17 @@ import xyz.xenondevs.invui.item.impl.SuppliedItem;
 import xyz.xenondevs.invui.window.Window;
 
 public class GoBackItem {
-    private final Player player;
     private final I18N i18n;
 
     public GoBackItem(Player player) {
-        this.player = player;
         this.i18n = new I18N(player);
     }
 
     public SuppliedItem get(Gui gui, String parentTitle) {
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.GO_BACK);
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.ARROW);
+            final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.GO_BACK);
             builder.setDisplayName(translation.getName());
-            translation.getLore().forEach(builder::addLoreLines);
             return builder;
         }, click -> {
             click.getEvent().getView().close();

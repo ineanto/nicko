@@ -1,13 +1,13 @@
 package xyz.atnrch.nicko.gui.items.settings;
 
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.profile.NickoProfile;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
@@ -49,14 +49,17 @@ public class BungeeCordCyclingItem {
         final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.BUNGEECORD);
 
         builder.setDisplayName(translation.getName());
-        if (enabled) {
-            builder.addLoreLines("§7> §cDisabled");
-            builder.addLoreLines("§6§l> §a§lEnabled");
-        } else {
-            builder.addLoreLines("§6§l> §c§lDisabled");
-            builder.addLoreLines("§7> §aEnabled");
-        }
-        builder.addLoreLines("§7§oCycle through the values by", "§7§oleft and right clicking.");
+        translation.getLore().forEach(builder::addLoreLines);
+        /*
+         if (enabled) {
+         builder.addLoreLines("§7> §cDisabled");
+         builder.addLoreLines("§6§l> §a§lEnabled");
+         } else {
+         builder.addLoreLines("§6§l> §c§lDisabled");
+         builder.addLoreLines("§7> §aEnabled");
+         }
+         builder.addLoreLines("§7§oCycle through the values by", "§7§oleft and right clicking.");
+         */
         return builder;
     }
 }

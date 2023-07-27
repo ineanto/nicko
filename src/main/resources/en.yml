@@ -29,6 +29,8 @@ event:
 
 gui:
   exit: "Exit"
+  go_back:
+    name: "Back"
   home:
     admin:
       name: "Administration panel"
@@ -58,5 +60,6 @@ gui:
     bungeecord:
       name: "Bungeecord Transfer"
       lore:
+        - "{0}"
         - "§7§oGet through the values"
         - "§7§oby left or right clicking."

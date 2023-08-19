@@ -7,6 +7,7 @@ import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -46,7 +47,7 @@ public class SQLStorageTest {
     @DisplayName("Store empty profile")
     @Order(2)
     public void storeEmptyProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
         assertTrue(optionalProfile.isPresent());
     }
 
@@ -54,15 +55,18 @@ public class SQLStorageTest {
     @DisplayName("Update profile")
     @Order(3)
     public void updateProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
+        assertTrue(optionalProfile.isPresent());
+
         final NickoProfile profile = optionalProfile.get();
-        assertNull(profile.getName());
-        assertNull(profile.getSkin());
+        final AppearanceData appearanceData = profile.getAppearanceData();
+        assertNull(appearanceData.getName());
+        assertNull(appearanceData.getSkin());
         assertEquals(profile.getLocale(), Locale.ENGLISH);
         assertTrue(profile.isBungeecordTransfer());
 
-        profile.setName("Notch");
-        profile.setSkin("Notch");
+        appearanceData.setName("Notch");
+        appearanceData.setSkin("Notch");
         profile.setLocale(Locale.FRENCH);
         profile.setBungeecordTransfer(false);
 
@@ -74,12 +78,13 @@ public class SQLStorageTest {
     @DisplayName("Get updated profile")
     @Order(4)
     public void hasProfileBeenUpdated() {
-        final Optional<NickoProfile> profile = dataStore.getData(uuid);
-        assertTrue(profile.isPresent());
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
+        assertTrue(optionalProfile.isPresent());
 
-        final NickoProfile updatedProfile = profile.get();
-        assertEquals(updatedProfile.getName(), "Notch");
-        assertEquals(updatedProfile.getSkin(), "Notch");
+        final NickoProfile updatedProfile = optionalProfile.get();
+        final AppearanceData appearanceData = updatedProfile.getAppearanceData();
+        assertEquals(appearanceData.getName(), "Notch");
+        assertEquals(appearanceData.getSkin(), "Notch");
         assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
         assertFalse(updatedProfile.isBungeecordTransfer());
     }

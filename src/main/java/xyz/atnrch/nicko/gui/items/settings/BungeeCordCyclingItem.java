@@ -8,6 +8,7 @@ import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
@@ -31,12 +32,14 @@ public class BungeeCordCyclingItem {
     }
 
     public AbstractItem get() {
-        final Optional<NickoProfile> profile = NickoBukkit.getInstance().getDataStore().getData(player.getUniqueId());
+        final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+        final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int startingState = nickoProfile.isBungeecordTransfer() ? 0 : 1;
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setBungeecordTransfer(integer != 1);
+                dataStore.updateCache(player.getUniqueId(), nickoProfile);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
             }, startingState, providers);
         }

@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangSkin;
+import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
@@ -26,93 +26,45 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class AppearanceManager {
-    private final NickoProfile profile;
-    private final Player player;
-    private final UUID uuid;
     private final NickoBukkit instance = NickoBukkit.getInstance();
     private final PlayerDataStore dataStore = instance.getDataStore();
     private final PlayerNameStore nameStore = instance.getNameStore();
 
-    private AppearanceManager(UUID uuid) {
-        this.player = Bukkit.getPlayer(uuid);
-        this.uuid = uuid;
-        this.profile = dataStore.getData(uuid).orElse(NickoProfile.EMPTY_PROFILE.clone());
-    }
+    private final NickoProfile profile;
+    private final AppearanceData appearanceData;
+    private final Player player;
+    private final UUID uuid;
 
-    private AppearanceManager(String name) {
-        this.player = null;
-        this.uuid = null;
-        this.profile = dataStore.getOfflineData(name).orElse(NickoProfile.EMPTY_PROFILE.clone());
-    }
+    public AppearanceManager(Player player) {
+        this.uuid = player.getUniqueId();
+        this.player = player;
 
-    public static AppearanceManager get(Player player) {
-        return new AppearanceManager(player.getUniqueId());
-    }
-
-    public static AppearanceManager get(String name) {
-        return new AppearanceManager(name);
-    }
-
-    public boolean hasData() {
-        return !profile.isEmpty();
-    }
-
-    public void setSkin(String skin) {
-        profile.setSkin(skin);
-        dataStore.getCache().cache(uuid, profile);
-    }
-
-    public String getSkin() {
-        return profile.getSkin();
-    }
-
-    public boolean needsASkinChange() {
-        return profile.getSkin() != null && !profile.getSkin().equals(player.getName());
-    }
-
-    public void setName(String name) {
-        profile.setName(name);
-        dataStore.getCache().cache(uuid, profile);
-    }
-
-    public String getName() {
-        return profile.getName();
-    }
-
-    public void setLocale(Locale locale) {
-        profile.setLocale(locale);
-        dataStore.getCache().cache(uuid, profile);
-    }
-
-    public Locale getLocale() {
-        return profile.getLocale();
-    }
-
-    public NickoProfile getProfile() {
-        return profile;
-    }
-
-    public void setNameAndSkin(String name, String skin) {
-        this.profile.setName(name);
-        this.profile.setSkin(skin);
-        dataStore.getCache().cache(uuid, profile);
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        if (!optionalProfile.isPresent()) {
+            this.profile = NickoProfile.EMPTY_PROFILE.clone();
+            this.appearanceData = profile.getAppearanceData();
+            instance.getLogger().warning("Unable to appearance data for: " + player.getUniqueId() + ".");
+        } else {
+            this.profile = optionalProfile.get();
+            this.appearanceData = profile.getAppearanceData();
+        }
     }
 
     public ActionResult reset() {
         final String defaultName = nameStore.getStoredName(player);
-        this.profile.setName(defaultName);
-        this.profile.setSkin(defaultName);
+        appearanceData.setName(defaultName);
+        appearanceData.setSkin(defaultName);
         final ActionResult actionResult = updatePlayer(true, true);
         if (!actionResult.isError()) {
-            this.profile.setSkin(null);
-            this.profile.setName(null);
+            appearanceData.setSkin(null);
+            appearanceData.setName(null);
             dataStore.getCache().cache(uuid, profile);
         }
         return actionResult;
     }
 
     public ActionResult updatePlayer(boolean skinChange, boolean reset) {
-        final String displayName = profile.getName() == null ? player.getName() : profile.getName();
+        final String displayName = appearanceData.getName() == null ? player.getName() : appearanceData.getName();
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult result = updateGameProfileSkin(gameProfile, skinChange, reset);
         if (!result.isError()) {
@@ -139,15 +91,15 @@ public class AppearanceManager {
 
 
     private ActionResult updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
-        final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
+        final boolean changeOnlyName = appearanceData.getSkin() != null && !appearanceData.getSkin().equalsIgnoreCase(player.getName());
 
         if (skinChange || changeOnlyName) {
             Optional<MojangSkin> skin;
             try {
-                final MojangAPI mojang = NickoBukkit.getInstance().getMojangAPI();
-                final Optional<String> uuid = mojang.getUUID(profile.getSkin());
+                final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();
+                final Optional<String> uuid = mojangAPI.getUUID(appearanceData.getSkin());
                 if (uuid.isPresent()) {
-                    skin = reset ? mojang.getSkinWithoutCaching(uuid.get()) : mojang.getSkin(uuid.get());
+                    skin = reset ? mojangAPI.getSkinWithoutCaching(uuid.get()) : mojangAPI.getSkin(uuid.get());
                     if (skin.isPresent()) {
                         final MojangSkin skinResult = skin.get();
                         final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
@@ -187,7 +139,7 @@ public class AppearanceManager {
         respawn.sendPacket(player);
         player.setFlying(wasFlying);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
-        player.updateInventory();
+        player.updateInventory(); // Marked as unstable.
     }
 
     @SuppressWarnings("deprecation")

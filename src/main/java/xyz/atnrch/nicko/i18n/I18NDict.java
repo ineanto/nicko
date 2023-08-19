@@ -2,14 +2,17 @@ package xyz.atnrch.nicko.i18n;
 
 public class I18NDict {
     public static class Error {
-        public static final String GENERIC = "error.generic";
-        public static final String PERMISSION = "error.permission";
-        public static final String CACHE = "error.cache";
-        public static final String MOJANG_NAME = "error.mojang_name";
-        public static final String MOJANG_SKIN = "error.mojang_skin";
-        public static final String INVALID_USERNAME = "error.invalid_username";
-        public static final String SQL_ERROR = "error.sql";
-        public static final String JSON_ERROR = "error.json";
+        public static final String ERROR_KEY = "error.";
+
+        public static final String GENERIC = ERROR_KEY + "generic";
+        public static final String PERMISSION = ERROR_KEY + "permission";
+        public static final String CACHE = ERROR_KEY + "cache";
+        public static final String MOJANG_NAME = ERROR_KEY + "mojang_name";
+        public static final String MOJANG_SKIN = ERROR_KEY + "mojang_skin";
+        @Deprecated
+        public static final String INVALID_USERNAME = ERROR_KEY + "invalid_username";
+        public static final String SQL_ERROR = ERROR_KEY + "sql";
+        public static final String JSON_ERROR = ERROR_KEY + "json";
     }
 
     public static class Event {

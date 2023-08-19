@@ -1,45 +1,70 @@
 package xyz.atnrch.nicko.profile;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.Locale;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class NickoProfile implements Cloneable {
-    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Locale.ENGLISH, true);
+    public static final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(new AppearanceData(null, null), Locale.ENGLISH, true);
 
-    private String name;
-    private String skin;
+    private final AppearanceData appearanceData;
+    private final Player player;
     private Locale locale;
     private boolean bungeecordTransfer;
 
-    public NickoProfile(String name, String skin, Locale locale, boolean bungeecordTransfer) {
-        this.name = name;
-        this.skin = skin;
+    public NickoProfile(AppearanceData appearanceData, Locale locale, boolean bungeecordTransfer) {
+        this.appearanceData = appearanceData;
+        this.locale = locale;
+        this.bungeecordTransfer = bungeecordTransfer;
+        this.player = null;
+    }
+
+    public NickoProfile(Player player, AppearanceData appearanceData, Locale locale, boolean bungeecordTransfer) {
+        this.player = player;
+        this.appearanceData = appearanceData;
         this.locale = locale;
         this.bungeecordTransfer = bungeecordTransfer;
     }
 
-    public boolean isEmpty() {
-        return name == null && skin == null;
+    public NickoProfile(UUID uuid, AppearanceData appearanceData, Locale locale, boolean bungeecordTransfer) {
+        this.appearanceData = appearanceData;
+        this.locale = locale;
+        this.bungeecordTransfer = bungeecordTransfer;
+        this.player = Bukkit.getPlayer(uuid);
     }
 
-    public String getName() {
-        return name;
+    public static Optional<NickoProfile> get(Player player) {
+        return dataStore.getData(player.getUniqueId());
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static Optional<NickoProfile> get(UUID uuid) {
+        return dataStore.getData(uuid);
     }
 
-    public String getSkin() {
-        return skin;
+    public AppearanceManager getAppearanceManager() {
+        if (player == null) return null;
+        return new AppearanceManager(player);
     }
 
-    public void setSkin(String skin) {
-        this.skin = skin;
+    public AppearanceData getAppearanceData() {
+        return appearanceData;
     }
 
-    public Locale getLocale() { return locale; }
+    public Locale getLocale() {
+        return locale;
+    }
 
-    public void setLocale(Locale locale) { this.locale = locale; }
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
 
     public boolean isBungeecordTransfer() {
         return bungeecordTransfer;
@@ -52,11 +77,11 @@ public class NickoProfile implements Cloneable {
     @Override
     public String toString() {
         return "NickoProfile{" +
-                "name='" + name + '\'' +
-                ", skin='" + skin + '\'' +
-                ", locale=" + locale +
-                ", bungeecordTransfer=" + bungeecordTransfer +
-                '}';
+               "name='" + appearanceData.getName() + '\'' +
+               ", skin='" + appearanceData.getSkin() + '\'' +
+               ", locale=" + locale +
+               ", bungeecordTransfer=" + bungeecordTransfer +
+               '}';
     }
 
     @Override

@@ -11,20 +11,28 @@ import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangUtils;
+import xyz.atnrch.nicko.profile.AppearanceData;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class AnvilManager {
     private final Player player;
     private final AppearanceManager appearanceManager;
-    private final PlayerDataStore dataStore;
+    private final AppearanceData appearanceData;
+    private final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+    private final NickoProfile profile;
 
     public AnvilManager(Player player) {
         this.player = player;
-        this.appearanceManager = AppearanceManager.get(player);
-        this.dataStore = NickoBukkit.getInstance().getDataStore();
+
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
+        this.appearanceManager = optionalProfile.map(NickoProfile::getAppearanceManager).orElse(null);
+        this.appearanceData = optionalProfile.map(NickoProfile::getAppearanceData).orElse(null);
     }
 
     public void openNameThenSkinAnvil() {
@@ -49,8 +57,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setName(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            appearanceData.setName(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             openSkinAnvil();
                             return Collections.singletonList(AnvilGUI.ResponseAction.close());
                         }
@@ -70,8 +78,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setName(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            appearanceData.setName(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             final ActionResult actionResult = appearanceManager.updatePlayer(false, false);
                             return sendResultAndClose(actionResult);
                         }
@@ -91,8 +99,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setSkin(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            appearanceData.setSkin(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             final ActionResult actionResult = appearanceManager.updatePlayer(true, false);
                             return sendResultAndClose(actionResult);
                         }

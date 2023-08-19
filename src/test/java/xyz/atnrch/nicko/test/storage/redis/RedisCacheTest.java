@@ -6,9 +6,9 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
+import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -46,14 +46,20 @@ public class RedisCacheTest {
     @DisplayName("Update Cache Profile")
     @Order(2)
     public void updateCache() {
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
+        assertTrue(optionalProfile.isPresent());
+
+        final NickoProfile profile = optionalProfile.get();
         final PlayerDataStore dataStore = plugin.getDataStore();
-        final AppearanceManager appearanceManager = AppearanceManager.get(player);
-        appearanceManager.setName("Notch");
-        dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+        final AppearanceData appearanceData = profile.getAppearanceData();
+        appearanceData.setName("Notch");
+        dataStore.updateCache(player.getUniqueId(), profile);
+
         final Optional<NickoProfile> retrieve = dataStore.getCache().retrieve(player.getUniqueId());
         assertTrue(retrieve.isPresent());
         final NickoProfile retrieved = retrieve.get();
-        assertEquals(retrieved.getName(), "Notch");
+        final AppearanceData retrievedAppearanceData = retrieved.getAppearanceData();
+        assertEquals(retrievedAppearanceData.getName(), "Notch");
     }
 
     @Test

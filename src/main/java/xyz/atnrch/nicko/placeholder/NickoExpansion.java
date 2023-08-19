@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 
 import java.util.Optional;
@@ -51,20 +52,26 @@ public class NickoExpansion extends PlaceholderExpansion {
         final Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
-            if (!profile.isEmpty()) {
-                name = profile.getName();
-                skin = profile.getSkin();
+            final AppearanceData appearanceData = profile.getAppearanceData();
+            if (!appearanceData.isEmpty()) {
+                name = appearanceData.getName();
+                skin = appearanceData.getSkin();
             }
             locale = profile.getLocale().getName();
             bungeecord = profile.isBungeecordTransfer();
         }
 
         switch (params) {
-            case "name": return name;
-            case "skin": return skin;
-            case "locale": return locale;
-            case "bungeecord": return String.valueOf(bungeecord);
-            default: return null;
+            case "name":
+                return name;
+            case "skin":
+                return skin;
+            case "locale":
+                return locale;
+            case "bungeecord":
+                return String.valueOf(bungeecord);
+            default:
+                return null;
         }
     }
 }

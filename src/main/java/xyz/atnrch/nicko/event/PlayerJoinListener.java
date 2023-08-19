@@ -10,7 +10,11 @@ import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.atnrch.nicko.storage.PlayerDataStore;
 import xyz.atnrch.nicko.storage.name.PlayerNameStore;
+
+import java.util.Optional;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
@@ -19,20 +23,25 @@ public class PlayerJoinListener implements Listener {
         final NickoBukkit instance = NickoBukkit.getInstance();
         final I18N i18n = new I18N(player);
         final PlayerNameStore nameStore = instance.getNameStore();
+        final PlayerDataStore dataStore = instance.getDataStore();
 
         // TODO: 2/20/23 Fetch data from BungeeCord
         nameStore.storeName(player);
         Bukkit.getScheduler().runTaskLater(instance, () -> {
-            final AppearanceManager appearanceManager = AppearanceManager.get(player);
-            if (appearanceManager.hasData()) {
-                final ActionResult actionResult = appearanceManager.updatePlayer(appearanceManager.needsASkinChange(), false);
-                if (!actionResult.isError()) {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK));
-                } else {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.ERROR, i18n.translatePrefixless(actionResult.getErrorKey())));
+            final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+
+            optionalProfile.map(NickoProfile::getAppearanceData).ifPresent(appearanceData -> {
+                final AppearanceManager appearanceManager = new AppearanceManager(player);
+                if (!appearanceData.isEmpty()) {
+                    final boolean needsASkinChange = appearanceData.getSkin() != null && !appearanceData.getSkin().equals(player.getName());
+                    final ActionResult actionResult = appearanceManager.updatePlayer(needsASkinChange, false);
+                    if (!actionResult.isError()) {
+                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK));
+                    } else {
+                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.ERROR, i18n.translatePrefixless(actionResult.getErrorKey())));
+                    }
                 }
-            }
+            });
         }, 20L);
-        System.out.println("i18n.getPlayerLocale().getCode() = " + i18n.getPlayerLocale().getCode());
     }
 }

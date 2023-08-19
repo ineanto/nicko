@@ -1,5 +1,6 @@
 package xyz.atnrch.nicko.gui.items.settings;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -29,6 +30,7 @@ public class LanguageCyclingItem {
     public LanguageCyclingItem(Player player) {
         this.player = player;
         this.i18n = new I18N(player);
+        Bukkit.broadcastMessage(i18n.getPlayerLocale().getCode());
         this.providers = getItems();
     }
 

@@ -42,7 +42,7 @@ public class NickoBukkit extends JavaPlugin {
      * Used by MockBukkit
      */
     protected NickoBukkit(Configuration configuration) {
-        unitTesting = true;
+        this.unitTesting = true;
         this.configuration = configuration;
         getLogger().info("Unit Testing Mode enabled.");
     }

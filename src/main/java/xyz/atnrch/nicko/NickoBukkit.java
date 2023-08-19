@@ -3,9 +3,7 @@ package xyz.atnrch.nicko;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 import xyz.atnrch.nicko.command.NickoCommand;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.ConfigurationManager;
@@ -22,7 +20,6 @@ import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
-import java.io.File;
 import java.io.IOException;
 
 public class NickoBukkit extends JavaPlugin {
@@ -44,15 +41,7 @@ public class NickoBukkit extends JavaPlugin {
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        this(loader, description, dataFolder, file, null);
-    }
-
-    /**
-     * Used by MockBukkit
-     */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, Configuration configuration) {
-        super(loader, description, dataFolder, file);
+    protected NickoBukkit(Configuration configuration) {
         unitTesting = true;
         this.configuration = configuration;
         getLogger().info("Unit Testing Mode enabled.");

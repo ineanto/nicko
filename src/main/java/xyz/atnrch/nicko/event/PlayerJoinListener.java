@@ -30,10 +30,10 @@ public class PlayerJoinListener implements Listener {
         Bukkit.getScheduler().runTaskLater(instance, () -> {
             final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
 
-            optionalProfile.map(NickoProfile::getAppearanceData).ifPresent(appearanceData -> {
-                final AppearanceManager appearanceManager = new AppearanceManager(player);
-                if (!appearanceData.isEmpty()) {
-                    final boolean needsASkinChange = appearanceData.getSkin() != null && !appearanceData.getSkin().equals(player.getName());
+            optionalProfile.ifPresent(profile -> {
+                if (profile.hasData()) {
+                    final AppearanceManager appearanceManager = new AppearanceManager(player);
+                    final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(player.getName());
                     final ActionResult actionResult = appearanceManager.updatePlayer(needsASkinChange, false);
                     if (!actionResult.isError()) {
                         player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK));

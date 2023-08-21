@@ -8,7 +8,6 @@ import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -51,15 +50,13 @@ public class RedisCacheTest {
 
         final NickoProfile profile = optionalProfile.get();
         final PlayerDataStore dataStore = plugin.getDataStore();
-        final AppearanceData appearanceData = profile.getAppearanceData();
-        appearanceData.setName("Notch");
+        profile.setName("Notch");
         dataStore.updateCache(player.getUniqueId(), profile);
 
         final Optional<NickoProfile> retrieve = dataStore.getCache().retrieve(player.getUniqueId());
         assertTrue(retrieve.isPresent());
         final NickoProfile retrieved = retrieve.get();
-        final AppearanceData retrievedAppearanceData = retrieved.getAppearanceData();
-        assertEquals(retrievedAppearanceData.getName(), "Notch");
+        assertEquals(retrieved.getName(), "Notch");
     }
 
     @Test

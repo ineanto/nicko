@@ -57,10 +57,9 @@ public class NickoDebugCmd {
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
             final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
-            final AppearanceData appearanceData = profile.getAppearanceData();
-            final AppearanceManager appearanceManager = profile.getAppearanceManager();
-            appearanceData.setName(name);
-            appearanceData.setSkin(skin);
+            final AppearanceManager appearanceManager = new AppearanceManager(target);
+            profile.setName(name);
+            profile.setSkin(skin);
             dataStore.updateCache(target.getUniqueId(), profile);
             final ActionResult result = appearanceManager.updatePlayer(true, false);
             if (!result.isError()) {
@@ -71,7 +70,5 @@ public class NickoDebugCmd {
                 target.sendMessage(prefix + "§cWhoops. Something happened: " + i18n.translatePrefixless(result.getErrorKey()));
             }
         }
-
-
     }
 }

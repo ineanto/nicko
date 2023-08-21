@@ -3,6 +3,7 @@ package xyz.atnrch.nicko.gui.items.home;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.profile.NickoProfile;
@@ -28,13 +29,15 @@ public class ResetItem extends SuppliedItem {
                 final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
                 final AtomicBoolean result = new AtomicBoolean(false);
                 optionalProfile.ifPresent(profile -> {
-                    if (profile.getAppearanceData().isEmpty()) {
+                    if (!profile.hasData()) {
                         player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Remove.MISSING));
                         event.getEvent().getView().close();
                         result.set(true);
+                        return;
                     }
 
-                    if (!profile.getAppearanceManager().reset().isError()) {
+                    final AppearanceManager appearanceManager = new AppearanceManager(player);
+                    if (!appearanceManager.reset().isError()) {
                         player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Remove.OK));
                         result.set(false);
                     } else {

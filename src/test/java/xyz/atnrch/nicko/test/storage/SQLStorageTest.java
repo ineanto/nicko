@@ -7,7 +7,6 @@ import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.i18n.Locale;
-import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -59,14 +58,13 @@ public class SQLStorageTest {
         assertTrue(optionalProfile.isPresent());
 
         final NickoProfile profile = optionalProfile.get();
-        final AppearanceData appearanceData = profile.getAppearanceData();
-        assertNull(appearanceData.getName());
-        assertNull(appearanceData.getSkin());
+        assertNull(profile.getName());
+        assertNull(profile.getSkin());
         assertEquals(profile.getLocale(), Locale.ENGLISH);
         assertTrue(profile.isBungeecordTransfer());
 
-        appearanceData.setName("Notch");
-        appearanceData.setSkin("Notch");
+        profile.setName("Notch");
+        profile.setSkin("Notch");
         profile.setLocale(Locale.FRENCH);
         profile.setBungeecordTransfer(false);
 
@@ -82,9 +80,8 @@ public class SQLStorageTest {
         assertTrue(optionalProfile.isPresent());
 
         final NickoProfile updatedProfile = optionalProfile.get();
-        final AppearanceData appearanceData = updatedProfile.getAppearanceData();
-        assertEquals(appearanceData.getName(), "Notch");
-        assertEquals(appearanceData.getSkin(), "Notch");
+        assertEquals(updatedProfile.getName(), "Notch");
+        assertEquals(updatedProfile.getSkin(), "Notch");
         assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
         assertFalse(updatedProfile.isBungeecordTransfer());
     }

@@ -21,7 +21,6 @@ import xyz.atnrch.nicko.wrapper.*;
 import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class AppearanceManager {
@@ -29,35 +28,29 @@ public class AppearanceManager {
     private final PlayerDataStore dataStore = instance.getDataStore();
     private final PlayerNameStore nameStore = instance.getNameStore();
 
-    private final NickoProfile profile;
     private final Player player;
-    private final UUID uuid;
 
     public AppearanceManager(Player player) {
-        this.uuid = player.getUniqueId();
         this.player = player;
-
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
-        this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
-        if (!optionalProfile.isPresent()) {
-            instance.getLogger().warning("Unable to appearance data for: " + player.getUniqueId() + ".");
-        }
     }
 
     public ActionResult reset() {
+        final NickoProfile profile = getNickoProfile();
         final String defaultName = nameStore.getStoredName(player);
         profile.setName(defaultName);
         profile.setSkin(defaultName);
+        dataStore.getCache().cache(player.getUniqueId(), profile);
         final ActionResult actionResult = updatePlayer(true, true);
         if (!actionResult.isError()) {
             profile.setSkin(null);
             profile.setName(null);
-            dataStore.getCache().cache(uuid, profile);
+            dataStore.getCache().cache(player.getUniqueId(), profile);
         }
         return actionResult;
     }
 
     public ActionResult updatePlayer(boolean skinChange, boolean reset) {
+        final NickoProfile profile = getNickoProfile();
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
         final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
         final ActionResult result = updateGameProfileSkin(gameProfile, skinChange, reset);
@@ -68,6 +61,11 @@ public class AppearanceManager {
             updateOthers();
         }
         return result;
+    }
+
+    private NickoProfile getNickoProfile() {
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        return optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
     public void updateOthers() {
@@ -85,9 +83,10 @@ public class AppearanceManager {
 
 
     private ActionResult updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
-        final boolean changeOnlyName = profile.getSkin() != null && !profile.getSkin().equalsIgnoreCase(player.getName());
+        final NickoProfile profile = getNickoProfile();
+        final boolean changeOnlyName = profile.getSkin() != null && profile.getSkin().equals(player.getName());
 
-        if (skinChange || changeOnlyName) {
+        if (skinChange || !changeOnlyName) {
             Optional<MojangSkin> skin;
             try {
                 final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();

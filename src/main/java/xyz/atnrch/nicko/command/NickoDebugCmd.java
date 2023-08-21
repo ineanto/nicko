@@ -9,7 +9,6 @@ import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.mojang.MojangUtils;
-import xyz.atnrch.nicko.profile.AppearanceData;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -57,10 +56,10 @@ public class NickoDebugCmd {
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
             final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
-            final AppearanceManager appearanceManager = new AppearanceManager(target);
             profile.setName(name);
             profile.setSkin(skin);
             dataStore.updateCache(target.getUniqueId(), profile);
+            final AppearanceManager appearanceManager = new AppearanceManager(target);
             final ActionResult result = appearanceManager.updatePlayer(true, false);
             if (!result.isError()) {
                 target.sendMessage(prefix + "§aWhoosh!");

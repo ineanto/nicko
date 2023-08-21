@@ -28,7 +28,8 @@ event:
       invalidate_entry: "§6{0} §fhas been invalidated."
 
 gui:
-  exit: "Exit"
+  exit:
+    name: "Exit"
   go_back:
     name: "Back"
   home:

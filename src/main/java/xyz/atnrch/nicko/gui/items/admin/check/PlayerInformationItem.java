@@ -22,7 +22,7 @@ public class PlayerInformationItem extends AsyncItem {
             final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
 
             optionalProfile.ifPresent(profile -> {
-                if (!profile.hasData()) {
+                if (profile.hasData()) {
                     skull.addLoreLines(
                             "§cNicked: §a✔",
                             "§cName: §6" + profile.getName(),

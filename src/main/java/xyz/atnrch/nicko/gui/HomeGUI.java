@@ -26,9 +26,11 @@ public class HomeGUI {
             dynamicStructure[2] = dynamicStructure[2].replace("A", "#");
         }
 
+        final ExitItem exitItem = new ExitItem(player);
+
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
-                .addIngredient('E', new ExitItem())
+                .addIngredient('E', exitItem.get())
                 .addIngredient('R', new ResetItem())
                 .addIngredient('N', new ChangeNameItem())
                 .addIngredient('B', new ChangeBothItem())

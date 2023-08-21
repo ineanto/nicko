@@ -44,7 +44,7 @@ public class AnvilManager {
         getNameAnvil().open(player);
     }
 
-    public AnvilGUI.Builder getNameThenSkinAnvil() {
+    private AnvilGUI.Builder getNameThenSkinAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
@@ -65,7 +65,7 @@ public class AnvilManager {
                 .text("New name...");
     }
 
-    public AnvilGUI.Builder getNameAnvil() {
+    private AnvilGUI.Builder getNameAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))

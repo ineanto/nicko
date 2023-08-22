@@ -27,7 +27,6 @@ public class HomeGUI {
         }
 
         final ExitItem exitItem = new ExitItem(player);
-
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
                 .addIngredient('E', exitItem.get())

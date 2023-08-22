@@ -66,7 +66,7 @@ public class LanguageCyclingItem {
                 builder.addLoreLines("§6§l> §f" + value.getName());
             }
         }
-        builder.addLoreLines("§7§oCycle through the values by", "§7§oleft and right clicking.");
+        translation.getLore().forEach(builder::addLoreLines);
         return builder;
     }
 

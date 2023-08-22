@@ -55,7 +55,6 @@ gui:
     language:
       name: "Langage"
       lore:
-        - "{0}"
         - "§7§oParcourez les valeurs"
         - "§7§oavec un clique gauche/droit."
     bungeecord:

@@ -76,12 +76,12 @@ public class PlayerDataStore {
         if (storage.isError()) return ActionResult.error(I18NDict.Error.GENERIC);
         if (cache.isError()) return ActionResult.error(I18NDict.Error.CACHE);
         if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.GENERIC);
-        if (!cache.retrieve(player.getUniqueId()).isPresent())
-            return ActionResult.error(I18NDict.Error.GENERIC);
 
-        // TODO (Ineanto, 5/20/23): Remove value from cache
-        //profiles.remove(player.getUniqueId());
-        return storage.store(player.getUniqueId(), cache.retrieve(player.getUniqueId()).get());
+        final Optional<NickoProfile> cachedProfile = cache.retrieve(player.getUniqueId());
+        if (!cachedProfile.isPresent()) return ActionResult.error(I18NDict.Error.GENERIC);
+
+        cache.delete(player.getUniqueId());
+        return storage.store(player.getUniqueId(), cachedProfile.get());
     }
 
     public Storage getStorage() {

@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.gui.SettingsGUI;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.ItemTranslation;
@@ -44,10 +45,10 @@ public class LanguageCyclingItem {
                 // TODO (Ineanto, 7/14/23): This checks a 2nd time for the profile.
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
-                    player.getOpenInventory().close();
                 } else {
-                    player.sendMessage("Updated language to " + nickoProfile.getLocale().getCode());
+                    new SettingsGUI(player).open();
                 }
+                player.getOpenInventory().close();
             }, localeOrdinal, providers);
         }
 

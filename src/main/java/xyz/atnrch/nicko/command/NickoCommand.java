@@ -1,12 +1,12 @@
 package xyz.atnrch.nicko.command;
 
-import org.jetbrains.annotations.NotNull;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.gui.HomeGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.gui.HomeGUI;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 
@@ -42,7 +42,7 @@ public class NickoCommand implements CommandExecutor {
     }
 
     public void sendHelpMessage(CommandSender sender) {
-        helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getDescription().getVersion());
+        helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getPluginMeta().getVersion());
         sender.sendMessage(helpMessage);
     }
 }

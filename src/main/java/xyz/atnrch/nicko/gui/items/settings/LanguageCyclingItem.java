@@ -42,13 +42,13 @@ public class LanguageCyclingItem {
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
+                player.getOpenInventory().close();
                 // TODO (Ineanto, 7/14/23): This checks a 2nd time for the profile.
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
                 } else {
                     new SettingsGUI(player).open();
                 }
-                player.getOpenInventory().close();
             }, localeOrdinal, providers);
         }
 

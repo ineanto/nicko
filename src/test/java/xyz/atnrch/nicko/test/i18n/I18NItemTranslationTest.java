@@ -45,7 +45,7 @@ public class I18NItemTranslationTest {
     public void translateItemLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
         final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.BUNGEECORD, "Test");
-        assertEquals("Test", translation.getLore().get(0));
+        assertEquals("§7§oParcourez les valeurs", translation.getLore().get(0));
     }
 
     @AfterAll

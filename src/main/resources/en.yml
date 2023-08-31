@@ -33,6 +33,7 @@ gui:
   go_back:
     name: "Back"
   home:
+    title: "Nicko - Home"
     admin:
       name: "Administration panel"
       lore:
@@ -51,6 +52,16 @@ gui:
       name: "Reset appearance"
       lore:
         - "Completely remove your disguise."
+  admin:
+    gui_title: "Nicko > Administration"
+    manage_cache:
+      name: "Manage §6skin §fcache..."
+      lore:
+        - "§7Access the skin cache management panel."
+    manage_player:
+      name: "Check a player..."
+      lore:
+        - "§7See players' disguise information."
   settings:
     language:
       name: "Language"
@@ -60,6 +71,5 @@ gui:
     bungeecord:
       name: "Bungeecord Transfer"
       lore:
-        - "{0}"
         - "§7§oGet through the values"
         - "§7§oby left or right clicking."

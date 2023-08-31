@@ -72,16 +72,24 @@ public class I18NDict {
         public static class Home {
             private static final String HOME_KEY = GUI_KEY + "home.";
 
+            public static final String TITLE = HOME_KEY + "title";
             public static final String ADMIN = HOME_KEY + "admin";
         }
 
         public static class Settings {
             private static final String SETTINGS_KEY = GUI_KEY + "settings.";
 
+            public static final String TITLE = SETTINGS_KEY + "title";
             public static final String LANGUAGE = SETTINGS_KEY + "language";
             public static final String BUNGEECORD = SETTINGS_KEY + "bungeecord";
         }
 
+        public static class Admin {
+            private static final String ADMIN_KEY = GUI_KEY + "admin.";
 
+            public static final String TITLE = ADMIN_KEY + "title";
+            public static final String MANAGE_CACHE = ADMIN_KEY + "manage_cache";
+            public static final String MANAGE_PLAYER = ADMIN_KEY + "manage_player";
+        }
     }
 }

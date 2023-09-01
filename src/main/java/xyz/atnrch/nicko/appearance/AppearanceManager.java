@@ -122,6 +122,7 @@ public class AppearanceManager {
     private void respawnPlayer() {
         final World world = player.getWorld();
         final boolean wasFlying = player.isFlying();
+        final boolean wasAllowedToFly = player.getAllowFlight();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
         respawn.setDimension(world);
         respawn.setSeed(world.getSeed());
@@ -130,8 +131,9 @@ public class AppearanceManager {
         respawn.setDifficulty(world.getDifficulty());
         respawn.setCopyMetadata(true);
         respawn.sendPacket(player);
-        player.setFlying(wasFlying);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+        player.setAllowFlight(wasAllowedToFly);
+        player.setFlying(wasFlying);
         player.updateInventory(); // Marked as unstable.
     }
 

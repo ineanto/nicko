@@ -41,7 +41,7 @@ gui:
     settings:
       name: "Paramètres"
       lore:
-        - "Configurez votre expérience."
+        - "Gérez votre expérience avec Nicko."
     change_name:
       name: "Changer le §6pseudo"
     change_skin:
@@ -49,20 +49,21 @@ gui:
     change_both:
       name: "Changer les §6deux"
     reset:
-      name: "Réinitialiser l''apparence"
+      name: "Réinitialiser l'apparence"
       lore:
         - "Supprime complètement votre déguisement."
   admin:
     title: "Nicko > Administration"
     manage_cache:
-      name: "Gérer le cache d''§6apparences..."
+      name: "Gérer le cache d'§6apparences..."
       lore:
-        - "§7Accédez à la gestion du cache d''apparences."
+        - "§7Accédez à la gestion du cache d'apparences."
     manage_player:
       name: "Vérifier un joueur..."
       lore:
         - "§7Vérifiez les informations de déguisement d'un joueur."
   settings:
+    title: "Nicko > Paramètres"
     language:
       name: "Langage"
       lore:

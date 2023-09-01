@@ -41,7 +41,7 @@ gui:
     settings:
       name: "Settings"
       lore:
-        - "Configure your experience."
+        - "Fine tune your experience with Nicko."
     change_name:
       name: "§6Nickname §fchange"
     change_skin:
@@ -53,7 +53,7 @@ gui:
       lore:
         - "Completely remove your disguise."
   admin:
-    gui_title: "Nicko > Administration"
+    title: "Nicko > Administration"
     manage_cache:
       name: "Manage §6skin §fcache..."
       lore:
@@ -63,6 +63,7 @@ gui:
       lore:
         - "§7See players' disguise information."
   settings:
+    title: "Nicko > Settings"
     language:
       name: "Language"
       lore:

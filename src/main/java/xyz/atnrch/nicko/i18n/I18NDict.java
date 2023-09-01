@@ -74,6 +74,11 @@ public class I18NDict {
 
             public static final String TITLE = HOME_KEY + "title";
             public static final String ADMIN = HOME_KEY + "admin";
+            public static final String CHANGE_NAME = HOME_KEY + "change_name";
+            public static final String CHANGE_SKIN = HOME_KEY + "change_skin";
+            public static final String CHANGE_BOTH = HOME_KEY + "change_both";
+            public static final String RESET = HOME_KEY + "reset";
+            public static final String SETTINGS = HOME_KEY + "settings";
         }
 
         public static class Settings {

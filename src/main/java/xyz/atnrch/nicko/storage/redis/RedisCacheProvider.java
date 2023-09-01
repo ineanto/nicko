@@ -1,5 +1,6 @@
 package xyz.atnrch.nicko.storage.redis;
 
+import redis.clients.jedis.exceptions.JedisConnectionException;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.storage.CacheProvider;
@@ -18,7 +19,11 @@ public class RedisCacheProvider implements CacheProvider {
     public boolean init() {
         final DataSourceConfiguration redisConfiguration = configuration.getRedisConfiguration();
         pool = new JedisPool(redisConfiguration.getAddress(), redisConfiguration.getPort());
-        return !pool.isClosed() && pool.getResource() != null;
+        try {
+            return !pool.isClosed() && pool.getResource() != null;
+        } catch (JedisConnectionException exception) {
+            return false;
+        }
     }
 
     @Override

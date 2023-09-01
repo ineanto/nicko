@@ -116,14 +116,6 @@ public class NickoBukkit extends JavaPlugin {
             } else {
                 getLogger().info("Persistence closed.");
             }
-
-            if (!dataStore.getCache().getProvider().close()) {
-                if (!dataStore.getCache().getProvider().close()) {
-                    getLogger().severe("Failed to close cache!");
-                } else {
-                    getLogger().info("Cache closed.");
-                }
-            }
         }
 
         getLogger().info("Nicko (Bukkit) has been disabled.");

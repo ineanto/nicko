@@ -4,14 +4,15 @@ import xyz.atnrch.nicko.gui.items.common.GoBackItem;
 import xyz.atnrch.nicko.gui.items.settings.BungeeCordCyclingItem;
 import xyz.atnrch.nicko.gui.items.settings.LanguageCyclingItem;
 import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
 public class SettingsGUI {
-    public static final String TITLE = "Nicko > Settings";
-
     private final Player player;
     private final Gui gui;
+    private final String title;
 
     public SettingsGUI(Player player) {
         final String[] dynamicStructure = new String[]{
@@ -22,6 +23,9 @@ public class SettingsGUI {
 
         // TODO: 3/6/23 Replace when Redis is not enabled
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
+
+        final I18N i18n = new I18N(player);
+        this.title = i18n.translatePrefixless(I18NDict.GUI.Settings.TITLE);
 
         final HomeGUI parent = new HomeGUI(player);
         final LanguageCyclingItem languageItem = new LanguageCyclingItem(player);
@@ -38,6 +42,6 @@ public class SettingsGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle(TITLE).open(player);
+        Window.single().setGui(gui).setTitle(title).open(player);
     }
 }

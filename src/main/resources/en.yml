@@ -32,6 +32,10 @@ gui:
     name: "Exit"
   go_back:
     name: "Back"
+  unavailable:
+    name: "Unavailable"
+    lore:
+      - "§7§oThis button is disabled."
   home:
     title: "Nicko - Home"
     admin:

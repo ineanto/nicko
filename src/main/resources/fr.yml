@@ -32,6 +32,10 @@ gui:
     name: "Quitter"
   go_back:
     name: "Retour"
+  unavailable:
+    name: "Indisponible"
+    lore:
+      - "§7§oCe boutton est désactivé."
   home:
     title: "Nicko - Accueil"
     admin:

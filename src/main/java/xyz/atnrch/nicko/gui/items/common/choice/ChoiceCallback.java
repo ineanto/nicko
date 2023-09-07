@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.gui.items.common.confirm;
+package xyz.atnrch.nicko.gui.items.common.choice;
 
 public interface ChoiceCallback {
     void onConfirm();

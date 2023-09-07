@@ -6,9 +6,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.gui.ConfirmGUI;
+import xyz.atnrch.nicko.gui.ChoiceGUI;
 import xyz.atnrch.nicko.gui.CacheDetailedGUI;
-import xyz.atnrch.nicko.gui.items.common.confirm.ChoiceCallback;
+import xyz.atnrch.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
@@ -40,7 +40,7 @@ public class CacheEntryItem extends AsyncItem {
     public void handleClick(@NotNull ClickType click, @NotNull Player player, @NotNull InventoryClickEvent event) {
         if (click.isLeftClick() || click.isRightClick()) {
             event.getView().close();
-            new ConfirmGUI(player, new ChoiceCallback() {
+            new ChoiceGUI(player, new ChoiceCallback() {
                 @Override
                 public void onConfirm() {
                     final I18N i18n = new I18N(player);

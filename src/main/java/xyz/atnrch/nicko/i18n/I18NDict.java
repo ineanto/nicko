@@ -70,6 +70,14 @@ public class I18NDict {
         public static final String UNAVAILABLE = GUI_KEY + "unavailable";
         public static final String GO_BACK = GUI_KEY + "go_back";
 
+        public static class Choice {
+            private static final String CHOICE_KEY = GUI_KEY + "choice.";
+
+            public static final String CONFIRM = CHOICE_KEY + "confirm";
+            public static final String CHOOSE = CHOICE_KEY + "choose";
+            public static final String CANCEL = CHOICE_KEY + "cancel";
+        }
+
         public static class Home {
             private static final String HOME_KEY = GUI_KEY + "home.";
 

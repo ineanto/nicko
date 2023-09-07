@@ -21,8 +21,6 @@ public class UnavailableItem {
             final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.UNAVAILABLE);
             builder.setDisplayName(translation.getName());
             translation.getLore().forEach(builder::addLoreLines);
-            builder.setDisplayName("Unavailable");
-            builder.addLoreLines("§7§oThis button is disabled.");
             return builder;
         }, click -> true);
     }

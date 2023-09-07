@@ -1,7 +1,7 @@
 error:
   generic: "Une erreur inconnue c'est produite."
   permission: "§cVous ne possédez pas la permission."
-  invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
+  invalid_username: "§cLe pseudo n'est pas un pseudo Minecraft valide."
   mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
   mojang_skin: "Ce compte Minecraft n'a pas de skin."
   cache: "Impossible de récupérer le skin depuis le cache."
@@ -13,14 +13,14 @@ event:
     error: "§cImpossible de mettre à jour vos paramètres. §7§o({0})"
   appearance:
     set:
-      error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
+      error: "§cImpossible d'appliquer votre déguisement. §7§o({0})"
       ok: "§fDéguisement appliqué."
     restore:
-      error: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
+      error: "§cImpossible d'appliquer votre précédent déguisement. §7§o({0})"
       ok: "§aVotre précédent déguisement a été appliqué."
     remove:
       error: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
-      missing: "§cVous n''avez pas de déguisement."
+      missing: "§cVous n'avez pas de déguisement."
       ok: "§fDéguisement retiré."
   admin:
     cache:
@@ -36,16 +36,23 @@ gui:
     name: "Indisponible"
     lore:
       - "§7§oCe boutton est désactivé."
+  choice:
+    confirm:
+      name: "§aConfirmer"
+    choose:
+      name: "§6§oChoisissez une option..."
+    cancel:
+      name: "§cAnnuler"
   home:
     title: "Nicko - Accueil"
     admin:
-      name: "Panel d''administration"
+      name: "Panel d'administration"
       lore:
-        - "Configurez et gérez Nicko."
+        - "§7Configurez et gérez Nicko."
     settings:
       name: "Paramètres"
       lore:
-        - "Gérez votre expérience avec Nicko."
+        - "§7Gérez votre expérience avec Nicko."
     change_name:
       name: "Changer le §6pseudo"
     change_skin:
@@ -55,7 +62,7 @@ gui:
     reset:
       name: "Réinitialiser l'apparence"
       lore:
-        - "Supprime complètement votre déguisement."
+        - "§7Supprime complètement votre déguisement."
   admin:
     title: "Nicko > Administration"
     manage_cache:

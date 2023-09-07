@@ -36,16 +36,23 @@ gui:
     name: "Unavailable"
     lore:
       - "§7§oThis button is disabled."
+  choice:
+    confirm:
+      name: "§aConfirm"
+    choose:
+      name: "§6§oChoose an option..."
+    cancel:
+      name: "§cCancel"
   home:
     title: "Nicko - Home"
     admin:
       name: "Administration panel"
       lore:
-        - "Configure and manage Nicko."
+        - "§7Configure and manage Nicko."
     settings:
       name: "Settings"
       lore:
-        - "Fine tune your experience with Nicko."
+        - "§7Fine tune your experience with Nicko."
     change_name:
       name: "§6Nickname §fchange"
     change_skin:
@@ -55,7 +62,7 @@ gui:
     reset:
       name: "Reset appearance"
       lore:
-        - "Completely remove your disguise."
+        - "§7Completely remove your disguise."
   admin:
     title: "Nicko > Administration"
     manage_cache:

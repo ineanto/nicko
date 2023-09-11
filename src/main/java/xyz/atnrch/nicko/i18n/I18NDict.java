@@ -104,6 +104,15 @@ public class I18NDict {
             public static final String TITLE = ADMIN_KEY + "title";
             public static final String MANAGE_CACHE = ADMIN_KEY + "manage_cache";
             public static final String MANAGE_PLAYER = ADMIN_KEY + "manage_player";
+
+            public static class Cache {
+                private static final String CACHE_KEY = ADMIN_KEY + "cache.";
+
+                public static final String TITLE = CACHE_KEY + "title";
+                public static final String STATISTICS = CACHE_KEY + "statistics";
+                public static final String INVALIDATE_CACHE = CACHE_KEY + "invalidate_cache";
+                public static final String INVALIDATE_SKIN = CACHE_KEY + "invalidate_skin";
+            }
         }
     }
 }

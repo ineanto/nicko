@@ -35,7 +35,7 @@ public class I18N {
         this.yamlConfig = getYamlConfig();
     }
 
-    public ItemTranslation translateItem(String key, String... args) {
+    public ItemTranslation translateItem(String key, Object... args) {
         final String nameKey = key + ".name";
         final String loreKey = key + ".lore";
         final String name = readString(nameKey);
@@ -74,8 +74,9 @@ public class I18N {
 
             // If it does, replace the content with the args at position replacementIndex
             if (replacementIndex < args.length && args[replacementIndex] != null) {
+                System.out.println("replacing...");
                 // Replace with the corresponding varargs index
-                toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex]));
+                toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex].toString()));
                 replacementIndex++;
             }
 

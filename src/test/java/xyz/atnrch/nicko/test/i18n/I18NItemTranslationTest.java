@@ -44,8 +44,8 @@ public class I18NItemTranslationTest {
     @DisplayName("Translate Item")
     public void translateItemLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.BUNGEECORD, "Test");
-        assertEquals("§7§oParcourez les valeurs", translation.getLore().get(0));
+        final String translation = i18n.translatePrefixless(I18NDict.Event.Settings.ERROR, "Test!");
+        assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test!)", translation);
     }
 
     @AfterAll

@@ -66,13 +66,34 @@ gui:
   admin:
     title: "Nicko > Administration"
     manage_cache:
-      name: "Gérer le cache d'§6apparences..."
+      name: "Gérer le cache d'§6skin..."
       lore:
-        - "§7Accédez à la gestion du cache d'apparences."
+        - "§7Accédez à la gestion du cache de skin."
     manage_player:
       name: "Vérifier un joueur..."
       lore:
         - "§7Vérifiez les informations de déguisement d'un joueur."
+    cache:
+      title: "Nicko > Admin... > Cache"
+      statistics:
+        name: "Statistiques"
+        lore:
+          - "§fNombre de requêtes: §b{0}"
+          - "§fNb. de skin dans le cache: §b{1}"
+          - "§8§oLe cache est vidé toutes les 24 heures."
+      invalidate_cache:
+        name: "Invalider le cache"
+        lore:
+          - "§c§oDÉCONSEILLÉ"
+          - "§7Invalide l'entièreté du cache des skin."
+          - "§7Ne retire pas les déguisements"
+          - "§7pour les joueurs en disposant."
+      invalidate_skin:
+        name: "Invalider un skin..."
+        lore:
+          - "§7Sélectionnez une apparence spécifique à"
+          - "§7invalider. Utile dans le cas où un skin"
+          - "§7a récemment été mis à jour."
   settings:
     title: "Nicko > Paramètres"
     language:

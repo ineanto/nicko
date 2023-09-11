@@ -73,6 +73,25 @@ gui:
       name: "Check a player..."
       lore:
         - "§7See players' disguise information."
+    cache:
+      title: "Nicko > Admin... > Cache"
+      statistics:
+        name: "Statistics"
+        lore:
+          - "§fRequest count: §b{0}"
+          - "§fNumber of skin cached: §b{1}"
+          - "§8§oCache is cleared every 24 hours."
+      invalidate_cache:
+        name: "Invalidate cache"
+        lore:
+          - "§c§oNOT RECOMMENDED"
+          - "§7Invalidate the entirety of the skin cache."
+          - "§7This doesn't reset player's disguises."
+      invalidate_skin:
+        name: "Invalidate a skin..."
+        lore:
+          - "§7Select a specific skin to invalidate."
+          - "§7Useful if a skin has been recently updated."
   settings:
     title: "Nicko > Settings"
     language:

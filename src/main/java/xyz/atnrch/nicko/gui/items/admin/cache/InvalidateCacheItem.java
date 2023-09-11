@@ -6,18 +6,23 @@ import xyz.atnrch.nicko.i18n.I18NDict;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class InvalidateCacheItem extends SuppliedItem {
-    public InvalidateCacheItem() {
-        super(() -> {
+public class InvalidateCacheItem {
+    private final I18N i18n;
+
+    public InvalidateCacheItem(Player player) {
+        this.i18n = new I18N(player);
+    }
+
+    public SuppliedItem get() {
+        return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.TNT);
-            builder.setDisplayName("Invalidate cache");
-            builder.addLoreLines(
-                    "§c§oNOT RECOMMENDED",
-                    "§7Invalidates every skin entry present in the cache.",
-                    "§7Does not reset player disguises.");
+            final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.Cache.INVALIDATE_CACHE);
+            builder.setDisplayName(translation.getName());
+            translation.getLore().forEach(builder::addLoreLines);
             return builder;
         }, (click) -> {
             final ClickType clickType = click.getClickType();

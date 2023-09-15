@@ -18,7 +18,7 @@ public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
     private final Logger logger = Logger.getLogger("I18N");
     private final NickoBukkit instance = NickoBukkit.getInstance();
-    private final Pattern replacementPattern = Pattern.compile("\\{\\d+}");
+    private final Pattern replacementPattern = Pattern.compile("\\{\\d+}$", Pattern.DOTALL);
     private final YamlConfig yamlConfig;
     private final Player player;
     private final Locale playerLocale;
@@ -67,14 +67,13 @@ public class I18N {
 
             // If the line doesn't contain {i}, skip it
             final Matcher matcher = replacementPattern.matcher(currentLine);
-            if (!matcher.matches()) {
+            if (!matcher.find()) {
                 lineIndex++;
                 continue;
             }
 
             // If it does, replace the content with the args at position replacementIndex
             if (replacementIndex < args.length && args[replacementIndex] != null) {
-                System.out.println("replacing...");
                 // Replace with the corresponding varargs index
                 toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex].toString()));
                 replacementIndex++;

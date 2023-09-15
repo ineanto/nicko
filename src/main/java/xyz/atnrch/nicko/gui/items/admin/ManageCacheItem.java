@@ -1,24 +1,25 @@
 package xyz.atnrch.nicko.gui.items.admin;
 
-import xyz.xenondevs.invui.item.builder.ItemBuilder;
-import xyz.xenondevs.invui.item.builder.SkullBuilder;
-import xyz.xenondevs.invui.item.impl.AsyncItem;
-import xyz.atnrch.nicko.gui.CacheManagementGUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
+import xyz.atnrch.nicko.gui.CacheManagementGUI;
+import xyz.atnrch.nicko.gui.items.common.LoadingItem;
+import xyz.atnrch.nicko.i18n.I18N;
+import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.ItemTranslation;
+import xyz.xenondevs.invui.item.builder.SkullBuilder;
+import xyz.xenondevs.invui.item.impl.AsyncItem;
 
 public class ManageCacheItem extends AsyncItem {
-    public ManageCacheItem() {
-        super(new ItemBuilder(Material.PAINTING)
-                        .setDisplayName("Manage §6skin §fcache...")
-                        .addLoreLines("§7Access the skin cache management panel."),
+    public ManageCacheItem(I18N i18n) {
+        super(new LoadingItem(i18n).get(),
                 () -> {
                     final SkullBuilder builder = new SkullBuilder("Notch");
-                    builder.setDisplayName("Manage §6skin §fcache...");
-                    builder.addLoreLines("§7Access the skin cache management panel.");
+                    final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.MANAGE_CACHE);
+                    builder.setDisplayName(translation.getName());
+                    translation.getLore().forEach(builder::addLoreLines);
                     return builder;
                 });
     }

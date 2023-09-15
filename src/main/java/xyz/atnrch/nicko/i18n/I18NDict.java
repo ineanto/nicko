@@ -67,8 +67,9 @@ public class I18NDict {
         private static final String GUI_KEY = "gui.";
 
         public static final String EXIT = GUI_KEY + "exit";
-        public static final String UNAVAILABLE = GUI_KEY + "unavailable";
         public static final String GO_BACK = GUI_KEY + "go_back";
+        public static final String UNAVAILABLE = GUI_KEY + "unavailable";
+        public static final String LOADING = GUI_KEY + "loading";
 
         public static class Choice {
             private static final String CHOICE_KEY = GUI_KEY + "choice.";

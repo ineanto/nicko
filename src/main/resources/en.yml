@@ -36,6 +36,8 @@ gui:
     name: "Unavailable"
     lore:
       - "§7§oThis button is disabled."
+  loading:
+    name: "§7§oLoading..."
   choice:
     confirm:
       name: "§aConfirm"
@@ -68,7 +70,7 @@ gui:
     manage_cache:
       name: "Manage §6skin §fcache..."
       lore:
-        - "§7Access the skin cache management panel."
+        - "§7View and manage the skin cache."
     manage_player:
       name: "Check a player..."
       lore:

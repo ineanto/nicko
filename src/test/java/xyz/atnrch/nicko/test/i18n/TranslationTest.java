@@ -11,13 +11,11 @@ import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.i18n.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class I18NItemTranslationTest {
+public class TranslationTest {
     private static PlayerMock player;
 
     @BeforeAll
@@ -32,20 +30,11 @@ public class I18NItemTranslationTest {
     }
 
     @Test
-    @DisplayName("Translate Item Without Lore")
+    @DisplayName("Translate Line With Replacement")
     public void translateItemTranslationWithoutLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.GO_BACK);
-        assertTrue(translation.getLore().isEmpty());
-        assertEquals(translation.getName(), "Retour");
-    }
-
-    @Test
-    @DisplayName("Translate Item")
-    public void translateItemLore() {
-        final I18N i18n = new I18N(Locale.FRENCH);
-        final String translation = i18n.translatePrefixless(I18NDict.Event.Settings.ERROR, "Test!");
-        assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test!)", translation);
+        final String translation = i18n.translatePrefixless(I18NDict.Event.Settings.ERROR, "Test");
+        assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test)", translation);
     }
 
     @AfterAll

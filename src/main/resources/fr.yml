@@ -13,14 +13,14 @@ event:
     error: "§cImpossible de mettre à jour vos paramètres. §7§o({0})"
   appearance:
     set:
-      error: "§cImpossible d'appliquer votre déguisement. §7§o({0})"
+      error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
       ok: "§fDéguisement appliqué."
     restore:
-      error: "§cImpossible d'appliquer votre précédent déguisement. §7§o({0})"
+      error: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
       ok: "§aVotre précédent déguisement a été appliqué."
     remove:
       error: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
-      missing: "§cVous n'avez pas de déguisement."
+      missing: "§cVous n''avez pas de déguisement."
       ok: "§fDéguisement retiré."
   admin:
     cache:
@@ -36,6 +36,8 @@ gui:
     name: "Indisponible"
     lore:
       - "§7§oCe boutton est désactivé."
+  loading:
+    name: "§7§oChargement..."
   choice:
     confirm:
       name: "§aConfirmer"
@@ -66,9 +68,9 @@ gui:
   admin:
     title: "Nicko > Administration"
     manage_cache:
-      name: "Gérer le cache d'§6skin..."
+      name: "Gérer le cache de §6skin..."
       lore:
-        - "§7Accédez à la gestion du cache de skin."
+        - "§7Consultez et gérez le cache de skin."
     manage_player:
       name: "Vérifier un joueur..."
       lore:

@@ -31,7 +31,6 @@ public class CacheStatisticsItem {
                     stats.requestCount(),
                     Math.round(cache.size())
             );
-            translation.getLore().forEach(System.out::println);
             // TODO (Ineanto, 9/11/23): This doesn't work.
             builder.setDisplayName(translation.getName());
             translation.getLore().forEach(builder::addLoreLines);

@@ -22,16 +22,17 @@ public class AdminGUI {
         final HomeGUI parent = new HomeGUI(player);
         final GoBackItem backItem = new GoBackItem(player);
         final UnavailableItem unavailableItem = new UnavailableItem(player);
+        final ManagePlayerItem managePlayerItem = new ManagePlayerItem(i18n, player);
 
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # S C U # # #",
+                        "# # # S C X # # #",
                         "B # # # # # # # #"
                 )
-                .addIngredient('S', new ManageCacheItem())
+                .addIngredient('S', new ManageCacheItem(i18n))
+                .addIngredient('C', managePlayerItem.get())
                 .addIngredient('U', unavailableItem.get())
-                .addIngredient('C', new ManagePlayerItem())
                 .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;

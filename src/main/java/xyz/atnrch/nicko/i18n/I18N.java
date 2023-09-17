@@ -3,50 +3,96 @@ package xyz.atnrch.nicko.i18n;
 import com.github.jsixface.YamlConfig;
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.AppearanceManager;
+import xyz.atnrch.nicko.profile.NickoProfile;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
+    private final Logger logger = Logger.getLogger("I18N");
     private final NickoBukkit instance = NickoBukkit.getInstance();
+    private final Pattern replacementPattern = Pattern.compile("\\{\\d+}$", Pattern.DOTALL);
+    private final YamlConfig yamlConfig;
     private final Player player;
     private final Locale playerLocale;
 
     public I18N(Player player) {
         this.player = player;
         this.playerLocale = getPlayerLocale();
+        this.yamlConfig = getYamlConfig();
     }
 
     public I18N(Locale locale) {
         this.player = null;
         this.playerLocale = locale;
+        this.yamlConfig = getYamlConfig();
     }
 
-    public List<String> translateItem(String key, Object... arguments) {
-        final ArrayList<String> lines = new ArrayList<>();
-        final String itemNameKey = readString(key + ".name");
-        final ArrayList<String> itemLoreKey = readList(key + ".lore");
-        try {
-            // Item Name
-            formatter.applyPattern(itemNameKey);
-            final String itemNameTranslated = formatter.format(arguments);
-            lines.add(itemNameTranslated);
-            return lines;
-        } catch (Exception e) {
-            return Collections.singletonList(key);
+    public ItemTranslation translateItem(String key, Object... args) {
+        final String nameKey = key + ".name";
+        final String loreKey = key + ".lore";
+        final String name = readString(nameKey);
+        final ArrayList<String> lore = readList(loreKey);
+
+        if (name == null) {
+            logger.warning(nameKey + " doesn't exists! Please translate this entry.");
+            return new ItemTranslation(nameKey, new ArrayList<String>() {{
+                add(loreKey);
+            }});
         }
+
+        // Add all elements to a list
+        final ArrayList<String> toTranslate = new ArrayList<>();
+        toTranslate.add(name);
+        if (lore != null && !lore.isEmpty()) {
+            toTranslate.addAll(lore);
+        }
+
+        // Set starting index to 0
+        int lineIndex = 0;
+        int replacementIndex = 0;
+
+        // While iterator next value exists/isn't null
+        final Iterator<String> iterator = toTranslate.iterator();
+        while (iterator.hasNext() && iterator.next() != null) {
+            // Get the current line
+            final String currentLine = toTranslate.get(lineIndex);
+
+            // If the line doesn't contain {i}, skip it
+            final Matcher matcher = replacementPattern.matcher(currentLine);
+            if (!matcher.find()) {
+                lineIndex++;
+                continue;
+            }
+
+            // If it does, replace the content with the args at position replacementIndex
+            if (replacementIndex < args.length && args[replacementIndex] != null) {
+                // Replace with the corresponding varargs index
+                toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex].toString()));
+                replacementIndex++;
+            }
+
+            // Increment the index
+            lineIndex++;
+        }
+
+        if (lore == null || lore.isEmpty()) {
+            return new ItemTranslation(toTranslate.get(0), new ArrayList<>());
+        }
+        return new ItemTranslation(toTranslate.get(0), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
     }
 
     public String translate(String key, Object... arguments) {
-        final String string = readString(key);
-
+        final String translation = readString(key);
         try {
-            formatter.applyPattern(string);
+            formatter.applyPattern(translation);
             return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
         } catch (Exception e) {
             return instance.getNickoConfig().getPrefix() + key;
@@ -64,43 +110,27 @@ public class I18N {
     }
 
     private String readString(String key) {
-        YamlConfig yamlFile;
-        if (playerLocale == Locale.CUSTOM) {
-            yamlFile = instance.getLocaleFileManager().getYamlFile();
-        } else {
-            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            yamlFile = YamlConfig.load(resource);
-        }
-        return yamlFile.getString(key);
+        return yamlConfig.getString(key);
     }
 
     private ArrayList<String> readList(String key) {
-        final ArrayList<String> lines = new ArrayList<>();
-        YamlConfig yamlFile;
-        if (playerLocale == Locale.CUSTOM) {
-            yamlFile = instance.getLocaleFileManager().getYamlFile();
-        } else {
-            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
-            yamlFile = YamlConfig.load(resource);
-        }
-
-        // 9 is a magic number
-        for (int i = 0; i < yamlFile.getInt(key + ".length"); i++) {
-            final String line = yamlFile.getString(key + ".content[" + i + "]");
-            System.out.println("line = " + line);
-            if (line != null && !line.equals("{" + i + "}")) {
-                lines.add(line);
-            }
-        }
-        return lines;
+        return yamlConfig.getStringList(key);
     }
 
-    private Locale getPlayerLocale() {
-        try {
-            final AppearanceManager appearanceManager = AppearanceManager.get(player);
-            return !appearanceManager.hasData() ? Locale.FALLBACK_LOCALE : appearanceManager.getLocale();
-        } catch (IllegalArgumentException exception) {
-            instance.getLogger().severe("Invalid locale provided by " + player.getName() + ", defaulting to " + Locale.FALLBACK_LOCALE.getCode() + ".");
+    private YamlConfig getYamlConfig() {
+        if (playerLocale == Locale.CUSTOM) {
+            return instance.getLocaleFileManager().getYamlFile();
+        } else {
+            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
+            return new YamlConfig(resource);
+        }
+    }
+
+    public Locale getPlayerLocale() {
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
+        if (optionalProfile.isPresent()) {
+            return optionalProfile.get().getLocale();
+        } else {
             return Locale.FALLBACK_LOCALE;
         }
     }

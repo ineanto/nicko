@@ -1,7 +1,7 @@
 error:
   generic: "Une erreur inconnue c'est produite."
   permission: "§cVous ne possédez pas la permission."
-  invalid_username: "§cLe pseudo n''est pas un pseudo Minecraft valide."
+  invalid_username: "§cLe pseudo n'est pas un pseudo Minecraft valide."
   mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
   mojang_skin: "Ce compte Minecraft n'a pas de skin."
   cache: "Impossible de récupérer le skin depuis le cache."
@@ -9,6 +9,8 @@ error:
   json: "Erreur JSON"
 
 event:
+  settings:
+    error: "§cImpossible de mettre à jour vos paramètres. §7§o({0})"
   appearance:
     set:
       error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
@@ -26,20 +28,48 @@ event:
       invalidate_entry: "§6{0} §fa été invalidé."
 
 gui:
-  exit: "Quitter"
+  title:
+    home: "Nicko - Accueil"
+    settings: "Nicko > Paramètres"
+    admin: "Nicko > Administration"
+    check: "Nicko > Admin... > Vérification"
+    cache: "Nicko > Admin... > Cache"
+    invalidate_skin: "... > Cache > Invalider"
+
+  exit:
+    name: "Quitter"
+  go_back:
+    name: "Retour"
+  unavailable:
+    name: "Indisponible"
+    lore:
+      - "§7§oCe boutton est désactivé."
+  loading:
+    name: "§7§oChargement..."
+  choice:
+    confirm:
+      name: "§aConfirmer"
+    choose:
+      name: "§6§oChoisissez une option..."
+    cancel:
+      name: "§cAnnuler"
+  scroll_up:
+    name: "Défiler vers le haut"
+    lore:
+      - "§8§o(Impossible de défiler plus haut.)"
+  scroll_down:
+    name: "Défiler vers le bas"
+    lore:
+      - "§8§o(Impossible de défiler plus bas.)"
   home:
     admin:
-      name: "Panel d''administration"
+      name: "Panel d'administration"
       lore:
-        length: 1
-        content:
-          - "Configurez et gérez Nicko."
+        - "§7Configurez et gérez Nicko."
     settings:
       name: "Paramètres"
       lore:
-        length: 1
-        content:
-          "Configurez votre expérience."
+        - "§7Gérez votre expérience avec Nicko."
     change_name:
       name: "Changer le §6pseudo"
     change_skin:
@@ -49,12 +79,50 @@ gui:
     reset:
       name: "Réinitialiser l'apparence"
       lore:
-        - "Supprime complètement votre déguisement."
+        - "§7Supprime complètement votre déguisement."
+  admin:
+    manage_cache:
+      name: "Gérer le cache de §6skin..."
+      lore:
+        - "§7Consultez et gérez le cache de skin."
+    manage_player:
+      name: "Vérifier un joueur..."
+      lore:
+        - "§7Vérifiez les informations de déguisement d'un joueur."
+    check:
+      name: "{0}"
+      lore:
+        - "§cDéguisé: §a{1}"
+        - "§cNom: §6{2}"
+        - "§cSkin: §6{3}"
+    cache:
+      statistics:
+        name: "Statistiques"
+        lore:
+          - "§fNombre de requêtes: §b{0}"
+          - "§fNb. de skin dans le cache: §b{1}"
+          - "§8§oLe cache est vidé toutes les 24 heures."
+      invalidate_cache:
+        name: "Invalider le cache"
+        lore:
+          - "§c§oDÉCONSEILLÉ"
+          - "§7Invalide l'entièreté du cache des skin."
+          - "§7Ne retire pas les déguisements"
+          - "§7pour les joueurs en disposant."
+      invalidate_skin:
+        name: "Invalider un skin..."
+        lore:
+          - "§7Sélectionnez une apparence spécifique à"
+          - "§7invalider. Utile dans le cas où un skin"
+          - "§7a récemment été mis à jour."
   settings:
     language:
-      name: "Language"
+      name: "Langage"
       lore:
-        # The language values will be filled at {0}
-        - "{0}"
+        - "§7§oParcourez les valeurs"
+        - "§7§oavec un clique gauche/droit."
+    bungeecord:
+      name: "Transfert Bungeecord"
+      lore:
         - "§7§oParcourez les valeurs"
         - "§7§oavec un clique gauche/droit."

@@ -11,20 +11,25 @@ import xyz.atnrch.nicko.appearance.AppearanceManager;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangUtils;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class AnvilManager {
     private final Player player;
     private final AppearanceManager appearanceManager;
-    private final PlayerDataStore dataStore;
+    private final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+    private final NickoProfile profile;
 
     public AnvilManager(Player player) {
         this.player = player;
-        this.appearanceManager = AppearanceManager.get(player);
-        this.dataStore = NickoBukkit.getInstance().getDataStore();
+
+        final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
+        this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
+        this.appearanceManager = new AppearanceManager(player);
     }
 
     public void openNameThenSkinAnvil() {
@@ -39,7 +44,7 @@ public class AnvilManager {
         getNameAnvil().open(player);
     }
 
-    public AnvilGUI.Builder getNameThenSkinAnvil() {
+    private AnvilGUI.Builder getNameThenSkinAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
@@ -49,8 +54,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setName(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            profile.setName(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             openSkinAnvil();
                             return Collections.singletonList(AnvilGUI.ResponseAction.close());
                         }
@@ -60,7 +65,7 @@ public class AnvilManager {
                 .text("New name...");
     }
 
-    public AnvilGUI.Builder getNameAnvil() {
+    private AnvilGUI.Builder getNameAnvil() {
         return new AnvilGUI.Builder()
                 .plugin(NickoBukkit.getInstance())
                 .itemLeft(getLeftItem(false))
@@ -70,8 +75,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setName(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            profile.setName(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             final ActionResult actionResult = appearanceManager.updatePlayer(false, false);
                             return sendResultAndClose(actionResult);
                         }
@@ -91,8 +96,8 @@ public class AnvilManager {
                         if (MojangUtils.isUsernameInvalid(snapshot.getText())) {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
-                            appearanceManager.setSkin(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), appearanceManager.getProfile());
+                            profile.setSkin(snapshot.getText());
+                            dataStore.updateCache(player.getUniqueId(), profile);
                             final ActionResult actionResult = appearanceManager.updatePlayer(true, false);
                             return sendResultAndClose(actionResult);
                         }

@@ -3,15 +3,12 @@ package xyz.atnrch.nicko;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 import xyz.atnrch.nicko.command.NickoCommand;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.ConfigurationManager;
 import xyz.atnrch.nicko.event.PlayerJoinListener;
 import xyz.atnrch.nicko.event.PlayerQuitListener;
-import xyz.atnrch.nicko.gui.items.common.UnavailableItem;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.i18n.LocaleFileManager;
 import xyz.atnrch.nicko.mojang.MojangAPI;
@@ -22,7 +19,6 @@ import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
-import java.io.File;
 import java.io.IOException;
 
 public class NickoBukkit extends JavaPlugin {
@@ -44,16 +40,8 @@ public class NickoBukkit extends JavaPlugin {
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        this(loader, description, dataFolder, file, null);
-    }
-
-    /**
-     * Used by MockBukkit
-     */
-    protected NickoBukkit(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, Configuration configuration) {
-        super(loader, description, dataFolder, file);
-        unitTesting = true;
+    protected NickoBukkit(Configuration configuration) {
+        this.unitTesting = true;
         this.configuration = configuration;
         getLogger().info("Unit Testing Mode enabled.");
     }
@@ -103,7 +91,6 @@ public class NickoBukkit extends JavaPlugin {
 
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
-            Structure.addGlobalIngredient('U', new UnavailableItem());
 
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 getLogger().info("Enabling PlaceHolderAPI support...");
@@ -120,11 +107,12 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         if (!getDataStore().getStorage().isError()) {
-            getLogger().info("Closing persistence...");
             nameStore.clearStoredNames();
             Bukkit.getOnlinePlayers().forEach(player -> dataStore.saveData(player));
             if (!dataStore.getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");
+            } else {
+                getLogger().info("Persistence closed.");
             }
         }
 

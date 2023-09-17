@@ -19,7 +19,6 @@ public class MapCacheProvider implements CacheProvider {
 
     @Override
     public boolean close() {
-        profiles = null;
         return true;
     }
 

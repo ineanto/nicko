@@ -91,9 +91,6 @@ public class SQLStorage extends Storage {
                 locale = resultSet.getString("locale");
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
-            System.out.println("name = " + name);
-            System.out.println("skin = " + skin);
-            System.out.println("locale = " + locale);
 
             final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
             return Optional.of(profile);

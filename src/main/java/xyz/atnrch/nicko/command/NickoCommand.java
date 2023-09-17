@@ -1,13 +1,12 @@
 package xyz.atnrch.nicko.command;
 
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.command.sub.NickoCheckSubCmd;
-import xyz.atnrch.nicko.command.sub.NickoDebugSubCmd;
-import xyz.atnrch.nicko.gui.HomeGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import xyz.atnrch.nicko.NickoBukkit;
+import xyz.atnrch.nicko.gui.HomeGUI;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 
@@ -17,25 +16,19 @@ public class NickoCommand implements CommandExecutor {
                                  "§6/nicko help §f- §7Print this help message.\n";
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             final Player player = (Player) sender;
             if (args.length >= 1) {
-                switch (args[0]) {
-                    case "debug":
-                        new NickoDebugSubCmd().execute(player, args);
-                        break;
-                    case "check":
-                        new NickoCheckSubCmd().execute(player, args);
-                        break;
-                    default:
-                        sendHelpMessage(sender);
-                        break;
+                if (args[0].equals("debug")) {
+                    new NickoDebugCmd().execute(player, args);
+                } else {
+                    sendHelpMessage(sender);
                 }
                 return false;
             }
 
-            if(player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
+            if (player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
                 new HomeGUI(player).open();
             } else {
                 final I18N i18N = new I18N(player);
@@ -49,7 +42,7 @@ public class NickoCommand implements CommandExecutor {
     }
 
     public void sendHelpMessage(CommandSender sender) {
-        helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getDescription().getVersion());
+        helpMessage = helpMessage.replace("{version}", NickoBukkit.getInstance().getPluginMeta().getVersion());
         sender.sendMessage(helpMessage);
     }
 }

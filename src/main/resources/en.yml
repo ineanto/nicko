@@ -26,3 +26,101 @@ event:
     cache:
       invalidate_cache: "§fComplete cache invalidated."
       invalidate_entry: "§6{0} §fhas been invalidated."
+
+gui:
+  title:
+    home: "Nicko - Home"
+    settings: "Nicko > Settings"
+    admin: "Nicko > Administration"
+    check: "Nicko > Admin... > Check"
+    cache: "Nicko > Admin... > Cache"
+    invalidate_skin: "... > Cache > Invalidate"
+
+  exit:
+    name: "Exit"
+  go_back:
+    name: "Back"
+  unavailable:
+    name: "Unavailable"
+    lore:
+      - "§7§oThis button is disabled."
+  loading:
+    name: "§7§oLoading..."
+  choice:
+    confirm:
+      name: "§aConfirm"
+    choose:
+      name: "§6§oChoose an option..."
+    cancel:
+      name: "§cCancel"
+  scroll_up:
+    name: "Scroll up"
+    lore:
+      - "§8§o(You can't scroll any higher.)"
+  scroll_down:
+    name: "Scroll down"
+    lore:
+      - "§8§o(You can't scroll any further down.)"
+  home:
+    admin:
+      name: "Administration panel"
+      lore:
+        - "§7Configure and manage Nicko."
+    settings:
+      name: "Settings"
+      lore:
+        - "§7Fine tune your experience with Nicko."
+    change_name:
+      name: "§6Nickname §fchange"
+    change_skin:
+      name: "§6Skin §fchange"
+    change_both:
+      name: "Change §6both"
+    reset:
+      name: "Reset appearance"
+      lore:
+        - "§7Completely remove your disguise."
+  admin:
+    manage_cache:
+      name: "Manage §6skin §fcache..."
+      lore:
+        - "§7View and manage the skin cache."
+    manage_player:
+      name: "Check a player..."
+      lore:
+        - "§7See players' disguise information."
+    check:
+      name: "{0}"
+      lore:
+        - "§cNicked: §a{1}"
+        - "§cName: §6{2}"
+        - "§cSkin: §6{3}"
+    cache:
+      statistics:
+        name: "Statistics"
+        lore:
+          - "§fRequest count: §b{0}"
+          - "§fNumber of skin cached: §b{1}"
+          - "§8§oCache is cleared every 24 hours."
+      invalidate_cache:
+        name: "Invalidate cache"
+        lore:
+          - "§c§oNOT RECOMMENDED"
+          - "§7Invalidate the entirety of the skin cache."
+          - "§7This doesn't reset player's disguises."
+      invalidate_skin:
+        name: "Invalidate a skin..."
+        lore:
+          - "§7Select a specific skin to invalidate."
+          - "§7Useful if a skin has been recently updated."
+  settings:
+    language:
+      name: "Language"
+      lore:
+        - "§7§oGet through the values"
+        - "§7§oby left or right clicking."
+    bungeecord:
+      name: "Bungeecord Transfer"
+      lore:
+        - "§7§oGet through the values"
+        - "§7§oby left or right clicking."

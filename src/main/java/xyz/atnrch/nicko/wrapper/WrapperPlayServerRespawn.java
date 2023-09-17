@@ -40,7 +40,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setDimension(World value) {
         if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
-            // 1.19 to 1.19.4
+            // 1.19 to 1.20.1
             // Thank you lukalt!
             final InternalStructure dimensionType = handle.getStructures().read(0);
             dimensionType.getMinecraftKeys().write(0, new MinecraftKey("minecraft", "dimension_type"));

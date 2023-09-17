@@ -1,7 +1,6 @@
 package xyz.atnrch.nicko.test.i18n;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,10 +13,9 @@ import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.Locale;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class I18NLoreTest {
-    private static NickoBukkit plugin;
+public class TranslationTest {
     private static PlayerMock player;
 
     @BeforeAll
@@ -27,16 +25,16 @@ public class I18NLoreTest {
                 DataSourceConfiguration.REDIS_EMPTY,
                 "",
                 false);
-        final ServerMock server = MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        MockBukkit.mock();
+        MockBukkit.load(NickoBukkit.class, config);
     }
 
     @Test
-    @DisplayName("Translate Item Lore")
-    public void translateItemLore() {
+    @DisplayName("Translate Line With Replacement")
+    public void translateItemTranslationWithoutLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        List<String> strings = i18n.translateItem(I18NDict.GUI.Home.ADMIN);
-        System.out.println("strings = " + strings);
+        final String translation = i18n.translatePrefixless(I18NDict.Event.Settings.ERROR, "Test");
+        assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test)", translation);
     }
 
     @AfterAll

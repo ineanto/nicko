@@ -46,7 +46,7 @@ public class SQLStorageTest {
     @DisplayName("Store empty profile")
     @Order(2)
     public void storeEmptyProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
         assertTrue(optionalProfile.isPresent());
     }
 
@@ -54,7 +54,9 @@ public class SQLStorageTest {
     @DisplayName("Update profile")
     @Order(3)
     public void updateProfile() {
-        final Optional<NickoProfile> optionalProfile = dataStore.getData(uuid);
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
+        assertTrue(optionalProfile.isPresent());
+
         final NickoProfile profile = optionalProfile.get();
         assertNull(profile.getName());
         assertNull(profile.getSkin());
@@ -74,10 +76,10 @@ public class SQLStorageTest {
     @DisplayName("Get updated profile")
     @Order(4)
     public void hasProfileBeenUpdated() {
-        final Optional<NickoProfile> profile = dataStore.getData(uuid);
-        assertTrue(profile.isPresent());
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(uuid);
+        assertTrue(optionalProfile.isPresent());
 
-        final NickoProfile updatedProfile = profile.get();
+        final NickoProfile updatedProfile = optionalProfile.get();
         assertEquals(updatedProfile.getName(), "Notch");
         assertEquals(updatedProfile.getSkin(), "Notch");
         assertEquals(updatedProfile.getLocale(), Locale.FRENCH);

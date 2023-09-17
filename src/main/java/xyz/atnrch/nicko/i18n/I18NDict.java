@@ -70,6 +70,19 @@ public class I18NDict {
         public static final String GO_BACK = GUI_KEY + "go_back";
         public static final String UNAVAILABLE = GUI_KEY + "unavailable";
         public static final String LOADING = GUI_KEY + "loading";
+        public static final String SCROLL_UP = GUI_KEY + "scroll_up";
+        public static final String SCROLL_DOWN = GUI_KEY + "scroll_down";
+
+        public static class Titles {
+            public static final String TITLE_KEY = GUI_KEY + "title.";
+
+            public static final String HOME = TITLE_KEY + "home";
+            public static final String SETTINGS = TITLE_KEY + "settings";
+            public static final String ADMIN = TITLE_KEY + "admin";
+            public static final String CHECK = TITLE_KEY + "check";
+            public static final String CACHE = TITLE_KEY + "cache";
+            public static final String INVALIDATE_SKIN = TITLE_KEY + "invalidate_skin";
+        }
 
         public static class Choice {
             private static final String CHOICE_KEY = GUI_KEY + "choice.";
@@ -82,7 +95,6 @@ public class I18NDict {
         public static class Home {
             private static final String HOME_KEY = GUI_KEY + "home.";
 
-            public static final String TITLE = HOME_KEY + "title";
             public static final String ADMIN = HOME_KEY + "admin";
             public static final String CHANGE_NAME = HOME_KEY + "change_name";
             public static final String CHANGE_SKIN = HOME_KEY + "change_skin";
@@ -94,7 +106,6 @@ public class I18NDict {
         public static class Settings {
             private static final String SETTINGS_KEY = GUI_KEY + "settings.";
 
-            public static final String TITLE = SETTINGS_KEY + "title";
             public static final String LANGUAGE = SETTINGS_KEY + "language";
             public static final String BUNGEECORD = SETTINGS_KEY + "bungeecord";
         }
@@ -102,14 +113,13 @@ public class I18NDict {
         public static class Admin {
             private static final String ADMIN_KEY = GUI_KEY + "admin.";
 
-            public static final String TITLE = ADMIN_KEY + "title";
             public static final String MANAGE_CACHE = ADMIN_KEY + "manage_cache";
             public static final String MANAGE_PLAYER = ADMIN_KEY + "manage_player";
+            public static final String CHECK = ADMIN_KEY + "check";
 
             public static class Cache {
                 private static final String CACHE_KEY = ADMIN_KEY + "cache.";
 
-                public static final String TITLE = CACHE_KEY + "title";
                 public static final String STATISTICS = CACHE_KEY + "statistics";
                 public static final String INVALIDATE_CACHE = CACHE_KEY + "invalidate_cache";
                 public static final String INVALIDATE_SKIN = CACHE_KEY + "invalidate_skin";

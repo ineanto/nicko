@@ -28,6 +28,14 @@ event:
       invalidate_entry: "§6{0} §fhas been invalidated."
 
 gui:
+  title:
+    home: "Nicko - Home"
+    settings: "Nicko > Settings"
+    admin: "Nicko > Administration"
+    check: "Nicko > Admin... > Check"
+    cache: "Nicko > Admin... > Cache"
+    invalidate_skin: "... > Cache > Invalidate"
+
   exit:
     name: "Exit"
   go_back:
@@ -45,8 +53,15 @@ gui:
       name: "§6§oChoose an option..."
     cancel:
       name: "§cCancel"
+  scroll_up:
+    name: "Scroll up"
+    lore:
+      - "§8§o(You can't scroll any higher.)"
+  scroll_down:
+    name: "Scroll down"
+    lore:
+      - "§8§o(You can't scroll any further down.)"
   home:
-    title: "Nicko - Home"
     admin:
       name: "Administration panel"
       lore:
@@ -66,7 +81,6 @@ gui:
       lore:
         - "§7Completely remove your disguise."
   admin:
-    title: "Nicko > Administration"
     manage_cache:
       name: "Manage §6skin §fcache..."
       lore:
@@ -75,8 +89,13 @@ gui:
       name: "Check a player..."
       lore:
         - "§7See players' disguise information."
+    check:
+      name: "{0}"
+      lore:
+        - "§cNicked: §a{1}"
+        - "§cName: §6{2}"
+        - "§cSkin: §6{3}"
     cache:
-      title: "Nicko > Admin... > Cache"
       statistics:
         name: "Statistics"
         lore:
@@ -95,7 +114,6 @@ gui:
           - "§7Select a specific skin to invalidate."
           - "§7Useful if a skin has been recently updated."
   settings:
-    title: "Nicko > Settings"
     language:
       name: "Language"
       lore:

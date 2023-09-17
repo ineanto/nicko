@@ -26,7 +26,7 @@ public class SettingsGUI {
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
         final I18N i18n = new I18N(player);
-        this.title = i18n.translatePrefixless(I18NDict.GUI.Settings.TITLE);
+        this.title = i18n.translatePrefixless(I18NDict.GUI.Titles.SETTINGS);
 
         final HomeGUI parent = new HomeGUI(player);
         final UnavailableItem unavailableItem = new UnavailableItem(player);

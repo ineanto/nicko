@@ -28,6 +28,14 @@ event:
       invalidate_entry: "§6{0} §fa été invalidé."
 
 gui:
+  title:
+    home: "Nicko - Accueil"
+    settings: "Nicko > Paramètres"
+    admin: "Nicko > Administration"
+    check: "Nicko > Admin... > Vérification"
+    cache: "Nicko > Admin... > Cache"
+    invalidate_skin: "... > Cache > Invalider"
+
   exit:
     name: "Quitter"
   go_back:
@@ -45,8 +53,15 @@ gui:
       name: "§6§oChoisissez une option..."
     cancel:
       name: "§cAnnuler"
+  scroll_up:
+    name: "Défiler vers le haut"
+    lore:
+      - "§8§o(Impossible de défiler plus haut.)"
+  scroll_down:
+    name: "Défiler vers le bas"
+    lore:
+      - "§8§o(Impossible de défiler plus bas.)"
   home:
-    title: "Nicko - Accueil"
     admin:
       name: "Panel d'administration"
       lore:
@@ -66,7 +81,6 @@ gui:
       lore:
         - "§7Supprime complètement votre déguisement."
   admin:
-    title: "Nicko > Administration"
     manage_cache:
       name: "Gérer le cache de §6skin..."
       lore:
@@ -75,8 +89,13 @@ gui:
       name: "Vérifier un joueur..."
       lore:
         - "§7Vérifiez les informations de déguisement d'un joueur."
+    check:
+      name: "{0}"
+      lore:
+        - "§cDéguisé: §a{1}"
+        - "§cNom: §6{2}"
+        - "§cSkin: §6{3}"
     cache:
-      title: "Nicko > Admin... > Cache"
       statistics:
         name: "Statistiques"
         lore:
@@ -97,7 +116,6 @@ gui:
           - "§7invalider. Utile dans le cas où un skin"
           - "§7a récemment été mis à jour."
   settings:
-    title: "Nicko > Paramètres"
     language:
       name: "Langage"
       lore:

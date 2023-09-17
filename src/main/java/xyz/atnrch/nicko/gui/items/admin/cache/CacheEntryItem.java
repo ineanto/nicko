@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.gui.ChoiceGUI;
-import xyz.atnrch.nicko.gui.CacheDetailedGUI;
+import xyz.atnrch.nicko.gui.InvalidateSkinGUI;
 import xyz.atnrch.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
@@ -50,7 +50,7 @@ public class CacheEntryItem extends AsyncItem {
 
                 @Override
                 public void onCancel() {
-                    new CacheDetailedGUI(player).open();
+                    new InvalidateSkinGUI(player).open();
                 }
             }).open();
         }

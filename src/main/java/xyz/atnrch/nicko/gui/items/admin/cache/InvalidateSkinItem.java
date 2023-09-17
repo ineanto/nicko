@@ -3,7 +3,7 @@ package xyz.atnrch.nicko.gui.items.admin.cache;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.atnrch.nicko.gui.CacheDetailedGUI;
+import xyz.atnrch.nicko.gui.InvalidateSkinGUI;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.ItemTranslation;
@@ -28,7 +28,7 @@ public class InvalidateSkinItem {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {
                 click.getEvent().getView().close();
-                new CacheDetailedGUI(click.getPlayer()).open();
+                new InvalidateSkinGUI(click.getPlayer()).open();
                 return true;
             }
             return false;

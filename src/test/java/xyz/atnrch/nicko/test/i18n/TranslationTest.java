@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
+import xyz.atnrch.nicko.config.DefaultDataSources;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.i18n.Locale;
@@ -21,8 +22,8 @@ public class TranslationTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                DataSourceConfiguration.SQL_EMPTY,
-                DataSourceConfiguration.REDIS_EMPTY,
+                DefaultDataSources.SQL_EMPTY,
+                DefaultDataSources.REDIS_EMPTY,
                 "",
                 false);
         MockBukkit.mock();

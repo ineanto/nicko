@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Configuration {
     @JsonProperty("sql")
-    private final DataSourceConfiguration sqlConfiguration;
+    private final SQLDataSourceConfiguration sqlConfiguration;
     @JsonProperty("redis")
     private final DataSourceConfiguration redisConfiguration;
     private final String prefix;
     private final Boolean customLocale;
 
-    public Configuration(DataSourceConfiguration sqlConfiguration, DataSourceConfiguration redisConfiguration, String prefix, Boolean customLocale) {
+    public Configuration(SQLDataSourceConfiguration sqlConfiguration, DataSourceConfiguration redisConfiguration, String prefix, Boolean customLocale) {
         this.sqlConfiguration = sqlConfiguration;
         this.redisConfiguration = redisConfiguration;
         this.prefix = prefix;
@@ -19,14 +19,14 @@ public class Configuration {
 
     public Configuration() {
         this(
-                new DataSourceConfiguration(false, "", 3306, "", ""),
+                new SQLDataSourceConfiguration(false, "", 3306, "", "", true),
                 new DataSourceConfiguration(false, "", 6379, "", ""),
                 "",
                 false
         );
     }
 
-    public DataSourceConfiguration getSqlConfiguration() {
+    public SQLDataSourceConfiguration getSqlConfiguration() {
         return sqlConfiguration;
     }
 

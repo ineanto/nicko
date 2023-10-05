@@ -6,6 +6,7 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
+import xyz.atnrch.nicko.config.DefaultDataSources;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,8 +24,8 @@ public class MapCacheTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                DataSourceConfiguration.SQL_EMPTY,
-                DataSourceConfiguration.REDIS_EMPTY,
+                DefaultDataSources.SQL_EMPTY,
+                DefaultDataSources.REDIS_EMPTY,
                 "",
                 false);
         final ServerMock server = MockBukkit.mock();

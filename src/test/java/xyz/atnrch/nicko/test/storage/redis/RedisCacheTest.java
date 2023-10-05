@@ -8,6 +8,7 @@ import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
+import xyz.atnrch.nicko.config.DefaultDataSources;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
 
@@ -23,7 +24,7 @@ public class RedisCacheTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                DataSourceConfiguration.SQL_EMPTY,
+                DefaultDataSources.SQL_EMPTY,
                 new DataSourceConfiguration(true, "127.0.0.1", 6379, "", ""),
                 "",
                 false);

@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.storage.sql;
+package xyz.atnrch.nicko.storage.mariadb;
 
 import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
@@ -15,20 +15,20 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public class SQLStorage extends Storage {
+public class MariaDBStorage extends Storage {
     private final Logger logger = Logger.getLogger("SQLStorage");
     private final Configuration configuration;
 
-    private SQLStorageProvider provider;
+    private MariaDBStorageProvider provider;
 
-    public SQLStorage(Configuration configuration) {
+    public MariaDBStorage(Configuration configuration) {
         this.configuration = configuration;
     }
 
     @Override
-    public SQLStorageProvider getProvider() {
+    public MariaDBStorageProvider getProvider() {
         if (provider == null) {
-            provider = new SQLStorageProvider(configuration);
+            provider = new MariaDBStorageProvider(configuration);
         }
         return provider;
     }

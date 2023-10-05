@@ -1,16 +1,17 @@
 package xyz.atnrch.nicko.storage;
 
 import org.bukkit.entity.Player;
-import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.atnrch.nicko.mojang.MojangUtils;
+import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.json.JSONStorage;
 import xyz.atnrch.nicko.storage.map.MapCache;
+import xyz.atnrch.nicko.storage.mariadb.MariaDBStorage;
+import xyz.atnrch.nicko.storage.mysql.MySQLStorage;
 import xyz.atnrch.nicko.storage.redis.RedisCache;
-import xyz.atnrch.nicko.storage.sql.SQLStorage;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -24,7 +25,9 @@ public class PlayerDataStore {
 
     public PlayerDataStore(MojangAPI mojangAPI, Configuration configuration) {
         this.mojangAPI = mojangAPI;
-        this.storage = configuration.getSqlConfiguration().isEnabled() ? new SQLStorage(configuration) : new JSONStorage();
+        this.storage = configuration.getSqlConfiguration().isEnabled() ?
+                configuration.getSqlConfiguration().isMariadb() ? new MariaDBStorage(configuration) : new MySQLStorage(configuration)
+                : new JSONStorage();
         this.cache = configuration.getRedisConfiguration().isEnabled() ? new RedisCache(configuration) : new MapCache();
     }
 

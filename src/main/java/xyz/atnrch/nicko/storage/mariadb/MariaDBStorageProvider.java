@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.storage.sql;
+package xyz.atnrch.nicko.storage.mariadb;
 
 import org.mariadb.jdbc.MariaDbDataSource;
 import xyz.atnrch.nicko.config.Configuration;
@@ -10,15 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class SQLStorageProvider implements StorageProvider {
-    private final Logger logger = Logger.getLogger("SQLStorageProvider");
+public class MariaDBStorageProvider implements StorageProvider {
+    private final Logger logger = Logger.getLogger("MariaDBStorageProvider");
     private final Configuration configuration;
 
     private Connection connection;
 
     private final String schemaName = "nicko";
 
-    public SQLStorageProvider(Configuration configuration) {
+    public MariaDBStorageProvider(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -40,7 +40,7 @@ public class SQLStorageProvider implements StorageProvider {
             createTable();
             return true;
         } catch (SQLException e) {
-            logger.severe("Couldn't establish a connection to the MySQL database: " + e.getMessage());
+            logger.severe("Couldn't establish a connection to the MariaDB database: " + e.getMessage());
             return false;
         }
     }

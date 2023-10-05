@@ -7,6 +7,7 @@ import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.appearance.ActionResult;
+import xyz.atnrch.nicko.config.DefaultDataSources;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import org.junit.jupiter.api.*;
 
@@ -23,7 +24,7 @@ public class BrokenSQLTest {
     public static void setup() {
         final Configuration config = new Configuration(
                 new DataSourceConfiguration(true, "127.0.0.1", 3306, "root", ""),
-                DataSourceConfiguration.REDIS_EMPTY,
+                DefaultDataSources.REDIS_EMPTY,
                 "",
                 false);
         final ServerMock server = MockBukkit.mock();

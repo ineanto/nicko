@@ -2,9 +2,7 @@ package xyz.atnrch.nicko;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.atnrch.nicko.command.NickoCommand;
 import xyz.atnrch.nicko.config.Configuration;
 import xyz.atnrch.nicko.config.ConfigurationManager;
 import xyz.atnrch.nicko.event.PlayerJoinListener;
@@ -84,10 +82,10 @@ public class NickoBukkit extends JavaPlugin {
                 }
             }
 
-            final PluginCommand command = getCommand("nicko");
+            /*final PluginCommand command = getCommand("nicko");
             if (command != null) {
                 command.setExecutor(new NickoCommand());
-            }
+            }*/
 
             Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
             Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));

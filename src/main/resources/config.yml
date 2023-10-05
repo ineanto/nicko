@@ -21,9 +21,13 @@ customLocale: false
 # This configuration section manages SQL.
 sql:
   # Indicates wherever the data will be stored locally
-  # inside a .json file or in a SQL database.
+  # inside a .json file or in an SQL database.
   # Accepted values: false (Disabled), true (Enabled)
   enabled: false
+  # Toggles between the MariaDB and MySQL drivers.
+  # If you use the MySQL database engine, switch this to off.
+  # Accepted values: false (Disabled), true (Enabled)
+  mariadb: true
   # SQL database's address
   # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
   address: "localhost"

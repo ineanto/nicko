@@ -47,6 +47,12 @@
             <artifactId>paper-api</artifactId>
             <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
@@ -149,6 +155,7 @@
                                     <include>org.mariadb.jdbc:*</include>
                                     <include>redis.clients:*</include>
                                     <include>org.apache.commons:commons-pool2</include>
+                                    <include>com.google.code.gson:gson</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -183,6 +190,10 @@
                                 <relocation>
                                     <pattern>org.apache.commons.pool2</pattern>
                                     <shadedPattern>net.artelnatif.libs.pool2</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.google.code.gson</pattern>
+                                    <shadedPattern>net.artelnatif.libs.gson</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

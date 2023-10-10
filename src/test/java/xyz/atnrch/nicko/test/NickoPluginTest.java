@@ -1,10 +1,12 @@
 package xyz.atnrch.nicko.test;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.config.DefaultDataSources;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,7 +17,7 @@ public class NickoPluginTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                new DataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345"),
+                DefaultDataSources.MARIADB_EMPTY,
                 DefaultDataSources.REDIS_EMPTY,
                 "",
                 false);

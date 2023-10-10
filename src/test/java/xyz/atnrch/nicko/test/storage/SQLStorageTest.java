@@ -5,8 +5,8 @@ import org.junit.jupiter.api.*;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.appearance.ActionResult;
 import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.config.DataSourceConfiguration;
 import xyz.atnrch.nicko.config.DefaultDataSources;
+import xyz.atnrch.nicko.config.SQLDataSourceConfiguration;
 import xyz.atnrch.nicko.i18n.Locale;
 import xyz.atnrch.nicko.profile.NickoProfile;
 import xyz.atnrch.nicko.storage.PlayerDataStore;
@@ -24,7 +24,7 @@ public class SQLStorageTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
-                new DataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345"),
+                new SQLDataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345", true),
                 DefaultDataSources.REDIS_EMPTY,
                 "",
                 false);

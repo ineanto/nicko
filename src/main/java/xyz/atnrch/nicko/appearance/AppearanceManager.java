@@ -70,7 +70,7 @@ public class AppearanceManager {
 
     public void updateOthers() {
         final WrapperPlayServerEntityDestroy destroy = new WrapperPlayServerEntityDestroy();
-        final WrapperPlayServerNamedEntitySpawn spawn = new WrapperPlayServerNamedEntitySpawn();
+        final WrapperPlayServerSpawnEntity spawn = new WrapperPlayServerSpawnEntity();
         destroy.setEntityIds(IntList.of(player.getEntityId()));
         spawn.setEntityId(player.getEntityId());
         spawn.setLocation(player.getLocation());

@@ -1,4 +1,4 @@
-# _Nicko_ <img style="vertical-align:middle" src="./img/LOGO.png" alt="" width="50"/>
+# *Nicko* <img style="vertical-align:middle" src="./img/LOGO.png" alt="" width="65"/>
 
 ## The feature packed, next generation disguise plugin for Minecraft.
 

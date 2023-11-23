@@ -158,22 +158,14 @@ public class AppearanceManager {
             remove.broadcastPacket();
         }
 
-        // Yes, I skip providing chat session data.
-        // Yes, this will cause players to get kicked
-        // as soon as they send a message on versions above 1.19.2.
-        // No, I'll not waste another day fixing their mess.
-        // Go cry about it to Mojang.
-        // (Long live NoEncryption!)
-        // TODO (Ineanto, 9/1/23):
-        //  Try to provide chat session data after ProtocolLib's update to support Chat Sessions.
-        //  This could remove the mandatory NoEncryption (or similar "encryption removing") dependency with Nicko.
         add.setData(ImmutableList.of(new PlayerInfoData(
                 player.getUniqueId(),
                 player.getPing(),
                 true,
                 EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()),
                 gameProfile,
-                WrappedChatComponent.fromText(displayName)
+                WrappedChatComponent.fromText(displayName),
+                WrappedRemoteChatSessionData.fromPlayer(player)
         )));
         add.broadcastPacket();
     }

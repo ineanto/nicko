@@ -36,7 +36,11 @@ public class PlayerInformationItem extends AsyncItem {
 
                 if (optionalProfile.isPresent()) {
                     final NickoProfile profile = optionalProfile.get();
-                    final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.CHECK, player.getName(), (profile.hasData() ? "§a✔" : "§c❌"), profile.getName(), profile.getSkin());
+                    final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.CHECK,
+                            player.getName(),
+                            (profile.hasData() ? "§a✔" : "§c❌"),
+                            (profile.getName() == null ? "§cN/A" : profile.getName()),
+                            (profile.getSkin() == null ? "§cN/A" : profile.getSkin()));
                     skull.setDisplayName("§6" + translation.getName());
                     translation.getLore().forEach(skull::addLoreLines);
                 } else {

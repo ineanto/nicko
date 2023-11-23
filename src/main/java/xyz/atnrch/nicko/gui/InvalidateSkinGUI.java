@@ -37,7 +37,7 @@ public class InvalidateSkinGUI {
                 .collect(Collectors.toList());
 
         final List<Item> items = loadedSkins.stream()
-                .map(CacheEntryItem::new)
+                .map(uuid -> new CacheEntryItem(i18n, uuid))
                 .collect(Collectors.toList());
 
         final CacheManagementGUI parent = new CacheManagementGUI(player);

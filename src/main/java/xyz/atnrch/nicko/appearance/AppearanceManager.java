@@ -84,9 +84,8 @@ public class AppearanceManager {
 
     private ActionResult updateGameProfileSkin(WrappedGameProfile gameProfile, boolean skinChange, boolean reset) {
         final NickoProfile profile = getNickoProfile();
-        final boolean changeOnlyName = profile.getSkin() != null && profile.getSkin().equals(player.getName());
 
-        if (skinChange || !changeOnlyName) {
+        if (skinChange) {
             Optional<MojangSkin> skin;
             try {
                 final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();

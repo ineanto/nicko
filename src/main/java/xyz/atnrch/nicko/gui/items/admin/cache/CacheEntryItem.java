@@ -11,11 +11,14 @@ import xyz.atnrch.nicko.gui.InvalidateSkinGUI;
 import xyz.atnrch.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
+import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
+import xyz.xenondevs.invui.util.MojangApiUtils;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class CacheEntryItem extends AsyncItem {
@@ -23,14 +26,23 @@ public class CacheEntryItem extends AsyncItem {
     private final String uuid;
     private final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();
 
-    public CacheEntryItem(String uuid) {
+    public CacheEntryItem(I18N i18n, String uuid) {
         super(new ItemBuilder(Material.PAINTING).setDisplayName("§7§oLoading..."), () -> {
             final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
             final UUID uuidObject = UUID.fromString(dashedUuid);
-            final SkullBuilder skull = new SkullBuilder(uuidObject);
-            skull.setDisplayName("§6" + NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
-            skull.addLoreLines("§7Click to invalidate skin");
-            return skull;
+            try {
+                final SkullBuilder skull = new SkullBuilder(uuidObject);
+                skull.setDisplayName("§6" + NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
+                skull.addLoreLines("§7Click to invalidate skin");
+                return skull;
+            } catch (MojangApiUtils.MojangApiException | IOException e) {
+                final ItemBuilder builder = new ItemBuilder(Material.TNT);
+                final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.ERROR);
+                builder.setDisplayName(translation.getName());
+                translation.getLore().forEach(builder::addLoreLines);
+                NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for Notch! (GUI/ManageCache)");
+                return builder;
+            }
         });
         this.uuid = uuid;
         this.name = mojangAPI.getUUIDName(uuid);

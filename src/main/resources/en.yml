@@ -44,6 +44,10 @@ gui:
     name: "Unavailable"
     lore:
       - "§7§oThis button is disabled."
+  error:
+    name: "Error!"
+    lore:
+      - "§7§oAn error occurred."
   loading:
     name: "§7§oLoading..."
   choice:

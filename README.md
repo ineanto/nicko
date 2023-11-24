@@ -10,6 +10,15 @@ Coming soon! ⏳
 
 ---
 
+## Known bugs:
+
+- Players who have operator (OP) status lose access to the Operator Items tab in creative mode
+  after disguising **(1.20 and up)**.
+- When disguising and only changing their display name, players will have the new default
+  skins **(1.20 and up)**.
+
+---
+
 ## Q/A
 
 Q: Players are getting kicked when they send a message on versions above 1.19.2!

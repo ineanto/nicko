@@ -1,5 +1,6 @@
 package xyz.atnrch.nicko;
 
+import com.comphenix.protocol.utility.MinecraftVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -49,6 +50,11 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+
+        if (!MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
+            getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
+        }
+
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 

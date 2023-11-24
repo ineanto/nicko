@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.gui.ChoiceGUI;
 import xyz.atnrch.nicko.gui.InvalidateSkinGUI;
+import xyz.atnrch.nicko.gui.items.ItemDefaults;
 import xyz.atnrch.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.atnrch.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
@@ -32,16 +32,10 @@ public class CacheEntryItem extends AsyncItem {
             final UUID uuidObject = UUID.fromString(dashedUuid);
             try {
                 final SkullBuilder skull = new SkullBuilder(uuidObject);
-                skull.setDisplayName("§6" + NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
-                skull.addLoreLines("§7Click to invalidate skin");
-                return skull;
+                return i18n.translateItem(skull, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
             } catch (MojangApiUtils.MojangApiException | IOException e) {
-                final ItemBuilder builder = new ItemBuilder(Material.TNT);
-                final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.ERROR);
-                builder.setDisplayName(translation.getName());
-                translation.getLore().forEach(builder::addLoreLines);
-                NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for Notch! (GUI/ManageCache)");
-                return builder;
+                NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + uuid + ")! (GUI/Cache/Entry)");
+                return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
             }
         });
         this.uuid = uuid;

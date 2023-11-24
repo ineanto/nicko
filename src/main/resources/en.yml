@@ -33,6 +33,7 @@ gui:
     settings: "Nicko > Settings"
     admin: "Nicko > Administration"
     check: "Nicko > Admin... > Check"
+    confirm: "... > Invalidate > Confirm"
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalidate"
 
@@ -47,7 +48,8 @@ gui:
   error:
     name: "Error!"
     lore:
-      - "§7§oAn error occurred."
+      - "§7"
+      - "§7The item texture failed to load, but it might still work."
   loading:
     name: "§7§oLoading..."
   choice:
@@ -94,7 +96,7 @@ gui:
       lore:
         - "§7See players' disguise information."
     check:
-      name: "{0}"
+      name: "§6{0}"
       lore:
         - "§cNicked: §a{1}"
         - "§cName: §6{2}"
@@ -117,6 +119,10 @@ gui:
         lore:
           - "§7Select a specific skin to invalidate."
           - "§7Useful if a skin has been recently updated."
+      entry:
+        name: "§6{0}"
+        lore:
+          - "§7Click to invalidate..."
   settings:
     language:
       name: "Language"

@@ -34,7 +34,7 @@ public class ItemTranslationTest {
     @DisplayName("Translate Item Without Lore")
     public void translateItemTranslationWithoutLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.GO_BACK);
+        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.GO_BACK);
         assertTrue(translation.getLore().isEmpty());
         assertEquals(translation.getName(), "Retour");
     }
@@ -43,7 +43,7 @@ public class ItemTranslationTest {
     @DisplayName("Translate Item")
     public void translateItemLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.Cache.STATISTICS, "1", "1");
+        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Admin.Cache.STATISTICS, "1", "1");
         assertFalse(translation.getLore().isEmpty());
         assertEquals("§fNombre de requêtes: §b1", translation.getLore().get(0));
         assertEquals("§fNb. de skin dans le cache: §b1", translation.getLore().get(1));

@@ -33,6 +33,7 @@ gui:
     settings: "Nicko > Paramètres"
     admin: "Nicko > Administration"
     check: "Nicko > Admin... > Vérification"
+    confirm: "... > Invalider  > Confirmer"
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalider"
 
@@ -90,7 +91,7 @@ gui:
       lore:
         - "§7Vérifiez les informations de déguisement d'un joueur."
     check:
-      name: "{0}"
+      name: "§6{0}"
       lore:
         - "§cDéguisé: §a{1}"
         - "§cNom: §6{2}"
@@ -115,6 +116,10 @@ gui:
           - "§7Sélectionnez une apparence spécifique à"
           - "§7invalider. Utile dans le cas où un skin"
           - "§7a récemment été mis à jour."
+      entry:
+        name: "§6{0}"
+        lore:
+          - "§7Cliquez pour invalider..."
   settings:
     language:
       name: "Langage"

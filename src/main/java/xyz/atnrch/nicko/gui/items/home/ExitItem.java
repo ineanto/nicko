@@ -19,9 +19,7 @@ public class ExitItem {
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.OAK_DOOR);
-            final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.EXIT);
-            builder.setDisplayName(translation.getName());
-            return builder;
+            return i18n.translateItem(builder, I18NDict.GUI.EXIT);
         }, click -> {
             click.getEvent().getView().close();
             final ClickType clickType = click.getClickType();

@@ -7,7 +7,6 @@ import xyz.atnrch.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.atnrch.nicko.gui.items.common.choice.ConfirmItem;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
@@ -16,13 +15,14 @@ import xyz.xenondevs.invui.window.Window;
 public class ChoiceGUI {
     private final Player player;
     private final Gui gui;
+    private final String title;
 
     public ChoiceGUI(Player player, ChoiceCallback callback) {
         final I18N i18n = new I18N(player);
         final ConfirmItem confirmItem = new ConfirmItem(player, callback);
         final CancelItem cancelItem = new CancelItem(player, callback);
-        final ItemTranslation chooseItemTranslation = i18n.translateItem(I18NDict.GUI.Choice.CHOOSE);
 
+        this.title = i18n.translatePrefixless(I18NDict.GUI.Titles.CONFIRM);
         this.gui = Gui.normal()
                 .setStructure(
                         "@ @ @ @ % & & & &",
@@ -31,12 +31,12 @@ public class ChoiceGUI {
                 )
                 .addIngredient('@', confirmItem.get())
                 .addIngredient('&', cancelItem.get())
-                .addIngredient('I', new SimpleItem(new ItemBuilder(Material.PAPER).setDisplayName(chooseItemTranslation.getName()).get()))
+                .addIngredient('I', new SimpleItem(i18n.translateItem(new ItemBuilder(Material.PAPER), I18NDict.GUI.Choice.CHOOSE)))
                 .build();
         this.player = player;
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle("... > Invalidate > Confirm").open(player);
+        Window.single().setGui(gui).setTitle(title).open(player);
     }
 }

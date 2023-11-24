@@ -47,9 +47,9 @@ public class BungeeCordCyclingItem {
         return new SimpleItem(ItemProvider.EMPTY);
     }
 
-    private ItemProvider getItemProviderForValue(boolean enabled) {
+    private ItemProvider getItemProviderForValue(boolean ignored) {
         final ItemBuilder builder = new ItemBuilder(Material.COMPASS);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.BUNGEECORD);
+        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Settings.BUNGEECORD);
 
         builder.setDisplayName(translation.getName());
         translation.getLore().forEach(builder::addLoreLines);

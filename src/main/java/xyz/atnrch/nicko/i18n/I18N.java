@@ -4,6 +4,7 @@ import com.github.jsixface.YamlConfig;
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.NickoBukkit;
 import xyz.atnrch.nicko.profile.NickoProfile;
+import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -35,7 +36,14 @@ public class I18N {
         this.yamlConfig = getYamlConfig();
     }
 
-    public ItemTranslation translateItem(String key, Object... args) {
+    public AbstractItemBuilder<?> translateItem(AbstractItemBuilder<?> item, String key, Object... args) {
+        final ItemTranslation translation = fetchTranslation(key, args);
+        item.setDisplayName(translation.getName());
+        translation.getLore().forEach(item::addLoreLines);
+        return item;
+    }
+
+    public ItemTranslation fetchTranslation(String key, Object... args) {
         final String nameKey = key + ".name";
         final String loreKey = key + ".lore";
         final String name = readString(nameKey);

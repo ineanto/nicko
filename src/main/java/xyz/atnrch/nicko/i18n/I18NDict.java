@@ -81,6 +81,7 @@ public class I18NDict {
             public static final String SETTINGS = TITLE_KEY + "settings";
             public static final String ADMIN = TITLE_KEY + "admin";
             public static final String CHECK = TITLE_KEY + "check";
+            public static final String CONFIRM = TITLE_KEY + "confirm";
             public static final String CACHE = TITLE_KEY + "cache";
             public static final String INVALIDATE_SKIN = TITLE_KEY + "invalidate_skin";
         }
@@ -124,6 +125,7 @@ public class I18NDict {
                 public static final String STATISTICS = CACHE_KEY + "statistics";
                 public static final String INVALIDATE_CACHE = CACHE_KEY + "invalidate_cache";
                 public static final String INVALIDATE_SKIN = CACHE_KEY + "invalidate_skin";
+                public static final String ENTRY = CACHE_KEY + "entry";
             }
         }
     }

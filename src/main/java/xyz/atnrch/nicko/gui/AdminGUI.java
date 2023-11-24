@@ -1,13 +1,14 @@
 package xyz.atnrch.nicko.gui;
 
+import org.bukkit.entity.Player;
+import xyz.atnrch.nicko.gui.items.ItemDefaults;
 import xyz.atnrch.nicko.gui.items.admin.ManageCacheItem;
 import xyz.atnrch.nicko.gui.items.admin.ManagePlayerItem;
 import xyz.atnrch.nicko.gui.items.common.GoBackItem;
-import org.bukkit.entity.Player;
-import xyz.atnrch.nicko.gui.items.common.UnavailableItem;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
 import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
 import xyz.xenondevs.invui.window.Window;
 
 public class AdminGUI {
@@ -21,7 +22,6 @@ public class AdminGUI {
 
         final HomeGUI parent = new HomeGUI(player);
         final GoBackItem backItem = new GoBackItem(player);
-        final UnavailableItem unavailableItem = new UnavailableItem(player);
         final ManagePlayerItem managePlayerItem = new ManagePlayerItem(i18n, player);
 
         this.gui = Gui.normal()
@@ -32,7 +32,7 @@ public class AdminGUI {
                 )
                 .addIngredient('S', new ManageCacheItem(i18n))
                 .addIngredient('C', managePlayerItem.get())
-                .addIngredient('U', unavailableItem.get())
+                .addIngredient('U', new SimpleItem(ItemDefaults.getUnavailableItem(i18n)))
                 .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;

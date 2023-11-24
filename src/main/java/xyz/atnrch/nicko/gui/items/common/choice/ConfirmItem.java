@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
@@ -20,9 +19,7 @@ public class ConfirmItem {
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
-            final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Choice.CONFIRM);
-            builder.setDisplayName(translation.getName());
-            return builder;
+            return i18n.translateItem(builder, I18NDict.GUI.Choice.CONFIRM);
         }, click -> {
             click.getEvent().getView().close();
             callback.onConfirm();

@@ -57,7 +57,7 @@ public class LanguageCyclingItem {
 
     private ItemProvider generateItem(Locale locale, List<Locale> locales) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Settings.LANGUAGE);
+        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Settings.LANGUAGE);
 
         builder.setDisplayName(translation.getName());
         for (Locale value : locales) {

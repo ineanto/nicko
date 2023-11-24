@@ -6,7 +6,6 @@ import org.bukkit.event.inventory.ClickType;
 import xyz.atnrch.nicko.gui.InvalidateSkinGUI;
 import xyz.atnrch.nicko.i18n.I18N;
 import xyz.atnrch.nicko.i18n.I18NDict;
-import xyz.atnrch.nicko.i18n.ItemTranslation;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
@@ -20,10 +19,7 @@ public class InvalidateSkinItem {
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.PAPER);
-            final ItemTranslation translation = i18n.translateItem(I18NDict.GUI.Admin.Cache.INVALIDATE_SKIN);
-            builder.setDisplayName(translation.getName());
-            translation.getLore().forEach(builder::addLoreLines);
-            return builder;
+            return i18n.translateItem(builder, I18NDict.GUI.Admin.Cache.INVALIDATE_SKIN);
         }, (click) -> {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {

@@ -50,8 +50,8 @@ public class RedisCache extends Cache {
     @Override
     public Optional<NickoProfile> retrieve(UUID uuid) {
         try (Jedis jedis = provider.getJedis()) {
-            // 29/08/23: what the fuck was I talking about?
-            // TODO (Ineanto, 5/20/23): Check if cached before because Jedis returns a bulk reply so this is unsafe
+            // 08/29/23: what the fuck was I talking about?
+            // TODO (Ineanto, 05/20/23): Check if cached before because Jedis returns a bulk reply so this is unsafe
             final String data = jedis.get("nicko:" + uuid.toString());
             final NickoProfile profile = gson.fromJson(data, NickoProfile.class);
             return Optional.of(profile);

@@ -25,7 +25,6 @@ public class PlayerJoinListener implements Listener {
         final PlayerNameStore nameStore = instance.getNameStore();
         final PlayerDataStore dataStore = instance.getDataStore();
 
-        // TODO: 2/20/23 Fetch data from BungeeCord
         nameStore.storeName(player);
         Bukkit.getScheduler().runTaskLater(instance, () -> {
             final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());

@@ -2,7 +2,7 @@ name: Nicko
 main: xyz.atnrch.nicko.NickoBukkit
 version: 1.0-SNAPSHOT
 author: Ineanto
-description: "In-game appearance manager."
+description: "The feature packed, next generation disguise plugin for Minecraft."
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
 depend:

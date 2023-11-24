@@ -31,9 +31,9 @@ Try installing [NoEncryption](https://www.spigotmc.org/resources/noencryption.10
 
 #### Version compatibility table
 
-| Version       | Plugin                                                                      |
-|---------------|-----------------------------------------------------------------------------|
-| 1.7 and lower | Unsupported                                                                 |
-| 1.8 - 1.12.2  | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/)  |
-| 1.13          | Unsupported (The library I use for the GUIs doesn't support 1.13 and lower) |
-| 1.14 and up   | Use Nicko                                                                   |
+| Version       | Plugin                                                                     |
+|---------------|----------------------------------------------------------------------------|
+| 1.7 and lower | Unsupported                                                                |
+| 1.8 - 1.12.2  | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/) |
+| 1.13          | Unsupported                                                                |
+| 1.14 and up   | Use Nicko                                                                  |

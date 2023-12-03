@@ -25,13 +25,13 @@ public class WrapperPlayerServerPlayerInfo extends AbstractPacket {
 
     public void setActions(Set<EnumWrappers.PlayerInfoAction> value) {
         if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
-            handle.getPlayerInfoActions().write(0, value);
+            handle.getPlayerInfoActions().writeSafely(0, value);
         } else {
-            handle.getPlayerInfoAction().write(0, value.stream().iterator().next()); // Get the first Value.
+            handle.getPlayerInfoAction().writeSafely(0, value.stream().iterator().next()); // Get the first Value.
         }
     }
 
     public void setData(List<PlayerInfoData> value) {
-        handle.getPlayerInfoDataLists().write(1, value);
+        handle.getPlayerInfoDataLists().writeSafely(1, value);
     }
 }

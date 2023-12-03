@@ -35,7 +35,7 @@ public class WrapperPlayServerEntityDestroy extends AbstractPacket {
      * @param value New value for field 'entityIds'
      */
     public void setEntityIds(IntList value) {
-        this.handle.getModifier().withType(IntList.class, Converters.passthrough(IntList.class)).write(0, value);
+        this.handle.getModifier().withType(IntList.class, Converters.passthrough(IntList.class)).writeSafely(0, value);
     }
 
 }

@@ -52,65 +52,65 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
             // 1.20.2
             final InternalStructure dimensionType = commonPlayerSpawnInfoStructure.getStructures().read(0);
-            dimensionType.getMinecraftKeys().write(0, new MinecraftKey("minecraft", "dimension_type"));
-            dimensionType.getMinecraftKeys().write(1, new MinecraftKey("minecraft", "overworld"));
-            commonPlayerSpawnInfoStructure.getStructures().write(0, dimensionType);
-            commonPlayerSpawnInfoStructure.getWorldKeys().write(0, value);
+            dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
+            dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
+            commonPlayerSpawnInfoStructure.getStructures().writeSafely(0, dimensionType);
+            commonPlayerSpawnInfoStructure.getWorldKeys().writeSafely(0, value);
         } else if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             // 1.19 to 1.20.1
             // Thank you lukalt!
             final InternalStructure dimensionType = handle.getStructures().read(0);
-            dimensionType.getMinecraftKeys().write(0, new MinecraftKey("minecraft", "dimension_type"));
-            dimensionType.getMinecraftKeys().write(1, new MinecraftKey("minecraft", "overworld"));
-            handle.getStructures().write(0, dimensionType);
-            handle.getWorldKeys().write(0, value);
+            dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
+            dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
+            handle.getStructures().writeSafely(0, dimensionType);
+            handle.getWorldKeys().writeSafely(0, value);
         } else if (MinecraftVersion.CAVES_CLIFFS_2.atOrAbove()) {
             // 1.18
             handle.getHolders(
                     MinecraftReflection.getDimensionManager(),
                     BukkitConverters.getDimensionConverter()
-            ).write(0, value);
+            ).writeSafely(0, value);
         } else {
             // 1.17 and below (untested)
-            handle.getDimensions().write(0, value.getEnvironment().ordinal());
+            handle.getDimensions().writeSafely(0, value.getEnvironment().ordinal());
         }
     }
 
     public void setGameMode(GameMode value) {
         if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            commonPlayerSpawnInfoStructure.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(value));
+            commonPlayerSpawnInfoStructure.getGameModes().writeSafely(0, EnumWrappers.NativeGameMode.fromBukkit(value));
             return;
         }
 
-        handle.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(value));
+        handle.getGameModes().writeSafely(0, EnumWrappers.NativeGameMode.fromBukkit(value));
     }
 
     public void setPreviousGameMode(GameMode value) {
         if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            commonPlayerSpawnInfoStructure.getGameModes().write(1, EnumWrappers.NativeGameMode.fromBukkit(value));
+            commonPlayerSpawnInfoStructure.getGameModes().writeSafely(1, EnumWrappers.NativeGameMode.fromBukkit(value));
             return;
         }
-        handle.getGameModes().write(1, EnumWrappers.NativeGameMode.fromBukkit(value));
+        handle.getGameModes().writeSafely(1, EnumWrappers.NativeGameMode.fromBukkit(value));
     }
 
     public void setCopyMetadata(boolean value) {
         if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) return;
         if (MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
-            handle.getBytes().write(0, ((byte) (value ? 0x01 : 0x00)));
+            handle.getBytes().writeSafely(0, ((byte) (value ? 0x01 : 0x00)));
         } else {
-            handle.getBooleans().write(0, value);
+            handle.getBooleans().writeSafely(0, value);
         }
     }
 
     public void setSeed(long value) {
         if (MinecraftVersion.BEE_UPDATE.atOrAbove() && !MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            handle.getLongs().write(0, Hashing.sha256().hashLong(value).asLong());
+            handle.getLongs().writeSafely(0, Hashing.sha256().hashLong(value).asLong());
         }
     }
 
     public void setDifficulty(Difficulty difficulty) {
         if (difficulty != null && !MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
-            handle.getDifficulties().write(0, EnumWrappers.Difficulty.valueOf(difficulty.name()));
+            handle.getDifficulties().writeSafely(0, EnumWrappers.Difficulty.valueOf(difficulty.name()));
         }
     }
 }

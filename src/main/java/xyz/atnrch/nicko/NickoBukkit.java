@@ -51,16 +51,18 @@ public class NickoBukkit extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        if (!MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
-            getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
-        }
-
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 
         mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
+
+        if (!MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
+            getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
+            dataStore.getStorage().setError(true);
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
 
         getLogger().info("Loading persistence...");
         if (!dataStore.getStorage().getProvider().init()) {

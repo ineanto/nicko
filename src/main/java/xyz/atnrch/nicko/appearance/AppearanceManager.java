@@ -58,7 +58,7 @@ public class AppearanceManager {
             updateMetadata();
             updateTabList(gameProfile, displayName);
             respawnPlayer();
-            updateOthers();
+            updateForOthers();
         }
         return result;
     }
@@ -68,7 +68,10 @@ public class AppearanceManager {
         return optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    public void updateOthers() {
+    public void updateForOthers() {
+        final NickoProfile nickoProfile = getNickoProfile();
+        if (!nickoProfile.hasData()) return;
+
         final WrapperPlayServerEntityDestroy destroy = new WrapperPlayServerEntityDestroy();
         final WrapperPlayServerSpawnEntity spawn = new WrapperPlayServerSpawnEntity();
         destroy.setEntityIds(IntList.of(player.getEntityId()));

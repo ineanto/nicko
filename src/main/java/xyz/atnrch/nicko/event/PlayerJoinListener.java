@@ -3,6 +3,7 @@ package xyz.atnrch.nicko.event;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import xyz.atnrch.nicko.NickoBukkit;
@@ -17,7 +18,7 @@ import xyz.atnrch.nicko.storage.name.PlayerNameStore;
 import java.util.Optional;
 
 public class PlayerJoinListener implements Listener {
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final NickoBukkit instance = NickoBukkit.getInstance();
@@ -41,6 +42,11 @@ public class PlayerJoinListener implements Listener {
                     }
                 }
             });
+
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                final AppearanceManager appearanceManager = new AppearanceManager(online);
+                appearanceManager.updateForOthers();
+            }
         }, 20L);
     }
 }

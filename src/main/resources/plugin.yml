@@ -1,6 +1,6 @@
 name: Nicko
-main: xyz.atnrch.nicko.NickoBukkit
-version: 1.0-SNAPSHOT
+main: xyz.ineanto.nicko.NickoBukkit
+version: 1.0-RC1
 author: Ineanto
 description: "The feature packed, next generation disguise plugin for Minecraft."
 api-version: 1.14

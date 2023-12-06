@@ -5,9 +5,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.config.DefaultDataSources;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.config.DefaultDataSources;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

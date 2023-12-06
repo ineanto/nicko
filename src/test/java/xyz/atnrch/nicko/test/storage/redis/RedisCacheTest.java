@@ -4,13 +4,13 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.*;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.config.DataSourceConfiguration;
-import xyz.atnrch.nicko.config.DefaultDataSources;
-import xyz.atnrch.nicko.profile.NickoProfile;
-import xyz.atnrch.nicko.storage.PlayerDataStore;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.appearance.ActionResult;
+import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.config.DataSourceConfiguration;
+import xyz.ineanto.nicko.config.DefaultDataSources;
+import xyz.ineanto.nicko.profile.NickoProfile;
+import xyz.ineanto.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
 

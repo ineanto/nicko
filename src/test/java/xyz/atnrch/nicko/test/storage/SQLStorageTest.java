@@ -2,14 +2,14 @@ package xyz.atnrch.nicko.test.storage;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import org.junit.jupiter.api.*;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.appearance.ActionResult;
-import xyz.atnrch.nicko.config.Configuration;
-import xyz.atnrch.nicko.config.DefaultDataSources;
-import xyz.atnrch.nicko.config.SQLDataSourceConfiguration;
-import xyz.atnrch.nicko.i18n.Locale;
-import xyz.atnrch.nicko.profile.NickoProfile;
-import xyz.atnrch.nicko.storage.PlayerDataStore;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.appearance.ActionResult;
+import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.config.DefaultDataSources;
+import xyz.ineanto.nicko.config.SQLDataSourceConfiguration;
+import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.profile.NickoProfile;
+import xyz.ineanto.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
 import java.util.UUID;

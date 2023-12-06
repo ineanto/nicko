@@ -5,8 +5,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.atnrch.nicko.NickoBukkit;
-import xyz.atnrch.nicko.config.Configuration;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.config.Configuration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

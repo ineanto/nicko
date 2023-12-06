@@ -58,7 +58,20 @@ public class AppearanceManager {
             updateMetadata();
             updateTabList(gameProfile, displayName);
             respawnPlayer();
-            updateForOthers();
+            respawnEntityForOthers();
+        }
+        return result;
+    }
+
+    public ActionResult updateForOthers(boolean skinChange, boolean reset) {
+        final NickoProfile profile = getNickoProfile();
+        final String displayName = profile.getName() == null ? player.getName() : profile.getName();
+        final WrappedGameProfile gameProfile = WrappedGameProfile.fromPlayer(player).withName(displayName);
+        final ActionResult result = updateGameProfileSkin(gameProfile, skinChange, reset);
+        if (!result.isError()) {
+            updateMetadata();
+            updateTabList(gameProfile, displayName);
+            respawnEntityForOthers();
         }
         return result;
     }
@@ -68,7 +81,7 @@ public class AppearanceManager {
         return optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
     }
 
-    public void updateForOthers() {
+    public void respawnEntityForOthers() {
         final NickoProfile nickoProfile = getNickoProfile();
         if (!nickoProfile.hasData()) return;
 

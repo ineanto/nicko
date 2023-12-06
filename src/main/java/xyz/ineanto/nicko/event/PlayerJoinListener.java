@@ -16,6 +16,7 @@ import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
@@ -43,9 +44,15 @@ public class PlayerJoinListener implements Listener {
                 }
             });
 
-            for (Player online : Bukkit.getOnlinePlayers()) {
-                final AppearanceManager appearanceManager = new AppearanceManager(online);
-                appearanceManager.updateForOthers();
+            // TODO (Ineanto, 12/6/23): Make this cleaner.
+            for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).collect(Collectors.toList())) {
+                final Optional<NickoProfile> optionalOnlinePlayerProfile = dataStore.getData(online.getUniqueId());
+
+                optionalOnlinePlayerProfile.ifPresent(profile -> {
+                    final AppearanceManager appearanceManager = new AppearanceManager(online);
+                    final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(online.getName());
+                    appearanceManager.updateForOthers(needsASkinChange, false);
+                });
             }
         }, 20L);
     }

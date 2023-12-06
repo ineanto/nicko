@@ -58,6 +58,12 @@ public class NickoBukkit extends JavaPlugin {
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
 
+        if (!Bukkit.getOnlineMode()) {
+            getLogger().warning("Nicko has not been tested using offline mode!");
+            getLogger().warning("Issues regarding Nicko being used in offline mode will be ignored for now.");
+        }
+
+
         if (!MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
             dataStore.getStorage().setError(true);

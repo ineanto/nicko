@@ -6,7 +6,7 @@
 
 ## Download:
 
-Coming soon! ⏳
+https://www.spigotmc.org/resources/nicko.113868/
 
 ---
 

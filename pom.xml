@@ -6,7 +6,7 @@
 
     <groupId>xyz.ineanto</groupId>
     <artifactId>nicko</artifactId>
-    <version>1.0.1-RC1</version>
+    <version>1.0.2-RC1</version>
     <name>Nicko</name>
 
     <properties>
@@ -162,43 +162,43 @@
                             <relocations>
                                 <relocation>
                                     <pattern>net.wesjd.anvilgui</pattern>
-                                    <shadedPattern>net.artelnatif.libs.anvilgui</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.anvilgui</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>xyz.xenondevs.invui</pattern>
-                                    <shadedPattern>net.artelnatif.libs.invui</shadedPattern>
+                                    <pattern>xyz.xenondevs</pattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.invui</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.github.jsixface</pattern>
-                                    <shadedPattern>net.artelnatif.libs.yaml</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.yaml</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.fasterxml.jackson.dataformat</pattern>
-                                    <shadedPattern>net.artelnatif.libs.jackson.yaml</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.jackson.yaml</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.fasterxml.jackson.core</pattern>
-                                    <shadedPattern>net.artelnatif.libs.jackson.core</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.jackson.core</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.mariadb.jdbc</pattern>
-                                    <shadedPattern>net.artelnatif.libs.mariadb</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.mariadb</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>redis.clients</pattern>
-                                    <shadedPattern>net.artelnatif.libs.redis</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.redis</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.apache.commons.pool2</pattern>
-                                    <shadedPattern>net.artelnatif.libs.pool2</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.pool2</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.google.code.gson</pattern>
-                                    <shadedPattern>net.artelnatif.libs.gson</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.gson</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.mysql</pattern>
-                                    <shadedPattern>net.artelnatif.libs.mysql</shadedPattern>
+                                    <shadedPattern>xyz.ineanto.nicko.libs.mysql</shadedPattern>
                                 </relocation>
                             </relocations>
                             <!-- Prevents breaking AnvilGUI's VersionWrapper. -->

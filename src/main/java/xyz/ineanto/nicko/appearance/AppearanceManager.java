@@ -149,7 +149,7 @@ public class AppearanceManager {
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.setAllowFlight(wasAllowedToFly);
         player.setFlying(wasFlying);
-        player.updateInventory(); // Marked as unstable.
+        player.updateInventory();
     }
 
     @SuppressWarnings("deprecation")

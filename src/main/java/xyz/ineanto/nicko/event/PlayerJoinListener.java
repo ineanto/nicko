@@ -16,9 +16,12 @@ import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PlayerJoinListener implements Listener {
+    private final Logger logger = Logger.getLogger("PlayerJoinListener");
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
@@ -51,7 +54,10 @@ public class PlayerJoinListener implements Listener {
                 optionalOnlinePlayerProfile.ifPresent(profile -> {
                     final AppearanceManager appearanceManager = new AppearanceManager(online);
                     final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(online.getName());
-                    appearanceManager.updateForOthers(needsASkinChange, false);
+                    final ActionResult actionResult = appearanceManager.updateForOthers(needsASkinChange, false);
+                    if (actionResult.isError()) {
+                        logger.warning("Something wrong happened while updating players to joining player (" + actionResult.getErrorKey() + ")");
+                    }
                 });
             }
         }, 20L);

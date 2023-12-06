@@ -12,6 +12,7 @@ https://www.spigotmc.org/resources/nicko.113868/
 
 ## Known bugs:
 
+- Disguising will heal and feed players to full health.
 - Players who have operator (OP) status lose access to the Operator Items tab in creative mode
   after disguising **(1.20 and up)**.
 - When disguising and only changing their display name, players will have the new default

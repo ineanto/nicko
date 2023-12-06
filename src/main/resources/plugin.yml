@@ -3,7 +3,7 @@ main: xyz.atnrch.nicko.NickoBukkit
 version: 1.0-SNAPSHOT
 author: Ineanto
 description: "The feature packed, next generation disguise plugin for Minecraft."
-api-version: 1.13
+api-version: 1.14
 softdepend: [ PlaceholderAPI ]
 depend:
   - ProtocolLib

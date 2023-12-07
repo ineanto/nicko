@@ -26,6 +26,8 @@ event:
     cache:
       invalidate_cache: "§fCache complet invalidé."
       invalidate_entry: "§6{0} §fa été invalidé."
+    check:
+      remove_skin: "§fSkin retiré du joueur."
 
 gui:
   title:
@@ -33,7 +35,7 @@ gui:
     settings: "Nicko > Paramètres"
     admin: "Nicko > Administration"
     check: "Nicko > Admin... > Vérification"
-    confirm: "... > Invalider  > Confirmer"
+    confirm: "... > Confirmer l'action"
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalider"
 
@@ -96,6 +98,8 @@ gui:
         - "§cDéguisé: §a{1}"
         - "§cNom: §6{2}"
         - "§cSkin: §6{3}"
+        - " "
+        - "§7§oCliquez pour retirer le skin!"
     cache:
       statistics:
         name: "Statistiques"

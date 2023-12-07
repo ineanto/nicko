@@ -29,7 +29,7 @@ public class PlayerCheckGUI {
 
         final List<Item> items = Bukkit.getOnlinePlayers().stream()
                 .map(Entity::getUniqueId)
-                .map(uuid -> new PlayerInformationItem(i18n, uuid))
+                .map(uuid -> new PlayerInformationItem(i18n, Bukkit.getPlayer(uuid)))
                 .collect(Collectors.toList());
 
         final AdminGUI parent = new AdminGUI(player);

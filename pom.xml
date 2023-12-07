@@ -6,7 +6,7 @@
 
     <groupId>xyz.ineanto</groupId>
     <artifactId>nicko</artifactId>
-    <version>1.0.3-RC1</version>
+    <version>1.0.4-RC1</version>
     <name>Nicko</name>
 
     <properties>

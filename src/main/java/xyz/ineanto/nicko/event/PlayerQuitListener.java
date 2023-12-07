@@ -1,11 +1,11 @@
 package xyz.ineanto.nicko.event;
 
-import xyz.ineanto.nicko.NickoBukkit;
-import xyz.ineanto.nicko.appearance.ActionResult;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.appearance.ActionResult;
 
 public class PlayerQuitListener implements Listener {
     @EventHandler

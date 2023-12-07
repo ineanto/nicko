@@ -28,6 +28,12 @@ public class I18NDict {
                 public static final String INVALIDATE_ENTRY = CACHE_KEY + "invalidate_entry";
 
             }
+
+            public static class Check {
+                private static final String CHECK_KEY = ADMIN_KEY + "check.";
+
+                public static final String REMOVE_SKIN = CHECK_KEY + "remove_skin";
+            }
         }
 
         public static class Settings {

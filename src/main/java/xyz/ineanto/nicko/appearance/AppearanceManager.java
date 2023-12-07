@@ -138,6 +138,7 @@ public class AppearanceManager {
         final World world = player.getWorld();
         final boolean wasFlying = player.isFlying();
         final boolean wasAllowedToFly = player.getAllowFlight();
+        final int foodLevel = player.getFoodLevel();
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
         respawn.setDimension(world);
         respawn.setSeed(world.getSeed());
@@ -150,6 +151,8 @@ public class AppearanceManager {
         player.setAllowFlight(wasAllowedToFly);
         player.setFlying(wasFlying);
         player.updateInventory();
+        player.sendHealthUpdate();
+        player.setFoodLevel(foodLevel);
     }
 
     @SuppressWarnings("deprecation")

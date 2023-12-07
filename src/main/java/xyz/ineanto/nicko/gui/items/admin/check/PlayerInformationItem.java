@@ -49,7 +49,7 @@ public class PlayerInformationItem extends AsyncItem {
             }
 
             return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.CHECK,
-                    "§c§l?!?", "§cN/A", "§cN/A", "§cN/A"
+                    "§c§l?!?", "§7N/A", "§7N/A", "§7N/A"
             );
         });
         this.target = target;

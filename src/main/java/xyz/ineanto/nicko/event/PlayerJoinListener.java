@@ -9,13 +9,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
+import xyz.ineanto.nicko.gui.PlayerCheckGUI;
+import xyz.ineanto.nicko.gui.PlayerCheckGUIData;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
+import xyz.xenondevs.invui.window.Window;
+import xyz.xenondevs.invui.window.WindowManager;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -61,5 +67,16 @@ public class PlayerJoinListener implements Listener {
                 });
             }
         }, 20L);
+
+        @SuppressWarnings("unchecked") final ArrayList<UUID> viewers = (ArrayList<UUID>) PlayerCheckGUIData.VIEWERS.clone();
+        viewers.forEach(uuid -> {
+            final Player windowWatcher = Bukkit.getPlayer(uuid);
+            final Window openWindow = WindowManager.getInstance().getOpenWindow(windowWatcher);
+            if (openWindow != null) {
+                final PlayerCheckGUI gui = new PlayerCheckGUI(windowWatcher, Bukkit.getOnlinePlayers());
+                openWindow.close();
+                gui.open();
+            }
+        });
     }
 }

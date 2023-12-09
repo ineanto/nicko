@@ -15,7 +15,9 @@ import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.window.Window;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PlayerCheckGUI {
@@ -23,13 +25,15 @@ public class PlayerCheckGUI {
     private final Gui gui;
     private final String title;
 
-    public PlayerCheckGUI(Player player) {
+    public PlayerCheckGUI(Player player, Collection<? extends Player> players) {
         final I18N i18n = new I18N(player);
         this.title = i18n.translatePrefixless(I18NDict.GUI.Titles.CHECK);
 
-        final List<Item> items = Bukkit.getOnlinePlayers().stream()
+        final List<Item> items = players.stream()
                 .map(Entity::getUniqueId)
-                .map(uuid -> new PlayerInformationItem(i18n, Bukkit.getPlayer(uuid)))
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .map(mappedPlayer -> new PlayerInformationItem(i18n, mappedPlayer))
                 .collect(Collectors.toList());
 
         final AdminGUI parent = new AdminGUI(player);
@@ -56,6 +60,9 @@ public class PlayerCheckGUI {
     }
 
     public void open() {
-        Window.single().setGui(gui).setTitle(title).open(player);
+        final Window.Builder.Normal.Single window = Window.single().setGui(gui).setTitle(title);
+        window.addOpenHandler(() -> PlayerCheckGUIData.VIEWERS.add(player.getUniqueId()));
+        window.addCloseHandler(() -> PlayerCheckGUIData.VIEWERS.remove(player.getUniqueId()));
+        window.open(player);
     }
 }

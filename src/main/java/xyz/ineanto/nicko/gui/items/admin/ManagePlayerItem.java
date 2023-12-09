@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.gui.items.admin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
@@ -22,7 +23,7 @@ public class ManagePlayerItem {
             final ItemBuilder builder = new ItemBuilder(Material.WRITABLE_BOOK);
             return i18n.translateItem(builder, I18NDict.GUI.Admin.MANAGE_PLAYER);
         }, click -> {
-            new PlayerCheckGUI(player).open();
+            new PlayerCheckGUI(player, Bukkit.getOnlinePlayers()).open();
             return true;
         });
     }

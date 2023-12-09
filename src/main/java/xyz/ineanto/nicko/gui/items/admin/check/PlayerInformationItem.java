@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.gui.items.admin.check;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -72,7 +73,7 @@ public class PlayerInformationItem extends AsyncItem {
 
                     @Override
                     public void onCancel() {
-                        new PlayerCheckGUI(player).open();
+                        new PlayerCheckGUI(player, Bukkit.getOnlinePlayers()).open();
                     }
                 }).open();
             }

@@ -51,7 +51,7 @@ public class I18N {
 
         if (name == null) {
             logger.warning(nameKey + " doesn't exists! Please translate this entry.");
-            return new ItemTranslation(nameKey, new ArrayList<String>() {{
+            return new ItemTranslation(nameKey, new ArrayList<>() {{
                 add(loreKey);
             }});
         }

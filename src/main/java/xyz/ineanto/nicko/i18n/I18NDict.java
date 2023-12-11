@@ -9,8 +9,6 @@ public class I18NDict {
         public static final String CACHE = ERROR_KEY + "cache";
         public static final String MOJANG_NAME = ERROR_KEY + "mojang_name";
         public static final String MOJANG_SKIN = ERROR_KEY + "mojang_skin";
-        @Deprecated
-        public static final String INVALID_USERNAME = ERROR_KEY + "invalid_username";
         public static final String SQL_ERROR = ERROR_KEY + "sql";
         public static final String JSON_ERROR = ERROR_KEY + "json";
     }

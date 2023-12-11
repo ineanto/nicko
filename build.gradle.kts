@@ -69,12 +69,13 @@ tasks.processResources {
 tasks {
     named<ShadowJar>("shadowJar") {
         mustRunAfter(test)
+        configurations = listOf(shadowImplementation)
+
+        // NAMING
         archiveBaseName.set("nicko")
         archiveVersion.set(version.toString())
         archiveAppendix.set("")
         archiveClassifier.set("")
-
-        configurations = listOf(shadowImplementation)
 
         // RELOCATIONS
         relocate("xyz.xenondevs", "xyz.ineanto.nicko.libs.invui")
@@ -89,6 +90,7 @@ tasks {
         relocate("com.google.gson", "xyz.ineanto.nicko.libs.gson")
         relocate("org.apache.commons.pool2", "xyz.ineanto.nicko.libs.pool2")
 
+        // EXCLUSIONS
         exclude("colors.bin")
         exclude("waffle/**")
         exclude("com/sun/**")
@@ -104,6 +106,12 @@ tasks {
         exclude("org/yaml/**")
         exclude("google/protobuf/**")
         exclude("net/kyori/**")
+
+        // MINIFY
+        minimize {
+            exclude(dependency("xyz.xenondevs.invui:.*"))
+            exclude(dependency("net.wesjd:.*"))
+        }
     }
 }
 

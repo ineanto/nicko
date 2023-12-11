@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.anvil;
 
+import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -120,7 +121,7 @@ public class AnvilManager {
     private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        if (meta != null) meta.setDisplayName("§0New " + (skin ? "skin" : "name") + "...");
+        if (meta != null) meta.displayName(Component.text("§0New " + (skin ? "skin" : "name") + "..."));
         item.setItemMeta(meta);
         return item;
     }

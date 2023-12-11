@@ -6,21 +6,13 @@ import xyz.xenondevs.invui.util.IOUtils;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.logging.Logger;
 
 public class LocaleFileManager {
+    private final Logger logger = Logger.getLogger("LocaleFileManager");
     private final File folder = new File(NickoBukkit.getInstance().getDataFolder() + "/lang/");
     private final File file = new File(folder, "lang.yml");
     private YamlConfig yamlFile;
-
-    public String getString(String key) {
-        if (!file.exists()) return key;
-        try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
-            final YamlConfig yamlConfig = new YamlConfig(inputStream);
-            return yamlConfig.getString(key);
-        } catch (IOException e) {
-            return key;
-        }
-    }
 
     public boolean dumpFromLocale(Locale locale) {
         if (locale == Locale.CUSTOM) return true;
@@ -36,7 +28,7 @@ public class LocaleFileManager {
             }
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Unable to dump Locale: " + locale.getCode() + "!");
             return false;
         }
     }

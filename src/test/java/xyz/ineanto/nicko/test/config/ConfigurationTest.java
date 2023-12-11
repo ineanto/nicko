@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
-import xyz.ineanto.nicko.config.SQLDataSourceConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

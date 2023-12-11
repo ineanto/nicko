@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.config.DefaultDataSources;
+import xyz.ineanto.nicko.config.SQLDataSourceConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -16,7 +18,12 @@ public class ConfigurationTest {
     @BeforeAll
     public static void setup() {
         MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class);
+        final Configuration config = new Configuration(
+                DefaultDataSources.SQL_EMPTY,
+                DefaultDataSources.REDIS_EMPTY,
+                "",
+                false);
+        plugin = MockBukkit.load(NickoBukkit.class, config);
     }
 
     @Test

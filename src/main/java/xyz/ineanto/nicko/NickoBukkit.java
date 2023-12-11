@@ -1,6 +1,7 @@
 package xyz.ineanto.nicko;
 
 import com.comphenix.protocol.utility.MinecraftVersion;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -113,6 +114,7 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+            new Metrics(this, 20483);
         }
 
         getLogger().info("Nicko has been enabled.");

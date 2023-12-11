@@ -51,6 +51,7 @@ dependencies {
     shadowImplementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
     shadowImplementation("redis.clients:jedis:4.4.3")
     shadowImplementation("com.google.code.gson:gson:2.10.1")
+    shadowImplementation("org.bstats:bstats-bukkit:3.0.2")
 
     testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.58.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
@@ -89,6 +90,7 @@ tasks {
         relocate("redis.clients", "xyz.ineanto.nicko.libs.redis")
         relocate("com.google.gson", "xyz.ineanto.nicko.libs.gson")
         relocate("org.apache.commons.pool2", "xyz.ineanto.nicko.libs.pool2")
+        relocate("org.bstats", "xyz.ineanto.nicko.libs.bstats")
 
         // EXCLUSIONS
         exclude("colors.bin")
@@ -97,7 +99,6 @@ tasks {
         exclude("com/google/protobuf/**")
         exclude("com/google/errorprone/**")
         exclude("org/apache/commons/logging/**")
-        exclude("org/bstats/**")
         exclude("org/jetbrains/**")
         exclude("org/intellij/**")
         exclude("org/checkerframework/**")

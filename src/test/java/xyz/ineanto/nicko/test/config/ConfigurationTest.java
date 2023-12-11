@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.test.config;
+package xyz.ineanto.nicko.test.config;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import org.junit.jupiter.api.AfterAll;

@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.test.storage.redis;
+package xyz.ineanto.nicko.test.storage.redis;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;

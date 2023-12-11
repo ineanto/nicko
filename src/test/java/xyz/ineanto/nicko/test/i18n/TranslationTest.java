@@ -1,4 +1,4 @@
-package xyz.atnrch.nicko.test.i18n;
+package xyz.ineanto.nicko.test.i18n;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
@@ -11,12 +11,11 @@ import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
-import xyz.ineanto.nicko.i18n.ItemTranslation;
 import xyz.ineanto.nicko.i18n.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ItemTranslationTest {
+public class TranslationTest {
     private static PlayerMock player;
 
     @BeforeAll
@@ -31,23 +30,11 @@ public class ItemTranslationTest {
     }
 
     @Test
-    @DisplayName("Translate Item Without Lore")
+    @DisplayName("Translate Line With Replacement")
     public void translateItemTranslationWithoutLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.GO_BACK);
-        assertTrue(translation.getLore().isEmpty());
-        assertEquals(translation.getName(), "Retour");
-    }
-
-    @Test
-    @DisplayName("Translate Item")
-    public void translateItemLore() {
-        final I18N i18n = new I18N(Locale.FRENCH);
-        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Admin.Cache.STATISTICS, "1", "1");
-        assertFalse(translation.getLore().isEmpty());
-        assertEquals("§fNombre de requêtes: §b1", translation.getLore().get(0));
-        assertEquals("§fNb. de skin dans le cache: §b1", translation.getLore().get(1));
-        assertEquals("§8§oLe cache est vidé toutes les 24 heures.", translation.getLore().get(2));
+        final String translation = i18n.translatePrefixless(I18NDict.Event.Settings.ERROR, "Test");
+        assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test)", translation);
     }
 
     @AfterAll

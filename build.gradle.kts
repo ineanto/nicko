@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "xyz.ineanto"
-version = "1.0.5-RC1"
+version = "1.0.6-RC1"
 
 val shadowImplementation: Configuration by configurations.creating
 configurations["implementation"].extendsFrom(shadowImplementation)

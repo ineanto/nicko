@@ -32,12 +32,12 @@ public class PlayerDataStore {
     }
 
     public ActionResult updateCache(UUID uuid, NickoProfile profile) {
-        final Optional<NickoProfile> retrieved = getData(uuid);
-        if (retrieved.isPresent()) {
-            getCache().cache(uuid, profile);
-            return ActionResult.ok();
+        if (storage.isError() || cache.isError()) {
+            return ActionResult.error(I18NDict.Error.CACHE);
         }
-        return ActionResult.error(I18NDict.Error.CACHE);
+
+        getCache().cache(uuid, profile);
+        return ActionResult.ok();
     }
 
     public Optional<NickoProfile> getData(UUID uuid) {
@@ -59,7 +59,7 @@ public class PlayerDataStore {
     }
 
     public Optional<NickoProfile> getOfflineData(String name) {
-        if (storage.isError()) {
+        if (storage.isError() || cache.isError()) {
             return Optional.empty();
         }
 
@@ -76,12 +76,12 @@ public class PlayerDataStore {
     }
 
     public ActionResult saveData(Player player) {
-        if (storage.isError()) return ActionResult.error(I18NDict.Error.GENERIC);
+        if (storage.isError()) return ActionResult.error(I18NDict.Error.SQL);
         if (cache.isError()) return ActionResult.error(I18NDict.Error.CACHE);
-        if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.GENERIC);
+        if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.CACHE);
 
         final Optional<NickoProfile> cachedProfile = cache.retrieve(player.getUniqueId());
-        if (!cachedProfile.isPresent()) return ActionResult.error(I18NDict.Error.GENERIC);
+        if (!cachedProfile.isPresent()) return ActionResult.error(I18NDict.Error.CACHE);
 
         cache.delete(player.getUniqueId());
         return storage.store(player.getUniqueId(), cachedProfile.get());

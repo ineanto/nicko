@@ -23,7 +23,6 @@ public class SettingsGUI {
                 "B # # # # # # # #"
         };
 
-        // TODO: 3/6/23 Replace when Redis is not enabled
         dynamicStructure[1] = dynamicStructure[1].replace("T", "U");
 
         final I18N i18n = new I18N(player);

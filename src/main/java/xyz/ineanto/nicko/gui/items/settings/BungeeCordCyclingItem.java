@@ -51,8 +51,8 @@ public class BungeeCordCyclingItem {
         final ItemBuilder builder = new ItemBuilder(Material.COMPASS);
         final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Settings.BUNGEECORD);
 
-        builder.setDisplayName(translation.getName());
-        translation.getLore().forEach(builder::addLoreLines);
+        builder.setDisplayName(translation.name());
+        translation.lore().forEach(builder::addLoreLines);
         /*
          if (enabled) {
          builder.addLoreLines("§7> §cDisabled");

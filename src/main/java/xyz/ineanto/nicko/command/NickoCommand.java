@@ -12,8 +12,7 @@ import xyz.ineanto.nicko.i18n.I18NDict;
 public class NickoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender instanceof Player) {
-            final Player player = (Player) sender;
+        if (sender instanceof Player player) {
             if (player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
                 new HomeGUI(player).open();
             } else {

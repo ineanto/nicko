@@ -21,15 +21,6 @@ public class WrapperPlayServerEntityDestroy extends AbstractPacket {
     }
 
     /**
-     * Gets a list of entity ids to remove
-     *
-     * @return 'entityIds' to remove
-     */
-    public IntList getEntityIds() {
-        return this.handle.getModifier().withType(IntList.class, Converters.passthrough(IntList.class)).read(0);
-    }
-
-    /**
      * Sets the list of entity ids to remove
      *
      * @param value New value for field 'entityIds'

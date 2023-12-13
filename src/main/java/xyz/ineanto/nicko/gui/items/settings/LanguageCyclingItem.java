@@ -43,7 +43,6 @@ public class LanguageCyclingItem {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
                 player.getOpenInventory().close();
-                // TODO (Ineanto, 7/14/23): This checks a 2nd time for the profile.
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
                 } else {
@@ -59,7 +58,7 @@ public class LanguageCyclingItem {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
         final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Settings.LANGUAGE);
 
-        builder.setDisplayName(translation.getName());
+        builder.setDisplayName(translation.name());
         for (Locale value : locales) {
             if (locale != value) {
                 builder.addLoreLines("§7> " + value.getName());
@@ -67,7 +66,7 @@ public class LanguageCyclingItem {
                 builder.addLoreLines("§6§l> §f" + value.getName());
             }
         }
-        translation.getLore().forEach(builder::addLoreLines);
+        translation.lore().forEach(builder::addLoreLines);
         return builder;
     }
 

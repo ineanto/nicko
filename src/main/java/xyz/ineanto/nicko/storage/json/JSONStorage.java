@@ -42,12 +42,12 @@ public class JSONStorage extends Storage {
                     }
                 } catch (IOException e) {
                     logger.warning("Could not write to file.");
-                    return ActionResult.error(I18NDict.Error.JSON_ERROR);
+                    return ActionResult.error(I18NDict.Error.JSON);
                 }
             }
         } catch (IOException e) {
             logger.warning("Could not create file.");
-            return ActionResult.error(I18NDict.Error.JSON_ERROR);
+            return ActionResult.error(I18NDict.Error.JSON);
         }
 
         return ActionResult.ok();
@@ -81,7 +81,7 @@ public class JSONStorage extends Storage {
         if (file.delete() || !file.exists()) {
             return ActionResult.ok();
         }
-        return ActionResult.error(I18NDict.Error.JSON_ERROR);
+        return ActionResult.error(I18NDict.Error.JSON);
     }
 
     private boolean checkFileExists(File file) throws IOException {

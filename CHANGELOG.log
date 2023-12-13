@@ -1,4 +1,8 @@
-Update n°4 (11/12/23):
+1.0.7-RC1: Update n°4 (11/12/23)
 
 [OTHER]
+    • In line with my thinking that Minecraft servers should always be in one of the latest versions to give developers more freedom and less maintenance hassle,
+      Nicko will now only be supporting the previous major version and current major version.
+      This results in this version of Nicko now needing at minimum of JRE 17 and a server running 1.19.
+      If you can't upgrade, consider skipping the plugin altogether. I'm sorry.
     • Various optimizations and improvements.

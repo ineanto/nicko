@@ -1,7 +1,6 @@
 package xyz.ineanto.nicko.test.i18n;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +15,6 @@ import xyz.ineanto.nicko.i18n.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TranslationTest {
-    private static PlayerMock player;
-
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(

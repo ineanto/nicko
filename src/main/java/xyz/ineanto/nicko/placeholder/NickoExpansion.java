@@ -64,17 +64,12 @@ public class NickoExpansion extends PlaceholderExpansion {
             bungeecord = profile.isBungeecordTransfer();
         }
 
-        switch (params) {
-            case "name":
-                return name;
-            case "skin":
-                return skin;
-            case "locale":
-                return locale;
-            case "bungeecord":
-                return String.valueOf(bungeecord);
-            default:
-                return null;
-        }
+        return switch (params) {
+            case "name" -> name;
+            case "skin" -> skin;
+            case "locale" -> locale;
+            case "bungeecord" -> String.valueOf(bungeecord);
+            default -> null;
+        };
     }
 }

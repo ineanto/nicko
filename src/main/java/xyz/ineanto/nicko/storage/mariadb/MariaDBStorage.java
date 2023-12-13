@@ -36,7 +36,7 @@ public class MariaDBStorage extends Storage {
     @Override
     public ActionResult store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
-        if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
+        if (connection == null) return ActionResult.error(I18NDict.Error.SQL);
 
         try {
             final PreparedStatement statement = isStored(uuid) ?
@@ -45,7 +45,7 @@ public class MariaDBStorage extends Storage {
             return ActionResult.ok();
         } catch (SQLException e) {
             logger.warning("Couldn't send SQL Request: " + e.getMessage());
-            return ActionResult.error(I18NDict.Error.SQL_ERROR);
+            return ActionResult.error(I18NDict.Error.SQL);
         }
     }
 
@@ -103,17 +103,17 @@ public class MariaDBStorage extends Storage {
     @Override
     public ActionResult delete(UUID uuid) {
         final Connection connection = getProvider().getConnection();
-        if (connection == null) return ActionResult.error(I18NDict.Error.SQL_ERROR);
+        if (connection == null) return ActionResult.error(I18NDict.Error.SQL);
 
         try {
             final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
             int rows = statement.executeUpdate();
-            return (rows == 1 ? ActionResult.ok() : ActionResult.error(I18NDict.Error.SQL_ERROR));
+            return (rows == 1 ? ActionResult.ok() : ActionResult.error(I18NDict.Error.SQL));
         } catch (SQLException e) {
             logger.warning("Couldn't delete profile: " + e.getMessage());
-            return ActionResult.error(I18NDict.Error.SQL_ERROR);
+            return ActionResult.error(I18NDict.Error.SQL);
         }
     }
 

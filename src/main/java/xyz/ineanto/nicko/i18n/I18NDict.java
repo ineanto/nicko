@@ -9,8 +9,8 @@ public class I18NDict {
         public static final String CACHE = ERROR_KEY + "cache";
         public static final String MOJANG_NAME = ERROR_KEY + "mojang_name";
         public static final String MOJANG_SKIN = ERROR_KEY + "mojang_skin";
-        public static final String SQL_ERROR = ERROR_KEY + "sql";
-        public static final String JSON_ERROR = ERROR_KEY + "json";
+        public static final String SQL = ERROR_KEY + "sql";
+        public static final String JSON = ERROR_KEY + "json";
     }
 
     public static class Event {
@@ -74,7 +74,6 @@ public class I18NDict {
         public static final String GO_BACK = GUI_KEY + "go_back";
         public static final String UNAVAILABLE = GUI_KEY + "unavailable";
         public static final String LOADING = GUI_KEY + "loading";
-        public static final String ERROR = GUI_KEY + "error";
         public static final String SCROLL_UP = GUI_KEY + "scroll_up";
         public static final String SCROLL_DOWN = GUI_KEY + "scroll_down";
 

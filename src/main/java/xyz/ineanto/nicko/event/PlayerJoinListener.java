@@ -53,7 +53,6 @@ public class PlayerJoinListener implements Listener {
                 }
             });
 
-            // TODO (Ineanto, 12/6/23): Make this cleaner.
             for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).collect(Collectors.toList())) {
                 final Optional<NickoProfile> optionalOnlinePlayerProfile = dataStore.getData(online.getUniqueId());
 

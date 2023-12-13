@@ -38,8 +38,8 @@ public class I18N {
 
     public AbstractItemBuilder<?> translateItem(AbstractItemBuilder<?> item, String key, Object... args) {
         final ItemTranslation translation = fetchTranslation(key, args);
-        item.setDisplayName(translation.getName());
-        translation.getLore().forEach(item::addLoreLines);
+        item.setDisplayName(translation.name());
+        translation.lore().forEach(item::addLoreLines);
         return item;
     }
 
@@ -51,7 +51,7 @@ public class I18N {
 
         if (name == null) {
             logger.warning(nameKey + " doesn't exists! Please translate this entry.");
-            return new ItemTranslation(nameKey, new ArrayList<String>() {{
+            return new ItemTranslation(nameKey, new ArrayList<>() {{
                 add(loreKey);
             }});
         }

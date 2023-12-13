@@ -65,7 +65,7 @@ public class NickoBukkit extends JavaPlugin {
         }
 
 
-        if (!MinecraftVersion.VILLAGE_UPDATE.atOrAbove()) {
+        if (!MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);

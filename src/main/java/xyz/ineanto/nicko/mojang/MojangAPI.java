@@ -27,7 +27,7 @@ public class MojangAPI {
     private final Logger logger = Logger.getLogger("MojangAPI");
     private final HashMap<String, String> uuidToName = new HashMap<>();
 
-    private final CacheLoader<String, Optional<MojangSkin>> skinLoader = new CacheLoader<String, Optional<MojangSkin>>() {
+    private final CacheLoader<String, Optional<MojangSkin>> skinLoader = new CacheLoader<>() {
         @Nonnull
         public Optional<MojangSkin> load(@Nonnull String uuid) throws Exception {
             return getSkinFromMojang(uuid);
@@ -40,7 +40,7 @@ public class MojangAPI {
             .expireAfterWrite(24, TimeUnit.HOURS)
             .build(skinLoader);
 
-    private final CacheLoader<String, Optional<String>> uuidLoader = new CacheLoader<String, Optional<String>>() {
+    private final CacheLoader<String, Optional<String>> uuidLoader = new CacheLoader<>() {
         @Nonnull
         public Optional<String> load(@Nonnull String name) throws Exception {
             return getUUIDFromMojang(name);

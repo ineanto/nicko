@@ -112,7 +112,7 @@ public class AppearanceManager {
                         final MojangSkin skinResult = skin.get();
                         final Multimap<String, WrappedSignedProperty> properties = gameProfile.getProperties();
                         properties.get("textures").clear();
-                        properties.put("textures", new WrappedSignedProperty("textures", skinResult.getValue(), skinResult.getSignature()));
+                        properties.put("textures", new WrappedSignedProperty("textures", skinResult.value(), skinResult.signature()));
                     } else {
                         return ActionResult.error(I18NDict.Error.MOJANG_SKIN);
                     }
@@ -144,7 +144,6 @@ public class AppearanceManager {
         respawn.setSeed(world.getSeed());
         respawn.setGameMode(player.getGameMode());
         respawn.setPreviousGameMode(player.getGameMode());
-        respawn.setDifficulty(world.getDifficulty());
         respawn.setCopyMetadata(true);
         respawn.sendPacket(player);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);

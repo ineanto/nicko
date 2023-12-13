@@ -58,15 +58,13 @@ public class MySQLStorageProvider implements StorageProvider {
 
     private void createTable() throws SQLException {
         final Connection connection = getConnection();
-
-        String query = "CREATE TABLE IF NOT EXISTS %s.DATA " +
-                       "(uuid varchar(36) NOT NULL," +
-                       "name varchar(16)," +
-                       "skin varchar(16)," +
-                       "locale char(2) NOT NULL," +
-                       "bungeecord boolean NOT NULL," +
-                       "PRIMARY KEY (uuid))";
-        query = query.replace("%s", schemaName);
+        final String query = "CREATE TABLE IF NOT EXISTS %s.DATA ".replace("%s", schemaName) +
+                             "(uuid varchar(36) NOT NULL," +
+                             "name varchar(16)," +
+                             "skin varchar(16)," +
+                             "locale char(2) NOT NULL," +
+                             "bungeecord boolean NOT NULL," +
+                             "PRIMARY KEY (uuid))";
 
         final PreparedStatement statement = connection.prepareStatement(query);
         statement.executeUpdate();
@@ -74,9 +72,7 @@ public class MySQLStorageProvider implements StorageProvider {
 
     private void createDatabase() throws SQLException {
         final Connection connection = getConnection();
-
-        String query = "CREATE DATABASE IF NOT EXISTS %s";
-        query = query.replace("%s", schemaName);
+        final String query = "CREATE DATABASE IF NOT EXISTS %s".replace("%s", schemaName);
 
         final PreparedStatement statement = connection.prepareStatement(query);
         statement.executeUpdate();

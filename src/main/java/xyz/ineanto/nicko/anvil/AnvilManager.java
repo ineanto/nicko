@@ -56,7 +56,6 @@ public class AnvilManager {
                             return Collections.singletonList(AnvilGUI.ResponseAction.replaceInputText("Invalid username!"));
                         } else {
                             profile.setName(snapshot.getText());
-                            dataStore.updateCache(player.getUniqueId(), profile);
                             openSkinAnvil();
                             return Collections.singletonList(AnvilGUI.ResponseAction.close());
                         }

@@ -35,5 +35,5 @@ Try installing [NoEncryption](https://www.spigotmc.org/resources/noencryption.10
 |---------------|----------------------------------------------------------------------------|
 | 1.7 and lower | Unsupported                                                                |
 | 1.8 - 1.12.2  | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/) |
-| 1.13          | Unsupported                                                                |
-| 1.14 and up   | Use Nicko                                                                  |
+| 1.13 to 1.18  | Unsupported                                                                |
+| 1.19 - 1.20   | Use Nicko                                                                  |

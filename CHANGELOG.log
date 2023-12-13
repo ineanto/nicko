@@ -1,5 +1,35 @@
-1.0.7-RC1: Update n°4 (13/12/23)
+1.0.8-RC1: Update n°5 (XX/XX/XX)
+    [OTHER]
+        - Various optimizations and improvements.
 
-[OTHER]
-    • In line with my thinking that Minecraft servers should always be in one of the latest versions to give developers more freedom and less maintenance hassle, Nicko will now only be supporting the current major version and the one before it. This results in this version of Nicko now needing at minimum Java version 17 and a server running 1.19. If you can't upgrade, consider myself sorry.
-    • Various optimizations and improvements following the upgrade to Java 17.
+1.0.7-RC1: Update n°4 (13/12/23)
+    [OTHER]
+        - In line with my thinking that Minecraft servers should always be in one of the latest versions to give developers more freedom and less maintenance hassle, Nicko will now only be supporting the current major version and the one before it. This results in this version of Nicko now needing at minimum Java version 17 and a server running 1.19. If you can't upgrade, consider myself sorry.
+        - Various optimizations and improvements following the upgrade to Java 17.
+
+1.0.6-RC1: Update n°3 (11/12/23)
+    [OTHER]
+        - Added telemetry via bStats to gather useful informations about Nicko. This feature is optional and can be disabled inside the "bStats" folder found in plugins folder. Informations gathered are public record and can be found at: https://bstats.org/plugin/bukkit/Nicko/20483.
+
+1.0.5-RC1: Update n°2 (11/12/23)
+    [OTHER]
+        - Moved plugin to the Gradle build chain, resulting in faster builds and smaller Jar. This has no consequences for players.
+
+1.0.4-RC1:
+    [FEATURES]
+        - The players check GUI is now updated upon player's joining and leaving
+        - Administrators are now able to remove a player's disguise through the player check GUI
+
+1.0.3-RC1: Hotfix n°3 (07/12/23)
+    [FIXES]
+        - Fixed a visual bug where players in survival mode were seeing themselves as having full health and hunger after disguising.
+
+1.0.2-RC1: Hotfix n°2 (06/12/23)
+    [FIXES]
+        - Internal refactoring
+
+1.0.1-RC1: Hotfix n°1 (06/12/23)
+    [FIXES]
+        - Fixed an issue when joining and players being disguised were not for the player joining.
+
+

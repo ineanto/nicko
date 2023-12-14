@@ -16,6 +16,8 @@ import xyz.ineanto.nicko.i18n.LocaleFileManager;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.ineanto.nicko.placeholder.NickoExpansion;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
+import xyz.ineanto.nicko.storage.json.JSONStorage;
+import xyz.ineanto.nicko.storage.map.MapCache;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
 import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -73,14 +75,18 @@ public class NickoBukkit extends JavaPlugin {
 
         getLogger().info("Loading persistence...");
         if (!dataStore.getStorage().getProvider().init()) {
-            dataStore.getStorage().setError(true);
-            getLogger().severe("Failed to open persistence, data will NOT be saved!");
+            getLogger().severe("Couldn't connect to distant persistence, falling back on local persistence.");
+            final JSONStorage storage = new JSONStorage();
+            storage.getProvider().init();
+            dataStore.setStorage(storage);
         }
 
         getLogger().info("Loading cache...");
         if (!dataStore.getCache().getProvider().init()) {
-            dataStore.getCache().setError(true);
-            getLogger().severe("Failed to open cache, data will NOT be saved!");
+            getLogger().severe("Couldn't connect to distant cache, falling back on local cache.");
+            final MapCache cache = new MapCache();
+            cache.getProvider().init();
+            dataStore.setCache(cache);
         }
 
         if (!unitTesting) {

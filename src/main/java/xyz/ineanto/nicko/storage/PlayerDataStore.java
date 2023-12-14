@@ -19,9 +19,10 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class PlayerDataStore {
-    private final Storage storage;
-    private final Cache cache;
     private final MojangAPI mojangAPI;
+
+    private Storage storage;
+    private Cache cache;
 
     public PlayerDataStore(MojangAPI mojangAPI, Configuration configuration) {
         this.mojangAPI = mojangAPI;
@@ -81,7 +82,7 @@ public class PlayerDataStore {
         if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.CACHE);
 
         final Optional<NickoProfile> cachedProfile = cache.retrieve(player.getUniqueId());
-        if (!cachedProfile.isPresent()) return ActionResult.error(I18NDict.Error.CACHE);
+        if (cachedProfile.isEmpty()) return ActionResult.error(I18NDict.Error.CACHE);
 
         cache.delete(player.getUniqueId());
         return storage.store(player.getUniqueId(), cachedProfile.get());
@@ -91,7 +92,15 @@ public class PlayerDataStore {
         return storage;
     }
 
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
     public Cache getCache() {
         return cache;
+    }
+
+    public void setCache(Cache cache) {
+        this.cache = cache;
     }
 }

@@ -1,4 +1,7 @@
 1.0.8-RC1: Update n°5 (XX/XX/XX)
+    [FEATURES]
+        - Persistence and cache will now fallback to local alternatives when unreachable.
+
     [OTHER]
         - Various optimizations and improvements.
 

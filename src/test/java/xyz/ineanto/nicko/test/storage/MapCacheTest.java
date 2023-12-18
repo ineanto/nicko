@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.test.storage.map;
+package xyz.ineanto.nicko.test.storage;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;

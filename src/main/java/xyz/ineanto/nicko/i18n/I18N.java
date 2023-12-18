@@ -139,7 +139,7 @@ public class I18N {
         if (optionalProfile.isPresent()) {
             return optionalProfile.get().getLocale();
         } else {
-            return Locale.FALLBACK_LOCALE;
+            return Locale.ENGLISH;
         }
     }
 }

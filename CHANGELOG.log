@@ -4,6 +4,7 @@
 
     [OTHER]
         - Various optimizations and improvements.
+        - Internal refactoring
 
 1.0.7-RC1: Update n°4 (13/12/23)
     [OTHER]
@@ -28,7 +29,7 @@
         - Fixed a visual bug where players in survival mode were seeing themselves as having full health and hunger after disguising.
 
 1.0.2-RC1: Hotfix n°2 (06/12/23)
-    [FIXES]
+    [OTHER]
         - Internal refactoring
 
 1.0.1-RC1: Hotfix n°1 (06/12/23)

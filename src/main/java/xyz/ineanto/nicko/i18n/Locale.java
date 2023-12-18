@@ -7,8 +7,6 @@ public enum Locale implements Serializable {
     FRENCH("fr", "Français"),
     CUSTOM("cm", "Server Custom");
 
-    public static final Locale FALLBACK_LOCALE = ENGLISH;
-
     private final String code;
     private transient final String name;
 

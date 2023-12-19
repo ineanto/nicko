@@ -15,6 +15,7 @@ import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.profile.NickoProfile;
+import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class PlayerInformationItem extends AsyncItem {
     private final Player target;
     private final NickoProfile profile;
+    private final I18N i18n;
 
     public PlayerInformationItem(I18N i18n, Player target) {
         super(new SuppliedItem(() -> {
@@ -39,11 +41,19 @@ public class PlayerInformationItem extends AsyncItem {
 
                 if (optionalProfile.isPresent()) {
                     final NickoProfile profile = optionalProfile.get();
-                    return i18n.translateItem(skull, I18NDict.GUI.Admin.CHECK,
+                    final AbstractItemBuilder<?> headItem = i18n.translateItem(skull, I18NDict.GUI.Admin.CHECK,
                             target.getName(),
                             (profile.hasData() ? "§a✔" : "§c❌"),
                             (profile.getName() == null ? "§7N/A" : profile.getName()),
                             (profile.getSkin() == null ? "§7N/A" : profile.getSkin()));
+
+                    if (!profile.hasData()) {
+                        // Remove the last 2 lines of the lore.
+                        headItem.removeLoreLine(headItem.getLore().size() - 1);
+                        headItem.removeLoreLine(headItem.getLore().size() - 1);
+                    }
+
+                    return headItem;
                 }
             } catch (MojangApiUtils.MojangApiException | IOException e) {
                 NickoBukkit.getInstance().getLogger().severe("Unable to get head for specified UUID ( " + target.getUniqueId() + ")! (GUI/PlayerCheck)");
@@ -53,6 +63,7 @@ public class PlayerInformationItem extends AsyncItem {
                     "§c§l?!?", "§7N/A", "§7N/A", "§7N/A"
             );
         });
+        this.i18n = i18n;
         this.target = target;
         this.profile = NickoBukkit.getInstance().getDataStore().getData(target.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
     }
@@ -67,7 +78,6 @@ public class PlayerInformationItem extends AsyncItem {
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
                         appearanceManager.reset();
-                        final I18N i18n = new I18N(player);
                         player.sendMessage(i18n.translate(I18NDict.Event.Admin.Check.REMOVE_SKIN, target.getName()));
                     }
 

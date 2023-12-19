@@ -24,6 +24,7 @@ public class RedisCacheTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
+                "",
                 DefaultDataSources.SQL_EMPTY,
                 new DataSourceConfiguration(true, "127.0.0.1", 6379, "", ""),
                 "",

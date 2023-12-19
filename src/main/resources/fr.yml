@@ -1,5 +1,3 @@
-version: "1.0.8"
-
 error:
   generic: "Une erreur inconnue c'est produite."
   permission: "§cVous ne possédez pas la permission."

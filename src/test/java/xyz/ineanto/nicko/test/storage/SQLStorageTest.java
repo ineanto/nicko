@@ -24,6 +24,7 @@ public class SQLStorageTest {
     @BeforeAll
     public static void setup() {
         final Configuration config = new Configuration(
+                "",
                 new SQLDataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345", true),
                 DefaultDataSources.REDIS_EMPTY,
                 "",

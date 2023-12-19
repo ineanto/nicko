@@ -24,6 +24,8 @@ import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
@@ -67,7 +69,6 @@ public class NickoBukkit extends JavaPlugin {
             getLogger().warning("Issues regarding Nicko being used in offline mode will be ignored for now.");
         }
 
-
         if (!MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
             dataStore.getStorage().setError(true);
@@ -91,6 +92,20 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (!unitTesting) {
+            // Migrate configuration (1.0.8-RC1)
+            if (configuration.getVersion() == null
+                || configuration.getVersion().isEmpty()
+                || configuration.getVersionObject().compareTo(Configuration.VERSION) != 0) {
+                getLogger().info("Migrating configuration file from older version...");
+                try {
+                    Files.copy(configurationManager.getFile().toPath(), configurationManager.getBackupFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.delete(configurationManager.getFile().toPath());
+                    configurationManager.saveDefaultConfig();
+                } catch (IOException e) {
+                    getLogger().severe("Failed to migrate your configuration!");
+                }
+            }
+
             try {
                 Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
                 getLogger().warning("Nicko has not been tested against Folia and might not work at all!");
@@ -139,7 +154,7 @@ public class NickoBukkit extends JavaPlugin {
             }
         }
 
-        if(!unitTesting) metrics.shutdown();
+        if (!unitTesting) metrics.shutdown();
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 
@@ -149,7 +164,10 @@ public class NickoBukkit extends JavaPlugin {
 
     public Configuration getNickoConfig() {
         try {
-            if (configuration == null) { return configuration = configurationManager.load(); }
+            if (configuration == null) {
+                configuration = configurationManager.load();
+                getLogger().info("Configuration file loaded.");
+            }
             return configuration;
         } catch (IOException e) {
             getLogger().severe("Failed to load the configuration file!");

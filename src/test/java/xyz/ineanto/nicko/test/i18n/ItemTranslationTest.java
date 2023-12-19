@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.config.DefaultDataSources;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.i18n.ItemTranslation;
@@ -21,11 +20,7 @@ public class ItemTranslationTest {
 
     @BeforeAll
     public static void setup() {
-        final Configuration config = new Configuration(
-                DefaultDataSources.SQL_EMPTY,
-                DefaultDataSources.REDIS_EMPTY,
-                "",
-                false);
+        final Configuration config = Configuration.DEFAULT;
         MockBukkit.mock();
         MockBukkit.load(NickoBukkit.class, config);
     }

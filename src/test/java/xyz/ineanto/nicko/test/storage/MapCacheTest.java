@@ -3,14 +3,13 @@ package xyz.ineanto.nicko.test.storage;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import xyz.ineanto.nicko.NickoBukkit;
-import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.config.DefaultDataSources;
-import xyz.ineanto.nicko.profile.NickoProfile;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.profile.NickoProfile;
 
 import java.util.Optional;
 
@@ -22,11 +21,7 @@ public class MapCacheTest {
 
     @BeforeAll
     public static void setup() {
-        final Configuration config = new Configuration(
-                DefaultDataSources.SQL_EMPTY,
-                DefaultDataSources.REDIS_EMPTY,
-                "",
-                false);
+        final Configuration config = Configuration.DEFAULT;
         final ServerMock server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
         player = server.addPlayer();

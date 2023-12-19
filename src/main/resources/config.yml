@@ -1,7 +1,7 @@
-# Nicko ${project.version} - Config:
+# Nicko ${version} - Config:
 
-# Don't modify this.
-# No, like... really.
+# Specifies the configuration version.
+# Do NOT modify this field.
 version: "1.0.8"
 
 ############

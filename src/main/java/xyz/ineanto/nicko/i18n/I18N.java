@@ -50,7 +50,7 @@ public class I18N {
         final ArrayList<String> lore = readList(loreKey);
 
         if (name == null) {
-            logger.warning(nameKey + " doesn't exists! Please translate this entry.");
+            logger.warning(nameKey + " doesn't exists! Is your language file outdated?");
             return new ItemTranslation(nameKey, new ArrayList<>() {{
                 add(loreKey);
             }});

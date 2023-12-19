@@ -36,6 +36,7 @@ public class NickoBukkit extends JavaPlugin {
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
+    private Metrics metrics;
 
     public NickoBukkit() {
         this.unitTesting = false;
@@ -120,7 +121,7 @@ public class NickoBukkit extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-            new Metrics(this, 20483);
+            metrics = new Metrics(this, 20483);
         }
 
         getLogger().info("Nicko has been enabled.");
@@ -138,6 +139,7 @@ public class NickoBukkit extends JavaPlugin {
             }
         }
 
+        if(!unitTesting) metrics.shutdown();
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 

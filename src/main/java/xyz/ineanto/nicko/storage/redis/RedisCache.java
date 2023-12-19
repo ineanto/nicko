@@ -3,8 +3,10 @@ package xyz.ineanto.nicko.storage.redis;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.exceptions.JedisException;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.Cache;
 import xyz.ineanto.nicko.storage.CacheProvider;
@@ -37,6 +39,8 @@ public class RedisCache extends Cache {
         try (Jedis jedis = provider.getJedis()) {
             jedis.set("nicko:" + uuid.toString(), gson.toJson(profile));
             return ActionResult.ok();
+        } catch (JedisException exception) {
+            return ActionResult.error(I18NDict.Error.CACHE);
         }
     }
 
@@ -44,6 +48,8 @@ public class RedisCache extends Cache {
     public boolean isCached(UUID uuid) {
         try (Jedis jedis = provider.getJedis()) {
             return jedis.exists("nicko:" + uuid.toString());
+        } catch (JedisException exception) {
+            return false;
         }
     }
 
@@ -55,6 +61,8 @@ public class RedisCache extends Cache {
             final String data = jedis.get("nicko:" + uuid.toString());
             final NickoProfile profile = gson.fromJson(data, NickoProfile.class);
             return Optional.of(profile);
+        } catch (JedisException exception) {
+            return Optional.empty();
         }
     }
 
@@ -63,6 +71,8 @@ public class RedisCache extends Cache {
         try (Jedis jedis = provider.getJedis()) {
             jedis.del("nicko:" + uuid.toString());
             return ActionResult.ok();
+        } catch (JedisException exception) {
+            return ActionResult.error(I18NDict.Error.CACHE);
         }
     }
 }

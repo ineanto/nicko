@@ -1,5 +1,9 @@
 # Nicko ${project.version} - Config:
 
+# Don't modify this.
+# No, like... really.
+version: "1.0.8"
+
 ############
 # LANGUAGE #
 ############
@@ -49,7 +53,7 @@ redis:
   # Accepted values: false (Disabled), true (Enabled)
   enabled: false
   # Redis server's address
-  # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
+  # Accepted values: valid IP address (e.g.: localhost, 127.0.0.1)
   address: "localhost"
   # Redis server's port
   # Accepted values: valid integer (e.g. 3306, 25565)

@@ -1,3 +1,5 @@
+version: "1.0.8"
+
 error:
   generic: "An unknown error occurred."
   permission: "§cYou do not have the required permission."

@@ -1,8 +1,7 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
-    id("io.github.goooler.shadow") version "8.1.2"
     id("java")
+    id("io.github.goooler.shadow") version "8.1.2"
+    id("xyz.jpenilla.run-paper") version "2.2.2"
 }
 
 group = "xyz.ineanto"
@@ -67,16 +66,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 }
 
-tasks.processResources {
-    from("src/main/resources")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    filesMatching("plugin.yml") {
-        expand("version" to version)
-    }
-}
-
 tasks {
-    named<ShadowJar>("shadowJar") {
+    processResources {
+        from("src/main/resources")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        filesMatching("plugin.yml") {
+            expand("version" to version)
+        }
+    }
+
+    shadowJar {
         mustRunAfter(test)
         configurations = listOf(shadowImplementation)
 
@@ -121,6 +120,17 @@ tasks {
             exclude(dependency("xyz.xenondevs.invui:.*"))
             exclude(dependency("net.wesjd:.*"))
         }
+    }
+
+    runServer {
+        downloadPlugins {
+            url("https://download.luckperms.net/1526/bukkit/loader/LuckPerms-Bukkit-5.4.113.jar")
+            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+        }
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.20.2")
     }
 }
 

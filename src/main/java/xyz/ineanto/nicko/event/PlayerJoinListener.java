@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class PlayerJoinListener implements Listener {
     private final Logger logger = Logger.getLogger("PlayerJoinListener");
@@ -53,7 +52,7 @@ public class PlayerJoinListener implements Listener {
                 }
             });
 
-            for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).collect(Collectors.toList())) {
+            for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).toList()) {
                 final Optional<NickoProfile> optionalOnlinePlayerProfile = dataStore.getData(online.getUniqueId());
 
                 optionalOnlinePlayerProfile.ifPresent(profile -> {

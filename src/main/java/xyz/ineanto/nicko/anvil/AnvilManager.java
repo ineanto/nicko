@@ -2,6 +2,7 @@ package xyz.ineanto.nicko.anvil;
 
 import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
+import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.mojang.MojangUtils;
@@ -77,8 +79,7 @@ public class AnvilManager {
                         } else {
                             profile.setName(snapshot.getText());
                             dataStore.updateCache(player.getUniqueId(), profile);
-                            final ActionResult actionResult = appearanceManager.updatePlayer(false, false);
-                            return sendResultAndClose(actionResult);
+                            return sendResultAndClose(false);
                         }
                     }
                     return Collections.emptyList();
@@ -98,8 +99,7 @@ public class AnvilManager {
                         } else {
                             profile.setSkin(snapshot.getText());
                             dataStore.updateCache(player.getUniqueId(), profile);
-                            final ActionResult actionResult = appearanceManager.updatePlayer(true, false);
-                            return sendResultAndClose(actionResult);
+                            return sendResultAndClose(true);
                         }
                     }
                     return Collections.emptyList();
@@ -107,8 +107,13 @@ public class AnvilManager {
                 .text("New skin...");
     }
 
-    private List<AnvilGUI.ResponseAction> sendResultAndClose(ActionResult actionResult) {
+    private List<AnvilGUI.ResponseAction> sendResultAndClose(boolean skinChange) {
+        final PlayerDisguiseEvent event = new PlayerDisguiseEvent(player, profile.getSkin(), player.getName());
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) { return Collections.singletonList(AnvilGUI.ResponseAction.close()); }
+
         final I18N i18n = new I18N(player);
+        final ActionResult actionResult = appearanceManager.updatePlayer(skinChange, false);
         if (!actionResult.isError()) {
             player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK));
         } else {
@@ -120,7 +125,7 @@ public class AnvilManager {
     private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        if (meta != null) meta.displayName(Component.text("§0New " + (skin ? "skin" : "name") + "..."));
+        if (meta != null) meta.displayName(Component.text("New " + (skin ? "skin" : "name") + "..."));
         item.setItemMeta(meta);
         return item;
     }

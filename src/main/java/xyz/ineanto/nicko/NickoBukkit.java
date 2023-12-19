@@ -112,8 +112,8 @@ public class NickoBukkit extends JavaPlugin {
                 getLogger().warning("Issues regarding Nicko on Folia will be ignored for now.");
             } catch (ClassNotFoundException ignored) { }
 
-            localeFileManager = new LocaleFileManager();
             if (configuration.isCustomLocale()) {
+                localeFileManager = new LocaleFileManager();
                 if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
                     getLogger().info("Successfully loaded custom language file.");
                 } else {

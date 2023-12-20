@@ -122,6 +122,7 @@ tasks {
         minimize {
             exclude(dependency("xyz.xenondevs.invui:.*"))
             exclude(dependency("net.wesjd:.*"))
+            exclude(dependency("org.bstats:.*"))
         }
     }
 

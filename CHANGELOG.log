@@ -1,3 +1,10 @@
+1.0.9-RC1: Update n°6 (20/12/23)
+    [FEATURES]
+        -
+
+    [FIXES]
+        - bStats metrics should be properly sent now(?)
+
 1.0.8-RC1: Update n°5 (19/12/23)
     [FEATURES]
         - Introduced a version string inside Nicko's configuration to plan future updated to the file. Your previous configuration file will automatically be migrated to this current version (with the backup of your old one included!)

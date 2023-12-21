@@ -130,8 +130,10 @@ gui:
       lore:
         - "§7§oParcourez les valeurs"
         - "§7§oavec un clique gauche/droit."
-    bungeecord:
-      name: "Transfert Bungeecord"
+    random_skin:
+      name: "Apparence aléatoire à la connexion"
       lore:
+        - "{0}"
+        - "{1}"
         - "§7§oParcourez les valeurs"
         - "§7§oavec un clique gauche/droit."

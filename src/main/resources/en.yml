@@ -133,8 +133,10 @@ gui:
       lore:
         - "§7§oGet through the values"
         - "§7§oby left or right clicking."
-    bungeecord:
-      name: "Bungeecord Transfer"
+    random_skin:
+      name: "Random skin on join"
       lore:
+        - "{0}"
+        - "{1}"
         - "§7§oGet through the values"
         - "§7§oby left or right clicking."

@@ -124,7 +124,7 @@ public class MySQLStorage extends Storage {
         statement.setString(2, profile.getName() == null ? null : profile.getName());
         statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
         statement.setString(4, profile.getLocale().getCode());
-        statement.setBoolean(5, profile.isBungeecordTransfer());
+        statement.setBoolean(5, profile.isRandomSkin());
         return statement;
     }
 
@@ -134,7 +134,7 @@ public class MySQLStorage extends Storage {
         statement.setString(1, profile.getName() == null ? null : profile.getName());
         statement.setString(2, profile.getSkin() == null ? null : profile.getSkin());
         statement.setString(3, profile.getLocale().getCode());
-        statement.setBoolean(4, profile.isBungeecordTransfer());
+        statement.setBoolean(4, profile.isRandomSkin());
         statement.setString(5, uuid.toString());
         return statement;
     }

@@ -40,8 +40,8 @@ public class LanguageCyclingItem {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();
             return CycleItem.withStateChangeHandler((observer, integer) -> {
-                nickoProfile.setLocale(Locale.values()[integer]);
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
+                nickoProfile.setLocale(Locale.values()[integer]);
                 player.getOpenInventory().close();
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
                     player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));

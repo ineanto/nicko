@@ -112,7 +112,7 @@ public class I18NDict {
             private static final String SETTINGS_KEY = GUI_KEY + "settings.";
 
             public static final String LANGUAGE = SETTINGS_KEY + "language";
-            public static final String BUNGEECORD = SETTINGS_KEY + "bungeecord";
+            public static final String RANDOM_SKIN = SETTINGS_KEY + "random_skin";
         }
 
         public static class Admin {

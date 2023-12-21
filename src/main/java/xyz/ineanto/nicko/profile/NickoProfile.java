@@ -15,13 +15,13 @@ public class NickoProfile implements Cloneable {
     private String name;
     private String skin;
     private Locale locale;
-    private boolean bungeecordTransfer;
+    private boolean randomSkin;
 
-    public NickoProfile(String name, String skin, Locale locale, boolean bungeecordTransfer) {
+    public NickoProfile(String name, String skin, Locale locale, boolean randomSkin) {
         this.name = name;
         this.skin = skin;
         this.locale = locale;
-        this.bungeecordTransfer = bungeecordTransfer;
+        this.randomSkin = randomSkin;
     }
 
     public static Optional<NickoProfile> get(Player player) {
@@ -60,12 +60,12 @@ public class NickoProfile implements Cloneable {
         this.locale = locale;
     }
 
-    public boolean isBungeecordTransfer() {
-        return bungeecordTransfer;
+    public boolean isRandomSkin() {
+        return randomSkin;
     }
 
-    public void setBungeecordTransfer(boolean bungeecordTransfer) {
-        this.bungeecordTransfer = bungeecordTransfer;
+    public void setRandomSkin(boolean randomSkin) {
+        this.randomSkin = randomSkin;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class NickoProfile implements Cloneable {
                "name='" + name + '\'' +
                ", skin='" + skin + '\'' +
                ", locale=" + locale +
-               ", bungeecordTransfer=" + bungeecordTransfer +
+               ", randomSkin=" + randomSkin +
                '}';
     }
 

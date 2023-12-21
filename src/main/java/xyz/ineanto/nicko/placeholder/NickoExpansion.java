@@ -42,11 +42,11 @@ public class NickoExpansion extends PlaceholderExpansion {
         if (player == null) return null;
 
         String name, skin, locale;
-        boolean bungeecord;
+        boolean randomSkin;
 
         name = skin = player.getName();
         locale = "N/A";
-        bungeecord = true;
+        randomSkin = false;
 
         final Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
@@ -61,14 +61,14 @@ public class NickoExpansion extends PlaceholderExpansion {
                 }
             }
             locale = profile.getLocale().getName();
-            bungeecord = profile.isBungeecordTransfer();
+            randomSkin = profile.isRandomSkin();
         }
 
         return switch (params) {
             case "name" -> name;
             case "skin" -> skin;
             case "locale" -> locale;
-            case "bungeecord" -> String.valueOf(bungeecord);
+            case "bungeecord" -> String.valueOf(randomSkin);
             default -> null;
         };
     }

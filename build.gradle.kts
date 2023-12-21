@@ -2,10 +2,11 @@ plugins {
     id("java")
     id("io.github.goooler.shadow") version "8.1.2"
     id("xyz.jpenilla.run-paper") version "2.2.2"
+    id("jvm-test-suite")
 }
 
 group = "xyz.ineanto"
-version = "1.0.8-RC1"
+version = "1.1.0-RC1"
 
 val shadowImplementation: Configuration by configurations.creating
 configurations["implementation"].extendsFrom(shadowImplementation)
@@ -145,3 +146,23 @@ tasks.named("jar").configure {
 tasks.test {
     useJUnitPlatform()
 }
+
+// For when Gradle 9.0 releases.
+/**
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            targets {
+                useJUnitJupiter()
+            }
+
+            dependencies {
+                implementation(project())
+                implementation("com.github.seeseemelk:MockBukkit-v1.20:3.58.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+                implementation("org.junit.jupiter:junit-jupiter:5.10.1")
+            }
+        }
+    }
+} */

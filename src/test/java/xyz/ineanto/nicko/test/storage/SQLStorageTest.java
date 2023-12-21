@@ -63,12 +63,12 @@ public class SQLStorageTest {
         assertNull(profile.getName());
         assertNull(profile.getSkin());
         assertEquals(profile.getLocale(), Locale.ENGLISH);
-        assertTrue(profile.isBungeecordTransfer());
+        assertTrue(profile.isRandomSkin());
 
         profile.setName("Notch");
         profile.setSkin("Notch");
         profile.setLocale(Locale.FRENCH);
-        profile.setBungeecordTransfer(false);
+        profile.setRandomSkin(false);
 
         final ActionResult result = dataStore.getStorage().store(uuid, profile);
         assertFalse(result.isError());
@@ -85,7 +85,7 @@ public class SQLStorageTest {
         assertEquals(updatedProfile.getName(), "Notch");
         assertEquals(updatedProfile.getSkin(), "Notch");
         assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
-        assertFalse(updatedProfile.isBungeecordTransfer());
+        assertFalse(updatedProfile.isRandomSkin());
     }
 
     @Test

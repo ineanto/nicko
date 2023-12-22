@@ -1,3 +1,8 @@
+# Nicko ${version} - Language File:
+
+# Specifies the configuration version, don't change.
+version: "1.1.0"
+
 error:
   generic: "An unknown error occurred."
   permission: "§cYou do not have the required permission."

@@ -145,7 +145,7 @@ public class I18N {
 
     private YamlConfig getYamlConfig() {
         if (playerLocale == Locale.CUSTOM) {
-            return instance.getLocaleFileManager().getYamlFile();
+            return instance.getCustomLocale().getYamlFile();
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
             return new YamlConfig(resource);

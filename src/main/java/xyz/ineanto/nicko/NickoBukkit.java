@@ -13,7 +13,10 @@ import xyz.ineanto.nicko.config.ConfigurationManager;
 import xyz.ineanto.nicko.event.PlayerJoinListener;
 import xyz.ineanto.nicko.event.PlayerQuitListener;
 import xyz.ineanto.nicko.i18n.Locale;
-import xyz.ineanto.nicko.i18n.LocaleFileManager;
+import xyz.ineanto.nicko.i18n.CustomLocale;
+import xyz.ineanto.nicko.migration.ConfigurationMigrator;
+import xyz.ineanto.nicko.migration.CustomLocaleMigrator;
+import xyz.ineanto.nicko.migration.Migrator;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.ineanto.nicko.placeholder.NickoExpansion;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -24,9 +27,9 @@ import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
@@ -37,7 +40,7 @@ public class NickoBukkit extends JavaPlugin {
     private PlayerDataStore dataStore;
     private ConfigurationManager configurationManager;
     private Configuration configuration;
-    private LocaleFileManager localeFileManager;
+    private CustomLocale customLocale;
     private PlayerNameStore nameStore;
     private RandomNameFetcher nameFetcher;
     private Metrics metrics;
@@ -95,19 +98,11 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (!unitTesting) {
-            // Migrate configuration (1.0.8-RC1)
-            if (configuration.getVersion() == null
-                || configuration.getVersion().isEmpty()
-                || configuration.getVersionObject().compareTo(Configuration.VERSION) != 0) {
-                getLogger().info("Migrating configuration file from older version...");
-                try {
-                    Files.copy(configurationManager.getFile().toPath(), configurationManager.getBackupFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    Files.delete(configurationManager.getFile().toPath());
-                    configurationManager.saveDefaultConfig();
-                } catch (IOException e) {
-                    getLogger().severe("Failed to migrate your configuration!");
-                }
-            }
+            final List<Migrator> migrations = List.of(
+                    new ConfigurationMigrator(this),
+                    new CustomLocaleMigrator(this)
+            );
+            migrations.forEach(Migrator::migrate);
 
             try {
                 Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
@@ -116,11 +111,15 @@ public class NickoBukkit extends JavaPlugin {
             } catch (ClassNotFoundException ignored) { }
 
             if (configuration.isCustomLocale()) {
-                localeFileManager = new LocaleFileManager();
-                if (localeFileManager.dumpFromLocale(Locale.ENGLISH)) {
-                    getLogger().info("Successfully loaded custom language file.");
-                } else {
-                    getLogger().severe("Failed to load custom language file!");
+                try {
+                    customLocale = new CustomLocale(this);
+                    if (customLocale.dumpIntoFile(Locale.ENGLISH)) {
+                        getLogger().info("Successfully loaded custom language file.");
+                    } else {
+                        getLogger().severe("Failed to load custom language file!");
+                    }
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -189,6 +188,10 @@ public class NickoBukkit extends JavaPlugin {
         return dataStore;
     }
 
+    public ConfigurationManager getConfigurationManager() {
+        return configurationManager;
+    }
+
     public PlayerNameStore getNameStore() {
         return nameStore;
     }
@@ -197,7 +200,7 @@ public class NickoBukkit extends JavaPlugin {
         return mojangAPI;
     }
 
-    public LocaleFileManager getLocaleFileManager() {
-        return localeFileManager;
+    public CustomLocale getCustomLocale() {
+        return customLocale;
     }
 }

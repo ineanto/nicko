@@ -1,6 +1,6 @@
 # Nicko ${version} - Config:
 
-# Specifies the configuration version. (Don't change!)
+# Specifies the configuration version, don't change.
 version: "1.0.8"
 
 ############

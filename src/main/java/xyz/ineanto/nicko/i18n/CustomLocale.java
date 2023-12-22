@@ -37,10 +37,8 @@ public class CustomLocale {
         final String localeFileName = locale.getCode() + ".yml";
         try {
             final InputStream resource = NickoBukkit.getInstance().getResource(localeFileName);
-            if (resource != null) {
-                Files.copy(resource, file.toPath());
-                resource.close();
-            }
+            Files.copy(resource, file.toPath());
+            resource.close();
         } catch (IOException e) {
             logger.severe("Unable to dump Locale: " + locale.getCode() + "!");
         }

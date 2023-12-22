@@ -12,13 +12,11 @@ import xyz.ineanto.nicko.config.DefaultDataSources;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConfigurationVersionTest {
-    private static NickoBukkit plugin;
-
     @BeforeAll
     public static void setup() {
         MockBukkit.mock();
         final Configuration configuration = Configuration.DEFAULT;
-        plugin = MockBukkit.load(NickoBukkit.class, configuration);
+        MockBukkit.load(NickoBukkit.class, configuration);
     }
 
     @Test

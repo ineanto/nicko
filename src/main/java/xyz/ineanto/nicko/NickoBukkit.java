@@ -12,11 +12,10 @@ import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.ConfigurationManager;
 import xyz.ineanto.nicko.event.PlayerJoinListener;
 import xyz.ineanto.nicko.event.PlayerQuitListener;
-import xyz.ineanto.nicko.i18n.Locale;
 import xyz.ineanto.nicko.i18n.CustomLocale;
+import xyz.ineanto.nicko.i18n.Locale;
 import xyz.ineanto.nicko.migration.ConfigurationMigrator;
 import xyz.ineanto.nicko.migration.CustomLocaleMigrator;
-import xyz.ineanto.nicko.migration.Migrator;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.ineanto.nicko.placeholder.NickoExpansion;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -27,9 +26,7 @@ import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public class NickoBukkit extends JavaPlugin {
     private static NickoBukkit plugin;
@@ -65,21 +62,24 @@ public class NickoBukkit extends JavaPlugin {
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 
-        mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
-        nameStore = new PlayerNameStore();
-        nameFetcher = new RandomNameFetcher(this);
-
-        if (!Bukkit.getOnlineMode()) {
-            getLogger().warning("Nicko has not been tested using offline mode!");
-            getLogger().warning("Issues regarding Nicko being used in offline mode will be ignored for now.");
-        }
 
         if (!MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
+        if (!Bukkit.getOnlineMode()) {
+            getLogger().warning("Nicko has not been tested using offline mode!");
+            getLogger().warning("Issues regarding Nicko being used in offline mode will be ignored for now.");
+        }
+
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
+            getLogger().warning("Nicko has not been tested against Folia and might not work at all!");
+            getLogger().warning("Issues regarding Nicko on Folia will be ignored for now.");
+        } catch (ClassNotFoundException ignored) { }
 
         getLogger().info("Loading persistence...");
         if (!dataStore.getStorage().getProvider().init()) {
@@ -98,28 +98,20 @@ public class NickoBukkit extends JavaPlugin {
         }
 
         if (!unitTesting) {
-            final List<Migrator> migrations = List.of(
-                    new ConfigurationMigrator(this),
-                    new CustomLocaleMigrator(this)
-            );
-            migrations.forEach(Migrator::migrate);
+            nameStore = new PlayerNameStore();
+            mojangAPI = new MojangAPI();
+            nameFetcher = new RandomNameFetcher(this);
 
-            try {
-                Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
-                getLogger().warning("Nicko has not been tested against Folia and might not work at all!");
-                getLogger().warning("Issues regarding Nicko on Folia will be ignored for now.");
-            } catch (ClassNotFoundException ignored) { }
+            new ConfigurationMigrator(this).migrate();
 
             if (configuration.isCustomLocale()) {
                 try {
-                    customLocale = new CustomLocale(this);
-                    if (customLocale.dumpIntoFile(Locale.ENGLISH)) {
-                        getLogger().info("Successfully loaded custom language file.");
-                    } else {
-                        getLogger().severe("Failed to load custom language file!");
-                    }
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                    CustomLocale.dumpIntoFile(Locale.ENGLISH);
+                    customLocale = new CustomLocale();
+                    new CustomLocaleMigrator(this, customLocale).migrate();
+                    getLogger().info("Successfully loaded the custom locale.");
+                } catch (IOException e) {
+                    getLogger().severe("Failed to load the custom locale!");
                 }
             }
 
@@ -147,7 +139,6 @@ public class NickoBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         if (!getDataStore().getStorage().isError()) {
-            nameStore.clearStoredNames();
             Bukkit.getOnlinePlayers().forEach(player -> dataStore.saveData(player));
             if (!dataStore.getStorage().getProvider().close()) {
                 getLogger().severe("Failed to close persistence!");
@@ -156,7 +147,10 @@ public class NickoBukkit extends JavaPlugin {
             }
         }
 
-        if (!unitTesting) metrics.shutdown();
+        if (!unitTesting) {
+            nameStore.clearStoredNames();
+            metrics.shutdown();
+        }
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 

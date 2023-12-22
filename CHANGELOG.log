@@ -1,13 +1,25 @@
-1.0.9-RC1: Update n°6 (20/12/23)
+1.1.0-RC1: Update n°6 (XX/12/23)
+    [BREAKING]
+        - The language system has been updated to use the Adventure API (https://docs.advntr.dev/index.html). This results in custom locale now breaking
+        Nicko upon usage of legacy color codes (e.g., "§6Nicko"). Your custom locale will be backed up upon starting this version and you will be able to
+        use the new default English locale to help you make your locale compatible with the new formatting.
+
     [FEATURES]
-        -
+        - Players can now choose to get a random appearance via a list of more than 400 usernames and skins associated.
+        - Players can now toggle a setting to automatically get a random appearance upon joining.
+        - Introduced a version string inside Nicko's language files to plan future updates to the file. (see [BREAKING])
+
+        (Note: the random skin functionality is still work-in-progress and might break or not work at all because of
+        the lack of time that I have to test all the usernames and skins associated.)
 
     [FIXES]
-        - bStats metrics should be properly sent now(?)
+        - Various optimizations and improvements.
+        - Internal refactoring
+        - bStats metrics are not minified anymore.
 
 1.0.8-RC1: Update n°5 (19/12/23)
     [FEATURES]
-        - Introduced a version string inside Nicko's configuration to plan future updated to the file. Your previous configuration file will automatically be migrated to this current version (with the backup of your old one included!)
+        - Introduced a version string inside Nicko's configuration to plan future updates to the file. Your previous configuration file will automatically be migrated to this current version (with the backup of your old one included!)
         - Persistence and cache will now fallback to local alternatives when unreachable.
         - Player check GUI has been updated to better reflect the current state of player's disguises.
         - Developers can now listen to the PlayerDisguiseEvent and cancel the disguise process.

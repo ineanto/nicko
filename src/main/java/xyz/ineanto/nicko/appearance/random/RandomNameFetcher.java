@@ -19,7 +19,7 @@ public class RandomNameFetcher {
     }
 
     public String getRandomUsername() {
-        final InputStream resource = instance.getResource("names.csv");
+        final InputStream resource = instance.getResource("names.txt");
         final List<List<String>> records = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource))) {
             String line;

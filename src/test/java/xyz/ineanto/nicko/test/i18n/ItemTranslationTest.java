@@ -43,7 +43,6 @@ public class ItemTranslationTest {
         test.lore().forEach(System.out::println);
 
         final Translation translation = i18n.translate(I18NDict.GUI.Admin.Cache.STATISTICS, "1", "1");
-        translation.lore().forEach(System.out::println);
         assertFalse(translation.lore().isEmpty());
         assertEquals("Nombre de requêtes: <aqua>1</aqua>", translation.lore().get(0));
         assertEquals("Nb. de skin dans le cache: <aqua>1</aqua>", translation.lore().get(1));

@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.gui.items.settings;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -59,7 +60,7 @@ public class LanguageCyclingItem {
         final Translation translation = i18n.translate(I18NDict.GUI.Settings.LANGUAGE);
         final Translation cyclingChoicesTranslation = i18n.translate(I18NDict.GUI.Settings.CYCLING_CHOICES);
 
-        builder.setDisplayName(translation.name());
+        builder.setDisplayName(Component.text(translation.name()).content());
         for (Locale value : locales) {
             if (locale != value) {
                 builder.addLoreLines("§7> " + value.getName());

@@ -49,6 +49,7 @@ dependencies {
     implementation("com.comphenix.protocol:ProtocolLib:5.1.1-SNAPSHOT")
 
     shadowImplementation("me.clip:placeholderapi:2.11.4")
+    shadowImplementation("net.kyori:adventure-api:4.14.0")
     shadowImplementation("xyz.xenondevs.invui:invui:1.23")
     shadowImplementation("net.wesjd:anvilgui:1.9.0-SNAPSHOT")
     shadowImplementation("com.github.jsixface:yamlconfig:1.2")

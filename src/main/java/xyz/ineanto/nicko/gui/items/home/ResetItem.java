@@ -40,8 +40,6 @@ public class ResetItem {
                         player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Remove.OK));
                     } else {
                         player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Remove.ERROR));
-                        profile.setSkin(null);
-                        profile.setName(null);
                     }
                 });
                 return true;

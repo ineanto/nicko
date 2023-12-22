@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.gui.items.common;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
@@ -21,7 +22,7 @@ public class ScrollDownItem extends ScrollItem {
     public ItemProvider getItemProvider(ScrollGui gui) {
         final ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
         final Translation translation = i18n.translate(I18NDict.GUI.SCROLL_DOWN);
-        builder.setDisplayName(translation.name());
+        builder.setDisplayName(Component.text(translation.name()).content());
         if (!gui.canScroll(1)) translation.lore().forEach(builder::addLoreLines);
         return builder;
     }

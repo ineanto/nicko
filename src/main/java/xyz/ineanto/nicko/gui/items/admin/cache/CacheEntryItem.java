@@ -1,5 +1,6 @@
 package xyz.ineanto.nicko.gui.items.admin.cache;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -27,17 +28,19 @@ public class CacheEntryItem extends AsyncItem {
     private final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();
 
     public CacheEntryItem(I18N i18n, String uuid) {
-        super(new ItemBuilder(Material.PAINTING).setDisplayName("§7§oLoading..."), () -> {
-            final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
-            final UUID uuidObject = UUID.fromString(dashedUuid);
-            try {
-                final SkullBuilder skull = new SkullBuilder(uuidObject);
-                return i18n.translateItem(skull, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
-            } catch (MojangApiUtils.MojangApiException | IOException e) {
-                NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + uuid + ")! (GUI/Cache/Entry)");
-                return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
-            }
-        });
+        super(new ItemBuilder(Material.PAINTING)
+                        .setDisplayName(Component.text(i18n.translateStringWithoutPrefix(I18NDict.GUI.LOADING)).content()),
+                () -> {
+                    final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
+                    final UUID uuidObject = UUID.fromString(dashedUuid);
+                    try {
+                        final SkullBuilder skull = new SkullBuilder(uuidObject);
+                        return i18n.translateItem(skull, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
+                    } catch (MojangApiUtils.MojangApiException | IOException e) {
+                        NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + uuid + ")! (GUI/Cache/Entry)");
+                        return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
+                    }
+                });
         this.uuid = uuid;
         this.name = mojangAPI.getUUIDName(uuid);
     }

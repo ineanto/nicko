@@ -46,84 +46,90 @@ gui:
   unavailable:
     name: "Indisponible"
     lore:
-      - "§7§oCe boutton est désactivé."
+      - "<gray><i>Ce boutton est désactivé.</i></gray>"
+  error:
+    name: "Erreur!"
+    lore:
+      - "<gray>La texture de l'objet n'a pas chargé</gray>"
+      - "<gray>correctement mais il fonctionne encore.</gray>"
   loading:
-    name: "§7§oChargement..."
+    name: "<gray><i>Chargement...</i></gray>"
   choice:
     confirm:
-      name: "§aConfirmer"
+      name: "<green>Confirmer</green>"
     choose:
-      name: "§6§oChoisissez une option..."
+      name: "<gold><i>Choisissez une option...</i></gold>"
     cancel:
-      name: "§cAnnuler"
+      name: "<red>Annuler</red>"
   scroll_up:
     name: "Défiler vers le haut"
     lore:
-      - "§8§o(Impossible de défiler plus haut.)"
+      - "<dark_gray><i>(Impossible de défiler plus haut.)</i></dark_gray>"
   scroll_down:
     name: "Défiler vers le bas"
     lore:
-      - "§8§o(Impossible de défiler plus bas.)"
+      - "<dark_gray><i>(Impossible de défiler plus bas.)</i></dark_gray>"
   home:
     admin:
       name: "Panel d'administration"
       lore:
-        - "§7Configurez et gérez Nicko."
+        - "<gray>Configurez et gérez Nicko.</gray>"
     settings:
       name: "Paramètres"
       lore:
-        - "§7Gérez votre expérience avec Nicko."
+        - "<gray>Gérez votre expérience avec Nicko.</gray>"
     change_name:
-      name: "Changer le §6pseudo"
+      name: "Changer le <gold>pseudo</gold>"
     change_skin:
-      name: "Changer le §6skin"
+      name: "Changer le <gold>skin</gold>"
     change_both:
-      name: "Changer les §6deux"
+      name: "Changer les <gold>deux</gold>"
+    random_skin:
+      name: "<rainbow>Obtenir une apparence aléatoire !</rainbow>"
     reset:
       name: "Réinitialiser l'apparence"
       lore:
-        - "§7Supprime complètement votre déguisement."
+        - "<gray>Supprime complètement votre déguisement.</gray>"
   admin:
     manage_cache:
-      name: "Gérer le cache de §6skin..."
+      name: "Gérer le cache de <gold>skin...</gold>"
       lore:
-        - "§7Consultez et gérez le cache de skin."
+        - "<gray>Consultez et gérez le cache de skin.</gray>"
     manage_player:
       name: "Vérifier un joueur..."
       lore:
-        - "§7Vérifiez les informations de déguisement d'un joueur."
+        - "<gray>Vérifiez les informations de déguisement d'un joueur.</gray>"
     check:
-      name: "§6{0}"
+      name: "<gold>{0}</gold>"
       lore:
-        - "§cDéguisé: §a{1}"
-        - "§cNom: §6{2}"
-        - "§cSkin: §6{3}"
+        - "<red>Déguisé:</red> {1}"
+        - "<red>Nom:</red> <gold>{2}</gold>"
+        - "<red>Skin:</red> <gold>{3}</gold>"
         - " "
-        - "§7§oCliquez pour retirer le skin!"
+        - "<gray><i>Cliquez pour retirer le skin !</i></gray>"
     cache:
       statistics:
         name: "Statistiques"
         lore:
-          - "§fNombre de requêtes: §b{0}"
-          - "§fNb. de skin dans le cache: §b{1}"
-          - "§8§oLe cache est vidé toutes les 24 heures."
+          - "Nombre de requêtes: <aqua>{0}</aqua>"
+          - "Nb. de skin dans le cache: <aqua>{1}</aqua>"
+          - "<dark_gray><i>Le cache est vidé toutes les 24 heures.</i></dark_gray>"
       invalidate_cache:
         name: "Invalider le cache"
         lore:
-          - "§c§oDÉCONSEILLÉ"
-          - "§7Invalide l'entièreté du cache des skin."
-          - "§7Ne retire pas les déguisements"
-          - "§7pour les joueurs en disposant."
+          - "<red><i>DÉCONSEILLÉ</i></red>"
+          - "<gray>Invalide l'entièreté du cache des skin.</gray>"
+          - "<gray>Ne retire pas les déguisements des joueurs.</gray>"
       invalidate_skin:
         name: "Invalider un skin..."
         lore:
-          - "§7Sélectionnez une apparence spécifique à"
-          - "§7invalider. Utile dans le cas où un skin"
-          - "§7a récemment été mis à jour."
+          - "<gray>Sélectionnez une apparence spécifique à</gray>"
+          - "<gray>invalider. Utile dans le cas où un skin</gray>"
+          - "<gray>a récemment été mis à jour.</gray>"
       entry:
-        name: "§6{0}"
+        name: "<gold>{0}</gold>"
         lore:
-          - "§7Cliquez pour invalider..."
+          - "<gray>Cliquez pour invalider...</gray>"
   settings:
     toggleable_button:
       lore:
@@ -131,8 +137,8 @@ gui:
         - "{1} Activé"
     cycling_choices:
       lore:
-        - "§7§oParcourez les valeurs"
-        - "§7§oavec un clique gauche/droit."
+        - "<gray><i>Parcourez les valeurs</i></gray>"
+        - "<gray><i>avec un clique gauche/droit.</i></gray>"
     language:
       name: "Langage"
     random_skin:

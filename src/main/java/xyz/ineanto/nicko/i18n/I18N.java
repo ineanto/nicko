@@ -1,6 +1,9 @@
 package xyz.ineanto.nicko.i18n;
 
 import com.github.jsixface.YamlConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -36,7 +39,18 @@ public class I18N {
 
     public AbstractItemBuilder<?> translateItem(AbstractItemBuilder<?> item, String key, Object... args) {
         final Translation translation = translate(key, args);
-        item.setDisplayName(translation.name());
+
+        // Name serialization
+        final Component deserializedName = MiniMessage.miniMessage().deserialize(translation.name());
+        final String serializedName = LegacyComponentSerializer.legacySection().serialize(deserializedName);
+
+        // Lore serialization
+        translation.lore().replaceAll(s -> {
+            final Component deserializedLoreLine = MiniMessage.miniMessage().deserialize(s);
+            return LegacyComponentSerializer.legacySection().serialize(deserializedLoreLine);
+        });
+
+        item.setDisplayName(serializedName);
         translation.lore().forEach(item::addLoreLines);
         return item;
     }

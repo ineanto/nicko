@@ -4,10 +4,7 @@ import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.gui.items.appearance.ChangeBothItem;
 import xyz.ineanto.nicko.gui.items.appearance.ChangeNameItem;
 import xyz.ineanto.nicko.gui.items.appearance.ChangeSkinItem;
-import xyz.ineanto.nicko.gui.items.home.AdminAccessItem;
-import xyz.ineanto.nicko.gui.items.home.ExitItem;
-import xyz.ineanto.nicko.gui.items.home.ResetItem;
-import xyz.ineanto.nicko.gui.items.home.SettingsAccessItem;
+import xyz.ineanto.nicko.gui.items.home.*;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.xenondevs.invui.gui.Gui;
@@ -20,7 +17,7 @@ public class HomeGUI {
 
     public HomeGUI(Player player) {
         final String[] dynamicStructure = new String[]{
-                "# # # # # # # # #",
+                "# # # # D # # # #",
                 "A # # N B S # # #",
                 "E P # # # # # # R"};
 
@@ -38,6 +35,7 @@ public class HomeGUI {
         final ChangeSkinItem changeSkinItem = new ChangeSkinItem(player);
         final SettingsAccessItem settingsAccessItem = new SettingsAccessItem(player);
         final AdminAccessItem adminAccessItem = new AdminAccessItem(player);
+        final RandomSkinItem randomSkinItem = new RandomSkinItem(player);
 
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
@@ -48,6 +46,7 @@ public class HomeGUI {
                 .addIngredient('S', changeSkinItem.get())
                 .addIngredient('P', settingsAccessItem.get())
                 .addIngredient('A', adminAccessItem.get())
+                .addIngredient('D', randomSkinItem.get())
                 .build();
         this.player = player;
     }

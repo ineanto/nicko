@@ -39,11 +39,6 @@ gui:
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalidate"
 
-  cycling_choices:
-    name: "IGNOREME"
-    lore:
-      - "§7§oGet through the values"
-      - "§7§oby left or right clicking."
   exit:
     name: "Exit"
   go_back:
@@ -51,99 +46,97 @@ gui:
   unavailable:
     name: "Unavailable"
     lore:
-      - "§7§oThis button is disabled."
+      - "<gray><i>This button is disabled.</i></gray>"
   error:
     name: "Error!"
     lore:
-      - "§7"
-      - "§7The item texture failed to load, but it might still work."
+      - "<gray>The item texture failed to load, but it might still work.</gray>"
   loading:
-    name: "§7§oLoading..."
+    name: "<gray><i>Loading...</i></gray>"
   choice:
     confirm:
-      name: "§aConfirm"
+      name: "<green>Confirm</green>"
     choose:
-      name: "§6§oChoose an option..."
+      name: "<gold><i>Choose an option...</i></gold>"
     cancel:
-      name: "§cCancel"
+      name: "<red>Cancel</red>"
   scroll_up:
     name: "Scroll up"
     lore:
-      - "§8§o(You can't scroll any higher.)"
+      - "<dark_gray><i>(You can't scroll any higher.)</i></dark_gray>"
   scroll_down:
     name: "Scroll down"
     lore:
-      - "§8§o(You can't scroll any further down.)"
+      - "<dark_gray><i>(You can't scroll any further down.)</i></dark_gray>"
   home:
     admin:
       name: "Administration panel"
       lore:
-        - "§7Configure and manage Nicko."
+        - "<gray>Configure and manage Nicko.</gray>"
     settings:
       name: "Settings"
       lore:
-        - "§7Fine tune your experience with Nicko."
+        - "<gray>Fine tune your experience with Nicko.</gray>"
     change_name:
-      name: "§6Nickname §fchange"
+      name: "Change your <gold>nickname</gold>"
     change_skin:
-      name: "§6Skin §fchange"
+      name: "Change your <gold>skin</gold>"
     change_both:
-      name: "Change §6both"
+      name: "Change <gold>both</gold>"
+    random_skin:
+      name: "<rainbow>Get a random appearance!</rainbow>"
     reset:
       name: "Reset appearance"
       lore:
-        - "§7Completely remove your disguise."
+        - "<gray>Completely remove your disguise.</gray>"
   admin:
     manage_cache:
-      name: "Manage §6skin §fcache..."
+      name: "Manage the <gold>skin</gold> cache..."
       lore:
-        - "§7View and manage the skin cache."
+        - "<gray>View and manage the skin cache.</gray>"
     manage_player:
-      name: "Check a player..."
+      name: "Inspect a player..."
       lore:
-        - "§7See players' disguise information."
+        - "<gray>See players' disguise information.</gray>"
     check:
-      name: "§6{0}"
+      name: "<gold>{0}</gold>"
       lore:
-        - "§cNicked: §a{1}"
-        - "§cName: §6{2}"
-        - "§cSkin: §6{3}"
+        - "<red>Nicked:</red> {1}"
+        - "<red>Name:</red> <gold>{2}</gold>"
+        - "<red>Skin:</red> <gold>{3}</gold>"
         - " "
-        - "§7§oClick to remove skin!"
+        - "<gray><i>Click to remove skin!</i></gray>"
     cache:
       statistics:
         name: "Statistics"
         lore:
-          - "§fRequest count: §b{0}"
-          - "§fNumber of skin cached: §b{1}"
-          - "§8§oCache is cleared every 24 hours."
+          - "Request count: <aqua>{0}</aqua>"
+          - "Number of skin cached: <aqua>{1}</aqua>"
+          - "<dark_gray><i>Cache is cleared every 24 hours.</i></dark_gray>"
       invalidate_cache:
         name: "Invalidate cache"
         lore:
-          - "§c§oNOT RECOMMENDED"
-          - "§7Invalidate the entirety of the skin cache."
-          - "§7This doesn't reset player's disguises."
+          - "<red><i>NOT RECOMMENDED</i></red>"
+          - "<gray>Invalidate the entirety of the skin cache.</gray>"
+          - "<gray>This doesn't reset player's disguises.</gray>"
       invalidate_skin:
         name: "Invalidate a skin..."
         lore:
-          - "§7Select a specific skin to invalidate."
-          - "§7Useful if a skin has been recently updated."
+          - "<gray>Select a specific skin to invalidate.</gray>"
+          - "<gray>Useful if a skin has been recently updated.</gray>"
       entry:
-        name: "§6{0}"
+        name: "<gold>{0}</gold>"
         lore:
-          - "§7Click to invalidate..."
+          - "<gray>Click to invalidate...</gray>"
   settings:
     toggleable_button:
-      name: "IGNORE_ME"
       lore:
-        # {0}/{1} represents the carets that shows the current selected option.
-        - "§b{0} Disabled"
-        - "§b{1} Enabled"
+        - "{0} Disabled"
+        - "{1} Enabled"
     cycling_choices:
-      name: "IGNORE_ME"
       lore:
-        - "§7§oCycle through the values"
-        - "§7§oby left or right clicking."
+        - "<gray><i>Cycle through the values</i></gray>"
+        - "<gray><i>by left or right clicking.</i></gray>"
     language:
       name: "Language"
     random_skin:

@@ -105,6 +105,7 @@ public class I18NDict {
             public static final String CHANGE_SKIN = HOME_KEY + "change_skin";
             public static final String CHANGE_BOTH = HOME_KEY + "change_both";
             public static final String RESET = HOME_KEY + "reset";
+            public static final String RANDOM_SKIN = HOME_KEY + "random_skin";
             public static final String SETTINGS = HOME_KEY + "settings";
         }
 

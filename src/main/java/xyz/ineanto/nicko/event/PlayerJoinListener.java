@@ -1,6 +1,5 @@
 package xyz.ineanto.nicko.event;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,7 +40,6 @@ public class PlayerJoinListener implements Listener {
         optionalProfile.ifPresent(profile -> {
             // Random Skin on connection feature
             if (profile.isRandomSkin()) {
-                Bukkit.broadcast(Component.text("§c[ELITE DEBUG] §fJoined with Random Skin."));
                 final String name = instance.getNameFetcher().getRandomUsername();
                 final String skin = instance.getNameFetcher().getRandomUsername();
                 profile.setName(name);

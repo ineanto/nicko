@@ -35,7 +35,7 @@ gui:
     settings: "Nicko > Paramètres"
     admin: "Nicko > Administration"
     check: "Nicko > Admin... > Vérification"
-    confirm: "... > Confirmer l'action"
+    confirm: "... > Confirmer l''action"
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalider"
 

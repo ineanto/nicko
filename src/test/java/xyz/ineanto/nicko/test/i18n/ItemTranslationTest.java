@@ -45,9 +45,9 @@ public class ItemTranslationTest {
         final Translation translation = i18n.translate(I18NDict.GUI.Admin.Cache.STATISTICS, "1", "1");
         translation.lore().forEach(System.out::println);
         assertFalse(translation.lore().isEmpty());
-        assertEquals("§fNombre de requêtes: §b1", translation.lore().get(0));
-        assertEquals("§fNb. de skin dans le cache: §b1", translation.lore().get(1));
-        assertEquals("§8§oLe cache est vidé toutes les 24 heures.", translation.lore().get(2));
+        assertEquals("Nombre de requêtes: <aqua>1</aqua>", translation.lore().get(0));
+        assertEquals("Nb. de skin dans le cache: <aqua>1</aqua>", translation.lore().get(1));
+        assertEquals("<dark_gray><i>Le cache est vidé toutes les 24 heures.</i></dark_gray>", translation.lore().get(2));
     }
 
     @AfterAll

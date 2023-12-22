@@ -40,7 +40,14 @@ public class AppearanceManager {
         profile.setName(defaultName);
         profile.setSkin(defaultName);
         dataStore.getCache().cache(player.getUniqueId(), profile);
-        return updatePlayer(true, true);
+
+        final ActionResult result = updatePlayer(true, true);
+        if (!result.isError()) {
+            profile.setName(null);
+            profile.setSkin(null);
+            dataStore.getCache().cache(player.getUniqueId(), profile);
+        }
+        return result;
     }
 
     public ActionResult updatePlayer(boolean skinChange, boolean reset) {

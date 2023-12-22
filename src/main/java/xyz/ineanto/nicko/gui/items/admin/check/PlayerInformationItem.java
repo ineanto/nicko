@@ -43,9 +43,9 @@ public class PlayerInformationItem extends AsyncItem {
                     final NickoProfile profile = optionalProfile.get();
                     final AbstractItemBuilder<?> headItem = i18n.translateItem(skull, I18NDict.GUI.Admin.CHECK,
                             target.getName(),
-                            (profile.hasData() ? "§a✔" : "§c❌"),
-                            (profile.getName() == null ? "§7N/A" : profile.getName()),
-                            (profile.getSkin() == null ? "§7N/A" : profile.getSkin()));
+                            (profile.hasData() ? "<green>✔</green>" : "<red>❌</red>"),
+                            (profile.getName() == null ? "<grey>N/A<grey>" : profile.getName()),
+                            (profile.getSkin() == null ? "<grey>N/A</grey>" : profile.getSkin()));
 
                     if (!profile.hasData()) {
                         // Remove the last 2 lines of the lore.

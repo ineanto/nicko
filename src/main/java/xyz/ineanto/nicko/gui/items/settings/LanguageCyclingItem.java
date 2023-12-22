@@ -1,6 +1,8 @@
 package xyz.ineanto.nicko.gui.items.settings;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -68,6 +70,11 @@ public class LanguageCyclingItem {
                 builder.addLoreLines("§6§l> §f" + value.getName());
             }
         }
+
+        cyclingChoicesTranslation.lore().replaceAll(s -> {
+            final Component deserializedLoreLine = MiniMessage.miniMessage().deserialize(s);
+            return LegacyComponentSerializer.legacySection().serialize(deserializedLoreLine);
+        });
         cyclingChoicesTranslation.lore().forEach(builder::addLoreLines);
         return builder;
     }

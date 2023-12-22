@@ -1,6 +1,8 @@
 package xyz.ineanto.nicko.gui.items.common;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
@@ -23,7 +25,14 @@ public class ScrollDownItem extends ScrollItem {
         final ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
         final Translation translation = i18n.translate(I18NDict.GUI.SCROLL_DOWN);
         builder.setDisplayName(Component.text(translation.name()).content());
-        if (!gui.canScroll(1)) translation.lore().forEach(builder::addLoreLines);
+        if (!gui.canScroll(1)) {
+            // Lore serialization
+            translation.lore().replaceAll(s -> {
+                final Component deserializedLoreLine = MiniMessage.miniMessage().deserialize(s);
+                return LegacyComponentSerializer.legacySection().serialize(deserializedLoreLine);
+            });
+            translation.lore().forEach(builder::addLoreLines);
+        }
         return builder;
     }
 }

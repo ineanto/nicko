@@ -17,12 +17,6 @@ public class CustomLocale {
     private final Version versionObject;
     private final YamlConfig yamlFile;
 
-    public CustomLocale(InputStream input) throws IOException {
-        this.yamlFile = new YamlConfig(input);
-        this.version = yamlFile.getString("version");
-        this.versionObject = Version.fromString(version);
-    }
-
     public CustomLocale() throws IOException {
         this.yamlFile = new YamlConfig(new FileInputStream(file));
         this.version = yamlFile.getString("version");

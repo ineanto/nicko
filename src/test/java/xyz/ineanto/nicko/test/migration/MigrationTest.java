@@ -50,7 +50,7 @@ public class MigrationTest {
         outputStream.flush();
 
         // Get wrong locale
-        final CustomLocale customLocaleBeforeMigration = new CustomLocale(new FileInputStream(localeFile));
+        final CustomLocale customLocaleBeforeMigration = new CustomLocale();
         assertEquals(customLocaleBeforeMigration.getVersion(), "1.0.0");
 
         // Migrate the wrong locale to the correct one
@@ -58,7 +58,7 @@ public class MigrationTest {
         localeMigrator.migrate();
 
         // Get the migrated locale
-        final CustomLocale customLocaleMigrated = new CustomLocale(new FileInputStream(localeFile));
+        final CustomLocale customLocaleMigrated = new CustomLocale();
         assertEquals(customLocaleMigrated.getVersion(), "1.1.0");
     }
 

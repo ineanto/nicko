@@ -24,13 +24,13 @@ public class RandomNameFetcher {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split("\n");
+                final String[] values = line.split("\n");
                 records.add(Arrays.asList(values));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return records.get(new Random().nextInt(records.size() -1)).get(0);
+        return records.get(new Random().nextInt(records.size() - 1)).get(0);
     }
 }

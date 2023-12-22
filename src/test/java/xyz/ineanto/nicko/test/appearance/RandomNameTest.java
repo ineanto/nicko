@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
 import xyz.ineanto.nicko.config.Configuration;
+import xyz.ineanto.nicko.mojang.MojangUtils;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RandomNameTest {
     private static NickoBukkit plugin;
@@ -25,7 +26,9 @@ public class RandomNameTest {
     @DisplayName("Get random name")
     public void getRandomName() {
         final RandomNameFetcher randomNameFetcher = new RandomNameFetcher(plugin);
-        assertNotNull(randomNameFetcher.getRandomUsername());
+        final String username = randomNameFetcher.getRandomUsername();
+        assertNotNull(username);
+        assertFalse(MojangUtils.isUsernameInvalid(username));
     }
 
     @AfterAll

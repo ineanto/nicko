@@ -125,15 +125,15 @@ gui:
         lore:
           - "§7Cliquez pour invalider..."
   settings:
+    toggleable_button:
+      lore:
+        - "{0} Désactivé"
+        - "{1} Activé"
+    cycling_choices:
+      lore:
+        - "§7§oParcourez les valeurs"
+        - "§7§oavec un clique gauche/droit."
     language:
       name: "Langage"
-      lore:
-        - "§7§oParcourez les valeurs"
-        - "§7§oavec un clique gauche/droit."
     random_skin:
       name: "Apparence aléatoire à la connexion"
-      lore:
-        - "{0}"
-        - "{1}"
-        - "§7§oParcourez les valeurs"
-        - "§7§oavec un clique gauche/droit."

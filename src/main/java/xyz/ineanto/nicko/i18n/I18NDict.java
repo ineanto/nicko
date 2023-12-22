@@ -111,6 +111,9 @@ public class I18NDict {
         public static class Settings {
             private static final String SETTINGS_KEY = GUI_KEY + "settings.";
 
+            public static final String CYCLING_CHOICES = SETTINGS_KEY + "cycling_choices";
+            public static final String TOGGLEABLE_BUTTON = SETTINGS_KEY + "toggleable_button";
+
             public static final String LANGUAGE = SETTINGS_KEY + "language";
             public static final String RANDOM_SKIN = SETTINGS_KEY + "random_skin";
         }

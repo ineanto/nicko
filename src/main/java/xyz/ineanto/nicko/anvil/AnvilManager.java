@@ -115,9 +115,9 @@ public class AnvilManager {
         final I18N i18n = new I18N(player);
         final ActionResult actionResult = appearanceManager.updatePlayer(skinChange, false);
         if (!actionResult.isError()) {
-            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK));
+            player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Set.OK));
         } else {
-            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, i18n.translatePrefixless(actionResult.getErrorKey())));
+            player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Set.ERROR, i18n.translateStringWithoutPrefix(actionResult.getErrorKey())));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

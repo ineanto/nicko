@@ -7,7 +7,7 @@ import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.gui.SettingsGUI;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
-import xyz.ineanto.nicko.i18n.ItemTranslation;
+import xyz.ineanto.nicko.i18n.Translation;
 import xyz.ineanto.nicko.i18n.Locale;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -44,7 +44,7 @@ public class LanguageCyclingItem {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 player.getOpenInventory().close();
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR));
+                    player.sendMessage(i18n.translateString(I18NDict.Event.Settings.ERROR));
                 } else {
                     new SettingsGUI(player).open();
                 }
@@ -56,7 +56,8 @@ public class LanguageCyclingItem {
 
     private ItemProvider generateItem(Locale locale, List<Locale> locales) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        final ItemTranslation translation = i18n.fetchTranslation(I18NDict.GUI.Settings.LANGUAGE);
+        final Translation translation = i18n.translate(I18NDict.GUI.Settings.LANGUAGE);
+        final Translation cyclingChoicesTranslation = i18n.translate(I18NDict.GUI.Settings.CYCLING_CHOICES);
 
         builder.setDisplayName(translation.name());
         for (Locale value : locales) {
@@ -66,7 +67,7 @@ public class LanguageCyclingItem {
                 builder.addLoreLines("§6§l> §f" + value.getName());
             }
         }
-        translation.lore().forEach(builder::addLoreLines);
+        cyclingChoicesTranslation.lore().forEach(builder::addLoreLines);
         return builder;
     }
 

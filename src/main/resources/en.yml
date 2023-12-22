@@ -39,6 +39,11 @@ gui:
     cache: "Nicko > Admin... > Cache"
     invalidate_skin: "... > Cache > Invalidate"
 
+  cycling_choices:
+    name: "IGNOREME"
+    lore:
+      - "§7§oGet through the values"
+      - "§7§oby left or right clicking."
   exit:
     name: "Exit"
   go_back:
@@ -128,15 +133,18 @@ gui:
         lore:
           - "§7Click to invalidate..."
   settings:
+    toggleable_button:
+      name: "IGNORE_ME"
+      lore:
+        # {0}/{1} represents the carets that shows the current selected option.
+        - "§b{0} Disabled"
+        - "§b{1} Enabled"
+    cycling_choices:
+      name: "IGNORE_ME"
+      lore:
+        - "§7§oCycle through the values"
+        - "§7§oby left or right clicking."
     language:
       name: "Language"
-      lore:
-        - "§7§oGet through the values"
-        - "§7§oby left or right clicking."
     random_skin:
-      name: "Random skin on join"
-      lore:
-        - "{0}"
-        - "{1}"
-        - "§7§oGet through the values"
-        - "§7§oby left or right clicking."
+      name: "Random skin on login"

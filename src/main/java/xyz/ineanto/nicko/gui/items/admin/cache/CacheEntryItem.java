@@ -50,7 +50,7 @@ public class CacheEntryItem extends AsyncItem {
                 @Override
                 public void onConfirm() {
                     final I18N i18n = new I18N(player);
-                    player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, name));
+                    player.sendMessage(i18n.translateString(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, name));
                     mojangAPI.eraseFromCache(uuid);
                 }
 

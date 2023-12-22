@@ -18,7 +18,7 @@ public class AdminGUI {
 
     public AdminGUI(Player player) {
         final I18N i18n = new I18N(player);
-        this.title = i18n.translatePrefixless(I18NDict.GUI.Titles.ADMIN);
+        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.ADMIN);
 
         final HomeGUI parent = new HomeGUI(player);
         final GoBackItem backItem = new GoBackItem(player);

@@ -8,9 +8,7 @@ import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +17,7 @@ public class I18N {
     private final MessageFormat formatter = new MessageFormat("");
     private final Logger logger = Logger.getLogger("I18N");
     private final NickoBukkit instance = NickoBukkit.getInstance();
-    private final Pattern replacementPattern = Pattern.compile("\\{\\d+}$", Pattern.DOTALL);
+    private final Pattern replacementPattern = Pattern.compile("(?ms)\\{\\d+}");
     private final YamlConfig yamlConfig;
     private final Player player;
     private final Locale playerLocale;
@@ -37,28 +35,28 @@ public class I18N {
     }
 
     public AbstractItemBuilder<?> translateItem(AbstractItemBuilder<?> item, String key, Object... args) {
-        final ItemTranslation translation = fetchTranslation(key, args);
+        final Translation translation = translate(key, args);
         item.setDisplayName(translation.name());
         translation.lore().forEach(item::addLoreLines);
         return item;
     }
 
-    public ItemTranslation fetchTranslation(String key, Object... args) {
+    public Translation translate(String key, Object... args) {
         final String nameKey = key + ".name";
         final String loreKey = key + ".lore";
         final String name = readString(nameKey);
         final ArrayList<String> lore = readList(loreKey);
 
-        if (name == null) {
+        if (name == null && lore == null) {
             logger.warning(nameKey + " doesn't exists! Is your language file outdated?");
-            return new ItemTranslation(nameKey, new ArrayList<>() {{
-                add(loreKey);
-            }});
+            return new Translation(nameKey, new ArrayList<>(List.of(loreKey)));
         }
 
         // Add all elements to a list
         final ArrayList<String> toTranslate = new ArrayList<>();
-        toTranslate.add(name);
+        if (name != null) {
+            toTranslate.add(name);
+        }
         if (lore != null && !lore.isEmpty()) {
             toTranslate.addAll(lore);
         }
@@ -91,13 +89,19 @@ public class I18N {
             lineIndex++;
         }
 
-        if (lore == null || lore.isEmpty()) {
-            return new ItemTranslation(toTranslate.get(0), new ArrayList<>());
+        if (name == null && !lore.isEmpty()) {
+            // Empty name, valid lore
+            return new Translation(null, toTranslate);
+        } else if (name != null && (lore == null || lore.isEmpty())) {
+            // Valid name, empty lore
+            return new Translation(toTranslate.get(0), new ArrayList<>(Collections.emptyList()));
+        } else {
+            // Valid name, valid lore
+            return new Translation(toTranslate.get(0), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
         }
-        return new ItemTranslation(toTranslate.get(0), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
     }
 
-    public String translate(String key, Object... arguments) {
+    public String translateString(String key, Object... arguments) {
         final String translation = readString(key);
         try {
             formatter.applyPattern(translation);
@@ -107,7 +111,7 @@ public class I18N {
         }
     }
 
-    public String translatePrefixless(String key, Object... arguments) {
+    public String translateStringWithoutPrefix(String key, Object... arguments) {
         final String translation = readString(key);
         try {
             formatter.applyPattern(translation);

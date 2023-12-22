@@ -22,7 +22,7 @@ public class ChoiceGUI {
         final ConfirmItem confirmItem = new ConfirmItem(player, callback);
         final CancelItem cancelItem = new CancelItem(player, callback);
 
-        this.title = i18n.translatePrefixless(I18NDict.GUI.Titles.CONFIRM);
+        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.CONFIRM);
         this.gui = Gui.normal()
                 .setStructure(
                         "@ @ @ @ % & & & &",

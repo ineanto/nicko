@@ -1,6 +1,6 @@
 1.1.0-RC1: Update n°6 (XX/12/23)
     [BREAKING]
-        - The language system has been updated to use the Adventure API (https://docs.advntr.dev/index.html). This results in custom locale now breaking
+        - The language system has been updated to use the Adventure library (https://docs.advntr.dev/index.html). This results in the custom locale breaking
         Nicko upon usage of legacy color codes (e.g., "§6Nicko"). Your custom locale will be backed up upon starting this version and you will be able to
         use the new default English locale to help you make your locale compatible with the new formatting.
 

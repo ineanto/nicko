@@ -10,6 +10,7 @@ import xyz.ineanto.nicko.config.SQLDataSourceConfiguration;
 import xyz.ineanto.nicko.i18n.Locale;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
+import xyz.ineanto.nicko.storage.mariadb.MariaDBStorageProvider;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class SQLStorageTest {
         final NickoBukkit plugin = MockBukkit.load(NickoBukkit.class, config);
         dataStore = plugin.getDataStore();
         uuid = UUID.randomUUID();
+        assertInstanceOf(MariaDBStorageProvider.class, dataStore.getStorage().getProvider());
     }
 
     @Test

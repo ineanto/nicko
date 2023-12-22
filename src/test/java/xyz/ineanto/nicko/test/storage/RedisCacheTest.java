@@ -11,6 +11,7 @@ import xyz.ineanto.nicko.config.DataSourceConfiguration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
+import xyz.ineanto.nicko.storage.redis.RedisCacheProvider;
 
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class RedisCacheTest {
         final ServerMock server = MockBukkit.mock();
         plugin = MockBukkit.load(NickoBukkit.class, config);
         player = server.addPlayer();
+        assertInstanceOf(RedisCacheProvider.class, plugin.getDataStore().getCache().getProvider());
     }
 
     @Test

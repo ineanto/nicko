@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
 import xyz.ineanto.nicko.command.NickoCommand;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.ConfigurationManager;
@@ -38,6 +39,7 @@ public class NickoBukkit extends JavaPlugin {
     private Configuration configuration;
     private LocaleFileManager localeFileManager;
     private PlayerNameStore nameStore;
+    private RandomNameFetcher nameFetcher;
     private Metrics metrics;
 
     public NickoBukkit() {
@@ -63,6 +65,7 @@ public class NickoBukkit extends JavaPlugin {
         mojangAPI = new MojangAPI();
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
         nameStore = new PlayerNameStore();
+        nameFetcher = new RandomNameFetcher(this);
 
         if (!Bukkit.getOnlineMode()) {
             getLogger().warning("Nicko has not been tested using offline mode!");
@@ -176,6 +179,10 @@ public class NickoBukkit extends JavaPlugin {
             getLogger().severe("(" + e.getMessage() + ")");
             return null;
         }
+    }
+
+    public RandomNameFetcher getNameFetcher() {
+        return nameFetcher;
     }
 
     public PlayerDataStore getDataStore() {

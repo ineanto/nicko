@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "xyz.ineanto"
-version = "1.1.0-RC1"
+version = "1.1.1-RC1"
 
 val shadowImplementation: Configuration by configurations.creating
 configurations["implementation"].extendsFrom(shadowImplementation)
@@ -45,13 +45,13 @@ repositories {
 }
 
 dependencies {
-    implementation("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     implementation("com.comphenix.protocol:ProtocolLib:5.1.1-SNAPSHOT")
 
     shadowImplementation("me.clip:placeholderapi:2.11.4")
     shadowImplementation("net.kyori:adventure-api:4.14.0")
-    shadowImplementation("xyz.xenondevs.invui:invui:1.23")
-    shadowImplementation("net.wesjd:anvilgui:1.9.0-SNAPSHOT")
+    shadowImplementation("xyz.xenondevs.invui:invui:1.24")
+    shadowImplementation("net.wesjd:anvilgui:1.9.2-SNAPSHOT")
     shadowImplementation("com.github.jsixface:yamlconfig:1.2")
     shadowImplementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
     shadowImplementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
@@ -137,6 +137,6 @@ tasks {
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.20.2")
+        minecraftVersion("1.20.4")
     }
 }

@@ -1,4 +1,9 @@
-1.1.0-RC1: Update n°6 (XX/12/23)
+1.1.1-RC1: Update n°7 (27/12/23)
+    [FEATURES]
+        - Made Nicko compatible with 1.20.3 and 1.20.4.
+
+
+1.1.0-RC1: Update n°6 (23/12/23)
     [BREAKING]
         - The language system has been updated to use the Adventure library (https://docs.advntr.dev/index.html). This results in the custom locale breaking
         Nicko upon usage of legacy color codes (e.g., "§6Nicko"). Your custom locale will be backed up upon starting this version and you will be able to

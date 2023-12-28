@@ -68,7 +68,7 @@ public class NickoExpansion extends PlaceholderExpansion {
             case "name" -> name;
             case "skin" -> skin;
             case "locale" -> locale;
-            case "bungeecord" -> String.valueOf(randomSkin);
+            case "random_skin" -> String.valueOf(randomSkin);
             default -> null;
         };
     }

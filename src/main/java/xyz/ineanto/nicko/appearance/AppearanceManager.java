@@ -2,7 +2,6 @@ package xyz.ineanto.nicko.appearance;
 
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.*;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.ints.IntList;
 import org.bukkit.Bukkit;
@@ -20,6 +19,7 @@ import xyz.ineanto.nicko.wrapper.*;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -170,7 +170,7 @@ public class AppearanceManager {
                     EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME,
                     EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE,
                     EnumWrappers.PlayerInfoAction.UPDATE_LATENCY);
-            remove.setUUIDs(ImmutableList.of(player.getUniqueId()));
+            remove.setUUIDs(List.of(player.getUniqueId()));
             remove.broadcastPacket();
             add.setActions(actions);
         } else {
@@ -180,7 +180,7 @@ public class AppearanceManager {
             remove.broadcastPacket();
         }
 
-        add.setData(ImmutableList.of(new PlayerInfoData(
+        add.setData(List.of(new PlayerInfoData(
                 player.getUniqueId(),
                 player.getPing(),
                 true,

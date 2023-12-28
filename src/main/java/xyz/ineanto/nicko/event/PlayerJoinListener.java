@@ -37,7 +37,7 @@ public class PlayerJoinListener implements Listener {
         nameStore.storeName(player);
 
         final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
-        optionalProfile.ifPresent(profile -> {
+        optionalProfile.ifPresentOrElse(profile -> {
             // Random Skin on connection feature
             if (profile.isRandomSkin()) {
                 final String name = instance.getNameFetcher().getRandomUsername();
@@ -61,6 +61,8 @@ public class PlayerJoinListener implements Listener {
                             ));
                 }
             }
+        }, () -> {
+            instance.getLogger().warning("Failed to load data for " + player.getName());
         });
 
         for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).toList()) {

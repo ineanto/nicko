@@ -115,22 +115,18 @@ public class AppearanceManager {
                         properties.get("textures").clear();
                         properties.put("textures", new WrappedSignedProperty("textures", skinResult.value(), skinResult.signature()));
                     } else {
-                        profile.setSkin(null);
-                        dataStore.updateCache(player.getUniqueId(), profile);
+                        reset();
                         return ActionResult.error(I18NDict.Error.MOJANG_SKIN);
                     }
                 } else {
-                    profile.setName(null);
-                    dataStore.updateCache(player.getUniqueId(), profile);
+                    reset();
                     return ActionResult.error(I18NDict.Error.MOJANG_NAME);
                 }
                 return ActionResult.ok();
             } catch (ExecutionException e) {
                 return ActionResult.error(I18NDict.Error.CACHE);
             } catch (IOException e) {
-                profile.setName(null);
-                profile.setSkin(null);
-                dataStore.updateCache(player.getUniqueId(), profile);
+                reset();
                 return ActionResult.error(I18NDict.Error.MOJANG_NAME);
             }
         }

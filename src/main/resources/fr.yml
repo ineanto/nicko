@@ -1,16 +1,16 @@
-# Nicko ${version} - Config:
+# Nicko ${version} - Fichier de langue:
 
-# Specifies the configuration version, don't change.
-version: "1.1.0"
+# Précise la version de la configuration, ne pas changer.
+version: "1.1.2"
 
 error:
   generic: "Une erreur inconnue c'est produite."
   permission: "§cVous ne possédez pas la permission."
   invalid_username: "§cLe pseudo n'est pas un pseudo Minecraft valide."
-  mojang_name: "Un compte Minecraft avec ce nom n'existe pas."
-  mojang_skin: "Ce compte Minecraft n'a pas de skin."
-  cache: "Impossible de récupérer le skin depuis le cache."
-  sql: "Erreur SQL"
+  mojang_name: "Compte Minecraft inexistant"
+  mojang_skin: "Skin Minecraft invalide"
+  cache: "Erreur du cache"
+  database: "Erreur SQL"
   json: "Erreur JSON"
 
 event:

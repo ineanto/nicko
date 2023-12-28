@@ -12,7 +12,7 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 
 /**
- * PacketPlayServerRespawn Wrapper class (1.19 to 1.20.2)
+ * PacketPlayServerRespawn Wrapper class (1.19 to 1.20.4)
  *
  * @author ineanto, based on work from dmulloy2 and Kristian S. Strangeland
  * <p>
@@ -34,7 +34,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setDimension(World value) {
         if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            // 1.20.2
+            // 1.20.2 to 1.20.4
             writeDimensionToStructure(value, commonPlayerSpawnInfoStructure.getStructures(), commonPlayerSpawnInfoStructure.getWorldKeys());
         } else if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
             // 1.19 to 1.20.1, props to lukalt for helping me figure this out.

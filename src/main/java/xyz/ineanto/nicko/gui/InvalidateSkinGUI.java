@@ -28,7 +28,7 @@ public class InvalidateSkinGUI {
 
     public InvalidateSkinGUI(Player player) {
         final I18N i18n = new I18N(player);
-        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.INVALIDATE_SKIN);
+        this.title = i18n.translate(I18NDict.GUI.Titles.INVALIDATE_SKIN, false);
 
         final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getSkinCache().asMap();
         final List<String> loadedSkins = skins.entrySet().stream()

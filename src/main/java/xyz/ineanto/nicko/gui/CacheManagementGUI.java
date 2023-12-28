@@ -17,7 +17,7 @@ public class CacheManagementGUI {
 
     public CacheManagementGUI(Player player) {
         final I18N i18n = new I18N(player);
-        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.CACHE);
+        this.title = i18n.translate(I18NDict.GUI.Titles.CACHE, false);
 
         final AdminGUI parent = new AdminGUI(player);
         final GoBackItem backItem = new GoBackItem(player);

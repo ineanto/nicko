@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
     implementation("com.comphenix.protocol:ProtocolLib:5.1.1-SNAPSHOT")
 
     shadowImplementation("me.clip:placeholderapi:2.11.4")
@@ -132,6 +132,8 @@ tasks {
     }
 
     runServer {
+        dependsOn(shadowJar)
+
         downloadPlugins {
             url("https://download.luckperms.net/1526/bukkit/loader/LuckPerms-Bukkit-5.4.113.jar")
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")

@@ -55,12 +55,12 @@ public class RandomSkinCyclingItem {
     private ItemProvider getItemProviderForValue(boolean enabled) {
         final SkullBuilder.HeadTexture texture = new SkullBuilder.HeadTexture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzgzMTEzOGMyMDYxMWQzMDJjNDIzZmEzMjM3MWE3NDNkMTc0MzdhMTg5NzNjMzUxOTczNDQ3MGE3YWJiNCJ9fX0=");
         final SkullBuilder builder = new SkullBuilder(texture);
-        final Translation randomSkinTranslation = i18n.translate(I18NDict.GUI.Settings.RANDOM_SKIN);
-        final Translation toggleableTranslation = i18n.translate(I18NDict.GUI.Settings.TOGGLEABLE_BUTTON,
+        final Translation randomSkinTranslation = i18n.translateAndReplace(I18NDict.GUI.Settings.RANDOM_SKIN);
+        final Translation toggleableTranslation = i18n.translateAndReplace(I18NDict.GUI.Settings.TOGGLEABLE_BUTTON,
                 (enabled ? "§7>§c" : "§6§l>§c§l"),
                 (enabled ? "§6§l>§a§l" : "§7>§a")
         );
-        final Translation cyclingChoicesTranslation = i18n.translate(I18NDict.GUI.Settings.CYCLING_CHOICES);
+        final Translation cyclingChoicesTranslation = i18n.translateAndReplace(I18NDict.GUI.Settings.CYCLING_CHOICES);
 
         builder.setDisplayName(randomSkinTranslation.name());
         toggleableTranslation.lore().forEach(builder::addLoreLines);

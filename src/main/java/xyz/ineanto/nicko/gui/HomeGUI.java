@@ -26,7 +26,7 @@ public class HomeGUI {
         }
 
         final I18N i18n = new I18N(player);
-        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.HOME);
+        this.title = i18n.translate(I18NDict.GUI.Titles.HOME, false);
 
         final ExitItem exitItem = new ExitItem(player);
         final ResetItem resetItem = new ResetItem(player);

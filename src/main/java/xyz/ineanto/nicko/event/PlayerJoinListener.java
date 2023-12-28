@@ -52,9 +52,13 @@ public class PlayerJoinListener implements Listener {
                 final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(player.getName());
                 final ActionResult actionResult = appearanceManager.updatePlayer(needsASkinChange, false);
                 if (!actionResult.isError()) {
-                    player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Restore.OK));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK, true));
                 } else {
-                    player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Restore.ERROR, i18n.translateStringWithoutPrefix(actionResult.getErrorKey())));
+                    player.sendMessage(
+                            i18n.translate(I18NDict.Event.Appearance.Restore.ERROR,
+                                    true,
+                                    i18n.translate(actionResult.getErrorKey(), false)
+                            ));
                 }
             }
         });

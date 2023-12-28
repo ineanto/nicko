@@ -23,7 +23,7 @@ public class ScrollDownItem extends ScrollItem {
     @Override
     public ItemProvider getItemProvider(ScrollGui gui) {
         final ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
-        final Translation translation = i18n.translate(I18NDict.GUI.SCROLL_DOWN);
+        final Translation translation = i18n.translateAndReplace(I18NDict.GUI.SCROLL_DOWN);
         builder.setDisplayName(Component.text(translation.name()).content());
         if (!gui.canScroll(1)) {
             // Lore serialization

@@ -78,7 +78,7 @@ public class PlayerInformationItem extends AsyncItem {
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
                         appearanceManager.reset();
-                        player.sendMessage(i18n.translateString(I18NDict.Event.Admin.Check.REMOVE_SKIN, target.getName()));
+                        player.sendMessage(i18n.translate(I18NDict.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
                     }
 
                     @Override

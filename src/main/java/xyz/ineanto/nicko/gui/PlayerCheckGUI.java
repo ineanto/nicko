@@ -27,7 +27,7 @@ public class PlayerCheckGUI {
 
     public PlayerCheckGUI(Player player, Collection<? extends Player> players) {
         final I18N i18n = new I18N(player);
-        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.CHECK);
+        this.title = i18n.translate(I18NDict.GUI.Titles.CHECK, false);
 
         final List<Item> items = players.stream()
                 .map(Entity::getUniqueId)

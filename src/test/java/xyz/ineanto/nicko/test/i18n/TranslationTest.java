@@ -25,7 +25,7 @@ public class TranslationTest {
     @DisplayName("Translate Line With Replacement")
     public void translateItemTranslationWithoutLore() {
         final I18N i18n = new I18N(Locale.FRENCH);
-        final String translation = i18n.translateStringWithoutPrefix(I18NDict.Event.Settings.ERROR, "Test");
+        final String translation = i18n.translate(I18NDict.Event.Settings.ERROR, false, "Test");
         assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test)", translation);
     }
 

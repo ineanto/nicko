@@ -22,7 +22,7 @@ public class SettingsGUI {
         };
 
         final I18N i18n = new I18N(player);
-        this.title = i18n.translateStringWithoutPrefix(I18NDict.GUI.Titles.SETTINGS);
+        this.title = i18n.translate(I18NDict.GUI.Titles.SETTINGS, false);
 
         final HomeGUI parent = new HomeGUI(player);
         final LanguageCyclingItem languageItem = new LanguageCyclingItem(player);

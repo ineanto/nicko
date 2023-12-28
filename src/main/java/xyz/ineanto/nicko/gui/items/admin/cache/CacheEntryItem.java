@@ -29,7 +29,9 @@ public class CacheEntryItem extends AsyncItem {
 
     public CacheEntryItem(I18N i18n, String uuid) {
         super(new ItemBuilder(Material.PAINTING)
-                        .setDisplayName(Component.text(i18n.translateStringWithoutPrefix(I18NDict.GUI.LOADING)).content()),
+                        .setDisplayName(
+                                Component.text(i18n.translate(I18NDict.GUI.LOADING, false)).content()
+                        ),
                 () -> {
                     final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
                     final UUID uuidObject = UUID.fromString(dashedUuid);
@@ -53,7 +55,7 @@ public class CacheEntryItem extends AsyncItem {
                 @Override
                 public void onConfirm() {
                     final I18N i18n = new I18N(player);
-                    player.sendMessage(i18n.translateString(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, name));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, true, name));
                     mojangAPI.eraseFromCache(uuid);
                 }
 

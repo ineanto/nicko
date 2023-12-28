@@ -22,23 +22,21 @@ public class I18N {
     private final NickoBukkit instance = NickoBukkit.getInstance();
     private final Pattern replacementPattern = Pattern.compile("(?ms)\\{\\d+}");
     private final YamlConfig yamlConfig;
-    private final Player player;
     private final Locale playerLocale;
 
     public I18N(Player player) {
-        this.player = player;
-        this.playerLocale = getPlayerLocale();
+        final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
+        this.playerLocale = optionalProfile.map(NickoProfile::getLocale).orElse(Locale.ENGLISH);
         this.yamlConfig = getYamlConfig();
     }
 
     public I18N(Locale locale) {
-        this.player = null;
         this.playerLocale = locale;
         this.yamlConfig = getYamlConfig();
     }
 
     public AbstractItemBuilder<?> translateItem(AbstractItemBuilder<?> item, String key, Object... args) {
-        final Translation translation = translate(key, args);
+        final Translation translation = translateAndReplace(key, args);
 
         // Name serialization
         final Component deserializedName = MiniMessage.miniMessage().deserialize(translation.name());
@@ -55,7 +53,7 @@ public class I18N {
         return item;
     }
 
-    public Translation translate(String key, Object... args) {
+    public Translation translateAndReplace(String key, Object... args) {
         final String nameKey = key + ".name";
         final String loreKey = key + ".lore";
         final String name = readString(nameKey);
@@ -115,23 +113,13 @@ public class I18N {
         }
     }
 
-    public String translateString(String key, Object... arguments) {
+    public String translate(String key, boolean prefix, Object... arguments) {
         final String translation = readString(key);
         try {
             formatter.applyPattern(translation);
-            return instance.getNickoConfig().getPrefix() + formatter.format(arguments);
+            return (prefix ? instance.getNickoConfig().getPrefix() : "") + formatter.format(arguments);
         } catch (Exception e) {
-            return instance.getNickoConfig().getPrefix() + key;
-        }
-    }
-
-    public String translateStringWithoutPrefix(String key, Object... arguments) {
-        final String translation = readString(key);
-        try {
-            formatter.applyPattern(translation);
-            return formatter.format(arguments);
-        } catch (Exception e) {
-            return key;
+            return (prefix ? instance.getNickoConfig().getPrefix() : "") + key;
         }
     }
 
@@ -149,15 +137,6 @@ public class I18N {
         } else {
             final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
             return new YamlConfig(resource);
-        }
-    }
-
-    public Locale getPlayerLocale() {
-        final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
-        if (optionalProfile.isPresent()) {
-            return optionalProfile.get().getLocale();
-        } else {
-            return Locale.ENGLISH;
         }
     }
 }

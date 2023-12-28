@@ -1,3 +1,14 @@
+1.1.2-RC1: Update n°8 (28/12/23)
+    [FEATURES]
+        - Players now default back to their original appearance upon failure.
+
+    [FIXES]
+        - Fixed an invalid placeholder parameter (%nicko_random_skin% now gets if the player has random skin on login set or not).
+        - Fixed the error reason not appearing upon failure.
+        - Fixed player profiles (name and skin associated) not being reset gracefully upon failure.
+        - Fixed error messages not being precise enough.
+        - Various optimizations and improvements.
+
 1.1.1-RC1: Update n°7 (27/12/23)
     [FEATURES]
         - Made Nicko compatible with 1.20.3 and 1.20.4.

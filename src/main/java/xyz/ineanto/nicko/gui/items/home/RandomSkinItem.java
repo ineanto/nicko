@@ -3,6 +3,7 @@ package xyz.ineanto.nicko.gui.items.home;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.i18n.I18N;
 import xyz.ineanto.nicko.i18n.I18NDict;
@@ -39,10 +40,16 @@ public class RandomSkinItem {
                     instance.getDataStore().updateCache(player.getUniqueId(), profile);
 
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
-                    if (!appearanceManager.updatePlayer(true, false).isError()) {
+                    final ActionResult result = appearanceManager.updatePlayer(true, false);
+                    if (!result.isError()) {
                         player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK, true));
                     } else {
-                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, true));
+                        player.sendMessage(i18n.translate(
+                                        I18NDict.Event.Appearance.Set.ERROR,
+                                        true,
+                                        i18n.translate(result.getErrorKey(), false)
+                                )
+                        );
                     }
                 });
                 return true;

@@ -130,6 +130,7 @@ public class AnvilManager {
     private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
+        // TODO (Ineanto, 12/28/23): Translate this
         if (meta != null) meta.displayName(Component.text("New " + (skin ? "skin" : "name") + "..."));
         item.setItemMeta(meta);
         return item;

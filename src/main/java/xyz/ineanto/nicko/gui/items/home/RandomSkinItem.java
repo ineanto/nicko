@@ -40,9 +40,9 @@ public class RandomSkinItem {
 
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
                     if (!appearanceManager.updatePlayer(true, false).isError()) {
-                        player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Set.OK));
+                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK, true));
                     } else {
-                        player.sendMessage(i18n.translateString(I18NDict.Event.Appearance.Set.ERROR));
+                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.ERROR, true));
                     }
                 });
                 return true;

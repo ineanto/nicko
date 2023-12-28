@@ -17,7 +17,7 @@ public class NickoCommand implements CommandExecutor {
                 new HomeGUI(player).open();
             } else {
                 final I18N i18N = new I18N(player);
-                player.sendMessage(i18N.translateString(I18NDict.Error.PERMISSION));
+                player.sendMessage(i18N.translate(I18NDict.Error.PERMISSION, true));
             }
             return false;
         }

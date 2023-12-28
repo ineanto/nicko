@@ -27,7 +27,7 @@ public class InvalidateCacheItem {
 
                 final Player player = click.getPlayer();
                 final I18N i18n = new I18N(player);
-                player.sendMessage(i18n.translateString(I18NDict.Event.Admin.Cache.INVALIDATE_CACHE));
+                player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_CACHE, true));
                 NickoBukkit.getInstance().getMojangAPI().getSkinCache().invalidateAll();
                 return true;
             }

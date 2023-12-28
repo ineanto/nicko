@@ -47,7 +47,7 @@ public class LanguageCyclingItem {
                 nickoProfile.setLocale(Locale.values()[integer]);
                 player.getOpenInventory().close();
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
-                    player.sendMessage(i18n.translateString(I18NDict.Event.Settings.ERROR));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR, true));
                 } else {
                     new SettingsGUI(player).open();
                 }

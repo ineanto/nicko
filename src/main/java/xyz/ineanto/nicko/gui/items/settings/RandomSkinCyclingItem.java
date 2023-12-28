@@ -43,7 +43,7 @@ public class RandomSkinCyclingItem {
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
                 nickoProfile.setRandomSkin(integer != 1);
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
-                    player.sendMessage(i18n.translateString(I18NDict.Event.Settings.ERROR));
+                    player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR, true));
                     player.getOpenInventory().close();
                 }
             }, localeOrdinal, providers);

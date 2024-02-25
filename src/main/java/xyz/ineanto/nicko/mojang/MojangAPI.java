@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -26,6 +28,7 @@ public class MojangAPI {
 
     private final Logger logger = Logger.getLogger("MojangAPI");
     private final HashMap<String, String> uuidToName = new HashMap<>();
+    private final ExecutorService worker = Executors.newFixedThreadPool(6);
 
     private final CacheLoader<String, Optional<MojangSkin>> skinLoader = new CacheLoader<>() {
         @Nonnull
@@ -56,7 +59,7 @@ public class MojangAPI {
         return skinCache.get(uuid);
     }
 
-    public Optional<MojangSkin> getSkinWithoutCaching(String uuid) throws IOException {
+    public Optional<MojangSkin> getSkinWithoutCaching(String uuid) throws IOException, ExecutionException, InterruptedException {
         return getSkinFromMojang(uuid);
     }
 
@@ -64,7 +67,7 @@ public class MojangAPI {
         return uuidCache.get(name);
     }
 
-    private Optional<String> getUUIDFromMojang(String name) throws IOException {
+    private Optional<String> getUUIDFromMojang(String name) throws ExecutionException, InterruptedException {
         final String parametrizedUrl = URL_NAME.replace("{name}", name);
         final JsonObject object = getRequestToUrl(parametrizedUrl);
         if (hasNoError(object)) {
@@ -84,7 +87,7 @@ public class MojangAPI {
         uuidCache.invalidate(uuid);
     }
 
-    private Optional<MojangSkin> getSkinFromMojang(String uuid) throws IOException {
+    private Optional<MojangSkin> getSkinFromMojang(String uuid) throws ExecutionException, InterruptedException {
         final String parametrizedUrl = URL_SKIN.replace("{uuid}", uuid);
         final JsonObject object = getRequestToUrl(parametrizedUrl);
         if (hasNoError(object)) {
@@ -98,39 +101,41 @@ public class MojangAPI {
         return uuidToName.get(uuid);
     }
 
-    private JsonObject getRequestToUrl(String parametrizedUrl) throws IOException {
-        final URL url = new URL(parametrizedUrl);
-        final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-        con.setDoInput(true);
-        con.setRequestMethod("GET");
+    private JsonObject getRequestToUrl(String parametrizedUrl) throws ExecutionException, InterruptedException {
+        return worker.submit(() -> {
+            final URL url = new URL(parametrizedUrl);
+            final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setDoInput(true);
+            con.setRequestMethod("GET");
 
-        switch (con.getResponseCode()) {
-            case 404:
-            case 400:
-                logger.warning("Failed to parse request: Invalid Name");
-                return getErrorObject();
-            case 429:
-                logger.warning("Failed to parse request: The connection is throttled.");
-                return getErrorObject();
-            case 200:
-                final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                final StringBuilder builder = new StringBuilder();
-                String line;
-                while ((line = input.readLine()) != null) {
-                    builder.append(line);
-                }
-
-                try {
-                    final JsonElement jsonElt = JsonParser.parseString(builder.toString());
-                    return jsonElt.getAsJsonObject();
-                } catch (JsonParseException | IllegalStateException exception) {
-                    logger.warning("Failed to parse request (" + parametrizedUrl + ")!");
+            switch (con.getResponseCode()) {
+                case 404:
+                case 400:
+                    logger.warning("Failed to parse request: Invalid Name");
                     return getErrorObject();
-                }
-            default:
-                logger.warning("Unhandled response code from Mojang: " + con.getResponseCode());
-                return getErrorObject();
-        }
+                case 429:
+                    logger.warning("Failed to parse request: The connection is throttled.");
+                    return getErrorObject();
+                case 200:
+                    final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    final StringBuilder builder = new StringBuilder();
+                    String line;
+                    while ((line = input.readLine()) != null) {
+                        builder.append(line);
+                    }
+
+                    try {
+                        final JsonElement jsonElt = JsonParser.parseString(builder.toString());
+                        return jsonElt.getAsJsonObject();
+                    } catch (JsonParseException | IllegalStateException exception) {
+                        logger.warning("Failed to parse request (" + parametrizedUrl + ")!");
+                        return getErrorObject();
+                    }
+                default:
+                    logger.warning("Unhandled response code from Mojang: " + con.getResponseCode());
+                    return getErrorObject();
+            }
+        }).get();
     }
 
     private JsonObject getErrorObject() {

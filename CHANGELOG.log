@@ -1,6 +1,12 @@
-1.1.4-RC1: Update n°9 (28/12/23)
+1.1.5-RC1: Update n°10 (28/12/23)
     [FEATURES]
         - Various improvements to performance.
+    [FIXES]
+        - Fixed a bug related to configuration migration.
+
+1.1.4-RC1: Update n°9 (07/02/23)
+    [OTHER]
+        - The repository hosting the previous version of Nicko had expired, this is now fixed.
 
 1.1.3-RC1: Hotfix n°4 (28/12/23)
     [FIXES]

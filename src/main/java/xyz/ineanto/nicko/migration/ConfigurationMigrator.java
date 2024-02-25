@@ -26,7 +26,7 @@ public class ConfigurationMigrator implements Migrator {
             || configuration.getVersionObject().compareTo(Configuration.VERSION) != 0) {
             instance.getLogger().info("Migrating configuration file to match the current version...");
             try {
-                Files.copy(configurationManager.getFile().toPath(), configurationManager.getBackupFile().toPath(), StandardCopyOption.ATOMIC_MOVE);
+                Files.copy(configurationManager.getFile().toPath(), configurationManager.getBackupFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
                 configurationManager.saveDefaultConfig();
             } catch (IOException e) {
                 instance.getLogger().severe("Failed to migrate your configuration!");

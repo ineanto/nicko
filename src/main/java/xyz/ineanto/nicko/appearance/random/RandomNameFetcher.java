@@ -27,10 +27,10 @@ public class RandomNameFetcher {
                 final String[] values = line.split("\n");
                 records.add(Arrays.asList(values));
             }
+            return records.get(new Random().nextInt(records.size() - 1)).get(0);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            instance.getLogger().severe("Unable to fetch random names.");
+            return "Ineanto";
         }
-
-        return records.get(new Random().nextInt(records.size() - 1)).get(0);
     }
 }

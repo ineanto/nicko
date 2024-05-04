@@ -15,14 +15,6 @@ services:
     ports:
       - "3306:3306"
 
-  phpmyadmin:
-    image: phpmyadmin
-    restart: no
-    links:
-      - db
-    ports:
-      - "8080:80"
-
   redis:
     image: redis
     restart: no

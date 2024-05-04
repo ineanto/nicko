@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "xyz.ineanto"
-version = "1.1.5-RC1"
+version = "1.1.6-RC1"
 
 val shadowImplementation: Configuration by configurations.creating
 configurations["implementation"].extendsFrom(shadowImplementation)
@@ -45,26 +45,26 @@ repositories {
 }
 
 dependencies {
-    implementation("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
-    implementation("com.comphenix.protocol:ProtocolLib:5.1.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    implementation("com.comphenix.protocol:ProtocolLib:5.2.0-SNAPSHOT")
 
-    shadowImplementation("me.clip:placeholderapi:2.11.4")
+    shadowImplementation("me.clip:placeholderapi:2.11.5")
     shadowImplementation("net.kyori:adventure-api:4.14.0")
-    shadowImplementation("xyz.xenondevs.invui:invui:1.24")
-    shadowImplementation("net.wesjd:anvilgui:1.9.2-SNAPSHOT")
+    shadowImplementation("xyz.xenondevs.invui:invui:1.30")
+    shadowImplementation("net.wesjd:anvilgui:1.9.3-SNAPSHOT")
     shadowImplementation("com.github.jsixface:yamlconfig:1.2")
     shadowImplementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
     shadowImplementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
     shadowImplementation("com.mysql:mysql-connector-j:8.2.0")
     shadowImplementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
-    shadowImplementation("redis.clients:jedis:4.4.3")
+    shadowImplementation("redis.clients:jedis:5.1.2")
     shadowImplementation("com.google.code.gson:gson:2.10.1")
     shadowImplementation("org.bstats:bstats-bukkit:3.0.2")
 
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.58.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.86.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
 tasks {
@@ -135,7 +135,7 @@ tasks {
         dependsOn(shadowJar)
 
         downloadPlugins {
-            url("https://download.luckperms.net/1526/bukkit/loader/LuckPerms-Bukkit-5.4.113.jar")
+            url("https://download.luckperms.net/1539/bukkit/loader/LuckPerms-Bukkit-5.4.126.jar")
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 

@@ -106,10 +106,10 @@ public class I18N {
             return new Translation(null, toTranslate);
         } else if (name != null && (lore == null || lore.isEmpty())) {
             // Valid name, empty lore
-            return new Translation(toTranslate.get(0), new ArrayList<>(Collections.emptyList()));
+            return new Translation(toTranslate.getFirst(), new ArrayList<>(Collections.emptyList()));
         } else {
             // Valid name, valid lore
-            return new Translation(toTranslate.get(0), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
+            return new Translation(toTranslate.getFirst(), new ArrayList<>(toTranslate.subList(1, toTranslate.size())));
         }
     }
 

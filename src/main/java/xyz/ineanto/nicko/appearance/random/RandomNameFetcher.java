@@ -27,7 +27,7 @@ public class RandomNameFetcher {
                 final String[] values = line.split("\n");
                 records.add(Arrays.asList(values));
             }
-            return records.get(new Random().nextInt(records.size() - 1)).get(0);
+            return records.get(new Random().nextInt(records.size() - 1)).getFirst();
         } catch (IOException e) {
             instance.getLogger().severe("Unable to fetch random names.");
             return "Ineanto";

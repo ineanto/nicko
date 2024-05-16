@@ -34,7 +34,7 @@ public class CustomLocaleMigrator implements Migrator {
             try {
                 Files.copy(customLocale.getFile().toPath(), backupFile.toPath());
                 if (customLocale.getFile().delete()) {
-                    customLocale.dumpIntoFile(Locale.ENGLISH);
+                    CustomLocale.dumpIntoFile(Locale.ENGLISH);
                 }
                 instance.getLogger().info("Successfully migrated the custom locale.");
             } catch (IOException e) {

@@ -13,6 +13,7 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
@@ -103,7 +104,7 @@ public class MojangAPI {
 
     private JsonObject getRequestToUrl(String parametrizedUrl) throws ExecutionException, InterruptedException {
         return worker.submit(() -> {
-            final URL url = new URL(parametrizedUrl);
+            final URL url = URI.create(parametrizedUrl).toURL();
             final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setDoInput(true);
             con.setRequestMethod("GET");

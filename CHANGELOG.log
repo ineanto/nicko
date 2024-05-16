@@ -1,3 +1,9 @@
+1.1.8: Update n°12 (XX/XX/24)
+    [FEATURES]
+
+    [OTHER]
+        - Dropped the release candidate status as Nicko is now considered stable.
+
 1.1.7-RC1: Hotfix n°5 (04/05/24)
     [OTHER]
         - Restored download link again on spigotmc.org

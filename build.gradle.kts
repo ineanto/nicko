@@ -1,21 +1,17 @@
 plugins {
     id("java")
-    id("io.github.goooler.shadow") version "8.1.2"
+    id("io.github.goooler.shadow") version "8.1.7"
     id("xyz.jpenilla.run-paper") version "2.2.2"
 }
 
 group = "xyz.ineanto"
-version = "1.1.7-RC1"
-
-val shadowImplementation: Configuration by configurations.creating
-configurations["implementation"].extendsFrom(shadowImplementation)
-configurations["testImplementation"].extendsFrom(shadowImplementation)
+version = "1.1.8"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -45,21 +41,22 @@ repositories {
 }
 
 dependencies {
-    implementation("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-    implementation("com.comphenix.protocol:ProtocolLib:5.2.0-SNAPSHOT")
+    // Nicko
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.2.0-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.11.5")
+    compileOnly("net.kyori:adventure-api:4.14.0")
 
-    shadowImplementation("me.clip:placeholderapi:2.11.5")
-    shadowImplementation("net.kyori:adventure-api:4.14.0")
-    shadowImplementation("xyz.xenondevs.invui:invui:1.30")
-    shadowImplementation("net.wesjd:anvilgui:1.9.3-SNAPSHOT")
-    shadowImplementation("com.github.jsixface:yamlconfig:1.2")
-    shadowImplementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
-    shadowImplementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
-    shadowImplementation("com.mysql:mysql-connector-j:8.2.0")
-    shadowImplementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
-    shadowImplementation("redis.clients:jedis:5.1.2")
-    shadowImplementation("com.google.code.gson:gson:2.10.1")
-    shadowImplementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("xyz.xenondevs.invui:invui:1.30")
+    implementation("net.wesjd:anvilgui:1.9.4-SNAPSHOT")
+    implementation("com.github.jsixface:yamlconfig:1.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.mysql:mysql-connector-j:8.2.0")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
+    implementation("redis.clients:jedis:5.1.2")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 
     testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.86.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
@@ -77,8 +74,6 @@ tasks {
     }
 
     shadowJar {
-        configurations = listOf(shadowImplementation)
-
         // NAMING
         archiveBaseName.set("nicko")
         archiveVersion.set(version.toString())

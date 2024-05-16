@@ -1,7 +1,7 @@
 # Nicko ${version} - Fichier de langue:
 
 # Précise la version de la configuration, ne pas changer.
-version: "1.1.2"
+version: "1.1.3"
 
 error:
   generic: "Une erreur inconnue c'est produite."
@@ -74,6 +74,10 @@ gui:
     name: "Défiler vers le bas"
     lore:
       - "<dark_gray><i>(Impossible de défiler plus bas.)</i></dark_gray>"
+  new_skin:
+    name: "Nouveau skin..."
+  new_name:
+    name: "Nouveau nom..."
   home:
     admin:
       name: "Panel d'administration"

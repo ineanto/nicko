@@ -26,9 +26,11 @@ public class AnvilManager {
     private final AppearanceManager appearanceManager;
     private final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
     private final NickoProfile profile;
+    private final I18N i18n;
 
     public AnvilManager(Player player) {
         this.player = player;
+        this.i18n = new I18N(player);
 
         final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
         this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
@@ -112,7 +114,6 @@ public class AnvilManager {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) { return Collections.singletonList(AnvilGUI.ResponseAction.close()); }
 
-        final I18N i18n = new I18N(player);
         final ActionResult actionResult = appearanceManager.updatePlayer(skinChange, false);
         if (!actionResult.isError()) {
             player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK, true));
@@ -130,8 +131,15 @@ public class AnvilManager {
     private ItemStack getLeftItem(boolean skin) {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        // TODO (Ineanto, 12/28/23): Translate this
-        if (meta != null) meta.displayName(Component.text("New " + (skin ? "skin" : "name") + "..."));
+
+        if (meta != null) {
+            if (skin) {
+                meta.displayName(Component.text(i18n.translate(I18NDict.GUI.NEW_SKIN, false)));
+            } else {
+                meta.displayName(Component.text(i18n.translate(I18NDict.GUI.NEW_NAME, false)));
+            }
+        }
+
         item.setItemMeta(meta);
         return item;
     }

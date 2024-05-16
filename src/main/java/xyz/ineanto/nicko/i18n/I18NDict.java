@@ -76,6 +76,8 @@ public class I18NDict {
         public static final String LOADING = GUI_KEY + "loading";
         public static final String SCROLL_UP = GUI_KEY + "scroll_up";
         public static final String SCROLL_DOWN = GUI_KEY + "scroll_down";
+        public static final String NEW_SKIN = GUI_KEY + "new_skin";
+        public static final String NEW_NAME = GUI_KEY + "new_name";
 
         public static class Titles {
             public static final String TITLE_KEY = GUI_KEY + "title.";

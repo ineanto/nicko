@@ -1,7 +1,7 @@
 # Nicko ${version} - Language File:
 
 # Specifies the configuration version, don't change.
-version: "1.1.2"
+version: "1.1.3"
 
 error:
   generic: "An unknown error occurred."
@@ -73,6 +73,10 @@ gui:
     name: "Scroll down"
     lore:
       - "<dark_gray><i>(You can't scroll any further down.)</i></dark_gray>"
+  new_skin:
+    name: "New skin..."
+  new_name:
+    name: "New name..."
   home:
     admin:
       name: "Administration panel"

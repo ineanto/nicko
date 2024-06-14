@@ -128,7 +128,7 @@ tasks {
 
         downloadPlugins {
             url("https://download.luckperms.net/1539/bukkit/loader/LuckPerms-Bukkit-5.4.126.jar")
-            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBu²ild/artifact/build/libs/ProtocolLib.jar")
+            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
         minecraftVersion("1.20.6")

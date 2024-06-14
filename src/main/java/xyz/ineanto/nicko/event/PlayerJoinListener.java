@@ -61,9 +61,7 @@ public class PlayerJoinListener implements Listener {
                             ));
                 }
             }
-        }, () -> {
-            instance.getLogger().warning("Failed to load data for " + player.getName());
-        });
+        }, () -> instance.getLogger().warning("Failed to load data for " + player.getName()));
 
         for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).toList()) {
             final Optional<NickoProfile> optionalOnlinePlayerProfile = dataStore.getData(online.getUniqueId());

@@ -18,10 +18,7 @@ java {
 repositories {
     mavenCentral()
     mavenLocal()
-    maven {
-        name = "dmulloy2"
-        url = uri("https://repo.dmulloy2.net/repository/public/")
-    }
+    maven { url = uri("https://jitpack.io") }
     maven {
         name = "xenondevs"
         url = uri("https://repo.xenondevs.xyz/releases")
@@ -43,7 +40,7 @@ repositories {
 dependencies {
     // Nicko
     compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.2.0-SNAPSHOT")
+    compileOnly("com.github.dmulloy2:ProtocolLib:master-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
 

@@ -22,24 +22,23 @@ import org.bukkit.World;
 public class WrapperPlayServerRespawn extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.RESPAWN;
 
-    private InternalStructure commonPlayerSpawnInfoStructure;
+    private final InternalStructure commonPlayerSpawnInfoStructure;
 
     public WrapperPlayServerRespawn() {
         super(new PacketContainer(TYPE), TYPE);
         handle.getModifier().writeDefaults();
-        if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            commonPlayerSpawnInfoStructure = handle.getStructures().read(0);
-        }
+        commonPlayerSpawnInfoStructure = handle.getStructures().readSafely(0);
     }
 
     public void setDimension(World value) {
-        if (MinecraftVersion.CONFIG_PHASE_PROTOCOL_UPDATE.atOrAbove()) {
-            // 1.20.2 to 1.20.4
-            writeDimensionToStructure(value, commonPlayerSpawnInfoStructure.getStructures(), commonPlayerSpawnInfoStructure.getWorldKeys());
-        } else if (MinecraftVersion.WILD_UPDATE.atOrAbove()) {
+        if (commonPlayerSpawnInfoStructure == null) {
             // 1.19 to 1.20.1, props to lukalt for helping me figure this out.
             writeDimensionToStructure(value, handle.getStructures(), handle.getWorldKeys());
+            return;
         }
+
+        // 1.20.2 to 1.21
+        writeDimensionToStructure(value, commonPlayerSpawnInfoStructure.getStructures(), commonPlayerSpawnInfoStructure.getWorldKeys());
     }
 
     public void setGameMode(GameMode value) {
@@ -74,10 +73,15 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     }
 
     private void writeDimensionToStructure(World value, StructureModifier<InternalStructure> structures, StructureModifier<World> worldKeys) {
-        final InternalStructure dimensionType = structures.read(0);
-        dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
-        dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
-        structures.writeSafely(0, dimensionType);
+        final InternalStructure dimensionType = structures.readSafely(0);
+
+        if (dimensionType != null) {
+            // 1.20.2 to 1.20.5
+            dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
+            dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
+            structures.writeSafely(0, dimensionType);
+        }
+
         worldKeys.writeSafely(0, value);
     }
 }

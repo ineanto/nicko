@@ -6,9 +6,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
-import com.comphenix.protocol.wrappers.BukkitConverters;
-import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.MinecraftKey;
+import com.comphenix.protocol.wrappers.*;
 import com.google.common.hash.Hashing;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -86,7 +84,11 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
             }
         } else {
             // 1.20.5/6 to 1.21
-            final StructureModifier<World> worldHolder = commonPlayerSpawnInfoStructure.getHolders(MinecraftReflection.getDimensionManager(), BukkitConverters.getDimensionConverter());
+            final StructureModifier<World> worldHolder = commonPlayerSpawnInfoStructure.getHolders(
+                    MinecraftReflection.getDimensionManager(),
+                    Converters.holder(BukkitConverters.getDimensionConverter(),
+                            WrappedRegistry.getDimensionRegistry())
+            );
             worldHolder.writeSafely(0, value);
         }
 

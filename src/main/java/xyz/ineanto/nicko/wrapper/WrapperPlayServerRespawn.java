@@ -4,7 +4,9 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
+import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
+import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.MinecraftKey;
 import com.google.common.hash.Hashing;
@@ -32,6 +34,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
 
     public void setDimension(World value) {
         if (commonPlayerSpawnInfoStructure == null) {
+            System.out.println("cPSIS null");
             // 1.19 to 1.20.1, props to lukalt for helping me figure this out.
             writeDimensionToStructure(value, handle.getStructures(), handle.getWorldKeys());
             return;
@@ -73,13 +76,18 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
     }
 
     private void writeDimensionToStructure(World value, StructureModifier<InternalStructure> structures, StructureModifier<World> worldKeys) {
-        final InternalStructure dimensionType = structures.readSafely(0);
-
-        if (dimensionType != null) {
-            // 1.20.2 to 1.20.5
-            dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
-            dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
-            structures.writeSafely(0, dimensionType);
+        if (MinecraftVersion.TRAILS_AND_TAILS.atOrAbove() && !MinecraftVersion.v1_20_5.atOrAbove()) {
+            final InternalStructure dimensionType = structures.readSafely(0);
+            if (dimensionType != null) {
+                // 1.20.2 to 1.20.5
+                dimensionType.getMinecraftKeys().writeSafely(0, new MinecraftKey("minecraft", "dimension_type"));
+                dimensionType.getMinecraftKeys().writeSafely(1, new MinecraftKey("minecraft", "overworld"));
+                structures.writeSafely(0, dimensionType);
+            }
+        } else {
+            // 1.20.5/6 to 1.21
+            final StructureModifier<World> worldHolder = commonPlayerSpawnInfoStructure.getHolders(MinecraftReflection.getDimensionManager(), BukkitConverters.getDimensionConverter());
+            worldHolder.writeSafely(0, value);
         }
 
         worldKeys.writeSafely(0, value);

@@ -12,7 +12,7 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 
 /**
- * PacketPlayServerRespawn Wrapper class (1.19 to 1.20.4)
+ * PacketPlayServerRespawn Wrapper class (1.19 to 1.21 (one day))
  *
  * @author ineanto, based on work from dmulloy2 and Kristian S. Strangeland
  * <p>

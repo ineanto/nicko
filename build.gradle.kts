@@ -39,13 +39,13 @@ repositories {
 
 dependencies {
     // Nicko
-    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
     compileOnly("com.github.dmulloy2:ProtocolLib:master-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
 
-    implementation("xyz.xenondevs.invui:invui:1.31")
-    implementation("net.wesjd:anvilgui:1.9.4-SNAPSHOT")
+    implementation("xyz.xenondevs.invui:invui:1.35")
+    implementation("net.wesjd:anvilgui:1.10.1-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
@@ -55,7 +55,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.89.0")
+    testImplementation("com.github.MockBukkit:MockBukkit:v3.99.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
@@ -127,10 +127,10 @@ tasks {
         dependsOn(shadowJar)
 
         downloadPlugins {
-            url("https://download.luckperms.net/1539/bukkit/loader/LuckPerms-Bukkit-5.4.126.jar")
+            url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.20.6")
+        minecraftVersion("1.21.1")
     }
 }

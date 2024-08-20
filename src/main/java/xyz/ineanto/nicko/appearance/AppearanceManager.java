@@ -151,7 +151,7 @@ public class AppearanceManager {
         respawn.setGameMode(player.getGameMode());
         respawn.setPreviousGameMode(player.getGameMode());
         respawn.setCopyMetadata(true);
-        respawn.sendPacket(player);
+        //respawn.sendPacket(player);
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.setAllowFlight(wasAllowedToFly);
         player.setFlying(wasFlying);

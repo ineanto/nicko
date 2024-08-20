@@ -64,8 +64,9 @@ public class NickoBukkit extends JavaPlugin {
 
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
 
-        if (!MinecraftVersion.WILD_UPDATE.atOrAbove()) {
+        if (!MinecraftVersion.TRAILS_AND_TAILS.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
+            getLogger().severe("As of version 1.0.7, Nicko only supports the latest two majors Minecraft versions. (Currently 1.20.X-1.21.X)");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);
         }

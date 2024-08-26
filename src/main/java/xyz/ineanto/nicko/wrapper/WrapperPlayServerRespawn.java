@@ -38,7 +38,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         final MinecraftVersion v1_20_5 = new MinecraftVersion(1, 20, 5);
 
         if (!MinecraftVersion.getCurrentVersion().isAtLeast(v1_20_5)) {
-            // 1.20.1 - 1.20.4
+            // 1.20 - 1.20.4
             final StructureModifier<InternalStructure> structureModifier = spawnInfoStructure == null ?
                     handle.getStructures() : spawnInfoStructure.getStructures();
 

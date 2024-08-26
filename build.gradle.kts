@@ -39,7 +39,7 @@ repositories {
 
 dependencies {
     // Nicko
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("com.github.dmulloy2:ProtocolLib:master-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
@@ -128,9 +128,14 @@ tasks {
 
         downloadPlugins {
             url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
-            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+
+            // 1.20 - 1.20.4 testing
+            url("https://github.com/dmulloy2/ProtocolLib/releases/download/5.2.0/ProtocolLib.jar")
+
+            // 1.20.5 - latest testing
+            //url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.21.1")
+        minecraftVersion("1.20.4")
     }
 }

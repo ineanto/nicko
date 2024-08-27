@@ -8,6 +8,10 @@ public class ActionResult {
         return new ActionResult();
     }
 
+    public static ActionResult error() {
+        return new ActionResult(null);
+    }
+
     public static ActionResult error(String errorMessage) {
         return new ActionResult(errorMessage);
     }

@@ -129,7 +129,7 @@ public class AppearanceManager {
                 reset();
                 return ActionResult.error(I18NDict.Error.MOJANG_NAME);
             } catch (InterruptedException e) {
-                return ActionResult.error(I18NDict.Error.GENERIC);
+                return ActionResult.error("Unknown error");
             }
         }
         return ActionResult.ok();

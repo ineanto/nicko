@@ -4,13 +4,10 @@ public class I18NDict {
     public static class Error {
         public static final String ERROR_KEY = "error.";
 
-        public static final String GENERIC = ERROR_KEY + "generic";
         public static final String PERMISSION = ERROR_KEY + "permission";
         public static final String CACHE = ERROR_KEY + "cache";
         public static final String MOJANG_NAME = ERROR_KEY + "mojang_name";
         public static final String MOJANG_SKIN = ERROR_KEY + "mojang_skin";
-        public static final String DATABASE = ERROR_KEY + "database";
-        public static final String JSON = ERROR_KEY + "json";
     }
 
     public static class Event {

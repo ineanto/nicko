@@ -2,7 +2,6 @@ package xyz.ineanto.nicko.storage.mysql;
 
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.i18n.Locale;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.Storage;
@@ -36,7 +35,7 @@ public class MySQLStorage extends Storage {
     @Override
     public ActionResult store(UUID uuid, NickoProfile profile) {
         final Connection connection = getProvider().getConnection();
-        if (connection == null) return ActionResult.error(I18NDict.Error.DATABASE);
+        if (connection == null) return ActionResult.error();
 
         try {
             final PreparedStatement statement = isStored(uuid) ?
@@ -45,7 +44,7 @@ public class MySQLStorage extends Storage {
             return ActionResult.ok();
         } catch (SQLException e) {
             logger.warning("Couldn't send SQL Request: " + e.getMessage());
-            return ActionResult.error(I18NDict.Error.DATABASE);
+            return ActionResult.error();
         }
     }
 
@@ -103,17 +102,17 @@ public class MySQLStorage extends Storage {
     @Override
     public ActionResult delete(UUID uuid) {
         final Connection connection = getProvider().getConnection();
-        if (connection == null) return ActionResult.error(I18NDict.Error.DATABASE);
+        if (connection == null) return ActionResult.error();
 
         try {
             final String sql = "DELETE FROM nicko.DATA WHERE uuid = ?";
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
             int rows = statement.executeUpdate();
-            return (rows == 1 ? ActionResult.ok() : ActionResult.error(I18NDict.Error.DATABASE));
+            return (rows == 1 ? ActionResult.ok() : ActionResult.error());
         } catch (SQLException e) {
             logger.warning("Couldn't delete profile: " + e.getMessage());
-            return ActionResult.error(I18NDict.Error.DATABASE);
+            return ActionResult.error();
         }
     }
 

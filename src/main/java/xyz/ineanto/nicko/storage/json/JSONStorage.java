@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import xyz.ineanto.nicko.NickoBukkit;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.profile.NickoProfile;
-import xyz.ineanto.nicko.i18n.I18NDict;
 import xyz.ineanto.nicko.storage.Storage;
 import xyz.ineanto.nicko.storage.StorageProvider;
 
@@ -42,12 +41,12 @@ public class JSONStorage extends Storage {
                     }
                 } catch (IOException e) {
                     logger.warning("Could not write to file.");
-                    return ActionResult.error(I18NDict.Error.JSON);
+                    return ActionResult.error();
                 }
             }
         } catch (IOException e) {
             logger.warning("Could not create file.");
-            return ActionResult.error(I18NDict.Error.JSON);
+            return ActionResult.error();
         }
 
         return ActionResult.ok();
@@ -81,7 +80,7 @@ public class JSONStorage extends Storage {
         if (file.delete() || !file.exists()) {
             return ActionResult.ok();
         }
-        return ActionResult.error(I18NDict.Error.JSON);
+        return ActionResult.error();
     }
 
     private boolean checkFileExists(File file) throws IOException {

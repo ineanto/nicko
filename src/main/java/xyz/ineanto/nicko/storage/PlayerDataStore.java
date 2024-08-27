@@ -77,12 +77,12 @@ public class PlayerDataStore {
     }
 
     public ActionResult saveData(Player player) {
-        if (storage.isError()) return ActionResult.error(I18NDict.Error.DATABASE);
-        if (cache.isError()) return ActionResult.error(I18NDict.Error.CACHE);
-        if (!cache.isCached(player.getUniqueId())) return ActionResult.error(I18NDict.Error.CACHE);
+        if (storage.isError()) return ActionResult.error();
+        if (cache.isError()) return ActionResult.error();
+        if (!cache.isCached(player.getUniqueId())) return ActionResult.error();
 
         final Optional<NickoProfile> cachedProfile = cache.retrieve(player.getUniqueId());
-        if (cachedProfile.isEmpty()) return ActionResult.error(I18NDict.Error.CACHE);
+        if (cachedProfile.isEmpty()) return ActionResult.error();
 
         cache.delete(player.getUniqueId());
         return storage.store(player.getUniqueId(), cachedProfile.get());

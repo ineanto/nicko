@@ -1,6 +1,10 @@
-package xyz.ineanto.nicko.i18n;
+package xyz.ineanto.nicko.language;
 
-public class I18NDict {
+public class LanguageKey {
+    public static final String PREFIX = "prefix";
+    public static final String WHOOSH = "whoosh";
+    public static final String OOPS = "oops";
+
     public static class Error {
         public static final String ERROR_KEY = "error.";
 

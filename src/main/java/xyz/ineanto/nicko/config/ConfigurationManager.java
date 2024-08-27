@@ -10,10 +10,8 @@ import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Logger;
 
 public class ConfigurationManager {
-    private final Logger logger = Logger.getLogger("ConfigurationManager");
     private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     private final File file;
     private final File backupFile;
@@ -40,7 +38,6 @@ public class ConfigurationManager {
             try {
                 final InputStream input = getClass().getResourceAsStream("/config.yml");
                 if (input != null) {
-                    logger.info("Saved default configuration as config.yml");
                     Files.createDirectories(file.getParentFile().toPath());
                     Files.createFile(file.toPath());
                     Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);

@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import xyz.ineanto.nicko.version.Version;
 
 public class Configuration {
-    public static final Version VERSION = new Version(1, 0, 8);
+    public static final Version VERSION = new Version(1, 0, 9);
     public static final Configuration DEFAULT = new Configuration(VERSION.toString(),
             DefaultDataSources.SQL_EMPTY,
             DefaultDataSources.REDIS_EMPTY,
-            "§6Nicko §8§l| §r",
             false);
 
     private final transient Version versionObject;
@@ -19,21 +18,17 @@ public class Configuration {
     private final SQLDataSourceConfiguration sqlConfiguration;
     @JsonProperty("redis")
     private final DataSourceConfiguration redisConfiguration;
-    @JsonProperty("prefix")
-    private final String prefix;
     @JsonProperty("customLocale")
     private final Boolean customLocale;
 
     public Configuration(@JsonProperty("version") String version,
                          @JsonProperty("sql") SQLDataSourceConfiguration sqlConfiguration,
                          @JsonProperty("redis") DataSourceConfiguration redisConfiguration,
-                         @JsonProperty("prefix") String prefix,
                          @JsonProperty("customLocale") Boolean customLocale) {
         this.version = version;
         this.versionObject = Version.fromString(version);
         this.sqlConfiguration = sqlConfiguration;
         this.redisConfiguration = redisConfiguration;
-        this.prefix = prefix;
         this.customLocale = customLocale;
     }
 
@@ -51,10 +46,6 @@ public class Configuration {
 
     public DataSourceConfiguration getRedisConfiguration() {
         return redisConfiguration;
-    }
-
-    public String getPrefix() {
-        return prefix;
     }
 
     public Boolean isCustomLocale() {

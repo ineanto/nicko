@@ -6,12 +6,12 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.gui.SettingsGUI;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
-import xyz.ineanto.nicko.i18n.Translation;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.language.Language;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.Translation;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.xenondevs.invui.item.ItemProvider;
@@ -28,26 +28,26 @@ import java.util.Optional;
 public class LanguageCyclingItem {
     private final Player player;
     private final ItemProvider[] providers;
-    private final I18N i18n;
+    private final PlayerLanguage playerLanguage;
 
     public LanguageCyclingItem(Player player) {
         this.player = player;
-        this.i18n = new I18N(player);
+        this.playerLanguage = new PlayerLanguage(player);
         this.providers = getItems();
     }
 
     public AbstractItem get() {
-        final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+        final PlayerDataStore dataStore = Nicko.getInstance().getDataStore();
         final Optional<NickoProfile> profile = dataStore.getData(player.getUniqueId());
         if (profile.isPresent()) {
             final NickoProfile nickoProfile = profile.get();
             int localeOrdinal = nickoProfile.getLocale().ordinal();
             return CycleItem.withStateChangeHandler((observer, integer) -> {
                 observer.playSound(player, Sound.UI_BUTTON_CLICK, 1f, 0.707107f); // 0.707107 ~= C
-                nickoProfile.setLocale(Locale.values()[integer]);
+                nickoProfile.setLocale(Language.values()[integer]);
                 player.getOpenInventory().close();
                 if (dataStore.updateCache(player.getUniqueId(), nickoProfile).isError()) {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Settings.ERROR, true));
+                    player.sendMessage(playerLanguage.translate(LanguageKey.Event.Settings.ERROR, true));
                 } else {
                     new SettingsGUI(player).open();
                 }
@@ -57,14 +57,14 @@ public class LanguageCyclingItem {
         return new SimpleItem(ItemProvider.EMPTY);
     }
 
-    private ItemProvider generateItem(Locale locale, List<Locale> locales) {
+    private ItemProvider generateItem(Language language, List<Language> languages) {
         final ItemBuilder builder = new ItemBuilder(Material.OAK_SIGN);
-        final Translation translation = i18n.translateAndReplace(I18NDict.GUI.Settings.LANGUAGE);
-        final Translation cyclingChoicesTranslation = i18n.translateAndReplace(I18NDict.GUI.Settings.CYCLING_CHOICES);
+        final Translation translation = playerLanguage.translateAndReplace(LanguageKey.GUI.Settings.LANGUAGE);
+        final Translation cyclingChoicesTranslation = playerLanguage.translateAndReplace(LanguageKey.GUI.Settings.CYCLING_CHOICES);
 
         builder.setDisplayName(Component.text(translation.name()).content());
-        for (Locale value : locales) {
-            if (locale != value) {
+        for (Language value : languages) {
+            if (language != value) {
                 builder.addLoreLines("§7> " + value.getName());
             } else {
                 builder.addLoreLines("§6§l> §f" + value.getName());
@@ -80,13 +80,13 @@ public class LanguageCyclingItem {
     }
 
     private ItemProvider[] getItems() {
-        final NickoBukkit instance = NickoBukkit.getInstance();
+        final Nicko instance = Nicko.getInstance();
         final ArrayList<ItemProvider> items = new ArrayList<>();
-        final ArrayList<Locale> localesToGenerate = new ArrayList<>();
+        final ArrayList<Language> localesToGenerate = new ArrayList<>();
 
-        Collections.addAll(localesToGenerate, Locale.values());
+        Collections.addAll(localesToGenerate, Language.values());
         if (!instance.getNickoConfig().isCustomLocale()) {
-            localesToGenerate.remove(Locale.CUSTOM);
+            localesToGenerate.remove(Language.CUSTOM);
         }
         localesToGenerate.forEach(locale -> items.add(generateItem(locale, localesToGenerate)));
         return items.toArray(new ItemProvider[]{});

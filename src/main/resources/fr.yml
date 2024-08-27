@@ -3,43 +3,47 @@
 # Précise la version de la configuration, ne pas changer.
 version: "1.1.4"
 
+prefix: "<b><gradient:#01a97c:#8ffd54>NICKO</gradient></b>"
+whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
+oops: "<b><color:#ff4640>OOPS!</color></b>"
+
 error:
-  permission: "§cVous ne possédez pas la permission."
-  invalid_username: "§cLe pseudo n'est pas un pseudo Minecraft valide."
-  mojang_name: "Compte Minecraft inexistant"
-  mojang_skin: "Skin Minecraft invalide"
-  cache: "Erreur du cache"
+  permission: "<gray>Vous n'avez pas la permission de faire cela.<gray>"
+  invalid_username: "<gray>Nom d'utilisateur Minecraft invalide.<gray>"
+  mojang_name: "<gray>Aucun compte Minecraft associé à ce nom d'utilisateur.<gray>"
+  mojang_skin: "<gray>Ce compte Minecraft n'a pas de skin.<gray>"
+  cache: "<gray>Impossible de récupérer les données depuis le cache.<gray>"
 
 event:
   settings:
-    error: "§cImpossible de mettre à jour vos paramètres. §7§o({0})"
+    error: "<gray>Impossible de mettre à jour vos paramètres ! ({0})</gray>"
   appearance:
     set:
-      error: "§cImpossible d''appliquer votre déguisement. §7§o({0})"
-      ok: "§fDéguisement appliqué."
+      error: "<gray>Impossible d''appliquer votre déguisement ! ({0})</gray>"
+      ok: "<gray>Déguisement appliqué avec succès.</gray>"
     restore:
-      error: "§cImpossible d''appliquer votre précédent déguisement. §7§o({0})"
-      ok: "§aVotre précédent déguisement a été appliqué."
+      error: "<gray>Impossible d''appliquer le précédent déguisement ! ({0})</gray>"
+      ok: "<gray>Votre précédent déguisement a été appliqué.<gray>"
     remove:
-      error: "§cImpossible de retirer votre déguisement. Il sera réinitialisé à votre prochaine reconnexion."
-      missing: "§cVous n''avez pas de déguisement."
-      ok: "§fDéguisement retiré."
+      error: "<gray>Impossible de retirer votre déguisement.</gray>"
+      missing: "<gray>Vous n''avez pas de déguisement.</gray>"
+      ok: "<gray>Déguisement retiré.</gray>"
   admin:
     cache:
-      invalidate_cache: "§fCache complet invalidé."
-      invalidate_entry: "§6{0} §fa été invalidé."
+      invalidate_cache: "<gray>Cache complet invalidé.</gray>"
+      invalidate_entry: "<gray>{0} a été invalidé.</gray>"
     check:
-      remove_skin: "§fSkin retiré du joueur."
+      remove_skin: "<gray>Déguisement retiré au joueur.</gray>"
 
 gui:
   title:
     home: "Nicko - Accueil"
-    settings: "Nicko > Paramètres"
-    admin: "Nicko > Administration"
-    check: "Nicko > Admin... > Vérification"
-    confirm: "... > Confirmer l''action"
-    cache: "Nicko > Admin... > Cache"
-    invalidate_skin: "... > Cache > Invalider"
+    settings: "Paramètres"
+    admin: "Administration"
+    check: "Gestion des Joueurs"
+    confirm: "Êtes-vous sûr ?"
+    cache: "Gestion du Cache"
+    invalidate_skin: "Purge du cache..."
 
   exit:
     name: "Quitter"
@@ -50,7 +54,7 @@ gui:
     lore:
       - "<gray><i>Ce boutton est désactivé.</i></gray>"
   error:
-    name: "Erreur!"
+    name: "Erreur !"
     lore:
       - "<gray>La texture de l'objet n'a pas chargé</gray>"
       - "<gray>correctement mais il fonctionne encore.</gray>"
@@ -121,10 +125,10 @@ gui:
           - "Nb. de skin dans le cache: <aqua>{1}</aqua>"
           - "<dark_gray><i>Le cache est vidé toutes les 24 heures.</i></dark_gray>"
       invalidate_cache:
-        name: "Invalider le cache"
+        name: "Purger le cache"
         lore:
           - "<red><i>DÉCONSEILLÉ</i></red>"
-          - "<gray>Invalide l'entièreté du cache des skin.</gray>"
+          - "<gray>Purge l'entièreté du cache des skin.</gray>"
           - "<gray>Ne retire pas les déguisements des joueurs.</gray>"
       invalidate_skin:
         name: "Invalider un skin..."

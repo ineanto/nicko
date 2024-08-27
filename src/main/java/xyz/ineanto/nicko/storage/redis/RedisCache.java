@@ -6,7 +6,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.Cache;
 import xyz.ineanto.nicko.storage.CacheProvider;
@@ -40,7 +40,7 @@ public class RedisCache extends Cache {
             jedis.set("nicko:" + uuid.toString(), gson.toJson(profile));
             return ActionResult.ok();
         } catch (JedisException exception) {
-            return ActionResult.error(I18NDict.Error.CACHE);
+            return ActionResult.error(LanguageKey.Error.CACHE);
         }
     }
 
@@ -72,7 +72,7 @@ public class RedisCache extends Cache {
             jedis.del("nicko:" + uuid.toString());
             return ActionResult.ok();
         } catch (JedisException exception) {
-            return ActionResult.error(I18NDict.Error.CACHE);
+            return ActionResult.error(LanguageKey.Error.CACHE);
         }
     }
 }

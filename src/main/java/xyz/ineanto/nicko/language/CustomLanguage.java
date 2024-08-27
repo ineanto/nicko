@@ -1,40 +1,41 @@
-package xyz.ineanto.nicko.i18n;
+package xyz.ineanto.nicko.language;
 
 import com.github.jsixface.YamlConfig;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.version.Version;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.logging.Logger;
 
-public class CustomLocale {
-    private static final Logger logger = Logger.getLogger("CustomLocale");
-    private static final File directory = new File(NickoBukkit.getInstance().getDataFolder(), "/locale/");
+public class CustomLanguage {
+    private static final File directory = new File(Nicko.getInstance().getDataFolder(), "/locale/");
     private static final File file = new File(directory, "locale.yml");
 
     private final String version;
     private final Version versionObject;
     private final YamlConfig yamlFile;
 
-    public CustomLocale() throws IOException {
+    public CustomLanguage() throws IOException {
         this.yamlFile = new YamlConfig(new FileInputStream(file));
         this.version = yamlFile.getString("version");
         this.versionObject = Version.fromString(version);
     }
 
-    public static void dumpIntoFile(Locale locale) throws IOException {
-        if (locale == Locale.CUSTOM) return;
+    public static void dumpIntoFile(Language language) throws IOException {
+        if (language == Language.CUSTOM) return;
         if (file.exists()) return;
         if (!directory.exists()) directory.mkdirs();
 
-        final String localeFileName = locale.getCode() + ".yml";
+        final String localeFileName = language.getCode() + ".yml";
         try {
-            final InputStream resource = NickoBukkit.getInstance().getResource(localeFileName);
+            final InputStream resource = Nicko.getInstance().getResource(localeFileName);
             Files.copy(resource, file.toPath());
             resource.close();
         } catch (IOException e) {
-            logger.severe("Unable to dump Locale: " + locale.getCode() + "!");
+            Nicko.getInstance().getLogger().severe("Unable to dump Locale: " + language.getCode() + "!");
         }
     }
 

@@ -5,11 +5,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.language.Language;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,14 +18,14 @@ public class TranslationTest {
     public static void setup() {
         final Configuration config = Configuration.DEFAULT;
         MockBukkit.mock();
-        MockBukkit.load(NickoBukkit.class, config);
+        MockBukkit.load(Nicko.class, config);
     }
 
     @Test
     @DisplayName("Translate Line With Replacement")
     public void translateItemTranslationWithoutLore() {
-        final I18N i18n = new I18N(Locale.FRENCH);
-        final String translation = i18n.translate(I18NDict.Event.Settings.ERROR, false, "Test");
+        final PlayerLanguage playerLanguage = new PlayerLanguage(Language.FRENCH);
+        final String translation = playerLanguage.translate(LanguageKey.Event.Settings.ERROR, false, "Test");
         assertEquals("§cImpossible de mettre à jour vos paramètres. §7§o(Test)", translation);
     }
 

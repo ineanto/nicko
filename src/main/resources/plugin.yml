@@ -1,5 +1,5 @@
 name: Nicko
-main: xyz.ineanto.nicko.NickoBukkit
+main: xyz.ineanto.nicko.Nicko
 version: ${version}
 author: Ineanto
 description: "The feature packed, next generation disguise plugin for Minecraft."

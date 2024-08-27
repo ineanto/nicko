@@ -130,12 +130,12 @@ tasks {
             url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
 
             // 1.20 - 1.20.4 testing
-            url("https://github.com/dmulloy2/ProtocolLib/releases/download/5.2.0/ProtocolLib.jar")
+            //url("https://github.com/dmulloy2/ProtocolLib/releases/download/5.2.0/ProtocolLib.jar")
 
             // 1.20.5 - latest testing
-            //url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.20.4")
+        minecraftVersion("1.21.1")
     }
 }

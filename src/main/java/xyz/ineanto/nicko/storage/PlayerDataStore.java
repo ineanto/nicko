@@ -3,7 +3,7 @@ package xyz.ineanto.nicko.storage;
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.ineanto.nicko.mojang.MojangUtils;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -34,7 +34,7 @@ public class PlayerDataStore {
 
     public ActionResult updateCache(UUID uuid, NickoProfile profile) {
         if (storage.isError() || cache.isError()) {
-            return ActionResult.error(I18NDict.Error.CACHE);
+            return ActionResult.error(LanguageKey.Error.CACHE);
         }
 
         getCache().cache(uuid, profile);

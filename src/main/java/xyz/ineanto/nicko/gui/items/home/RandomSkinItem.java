@@ -2,11 +2,11 @@ package xyz.ineanto.nicko.gui.items.home;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
@@ -14,19 +14,19 @@ import xyz.xenondevs.invui.item.impl.SuppliedItem;
 import java.util.Optional;
 
 public class RandomSkinItem {
-    private final I18N i18n;
-    private final NickoBukkit instance;
+    private final PlayerLanguage playerLanguage;
+    private final Nicko instance;
 
     public RandomSkinItem(Player player) {
-        this.instance = NickoBukkit.getInstance();
-        this.i18n = new I18N(player);
+        this.instance = Nicko.getInstance();
+        this.playerLanguage = new PlayerLanguage(player);
     }
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
             final SkullBuilder.HeadTexture texture = new SkullBuilder.HeadTexture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzgzMTEzOGMyMDYxMWQzMDJjNDIzZmEzMjM3MWE3NDNkMTc0MzdhMTg5NzNjMzUxOTczNDQ3MGE3YWJiNCJ9fX0=");
             final SkullBuilder builder = new SkullBuilder(texture);
-            return i18n.translateItem(builder, I18NDict.GUI.Home.RANDOM_SKIN);
+            return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.RANDOM_SKIN);
         }, (event) -> {
             final Player player = event.getPlayer();
             final ClickType clickType = event.getClickType();
@@ -42,12 +42,12 @@ public class RandomSkinItem {
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
                     final ActionResult result = appearanceManager.updatePlayer(true, false);
                     if (!result.isError()) {
-                        player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK, true));
+                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
                     } else {
-                        player.sendMessage(i18n.translate(
-                                        I18NDict.Event.Appearance.Set.ERROR,
+                        player.sendMessage(playerLanguage.translate(
+                                        LanguageKey.Event.Appearance.Set.ERROR,
                                         true,
-                                        i18n.translate(result.getErrorKey(), false)
+                                        playerLanguage.translate(result.getErrorKey(), false)
                                 )
                         );
                     }

@@ -6,13 +6,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.gui.ChoiceGUI;
 import xyz.ineanto.nicko.gui.InvalidateSkinGUI;
 import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
@@ -25,22 +25,22 @@ import java.util.UUID;
 public class CacheEntryItem extends AsyncItem {
     private final String name;
     private final String uuid;
-    private final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();
+    private final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
 
-    public CacheEntryItem(I18N i18n, String uuid) {
+    public CacheEntryItem(PlayerLanguage playerLanguage, String uuid) {
         super(new ItemBuilder(Material.PAINTING)
                         .setDisplayName(
-                                Component.text(i18n.translate(I18NDict.GUI.LOADING, false)).content()
+                                Component.text(playerLanguage.translate(LanguageKey.GUI.LOADING, false)).content()
                         ),
                 () -> {
                     final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
                     final UUID uuidObject = UUID.fromString(dashedUuid);
                     try {
                         final SkullBuilder skull = new SkullBuilder(uuidObject);
-                        return i18n.translateItem(skull, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
+                        return playerLanguage.translateItem(skull, LanguageKey.GUI.Admin.Cache.ENTRY, Nicko.getInstance().getMojangAPI().getUUIDName(uuid));
                     } catch (MojangApiUtils.MojangApiException | IOException e) {
-                        NickoBukkit.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + uuid + ")! (GUI/Cache/Entry)");
-                        return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.Cache.ENTRY, NickoBukkit.getInstance().getMojangAPI().getUUIDName(uuid));
+                        Nicko.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + uuid + ")! (GUI/Cache/Entry)");
+                        return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Admin.Cache.ENTRY, Nicko.getInstance().getMojangAPI().getUUIDName(uuid));
                     }
                 });
         this.uuid = uuid;
@@ -54,8 +54,8 @@ public class CacheEntryItem extends AsyncItem {
             new ChoiceGUI(player, new ChoiceCallback() {
                 @Override
                 public void onConfirm() {
-                    final I18N i18n = new I18N(player);
-                    player.sendMessage(i18n.translate(I18NDict.Event.Admin.Cache.INVALIDATE_ENTRY, true, name));
+                    final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+                    player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Admin.Cache.INVALIDATE_ENTRY, name));
                     mojangAPI.eraseFromCache(uuid);
                 }
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
 
@@ -16,17 +16,13 @@ public class ConfigurationVersionTest {
     public static void setup() {
         MockBukkit.mock();
         final Configuration configuration = Configuration.DEFAULT;
-        MockBukkit.load(NickoBukkit.class, configuration);
+        MockBukkit.load(Nicko.class, configuration);
     }
 
     @Test
     @DisplayName("Compare configuration version")
     public void compareConfigurationVersion() {
-        final Configuration configuration = new Configuration(Configuration.VERSION.toString(),
-                DefaultDataSources.SQL_EMPTY,
-                DefaultDataSources.REDIS_EMPTY,
-                "",
-                false);
+        final Configuration configuration = Configuration.DEFAULT;
         assertEquals(configuration.getVersionObject().compareTo(Configuration.VERSION), 0);
     }
 
@@ -36,7 +32,6 @@ public class ConfigurationVersionTest {
         final Configuration configuration = new Configuration("24.1.0",
                 DefaultDataSources.SQL_EMPTY,
                 DefaultDataSources.REDIS_EMPTY,
-                "",
                 false);
         assertEquals(configuration.getVersionObject().compareTo(Configuration.VERSION), 1);
     }
@@ -47,7 +42,6 @@ public class ConfigurationVersionTest {
         final Configuration configuration = new Configuration("0.23.3",
                 DefaultDataSources.SQL_EMPTY,
                 DefaultDataSources.REDIS_EMPTY,
-                "",
                 false);
         assertEquals(configuration.getVersionObject().compareTo(Configuration.VERSION), -1);
     }
@@ -58,7 +52,6 @@ public class ConfigurationVersionTest {
         final Configuration configuration = new Configuration(null,
                 DefaultDataSources.SQL_EMPTY,
                 DefaultDataSources.REDIS_EMPTY,
-                "",
                 false);
         assertEquals(configuration.getVersionObject().compareTo(Configuration.VERSION), -1);
     }

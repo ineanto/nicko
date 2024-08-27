@@ -1,26 +1,26 @@
 package xyz.ineanto.nicko.profile;
 
 import org.bukkit.entity.Player;
-import xyz.ineanto.nicko.NickoBukkit;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class NickoProfile implements Cloneable {
-    public static final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
-    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Locale.ENGLISH, true);
+    public static final PlayerDataStore dataStore = Nicko.getInstance().getDataStore();
+    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Language.ENGLISH, true);
 
     private String name;
     private String skin;
-    private Locale locale;
+    private Language language;
     private boolean randomSkin;
 
-    public NickoProfile(String name, String skin, Locale locale, boolean randomSkin) {
+    public NickoProfile(String name, String skin, Language language, boolean randomSkin) {
         this.name = name;
         this.skin = skin;
-        this.locale = locale;
+        this.language = language;
         this.randomSkin = randomSkin;
     }
 
@@ -52,12 +52,12 @@ public class NickoProfile implements Cloneable {
         this.skin = skin;
     }
 
-    public Locale getLocale() {
-        return locale;
+    public Language getLocale() {
+        return language;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLocale(Language language) {
+        this.language = language;
     }
 
     public boolean isRandomSkin() {
@@ -73,7 +73,7 @@ public class NickoProfile implements Cloneable {
         return "NickoProfile{" +
                "name='" + name + '\'' +
                ", skin='" + skin + '\'' +
-               ", locale=" + locale +
+               ", locale=" + language +
                ", randomSkin=" + randomSkin +
                '}';
     }

@@ -5,8 +5,8 @@ import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.admin.ManageCacheItem;
 import xyz.ineanto.nicko.gui.items.admin.ManagePlayerItem;
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 import xyz.xenondevs.invui.window.Window;
@@ -17,22 +17,22 @@ public class AdminGUI {
     private final String title;
 
     public AdminGUI(Player player) {
-        final I18N i18n = new I18N(player);
-        this.title = i18n.translate(I18NDict.GUI.Titles.ADMIN, false);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.ADMIN, false);
 
         final HomeGUI parent = new HomeGUI(player);
         final GoBackItem backItem = new GoBackItem(player);
-        final ManagePlayerItem managePlayerItem = new ManagePlayerItem(i18n, player);
+        final ManagePlayerItem managePlayerItem = new ManagePlayerItem(playerLanguage, player);
 
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # S C X # # #",
+                        "# # # S C U # # #",
                         "B # # # # # # # #"
                 )
-                .addIngredient('S', new ManageCacheItem(i18n))
+                .addIngredient('S', new ManageCacheItem(playerLanguage))
                 .addIngredient('C', managePlayerItem.get())
-                .addIngredient('U', new SimpleItem(ItemDefaults.getUnavailableItem(i18n)))
+                .addIngredient('U', new SimpleItem(ItemDefaults.getUnavailableItem(playerLanguage)))
                 .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;

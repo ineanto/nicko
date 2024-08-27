@@ -1,6 +1,6 @@
 package xyz.ineanto.nicko.appearance.random;
 
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomNameFetcher {
-    private final NickoBukkit instance;
+    private final Nicko instance;
 
-    public RandomNameFetcher(NickoBukkit instance) {
+    public RandomNameFetcher(Nicko instance) {
         this.instance = instance;
     }
 

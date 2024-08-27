@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.gui.items.common.choice.CancelItem;
 import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.ineanto.nicko.gui.items.common.choice.ConfirmItem;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
@@ -18,11 +18,11 @@ public class ChoiceGUI {
     private final String title;
 
     public ChoiceGUI(Player player, ChoiceCallback callback) {
-        final I18N i18n = new I18N(player);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
         final ConfirmItem confirmItem = new ConfirmItem(player, callback);
         final CancelItem cancelItem = new CancelItem(player, callback);
 
-        this.title = i18n.translate(I18NDict.GUI.Titles.CONFIRM, false);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.CONFIRM, false);
         this.gui = Gui.normal()
                 .setStructure(
                         "@ @ @ @ % & & & &",
@@ -31,7 +31,7 @@ public class ChoiceGUI {
                 )
                 .addIngredient('@', confirmItem.get())
                 .addIngredient('&', cancelItem.get())
-                .addIngredient('I', new SimpleItem(i18n.translateItem(new ItemBuilder(Material.PAPER), I18NDict.GUI.Choice.CHOOSE)))
+                .addIngredient('I', new SimpleItem(playerLanguage.translateItem(new ItemBuilder(Material.PAPER), LanguageKey.GUI.Choice.CHOOSE)))
                 .build();
         this.player = player;
     }

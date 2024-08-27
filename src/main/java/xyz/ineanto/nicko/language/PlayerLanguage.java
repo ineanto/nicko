@@ -1,11 +1,11 @@
-package xyz.ineanto.nicko.i18n;
+package xyz.ineanto.nicko.language;
 
 import com.github.jsixface.YamlConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 
@@ -16,22 +16,22 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class I18N {
+public class PlayerLanguage {
     private final MessageFormat formatter = new MessageFormat("");
     private final Logger logger = Logger.getLogger("I18N");
-    private final NickoBukkit instance = NickoBukkit.getInstance();
+    private final Nicko instance = Nicko.getInstance();
     private final Pattern replacementPattern = Pattern.compile("(?ms)\\{\\d+}");
     private final YamlConfig yamlConfig;
-    private final Locale playerLocale;
+    private final Language playerLanguage;
 
-    public I18N(Player player) {
+    public PlayerLanguage(Player player) {
         final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
-        this.playerLocale = optionalProfile.map(NickoProfile::getLocale).orElse(Locale.ENGLISH);
+        this.playerLanguage = optionalProfile.map(NickoProfile::getLocale).orElse(Language.ENGLISH);
         this.yamlConfig = getYamlConfig();
     }
 
-    public I18N(Locale locale) {
-        this.playerLocale = locale;
+    public PlayerLanguage(Language language) {
+        this.playerLanguage = language;
         this.yamlConfig = getYamlConfig();
     }
 
@@ -60,7 +60,7 @@ public class I18N {
         final ArrayList<String> lore = readList(loreKey);
 
         if (name == null && lore == null) {
-            logger.warning(nameKey + " doesn't exists! Is your language file outdated?");
+            Nicko.getInstance().getLogger().warning(nameKey + " doesn't exists! Is your language file outdated?");
             return new Translation(nameKey, new ArrayList<>(List.of(loreKey)));
         }
 
@@ -92,7 +92,7 @@ public class I18N {
 
             // If it does, replace the content with the args at position replacementIndex
             if (replacementIndex < args.length && args[replacementIndex] != null) {
-                // Replace with the corresponding varargs index
+                // Replace it with the corresponding varargs index
                 toTranslate.set(lineIndex, currentLine.replace("{" + replacementIndex + "}", args[replacementIndex].toString()));
                 replacementIndex++;
             }
@@ -115,11 +115,34 @@ public class I18N {
 
     public String translate(String key, boolean prefix, Object... arguments) {
         final String translation = readString(key);
+
         try {
             formatter.applyPattern(translation);
-            return (prefix ? instance.getNickoConfig().getPrefix() : "") + formatter.format(arguments);
+            return (prefix ? getPrefix() + " " : "") + formatter.format(arguments);
         } catch (Exception e) {
-            return (prefix ? instance.getNickoConfig().getPrefix() : "") + key;
+            return (prefix ? getPrefix() + " " : "") + key;
+        }
+    }
+
+    public String translateWithWhoosh(String key, Object... arguments) {
+        final String translation = readStringWithMiniMessage(key);
+
+        try {
+            formatter.applyPattern(translation);
+            return getWhoosh() + " " + formatter.format(arguments);
+        } catch (Exception e) {
+            return getWhoosh() + " " + key;
+        }
+    }
+
+    public String translateWithOops(String key, Object... arguments) {
+        final String translation = readStringWithMiniMessage(key);
+
+        try {
+            formatter.applyPattern(translation);
+            return getOops() + " " + formatter.format(arguments);
+        } catch (Exception e) {
+            return getOops() + " " + key;
         }
     }
 
@@ -127,15 +150,31 @@ public class I18N {
         return yamlConfig.getString(key);
     }
 
+    private String readStringWithMiniMessage(String key) {
+        return LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize(readString(key)));
+    }
+
     private ArrayList<String> readList(String key) {
         return yamlConfig.getStringList(key);
     }
 
+    private String getPrefix() {
+        return readStringWithMiniMessage(LanguageKey.PREFIX);
+    }
+
+    private String getWhoosh() {
+        return readStringWithMiniMessage(LanguageKey.WHOOSH);
+    }
+
+    private String getOops() {
+        return readStringWithMiniMessage(LanguageKey.OOPS);
+    }
+
     private YamlConfig getYamlConfig() {
-        if (playerLocale == Locale.CUSTOM) {
+        if (playerLanguage == Language.CUSTOM) {
             return instance.getCustomLocale().getYamlFile();
         } else {
-            final InputStream resource = instance.getResource(playerLocale.getCode() + ".yml");
+            final InputStream resource = instance.getResource(playerLanguage.getCode() + ".yml");
             return new YamlConfig(resource);
         }
     }

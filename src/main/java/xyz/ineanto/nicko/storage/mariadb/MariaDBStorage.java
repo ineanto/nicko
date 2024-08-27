@@ -2,7 +2,7 @@ package xyz.ineanto.nicko.storage.mariadb;
 
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.Storage;
 
@@ -91,7 +91,7 @@ public class MariaDBStorage extends Storage {
                 bungeecord = resultSet.getBoolean("bungeecord");
             }
 
-            final NickoProfile profile = new NickoProfile(name, skin, Locale.fromCode(locale), bungeecord);
+            final NickoProfile profile = new NickoProfile(name, skin, Language.fromCode(locale), bungeecord);
             return Optional.of(profile);
         } catch (SQLException e) {
             logger.warning("Couldn't fetch profile: " + e.getMessage());

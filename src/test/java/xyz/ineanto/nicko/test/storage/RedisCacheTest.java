@@ -4,7 +4,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.*;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DataSourceConfiguration;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RedisCacheTest {
-    private static NickoBukkit plugin;
+    private static Nicko plugin;
     private static PlayerMock player;
 
     @BeforeAll
@@ -28,10 +28,9 @@ public class RedisCacheTest {
                 "",
                 DefaultDataSources.SQL_EMPTY,
                 new DataSourceConfiguration(true, "127.0.0.1", 6379, "", ""),
-                "",
                 false);
         final ServerMock server = MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        plugin = MockBukkit.load(Nicko.class, config);
         player = server.addPlayer();
         assertInstanceOf(RedisCacheProvider.class, plugin.getDataStore().getCache().getProvider());
     }

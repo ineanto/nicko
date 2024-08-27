@@ -2,7 +2,7 @@ package xyz.ineanto.nicko.storage.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.Storage;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class JSONStorage extends Storage {
     private final Logger logger = Logger.getLogger("JSONStorage");
     private final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-    private final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+    private final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
 
     private JSONStorageProvider provider;
 
@@ -54,14 +54,14 @@ public class JSONStorage extends Storage {
 
     @Override
     public boolean isStored(UUID uuid) {
-        final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         return file.exists();
     }
 
     @Override
     public Optional<NickoProfile> retrieve(UUID uuid) {
-        final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         try (FileReader fileReader = new FileReader(file)) {
             try (BufferedReader reader = new BufferedReader(fileReader)) {
@@ -75,7 +75,7 @@ public class JSONStorage extends Storage {
 
     @Override
     public ActionResult delete(UUID uuid) {
-        final File directory = new File(NickoBukkit.getInstance().getDataFolder() + "/players/");
+        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         if (file.delete() || !file.exists()) {
             return ActionResult.ok();

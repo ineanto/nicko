@@ -7,12 +7,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.mojang.MojangUtils;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -24,13 +24,13 @@ import java.util.Optional;
 public class AnvilManager {
     private final Player player;
     private final AppearanceManager appearanceManager;
-    private final PlayerDataStore dataStore = NickoBukkit.getInstance().getDataStore();
+    private final PlayerDataStore dataStore = Nicko.getInstance().getDataStore();
     private final NickoProfile profile;
-    private final I18N i18n;
+    private final PlayerLanguage playerLanguage;
 
     public AnvilManager(Player player) {
         this.player = player;
-        this.i18n = new I18N(player);
+        this.playerLanguage = new PlayerLanguage(player);
 
         final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
         this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
@@ -51,7 +51,7 @@ public class AnvilManager {
 
     private AnvilGUI.Builder getNameThenSkinAnvil() {
         return new AnvilGUI.Builder()
-                .plugin(NickoBukkit.getInstance())
+                .plugin(Nicko.getInstance())
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -71,7 +71,7 @@ public class AnvilManager {
 
     private AnvilGUI.Builder getNameAnvil() {
         return new AnvilGUI.Builder()
-                .plugin(NickoBukkit.getInstance())
+                .plugin(Nicko.getInstance())
                 .itemLeft(getLeftItem(false))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -91,7 +91,7 @@ public class AnvilManager {
 
     private AnvilGUI.Builder getSkinAnvil() {
         return new AnvilGUI.Builder()
-                .plugin(NickoBukkit.getInstance())
+                .plugin(Nicko.getInstance())
                 .itemLeft(getLeftItem(true))
                 .interactableSlots(AnvilGUI.Slot.OUTPUT)
                 .onClick((slot, snapshot) -> {
@@ -116,13 +116,13 @@ public class AnvilManager {
 
         final ActionResult actionResult = appearanceManager.updatePlayer(skinChange, false);
         if (!actionResult.isError()) {
-            player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Set.OK, true));
+            player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
         } else {
             player.sendMessage(
-                    i18n.translate(
-                            I18NDict.Event.Appearance.Set.ERROR,
+                    playerLanguage.translate(
+                            LanguageKey.Event.Appearance.Set.ERROR,
                             true,
-                            i18n.translate(actionResult.getErrorKey(), false)
+                            playerLanguage.translate(actionResult.getErrorKey(), false)
                     ));
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
@@ -134,9 +134,9 @@ public class AnvilManager {
 
         if (meta != null) {
             if (skin) {
-                meta.displayName(Component.text(i18n.translate(I18NDict.GUI.NEW_SKIN, false)));
+                meta.displayName(Component.text(playerLanguage.translate(LanguageKey.GUI.NEW_SKIN, false)));
             } else {
-                meta.displayName(Component.text(i18n.translate(I18NDict.GUI.NEW_NAME, false)));
+                meta.displayName(Component.text(playerLanguage.translate(LanguageKey.GUI.NEW_NAME, false)));
             }
         }
 

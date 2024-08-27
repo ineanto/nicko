@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.mojang.MojangUtils;
@@ -13,13 +13,13 @@ import xyz.ineanto.nicko.mojang.MojangUtils;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RandomNameTest {
-    private static NickoBukkit plugin;
+    private static Nicko plugin;
 
     @BeforeAll
     public static void setup() {
         final Configuration config = Configuration.DEFAULT;
         MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        plugin = MockBukkit.load(Nicko.class, config);
     }
 
     @Test

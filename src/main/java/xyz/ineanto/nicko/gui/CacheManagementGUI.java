@@ -5,8 +5,8 @@ import xyz.ineanto.nicko.gui.items.admin.cache.CacheStatisticsItem;
 import xyz.ineanto.nicko.gui.items.admin.cache.InvalidateCacheItem;
 import xyz.ineanto.nicko.gui.items.admin.cache.InvalidateSkinItem;
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
@@ -16,8 +16,8 @@ public class CacheManagementGUI {
     private final String title;
 
     public CacheManagementGUI(Player player) {
-        final I18N i18n = new I18N(player);
-        this.title = i18n.translate(I18NDict.GUI.Titles.CACHE, false);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.CACHE, false);
 
         final AdminGUI parent = new AdminGUI(player);
         final GoBackItem backItem = new GoBackItem(player);

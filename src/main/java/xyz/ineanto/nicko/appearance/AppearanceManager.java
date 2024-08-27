@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import xyz.ineanto.nicko.NickoBukkit;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.ineanto.nicko.mojang.MojangSkin;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 public class AppearanceManager {
-    private final NickoBukkit instance = NickoBukkit.getInstance();
+    private final Nicko instance = Nicko.getInstance();
     private final PlayerDataStore dataStore = instance.getDataStore();
     private final PlayerNameStore nameStore = instance.getNameStore();
 
@@ -105,7 +105,7 @@ public class AppearanceManager {
         if (skinChange) {
             Optional<MojangSkin> skin;
             try {
-                final MojangAPI mojangAPI = NickoBukkit.getInstance().getMojangAPI();
+                final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
                 final Optional<String> uuid = mojangAPI.getUUID(profile.getSkin());
                 if (uuid.isPresent()) {
                     skin = reset ? mojangAPI.getSkinWithoutCaching(uuid.get()) : mojangAPI.getSkin(uuid.get());
@@ -116,18 +116,18 @@ public class AppearanceManager {
                         properties.put("textures", new WrappedSignedProperty("textures", skinResult.value(), skinResult.signature()));
                     } else {
                         reset();
-                        return ActionResult.error(I18NDict.Error.MOJANG_SKIN);
+                        return ActionResult.error(LanguageKey.Error.MOJANG_SKIN);
                     }
                 } else {
                     reset();
-                    return ActionResult.error(I18NDict.Error.MOJANG_NAME);
+                    return ActionResult.error(LanguageKey.Error.MOJANG_NAME);
                 }
                 return ActionResult.ok();
             } catch (ExecutionException e) {
-                return ActionResult.error(I18NDict.Error.CACHE);
+                return ActionResult.error(LanguageKey.Error.CACHE);
             } catch (IOException e) {
                 reset();
-                return ActionResult.error(I18NDict.Error.MOJANG_NAME);
+                return ActionResult.error(LanguageKey.Error.MOJANG_NAME);
             } catch (InterruptedException e) {
                 return ActionResult.error("Unknown error");
             }

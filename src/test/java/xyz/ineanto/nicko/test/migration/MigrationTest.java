@@ -4,19 +4,22 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
-import xyz.ineanto.nicko.i18n.CustomLocale;
+import xyz.ineanto.nicko.language.CustomLanguage;
 import xyz.ineanto.nicko.migration.CustomLocaleMigrator;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MigrationTest {
-    private static NickoBukkit plugin;
+    private static Nicko plugin;
 
     private static File folder;
     private static File localeFile;
@@ -27,9 +30,8 @@ public class MigrationTest {
         final Configuration configuration = new Configuration(Configuration.VERSION.toString(),
                 DefaultDataSources.SQL_EMPTY,
                 DefaultDataSources.REDIS_EMPTY,
-                "§6Nicko §8§l| §r",
                 true);
-        plugin = MockBukkit.load(NickoBukkit.class, configuration);
+        plugin = MockBukkit.load(Nicko.class, configuration);
         folder = new File(plugin.getDataFolder(), "/locale/");
         localeFile = new File(folder, "locale.yml");
         folder.mkdirs();
@@ -40,26 +42,26 @@ public class MigrationTest {
     public void testLanguageFileMigration() throws IOException {
         final String content = """
                 # Nicko - Language File:
-                                 
+                
                 # hello I'm the invalid version
                 version: "1.0.0"
-                 """;
+                """;
 
         BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(localeFile));
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
 
         // Get wrong locale
-        final CustomLocale customLocaleBeforeMigration = new CustomLocale();
-        assertEquals(customLocaleBeforeMigration.getVersion(), "1.0.0");
+        final CustomLanguage customLanguageBeforeMigration = new CustomLanguage();
+        assertEquals(customLanguageBeforeMigration.getVersion(), "1.0.0");
 
         // Migrate the wrong locale to the correct one
-        final CustomLocaleMigrator localeMigrator = new CustomLocaleMigrator(plugin, customLocaleBeforeMigration);
+        final CustomLocaleMigrator localeMigrator = new CustomLocaleMigrator(plugin, customLanguageBeforeMigration);
         localeMigrator.migrate();
 
         // Get the migrated locale
-        final CustomLocale customLocaleMigrated = new CustomLocale();
-        assertEquals(customLocaleMigrated.getVersion(), "1.1.0");
+        final CustomLanguage customLanguageMigrated = new CustomLanguage();
+        assertEquals(customLanguageMigrated.getVersion(), "1.1.0");
     }
 
     @AfterAll

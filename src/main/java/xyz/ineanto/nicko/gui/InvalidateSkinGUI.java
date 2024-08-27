@@ -2,14 +2,14 @@ package xyz.ineanto.nicko.gui;
 
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollUpItem;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.mojang.MojangSkin;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.gui.ScrollGui;
 import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.gui.items.admin.cache.CacheEntryItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollDownItem;
 import org.bukkit.entity.Player;
@@ -27,22 +27,22 @@ public class InvalidateSkinGUI {
     private final String title;
 
     public InvalidateSkinGUI(Player player) {
-        final I18N i18n = new I18N(player);
-        this.title = i18n.translate(I18NDict.GUI.Titles.INVALIDATE_SKIN, false);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.INVALIDATE_SKIN, false);
 
-        final ConcurrentMap<String, Optional<MojangSkin>> skins = NickoBukkit.getInstance().getMojangAPI().getSkinCache().asMap();
+        final ConcurrentMap<String, Optional<MojangSkin>> skins = Nicko.getInstance().getMojangAPI().getSkinCache().asMap();
         final List<String> loadedSkins = skins.entrySet().stream()
                 .filter(entry -> entry.getValue().isPresent())
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .toList();
 
         final List<Item> items = loadedSkins.stream()
-                .map(uuid -> new CacheEntryItem(i18n, uuid))
+                .map(uuid -> new CacheEntryItem(playerLanguage, uuid))
                 .collect(Collectors.toList());
 
         final CacheManagementGUI parent = new CacheManagementGUI(player);
-        final ScrollUpItem scrollUpItem = new ScrollUpItem(i18n);
-        final ScrollDownItem scrollDownItem = new ScrollDownItem(i18n);
+        final ScrollUpItem scrollUpItem = new ScrollUpItem(playerLanguage);
+        final ScrollDownItem scrollDownItem = new ScrollDownItem(playerLanguage);
         final GoBackItem backItem = new GoBackItem(player);
 
         gui = ScrollGui.items(guiItemBuilder -> {

@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.i18n;
+package xyz.ineanto.nicko.language;
 
 import java.util.ArrayList;
 

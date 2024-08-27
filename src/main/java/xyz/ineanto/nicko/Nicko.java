@@ -12,8 +12,8 @@ import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.ConfigurationManager;
 import xyz.ineanto.nicko.event.PlayerJoinListener;
 import xyz.ineanto.nicko.event.PlayerQuitListener;
-import xyz.ineanto.nicko.i18n.CustomLocale;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.language.CustomLanguage;
+import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.migration.ConfigurationMigrator;
 import xyz.ineanto.nicko.migration.CustomLocaleMigrator;
 import xyz.ineanto.nicko.mojang.MojangAPI;
@@ -28,8 +28,8 @@ import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.io.IOException;
 
-public class NickoBukkit extends JavaPlugin {
-    private static NickoBukkit plugin;
+public class Nicko extends JavaPlugin {
+    private static Nicko plugin;
 
     private final boolean unitTesting;
 
@@ -37,19 +37,19 @@ public class NickoBukkit extends JavaPlugin {
     private PlayerDataStore dataStore;
     private ConfigurationManager configurationManager;
     private Configuration configuration;
-    private CustomLocale customLocale;
+    private CustomLanguage customLanguage;
     private PlayerNameStore nameStore;
     private RandomNameFetcher nameFetcher;
     private Metrics metrics;
 
-    public NickoBukkit() {
+    public Nicko() {
         this.unitTesting = false;
     }
 
     /**
      * Used by MockBukkit
      */
-    protected NickoBukkit(Configuration configuration) {
+    protected Nicko(Configuration configuration) {
         this.unitTesting = true;
         this.configuration = configuration;
         getLogger().info("Unit Testing Mode enabled.");
@@ -107,9 +107,9 @@ public class NickoBukkit extends JavaPlugin {
 
             if (configuration.isCustomLocale()) {
                 try {
-                    CustomLocale.dumpIntoFile(Locale.ENGLISH);
-                    customLocale = new CustomLocale();
-                    new CustomLocaleMigrator(this, customLocale).migrate();
+                    CustomLanguage.dumpIntoFile(Language.ENGLISH);
+                    customLanguage = new CustomLanguage();
+                    new CustomLocaleMigrator(this, customLanguage).migrate();
                     getLogger().info("Successfully loaded the custom locale.");
                 } catch (IOException e) {
                     getLogger().severe("Failed to load the custom locale!");
@@ -155,7 +155,7 @@ public class NickoBukkit extends JavaPlugin {
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 
-    public static NickoBukkit getInstance() {
+    public static Nicko getInstance() {
         return plugin;
     }
 
@@ -195,7 +195,7 @@ public class NickoBukkit extends JavaPlugin {
         return mojangAPI;
     }
 
-    public CustomLocale getCustomLocale() {
-        return customLocale;
+    public CustomLanguage getCustomLocale() {
+        return customLanguage;
     }
 }

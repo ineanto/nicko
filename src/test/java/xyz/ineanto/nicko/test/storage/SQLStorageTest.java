@@ -2,12 +2,12 @@ package xyz.ineanto.nicko.test.storage;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import org.junit.jupiter.api.*;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.DefaultDataSources;
 import xyz.ineanto.nicko.config.SQLDataSourceConfiguration;
-import xyz.ineanto.nicko.i18n.Locale;
+import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.mariadb.MariaDBStorageProvider;
@@ -28,12 +28,11 @@ public class SQLStorageTest {
                 "",
                 new SQLDataSourceConfiguration(true, "127.0.0.1", 3306, "root", "12345", true),
                 DefaultDataSources.REDIS_EMPTY,
-                "",
                 false);
 
         MockBukkit.mock();
 
-        final NickoBukkit plugin = MockBukkit.load(NickoBukkit.class, config);
+        final Nicko plugin = MockBukkit.load(Nicko.class, config);
         dataStore = plugin.getDataStore();
         uuid = UUID.randomUUID();
         assertInstanceOf(MariaDBStorageProvider.class, dataStore.getStorage().getProvider());
@@ -64,12 +63,12 @@ public class SQLStorageTest {
         final NickoProfile profile = optionalProfile.get();
         assertNull(profile.getName());
         assertNull(profile.getSkin());
-        assertEquals(profile.getLocale(), Locale.ENGLISH);
+        assertEquals(profile.getLocale(), Language.ENGLISH);
         assertTrue(profile.isRandomSkin());
 
         profile.setName("Notch");
         profile.setSkin("Notch");
-        profile.setLocale(Locale.FRENCH);
+        profile.setLocale(Language.FRENCH);
         profile.setRandomSkin(false);
 
         final ActionResult result = dataStore.getStorage().store(uuid, profile);
@@ -86,7 +85,7 @@ public class SQLStorageTest {
         final NickoProfile updatedProfile = optionalProfile.get();
         assertEquals(updatedProfile.getName(), "Notch");
         assertEquals(updatedProfile.getSkin(), "Notch");
-        assertEquals(updatedProfile.getLocale(), Locale.FRENCH);
+        assertEquals(updatedProfile.getLocale(), Language.FRENCH);
         assertFalse(updatedProfile.isRandomSkin());
     }
 

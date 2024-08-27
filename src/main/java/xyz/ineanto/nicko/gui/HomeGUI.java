@@ -5,8 +5,8 @@ import xyz.ineanto.nicko.gui.items.appearance.ChangeBothItem;
 import xyz.ineanto.nicko.gui.items.appearance.ChangeNameItem;
 import xyz.ineanto.nicko.gui.items.appearance.ChangeSkinItem;
 import xyz.ineanto.nicko.gui.items.home.*;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.window.Window;
 
@@ -25,8 +25,8 @@ public class HomeGUI {
             dynamicStructure[2] = dynamicStructure[2].replace("A", "#");
         }
 
-        final I18N i18n = new I18N(player);
-        this.title = i18n.translate(I18NDict.GUI.Titles.HOME, false);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.HOME, false);
 
         final ExitItem exitItem = new ExitItem(player);
         final ResetItem resetItem = new ResetItem(player);

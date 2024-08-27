@@ -4,26 +4,26 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
-import xyz.ineanto.nicko.i18n.Translation;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.Translation;
 import xyz.xenondevs.invui.gui.ScrollGui;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.controlitem.ScrollItem;
 
 public class ScrollDownItem extends ScrollItem {
-    final I18N i18n;
+    final PlayerLanguage playerLanguage;
 
-    public ScrollDownItem(I18N i18n) {
+    public ScrollDownItem(PlayerLanguage playerLanguage) {
         super(1);
-        this.i18n = i18n;
+        this.playerLanguage = playerLanguage;
     }
 
     @Override
     public ItemProvider getItemProvider(ScrollGui gui) {
         final ItemBuilder builder = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE);
-        final Translation translation = i18n.translateAndReplace(I18NDict.GUI.SCROLL_DOWN);
+        final Translation translation = playerLanguage.translateAndReplace(LanguageKey.GUI.SCROLL_DOWN);
         builder.setDisplayName(Component.text(translation.name()).content());
         if (!gui.canScroll(1)) {
             // Lore serialization

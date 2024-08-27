@@ -1,26 +1,26 @@
-package xyz.ineanto.nicko.i18n;
+package xyz.ineanto.nicko.language;
 
 import xyz.ineanto.nicko.version.Version;
 
 import java.io.Serializable;
 
-public enum Locale implements Serializable {
+public enum Language implements Serializable {
     ENGLISH("en", "English"),
     FRENCH("fr", "Français"),
     CUSTOM("cm", "Server Custom");
 
-    public static final Version VERSION = new Version(1, 1, 3);
+    public static final Version VERSION = new Version(1, 1, 4);
 
     private final String code;
     private transient final String name;
 
-    Locale(String code, String name) {
+    Language(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public static Locale fromCode(String code) {
-        for (Locale value : values()) {
+    public static Language fromCode(String code) {
+        for (Language value : values()) {
             if (code.equals(value.code)) return value;
         }
         return ENGLISH;

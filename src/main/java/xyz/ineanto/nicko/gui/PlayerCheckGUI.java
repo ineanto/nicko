@@ -7,8 +7,8 @@ import xyz.ineanto.nicko.gui.items.admin.check.PlayerInformationItem;
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollDownItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollUpItem;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.gui.ScrollGui;
 import xyz.xenondevs.invui.gui.structure.Markers;
@@ -26,20 +26,20 @@ public class PlayerCheckGUI {
     private final String title;
 
     public PlayerCheckGUI(Player player, Collection<? extends Player> players) {
-        final I18N i18n = new I18N(player);
-        this.title = i18n.translate(I18NDict.GUI.Titles.CHECK, false);
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+        this.title = playerLanguage.translate(LanguageKey.GUI.Titles.CHECK, false);
 
         final List<Item> items = players.stream()
                 .map(Entity::getUniqueId)
                 .map(Bukkit::getPlayer)
                 .filter(Objects::nonNull)
-                .map(mappedPlayer -> new PlayerInformationItem(i18n, mappedPlayer))
+                .map(mappedPlayer -> new PlayerInformationItem(playerLanguage, mappedPlayer))
                 .collect(Collectors.toList());
 
         final AdminGUI parent = new AdminGUI(player);
         final GoBackItem backItem = new GoBackItem(player);
-        final ScrollUpItem scrollUpItem = new ScrollUpItem(i18n);
-        final ScrollDownItem scrollDownItem = new ScrollDownItem(i18n);
+        final ScrollUpItem scrollUpItem = new ScrollUpItem(playerLanguage);
+        final ScrollDownItem scrollDownItem = new ScrollDownItem(playerLanguage);
 
         gui = ScrollGui.items(guiItemBuilder -> {
             guiItemBuilder.setStructure(

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
 import xyz.ineanto.nicko.gui.PlayerCheckGUIData;
@@ -21,9 +21,9 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
-        final ActionResult result = NickoBukkit.getInstance().getDataStore().saveData(player);
+        final ActionResult result = Nicko.getInstance().getDataStore().saveData(player);
         if (result.isError()) {
-            NickoBukkit.getInstance().getLogger().warning("Failed to save data for " + player.getName());
+            Nicko.getInstance().getLogger().warning("Failed to save data for " + player.getName());
         }
 
         // This is a dirty way to do it but could be worse tbh

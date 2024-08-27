@@ -6,13 +6,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
 import xyz.ineanto.nicko.gui.PlayerCheckGUIData;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
@@ -30,8 +30,8 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final NickoBukkit instance = NickoBukkit.getInstance();
-        final I18N i18n = new I18N(player);
+        final Nicko instance = Nicko.getInstance();
+        final PlayerLanguage playerLanguage = new PlayerLanguage(player);
         final PlayerNameStore nameStore = instance.getNameStore();
         final PlayerDataStore dataStore = instance.getDataStore();
         nameStore.storeName(player);
@@ -52,12 +52,11 @@ public class PlayerJoinListener implements Listener {
                 final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(player.getName());
                 final ActionResult actionResult = appearanceManager.updatePlayer(needsASkinChange, false);
                 if (!actionResult.isError()) {
-                    player.sendMessage(i18n.translate(I18NDict.Event.Appearance.Restore.OK, true));
+                    player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Restore.OK));
                 } else {
                     player.sendMessage(
-                            i18n.translate(I18NDict.Event.Appearance.Restore.ERROR,
-                                    true,
-                                    i18n.translate(actionResult.getErrorKey(), false)
+                            playerLanguage.translateWithOops(LanguageKey.Event.Appearance.Restore.ERROR,
+                                    playerLanguage.translate(actionResult.getErrorKey(), false)
                             ));
                 }
             }

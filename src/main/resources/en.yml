@@ -3,43 +3,47 @@
 # Specifies the configuration version, don't change.
 version: "1.1.4"
 
+prefix: "<b><gradient:#01a97c:#8ffd54>NICKO</gradient></b>"
+whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
+oops: "<b><color:#ff4640>OOPS!</color></b>"
+
 error:
-  permission: "§cYou do not have the required permission."
-  invalid_username: "§cThis is not a valid Minecraft username."
-  mojang_name: "There is no Minecraft account with this name."
-  mojang_skin: "This Minecraft account has no skin."
-  cache: "Unable to get skin from the cache."
+  permission: "<gray>You're missing the permission to do that.<gray>"
+  invalid_username: "<gray>This is an invalid Minecraft username.<gray>"
+  mojang_name: "<gray>There's is not Minecraft account with this username.<gray>"
+  mojang_skin: "<gray>This Minecraft account has no skin.<gray>"
+  cache: "<gray>Unable to get data from the cache.<gray>"
 
 event:
   settings:
-    error: "§cUnable to update your settings. §7§o({0})"
+    error: "<gray>Wasn't able to update your settings! ({0})</gray>"
   appearance:
     set:
-      error: "§cUnable to apply your disguise. §7§o({0})"
-      ok: "§fDisguise applied."
+      error: "<gray>Wasn't able to apply your disguise! ({0})</gray>"
+      ok: "<gray>You're now disguised.</gray>"
     restore:
-      error: "§cUnable to apply your previous disguise back. §7§o({0})"
-      ok: "§aYour previous active disguise has been applied."
+      error: "<gray>Wasn't able to apply the previous disguise! ({0})</gray>"
+      ok: "<gray>Disguise restored from last time.<gray>"
     remove:
-      error: "§cUnable to remove your disguise. It will be reset on your next login."
-      missing: "§cYou are not under a disguise."
-      ok: "§fDisguise removed."
+      error: "<gray>Wasn't able to remove your disguise!.</gray>"
+      missing: "<gray>You're not currently disguised.</gray>"
+      ok: "<gray>Undisguised successfully.</gray>"
   admin:
     cache:
-      invalidate_cache: "§fComplete cache invalidated."
-      invalidate_entry: "§6{0} §fhas been invalidated."
+      invalidate_cache: "<gray>Cache purged.</gray>"
+      invalidate_entry: "<gray>{0} was purged.</gray>"
     check:
-      remove_skin: "§fSkin removed from player."
+      remove_skin: "<gray>Skin removed from player.</gray>"
 
 gui:
   title:
     home: "Nicko - Home"
-    settings: "Nicko > Settings"
-    admin: "Nicko > Administration"
-    check: "Nicko > Admin... > Check"
-    confirm: "... > Confirm action"
-    cache: "Nicko > Admin... > Cache"
-    invalidate_skin: "... > Cache > Invalidate"
+    settings: "Settings"
+    admin: "Administration"
+    check: "Player Management"
+    confirm: "Are you sure?"
+    cache: "Cache Management"
+    invalidate_skin: "Purge cache..."
 
   exit:
     name: "Exit"
@@ -52,7 +56,7 @@ gui:
   error:
     name: "Error!"
     lore:
-      - "<gray>The item texture failed to load, but it might still work.</gray>"
+      - "<gray>The item failed to load, but it might still work.</gray>"
   loading:
     name: "<gray><i>Loading...</i></gray>"
   choice:

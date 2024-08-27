@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import xyz.ineanto.nicko.gui.HomeGUI;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 
 public class NickoCommand implements CommandExecutor {
     @Override
@@ -16,8 +16,8 @@ public class NickoCommand implements CommandExecutor {
             if (player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
                 new HomeGUI(player).open();
             } else {
-                final I18N i18N = new I18N(player);
-                player.sendMessage(i18N.translate(I18NDict.Error.PERMISSION, true));
+                final PlayerLanguage playerLanguage = new PlayerLanguage(player);
+                player.sendMessage(playerLanguage.translate(LanguageKey.Error.PERMISSION, true));
             }
             return false;
         }

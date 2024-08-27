@@ -1,15 +1,11 @@
 # Nicko ${version} - Config:
 
 # Specifies the configuration version, don't change.
-version: "1.0.8"
+version: "1.0.9"
 
-############
-# LANGUAGE #
-############
-
-# Nicko's messages prefix.
-# Accepted values: any string
-prefix: "§6Nicko §8§l| §r"
+#
+# Language
+#
 
 # Nicko will copy the English locale as "lang.yml"
 # and will use the translations in that file when "Server Custom"
@@ -17,11 +13,10 @@ prefix: "§6Nicko §8§l| §r"
 # Accepted values: false (Disabled), true (Enabled)
 customLocale: false
 
-###########
-# STORAGE #
-###########
+#
+# Storage
+#
 
-# This configuration section manages SQL.
 sql:
   # Indicates wherever the data will be stored locally
   # inside a .json file or in an SQL database.
@@ -44,7 +39,7 @@ sql:
   # Accepted values: any string
   password: "password"
 
-# This configuration section manages Redis (BungeeCord support).
+# This configuration section manages Redis (enabled BungeeCord support).
 # It is used to transfer data between multiple servers.
 redis:
   # Indicates wherever the data will be stored through

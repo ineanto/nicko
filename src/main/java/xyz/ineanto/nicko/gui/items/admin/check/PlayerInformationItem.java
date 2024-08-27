@@ -6,14 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.gui.ChoiceGUI;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
 import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -28,20 +28,20 @@ import java.util.Optional;
 public class PlayerInformationItem extends AsyncItem {
     private final Player target;
     private final NickoProfile profile;
-    private final I18N i18n;
+    private final PlayerLanguage playerLanguage;
 
-    public PlayerInformationItem(I18N i18n, Player target) {
+    public PlayerInformationItem(PlayerLanguage playerLanguage, Player target) {
         super(new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
-            return i18n.translateItem(builder, I18NDict.GUI.LOADING);
+            return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
         }, (click -> true)).getItemProvider(), () -> {
             try {
                 final SkullBuilder skull = new SkullBuilder(target.getUniqueId());
-                final Optional<NickoProfile> optionalProfile = NickoBukkit.getInstance().getDataStore().getData(target.getUniqueId());
+                final Optional<NickoProfile> optionalProfile = Nicko.getInstance().getDataStore().getData(target.getUniqueId());
 
                 if (optionalProfile.isPresent()) {
                     final NickoProfile profile = optionalProfile.get();
-                    final AbstractItemBuilder<?> headItem = i18n.translateItem(skull, I18NDict.GUI.Admin.CHECK,
+                    final AbstractItemBuilder<?> headItem = playerLanguage.translateItem(skull, LanguageKey.GUI.Admin.CHECK,
                             target.getName(),
                             (profile.hasData() ? "<green>✔</green>" : "<red>❌</red>"),
                             (profile.getName() == null ? "<grey>N/A<grey>" : profile.getName()),
@@ -56,16 +56,16 @@ public class PlayerInformationItem extends AsyncItem {
                     return headItem;
                 }
             } catch (MojangApiUtils.MojangApiException | IOException e) {
-                NickoBukkit.getInstance().getLogger().severe("Unable to get head for specified UUID ( " + target.getUniqueId() + ")! (GUI/PlayerCheck)");
+                Nicko.getInstance().getLogger().severe("Unable to get head for specified UUID ( " + target.getUniqueId() + ")! (GUI/PlayerCheck)");
             }
 
-            return ItemDefaults.getErrorSkullItem(i18n, I18NDict.GUI.Admin.CHECK,
+            return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Admin.CHECK,
                     "§c§l?!?", "§7N/A", "§7N/A", "§7N/A"
             );
         });
-        this.i18n = i18n;
+        this.playerLanguage = playerLanguage;
         this.target = target;
-        this.profile = NickoBukkit.getInstance().getDataStore().getData(target.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
+        this.profile = Nicko.getInstance().getDataStore().getData(target.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PlayerInformationItem extends AsyncItem {
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
                         appearanceManager.reset();
-                        player.sendMessage(i18n.translate(I18NDict.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
+                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
                     }
 
                     @Override

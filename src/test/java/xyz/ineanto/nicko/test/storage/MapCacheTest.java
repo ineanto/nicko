@@ -7,7 +7,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.profile.NickoProfile;
 
@@ -16,14 +16,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MapCacheTest {
-    private static NickoBukkit plugin;
+    private static Nicko plugin;
     private static PlayerMock player;
 
     @BeforeAll
     public static void setup() {
         final Configuration config = Configuration.DEFAULT;
         final ServerMock server = MockBukkit.mock();
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        plugin = MockBukkit.load(Nicko.class, config);
         player = server.addPlayer();
     }
 

@@ -5,19 +5,19 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.config.Configuration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ConfigurationTest {
-    private static NickoBukkit plugin;
+    private static Nicko plugin;
 
     @BeforeAll
     public static void setup() {
         MockBukkit.mock();
         final Configuration config = Configuration.DEFAULT;
-        plugin = MockBukkit.load(NickoBukkit.class, config);
+        plugin = MockBukkit.load(Nicko.class, config);
     }
 
     @Test

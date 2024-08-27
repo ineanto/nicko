@@ -4,24 +4,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
-import xyz.ineanto.nicko.i18n.I18N;
-import xyz.ineanto.nicko.i18n.I18NDict;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
 public class ManagePlayerItem {
     private final Player player;
-    private final I18N i18n;
+    private final PlayerLanguage playerLanguage;
 
-    public ManagePlayerItem(I18N i18n, Player player) {
-        this.i18n = i18n;
+    public ManagePlayerItem(PlayerLanguage playerLanguage, Player player) {
+        this.playerLanguage = playerLanguage;
         this.player = player;
     }
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.WRITABLE_BOOK);
-            return i18n.translateItem(builder, I18NDict.GUI.Admin.MANAGE_PLAYER);
+            return playerLanguage.translateItem(builder, LanguageKey.GUI.Admin.MANAGE_PLAYER);
         }, click -> {
             new PlayerCheckGUI(player, Bukkit.getOnlinePlayers()).open();
             return true;

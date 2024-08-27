@@ -4,16 +4,16 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.ineanto.nicko.NickoBukkit;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.profile.NickoProfile;
 
 import java.util.Optional;
 
 public class NickoExpansion extends PlaceholderExpansion {
 
-    private final NickoBukkit instance;
+    private final Nicko instance;
 
-    public NickoExpansion(NickoBukkit instance) {
+    public NickoExpansion(Nicko instance) {
         this.instance = instance;
     }
 

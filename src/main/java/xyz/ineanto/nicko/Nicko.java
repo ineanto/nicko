@@ -1,9 +1,19 @@
 package xyz.ineanto.nicko;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.accessors.Accessors;
+import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
+import com.comphenix.protocol.wrappers.MinecraftKey;
+import net.kyori.adventure.text.Component;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
@@ -132,6 +142,32 @@ public class Nicko extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
             metrics = new Metrics(this, 20483);
+
+            ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this,
+                    ListenerPriority.HIGH,
+                    PacketType.Play.Server.RESPAWN
+            ) {
+                @Override
+                public void onPacketSending(PacketEvent event) {
+                    try {
+                        Bukkit.broadcast(Component.text("intercepting packet..."));
+                        Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
+                        // access CommonPlayerSpawnInfo, first field of that type in the Respawn / Login packets
+                        Object commonSpawnData = Accessors.getFieldAccessor(event.getPacket().getClass(), commonPlayerInfoClazz, true).getField().get(event.getPacket());
+                        // get the key of the level the player is joining. Second field in the object. First of type ResourceKey
+                        MinecraftKey key = MinecraftKey.fromHandle(Accessors.getFieldAccessor(commonPlayerInfoClazz, MinecraftReflection.getResourceKey(), true).get(commonSpawnData)); // wrap to ProtocolLib handle
+                        for (World world : Bukkit.getWorlds()) {
+                            if (key.getPrefix().equals(world.getKey().getNamespace()) && key.getKey().equals(world.getKey().getKey())) {
+                                Bukkit.broadcast(Component.text("found world!"));
+                            } else {
+                                Bukkit.broadcast(Component.text("whoops, no matching world found"));
+                            }
+                        }
+                    } catch (IllegalAccessException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                }
+            });
         }
 
         getLogger().info("Nicko has been enabled.");

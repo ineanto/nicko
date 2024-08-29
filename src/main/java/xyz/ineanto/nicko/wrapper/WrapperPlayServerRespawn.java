@@ -4,6 +4,8 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
+import com.comphenix.protocol.reflect.accessors.Accessors;
+import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.MinecraftKey;
@@ -52,23 +54,27 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
             // 1.20.5 to 1.21.1
 
             // why is life so hard?
-            /**final Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
-            Object commonSpawnData = Accessors.getFieldAccessor(TYPE.getPacketClass(), commonPlayerInfoClazz, true).getField().get(TYPE.getPacketClass());
-             final MinecraftKey key = MinecraftKey.fromHandle(
-             Accessors.getFieldAccessor(
-             commonPlayerInfoClazz,
-             MinecraftReflection.getResourceKey(),
-             true
-             )
-             .get(spawnInfoStructure));
+            final Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
+            try {
+                final Object commonSpawnData = Accessors.getFieldAccessor(TYPE.getPacketClass(), commonPlayerInfoClazz, true).getField()
+                        .get(this);
+                final MinecraftKey key = MinecraftKey.fromHandle(
+                        Accessors.getFieldAccessor(
+                                        commonPlayerInfoClazz,
+                                        MinecraftReflection.getResourceKey(),
+                                        true
+                                )
+                                .get(spawnInfoStructure));
 
-             // Set the key
-             Accessors.getFieldAccessor(
-             commonPlayerInfoClazz,
-             MinecraftReflection.getResourceKey(),
-             true
-             )
-             .set(commonSpawnData, key);*/
+                Accessors.getFieldAccessor(
+                                commonPlayerInfoClazz,
+                                MinecraftReflection.getResourceKey(),
+                                true
+                        )
+                        .set(commonSpawnData, key);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

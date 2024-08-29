@@ -114,7 +114,7 @@ public class PlayerLanguage {
     }
 
     public String translate(String key, boolean prefix, Object... arguments) {
-        final String translation = readString(key);
+        final String translation = readStringWithMiniMessage(key);
 
         try {
             formatter.applyPattern(translation);

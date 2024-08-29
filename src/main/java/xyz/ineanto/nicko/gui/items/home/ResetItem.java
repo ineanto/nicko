@@ -30,16 +30,16 @@ public class ResetItem {
                 final Optional<NickoProfile> optionalProfile = NickoProfile.get(player);
                 optionalProfile.ifPresent(profile -> {
                     if (!profile.hasData()) {
-                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Remove.MISSING, true));
+                        player.sendMessage(playerLanguage.translateWithOops(LanguageKey.Event.Appearance.Remove.MISSING));
                         event.getEvent().getView().close();
                         return;
                     }
 
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
                     if (!appearanceManager.reset().isError()) {
-                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Remove.OK, true));
+                        player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Remove.OK));
                     } else {
-                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Remove.ERROR, true));
+                        player.sendMessage(playerLanguage.translateWithOops(LanguageKey.Event.Appearance.Remove.ERROR));
                     }
                 });
                 return true;

@@ -8,25 +8,25 @@ whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
 oops: "<b><color:#ff4640>OOPS!</color></b>"
 
 error:
-  permission: "<gray>You're missing the permission to do that.<gray>"
-  invalid_username: "<gray>This is an invalid Minecraft username.<gray>"
-  mojang_name: "<gray>There's is not Minecraft account with this username.<gray>"
-  mojang_skin: "<gray>This Minecraft account has no skin.<gray>"
-  cache: "<gray>Unable to get data from the cache.<gray>"
+  permission: "<gray>You're missing the permission to do that.</gray>"
+  invalid_username: "<gray>This is an invalid Minecraft username.</gray>"
+  mojang_name: "<gray>There's is not Minecraft account with this username.</gray>"
+  mojang_skin: "<gray>This Minecraft account has no skin.</gray>"
+  cache: "<gray>Unable to get data from the cache.</gray>"
 
 event:
   settings:
-    error: "<gray>Wasn't able to update your settings! ({0})</gray>"
+    error: "<gray>Wasn''t able to update your settings! ({0})</gray>"
   appearance:
     set:
-      error: "<gray>Wasn't able to apply your disguise! ({0})</gray>"
+      error: "<gray>Wasn''t able to apply your disguise! ({0})</gray>"
       ok: "<gray>You're now disguised.</gray>"
     restore:
-      error: "<gray>Wasn't able to apply the previous disguise! ({0})</gray>"
-      ok: "<gray>Disguise restored from last time.<gray>"
+      error: "<gray>Wasn''t able to apply the previous disguise! ({0})</gray>"
+      ok: "<gray>Disguise restored from last time.</gray>"
     remove:
-      error: "<gray>Wasn't able to remove your disguise!.</gray>"
-      missing: "<gray>You're not currently disguised.</gray>"
+      error: "<gray>Wasn''t able to remove your disguise!.</gray>"
+      missing: "<gray>You''re not currently disguised.</gray>"
       ok: "<gray>Undisguised successfully.</gray>"
   admin:
     cache:

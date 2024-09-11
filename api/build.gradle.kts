@@ -1,6 +1,5 @@
 plugins {
     id("java")
-    id("io.github.goooler.shadow") version "8.1.7"
 }
 
 java {
@@ -9,9 +8,4 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
-}
-
-allprojects {
-    group = "xyz.ineanto.nicko"
-    version = "1.2.0"
 }

@@ -1,34 +1,9 @@
 rootProject.name = "nicko"
 
+include(":mappings")
 setOf(
-    "1_20"
+    "1_20", "1_20_2", "1_20_4", "1_20_6",
+    "1_21"
 ).forEach {
-    include("mappings:v$it")
+    include(":mappings:v$it")
 }
-
-include("common", "api")
-
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        maven { url = uri("https://jitpack.io") }
-        maven {
-            name = "xenondevs"
-            url = uri("https://repo.xenondevs.xyz/releases")
-        }
-        maven {
-            name = "papermc"
-            url = uri("https://repo.papermc.io/repository/maven-public/")
-        }
-        maven {
-            name = "codemc"
-            url = uri("https://repo.codemc.io/repository/maven-snapshots/")
-        }
-        maven {
-            name = "placeholderapi"
-            url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-        }
-    }
-}
-include("v1_20")

@@ -1,0 +1,155 @@
+# Nicko ${version} - Fichier de langue:
+
+# Précise la version de la configuration, ne pas changer.
+version: "1.2.0"
+
+prefix: "<b><gradient:#01a97c:#8ffd54>NICKO</gradient></b>"
+whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
+oops: "<b><color:#ff4640>OOPS!</color></b>"
+
+error:
+  permission: "<gray>Vous n'avez pas la permission de faire cela.<gray>"
+  invalid_username: "<gray>Nom d'utilisateur Minecraft invalide.<gray>"
+  mojang_name: "<gray>Aucun compte Minecraft associé à ce nom d'utilisateur.<gray>"
+  mojang_skin: "<gray>Ce compte Minecraft n'a pas de skin.<gray>"
+  cache: "<gray>Impossible de récupérer les données depuis le cache.<gray>"
+
+event:
+  settings:
+    error: "<gray>Impossible de mettre à jour vos paramètres ! ({0})</gray>"
+  appearance:
+    set:
+      error: "<gray>Impossible d''appliquer votre déguisement ! ({0})</gray>"
+      ok: "<gray>Déguisement appliqué avec succès.</gray>"
+    restore:
+      error: "<gray>Impossible d''appliquer le précédent déguisement ! ({0})</gray>"
+      ok: "<gray>Votre précédent déguisement a été appliqué.<gray>"
+    remove:
+      error: "<gray>Impossible de retirer votre déguisement.</gray>"
+      missing: "<gray>Vous n''avez pas de déguisement.</gray>"
+      ok: "<gray>Déguisement retiré.</gray>"
+  admin:
+    cache:
+      invalidate_cache: "<gray>Cache complet invalidé.</gray>"
+      invalidate_entry: "<gray>{0} a été invalidé.</gray>"
+    check:
+      remove_skin: "<gray>Déguisement retiré au joueur.</gray>"
+
+gui:
+  title:
+    home: "Nicko - Accueil"
+    settings: "Paramètres"
+    admin: "Administration"
+    check: "Gestion des Joueurs"
+    confirm: "Êtes-vous sûr ?"
+    cache: "Gestion du Cache"
+    invalidate_skin: "Purge du cache..."
+
+  exit:
+    name: "Quitter"
+  go_back:
+    name: "Retour"
+  unavailable:
+    name: "Indisponible"
+    lore:
+      - "<gray><i>Ce boutton est désactivé.</i></gray>"
+  error:
+    name: "Erreur !"
+    lore:
+      - "<gray>La texture de l'objet n'a pas chargé</gray>"
+      - "<gray>correctement mais il fonctionne encore.</gray>"
+  loading:
+    name: "<gray><i>Chargement...</i></gray>"
+  choice:
+    confirm:
+      name: "<green>Confirmer</green>"
+    choose:
+      name: "<gold><i>Choisissez une option...</i></gold>"
+    cancel:
+      name: "<red>Annuler</red>"
+  scroll_up:
+    name: "Défiler vers le haut"
+    lore:
+      - "<dark_gray><i>(Impossible de défiler plus haut.)</i></dark_gray>"
+  scroll_down:
+    name: "Défiler vers le bas"
+    lore:
+      - "<dark_gray><i>(Impossible de défiler plus bas.)</i></dark_gray>"
+  new_skin:
+    name: "Nouveau skin..."
+  new_name:
+    name: "Nouveau nom..."
+  home:
+    admin:
+      name: "Panel d'administration"
+      lore:
+        - "<gray>Configurez et gérez Nicko.</gray>"
+    settings:
+      name: "Paramètres"
+      lore:
+        - "<gray>Gérez votre expérience avec Nicko.</gray>"
+    change_name:
+      name: "Changer le <gold>pseudo</gold>"
+    change_skin:
+      name: "Changer le <gold>skin</gold>"
+    change_both:
+      name: "Changer les <gold>deux</gold>"
+    random_skin:
+      name: "<rainbow>Obtenir une apparence aléatoire !</rainbow>"
+    reset:
+      name: "Réinitialiser l'apparence"
+      lore:
+        - "<gray>Supprime complètement votre déguisement.</gray>"
+  admin:
+    manage_cache:
+      name: "Gérer le cache de <gold>skin...</gold>"
+      lore:
+        - "<gray>Consultez et gérez le cache de skin.</gray>"
+    manage_player:
+      name: "Vérifier un joueur..."
+      lore:
+        - "<gray>Vérifiez les informations de déguisement d'un joueur.</gray>"
+    check:
+      name: "<gold>{0}</gold>"
+      lore:
+        - "<red>Déguisé:</red> {1}"
+        - "<red>Nom:</red> <gold>{2}</gold>"
+        - "<red>Skin:</red> <gold>{3}</gold>"
+        - " "
+        - "<gray><i>Cliquez pour retirer le skin !</i></gray>"
+    cache:
+      statistics:
+        name: "Statistiques"
+        lore:
+          - "Nombre de requêtes: <aqua>{0}</aqua>"
+          - "Nb. de skin dans le cache: <aqua>{1}</aqua>"
+          - "<dark_gray><i>Le cache est vidé toutes les 24 heures.</i></dark_gray>"
+      invalidate_cache:
+        name: "Purger le cache"
+        lore:
+          - "<red><i>DÉCONSEILLÉ</i></red>"
+          - "<gray>Purge l'entièreté du cache des skin.</gray>"
+          - "<gray>Ne retire pas les déguisements des joueurs.</gray>"
+      invalidate_skin:
+        name: "Invalider un skin..."
+        lore:
+          - "<gray>Sélectionnez une apparence spécifique à</gray>"
+          - "<gray>invalider. Utile dans le cas où un skin</gray>"
+          - "<gray>a récemment été mis à jour.</gray>"
+      entry:
+        name: "<gold>{0}</gold>"
+        lore:
+          - "<gray>Cliquez pour invalider...</gray>"
+  settings:
+    toggleable_button:
+      lore:
+        - "{0} Désactivé"
+        - "{1} Activé"
+    cycling_choices:
+      lore:
+        - "<gray><i>Parcourez les valeurs</i></gray>"
+        - "<gray><i>avec un clique gauche/droit.</i></gray>"
+    language:
+      name: "Langage"
+    random_skin:
+      name: "Apparence aléatoire à la connexion"

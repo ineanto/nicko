@@ -1,0 +1,19 @@
+name: Nicko
+main: xyz.ineanto.nicko.Nicko
+version: ${version}
+author: Ineanto
+description: "The feature packed, next generation disguise plugin for Minecraft."
+api-version: 1.20
+softdepend: [ PlaceholderAPI ]
+load: POSTWORLD
+commands:
+  nicko:
+    description: "Opens Nicko's GUI."
+    permission: nicko.use
+permissions:
+  nicko.*:
+    default: op
+    children:
+      - nicko.use
+  nicko.use:
+    default: false

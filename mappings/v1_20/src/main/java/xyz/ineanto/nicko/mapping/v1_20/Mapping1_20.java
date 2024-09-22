@@ -17,13 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Mapping1_20 extends Mapping {
+
     @Override
     public void respawn(Player player) {
-        final ServerPlayer entityPlayer = (ServerPlayer) player;
-
-        final ServerLevel world = entityPlayer.serverLevel();
-        final ServerPlayerGameMode gameMode = entityPlayer.gameMode;
-
         // Really Mojang...? (also applies to Bukkit/Spigot maintainers)
         // I'll have to do this everytime I want to update Nicko for the foreseeable future.
         // (until ProtocolLib has reworked its API to be more maintainable that said)
@@ -36,11 +32,17 @@ public class Mapping1_20 extends Mapping {
         // I can't be bothered with fighting your game anymore.
         // We need an easy and reliable way to send packets across multiple server versions.
         // And I know that this is easier said than done, the game protocol needs
-        // to evolve and be updated, I get it. But I think you can at least try.
+        // to evolve and be updated, I get it.
+        // But I think you can at least try.
 
         // You made a step forward by providing the mappings for Java, this I can agree with.
         // (and still stripped them from Bedrock against community feedback, haha f*ck you.)
         // However, we still need a stable and reliable Packet API (and so much more!) one day.
+
+        final ServerPlayer entityPlayer = (ServerPlayer) player;
+
+        final ServerLevel world = entityPlayer.serverLevel();
+        final ServerPlayerGameMode gameMode = entityPlayer.gameMode;
 
         final ClientboundRespawnPacket respawn = new ClientboundRespawnPacket(
                 world.dimensionTypeId(),
@@ -70,7 +72,6 @@ public class Mapping1_20 extends Mapping {
         playerList.sendLevelInfo(entityPlayer, world);
         playerList.sendAllPlayerInfo(entityPlayer);
 
-        // Resend their effects
         for (MobEffectInstance effect : entityPlayer.getActiveEffects()) {
             entityPlayer.connection.send(new ClientboundUpdateMobEffectPacket(entityPlayer.getId(), effect));
         }

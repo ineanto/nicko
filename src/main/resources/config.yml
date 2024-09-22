@@ -1,0 +1,50 @@
+# Nicko ${version} - Config:
+
+# Specifies the configuration version, don't change.
+version: "1.2.0"
+
+# Nicko will copy the English locale as "lang.yml"
+# and will use the translations in that file when "Server Custom"
+# is selected as the player's locale.
+# Accepted values: false (Disabled), true (Enabled)
+customLocale: false
+
+sql:
+  # Indicates wherever the data will be stored locally
+  # inside a .json file or in an SQL database.
+  # Accepted values: false (Disabled), true (Enabled)
+  enabled: false
+  # Toggles between the MariaDB and MySQL drivers.
+  # If you use the MySQL database engine, switch this to off.
+  # Accepted values: false (Disabled), true (Enabled)
+  mariadb: true
+  # SQL database's address
+  # Accepted values: valid IP address (e.g. localhost, 127.0.0.1)
+  address: "localhost"
+  # SQL database's port
+  # Accepted values: valid integer (e.g. 3306, 25565)
+  port: 3306
+  # SQL database's username.
+  # Accepted values: any string
+  username: "username"
+  # SQL database's password.
+  # Accepted values: any string
+  password: "password"
+
+redis:
+  # Indicates wherever the data will be stored through
+  # Redis to transfer whenever a player switches server.
+  # Accepted values: false (Disabled), true (Enabled)
+  enabled: false
+  # Redis server's address
+  # Accepted values: valid IP address (e.g.: localhost, 127.0.0.1)
+  address: "localhost"
+  # Redis server's port
+  # Accepted values: valid integer (e.g. 3306, 25565)
+  port: 6379
+  # Redis server's username
+  # Accepted values: any string
+  username: "username"
+  # Redis server's password
+  # Accepted values: any string
+  password: "password"

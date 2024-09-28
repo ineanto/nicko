@@ -1,8 +1,13 @@
-1.1.8: Update n°12 (XX/XX/24)
+1.2.0: Update n°12 (XX/XX/24)
     [FEATURES]
+        - Players are now able to save disguises as presets.
+        - Modernized the messages and added various sound effects upon interacting with Nicko.
 
-    [OTHER]
-        - Dropped the release candidate status as Nicko is now considered stable.
+     [FIXES]
+        - Fixed an oversight preventing the configuration from properly being migrated.
+
+    [LANGUAGE]
+        - Moved the prefix to the language file.
 
 1.1.7-RC1: Hotfix n°5 (04/05/24)
     [OTHER]

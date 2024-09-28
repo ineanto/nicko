@@ -8,15 +8,6 @@ allprojects {
     group = "xyz.ineanto.nicko"
     version = "1.2.0"
 
-    apply(plugin = "java")
-    java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-    }
-
     repositories {
         mavenCentral()
         mavenLocal()
@@ -49,12 +40,12 @@ java {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
-    compileOnly("com.github.dmulloy2:ProtocolLib:master-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("com.github.dmulloy2:ProtocolLib:-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
 
     implementation("net.kyori:adventure-api:4.17.0")
-    implementation("xyz.xenondevs.invui:invui:1.35")
+    implementation("xyz.xenondevs.invui:invui:1.37")
     implementation("net.wesjd:anvilgui:1.10.1-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
@@ -118,18 +109,9 @@ tasks {
         exclude("org/yaml/**")
         exclude("google/protobuf/**")
         exclude("net/kyori/**")
-
-        // MINIFY
-        minimize {
-            exclude(dependency("xyz.xenondevs.invui:.*"))
-            exclude(dependency("net.wesjd:.*"))
-            exclude(dependency("org.bstats:.*"))
-        }
     }
 
     runServer {
-        dependsOn(shadowJar)
-
         downloadPlugins {
             url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
 

@@ -15,3 +15,7 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
+
+tasks.assemble {
+    dependsOn(tasks.reobfJar)
+}

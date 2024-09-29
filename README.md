@@ -19,21 +19,11 @@ https://www.spigotmc.org/resources/nicko.113868/
 
 ---
 
-## Q/A
-
-Q: Players are getting kicked when they send a message on versions above 1.19.2!
-
-A:
-This should not happen.
-Try installing [NoEncryption](https://www.spigotmc.org/resources/noencryption.102902/).
-
----
-
 #### Version compatibility table
 
 | Version       | Plugin                                                                     |
 |---------------|----------------------------------------------------------------------------|
 | 1.7 and lower | Unsupported                                                                |
 | 1.8 - 1.12.2  | Use [NickReloaded](https://www.spigotmc.org/resources/nickreloaded.46335/) |
-| 1.13 to 1.18  | Unsupported                                                                |
-| 1.19 - 1.20   | Use Nicko                                                                  |
+| 1.13 to 1.19  | Unsupported                                                                |
+| 1.20 - 1.21   | Use Nicko                                                                  |

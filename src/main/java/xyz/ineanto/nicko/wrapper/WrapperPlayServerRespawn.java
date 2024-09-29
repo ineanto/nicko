@@ -4,16 +4,17 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
-import com.comphenix.protocol.reflect.accessors.Accessors;
-import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
+import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.MinecraftKey;
 import com.google.common.hash.Hashing;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.RecordComponent;
 
 /**
  * PacketPlayServerRespawn Wrapper class (1.20.X to 1.21.X)
@@ -55,27 +56,16 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         } else {
             // 1.20.5 to 1.21.1
 
-            final Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
             try {
-                final Field commonSpawnDataField = Accessors.getFieldAccessor(TYPE.getPacketClass(), commonPlayerInfoClazz, true).getField();
-                commonSpawnDataField.setAccessible(true);
+                final Object spawnInfoStructureHandle = spawnInfoStructure.getHandle();
+                final RecordComponent[] components = spawnInfoStructureHandle.getClass().getRecordComponents();
 
-                final MinecraftKey key = MinecraftKey.fromHandle(
-                        Accessors.getFieldAccessor(
-                                        commonPlayerInfoClazz,
-                                        MinecraftReflection.getResourceKey(),
-                                        true
-                                )
-                                .get(spawnInfoStructure));
-
-                Accessors.getFieldAccessor(
-                                commonPlayerInfoClazz,
-                                MinecraftReflection.getResourceKey(),
-                                true
-                        )
-                        .set(commonSpawnDataField.get(this), key);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
+                // Doesn't work!
+                final Field levelKeyField = spawnInfoStructureHandle.getClass().getDeclaredField(components[1].getAccessor().getName());
+                levelKeyField.setAccessible(true);
+                levelKeyField.set(spawnInfoStructureHandle, BukkitConverters.getWorldKeyConverter().getGeneric(Bukkit.getWorld("world")));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException();
             }
         }
     }

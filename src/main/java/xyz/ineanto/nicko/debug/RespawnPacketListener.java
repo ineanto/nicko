@@ -4,7 +4,6 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListeningWhitelist;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
-import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.MinecraftKey;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -58,7 +57,6 @@ public class RespawnPacketListener implements PacketListener {
     }
 
     public Optional<World> getWorld(PacketEvent event) throws Throwable {
-        final Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
         // access CommonPlayerSpawnInfo, first field of that type in the Respawn / Login packets
         final Object packetHandle = event.getPacket().getHandle();
         final Object commonSpawnData = packetHandle.getClass().getRecordComponents()[0].getAccessor().invoke(packetHandle);
@@ -68,19 +66,18 @@ public class RespawnPacketListener implements PacketListener {
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-");
                     System.out.println(component.getName());
                     System.out.println(component.getType().getSimpleName());
-                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-");
                     component.getAccessor().setAccessible(false);
                 }
         );
 
         // get the key of the level the player is joining. Second field in the object. First of type ResourceKey
-        /**MinecraftKey key = MinecraftKey.fromHandle(Accessors.getFieldAccessor(commonSpawnData.getClass(), MinecraftReflection.getResourceKey(), true)
-         .get(commonSpawnData)); // wrap to ProtocolLib handle
-         for (World world : Bukkit.getWorlds()) {
-         if (keysEquals(key, world.getKey())) {
-         return Optional.of(world);
-         }
-         }*/
+        MinecraftKey key = MinecraftKey.fromHandle(commonSpawnData.getClass().getRecordComponents()[1]);
+        System.out.println(key.getPrefix() + " / " + key.getKey() + " (" + key.getFullKey() + ")");
+        for (World world : Bukkit.getWorlds()) {
+            if (keysEquals(key, world.getKey())) {
+                return Optional.of(world);
+            }
+        }
         return Optional.empty();
     }
 }

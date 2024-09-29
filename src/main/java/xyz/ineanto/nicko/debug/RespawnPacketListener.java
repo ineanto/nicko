@@ -71,8 +71,7 @@ public class RespawnPacketListener implements PacketListener {
         );
 
         // get the key of the level the player is joining. Second field in the object. First of type ResourceKey
-        MinecraftKey key = MinecraftKey.fromHandle(commonSpawnData.getClass().getRecordComponents()[1]);
-        System.out.println(key.getPrefix() + " / " + key.getKey() + " (" + key.getFullKey() + ")");
+        final MinecraftKey key = MinecraftKey.fromHandle(commonSpawnData.getClass().getRecordComponents()[1]);
         for (World world : Bukkit.getWorlds()) {
             if (keysEquals(key, world.getKey())) {
                 return Optional.of(world);

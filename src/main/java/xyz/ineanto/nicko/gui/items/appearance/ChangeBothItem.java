@@ -18,7 +18,7 @@ public class ChangeBothItem {
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.TOTEM_OF_UNDYING);
+            final ItemBuilder builder = new ItemBuilder(Material.ARMOR_STAND);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.CHANGE_BOTH);
         }, click -> {
             final ClickType clickType = click.getClickType();

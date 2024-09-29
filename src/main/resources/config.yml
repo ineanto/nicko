@@ -1,21 +1,13 @@
 # Nicko ${version} - Config:
 
 # Specifies the configuration version, don't change.
-version: "1.0.9"
-
-#
-# Language
-#
+version: "1.2.0"
 
 # Nicko will copy the English locale as "lang.yml"
 # and will use the translations in that file when "Server Custom"
 # is selected as the player's locale.
 # Accepted values: false (Disabled), true (Enabled)
 customLocale: false
-
-#
-# Storage
-#
 
 sql:
   # Indicates wherever the data will be stored locally
@@ -39,8 +31,6 @@ sql:
   # Accepted values: any string
   password: "password"
 
-# This configuration section manages Redis (enabled BungeeCord support).
-# It is used to transfer data between multiple servers.
 redis:
   # Indicates wherever the data will be stored through
   # Redis to transfer whenever a player switches server.

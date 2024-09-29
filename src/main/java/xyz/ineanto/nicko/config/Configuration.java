@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import xyz.ineanto.nicko.version.Version;
 
 public class Configuration {
-    public static final Version VERSION = new Version(1, 0, 9);
+    public static final Version VERSION = new Version(1, 2, 0);
     public static final Configuration DEFAULT = new Configuration(VERSION.toString(),
             DefaultDataSources.SQL_EMPTY,
             DefaultDataSources.REDIS_EMPTY,

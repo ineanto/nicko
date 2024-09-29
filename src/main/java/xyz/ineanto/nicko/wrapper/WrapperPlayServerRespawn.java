@@ -13,6 +13,8 @@ import com.google.common.hash.Hashing;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 
+import java.lang.reflect.Field;
+
 /**
  * PacketPlayServerRespawn Wrapper class (1.20.X to 1.21.X)
  * <p>
@@ -53,11 +55,11 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         } else {
             // 1.20.5 to 1.21.1
 
-            // why is life so hard?
             final Class<?> commonPlayerInfoClazz = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
             try {
-                final Object commonSpawnData = Accessors.getFieldAccessor(TYPE.getPacketClass(), commonPlayerInfoClazz, true).getField()
-                        .get(this);
+                final Field commonSpawnDataField = Accessors.getFieldAccessor(TYPE.getPacketClass(), commonPlayerInfoClazz, true).getField();
+                commonSpawnDataField.setAccessible(true);
+
                 final MinecraftKey key = MinecraftKey.fromHandle(
                         Accessors.getFieldAccessor(
                                         commonPlayerInfoClazz,
@@ -71,7 +73,7 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
                                 MinecraftReflection.getResourceKey(),
                                 true
                         )
-                        .set(commonSpawnData, key);
+                        .set(commonSpawnDataField.get(this), key);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

@@ -1,36 +1,25 @@
 package xyz.ineanto.nicko.gui.items.appearance;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.anvil.AnvilManager;
-import xyz.ineanto.nicko.gui.items.ItemDefaults;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
-import xyz.xenondevs.invui.item.builder.SkullBuilder;
+import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
-import xyz.xenondevs.invui.util.MojangApiUtils;
-
-import java.io.IOException;
 
 public class ChangeSkinItem {
     private final PlayerLanguage playerLanguage;
-    private final Player player;
 
     public ChangeSkinItem(Player player) {
         this.playerLanguage = new PlayerLanguage(player);
-        this.player = player;
     }
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            try {
-                final SkullBuilder builder = new SkullBuilder(player.getName());
-                return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.CHANGE_SKIN);
-            } catch (MojangApiUtils.MojangApiException | IOException e) {
-                Nicko.getInstance().getLogger().warning("Unable to get Head texture for specified player (" + player.getName() + ")! (GUI/Home)");
-                return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Home.CHANGE_SKIN);
-            }
+            final ItemBuilder builder = new ItemBuilder(Material.PLAYER_HEAD);
+            return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.CHANGE_SKIN);
         }, click -> {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {

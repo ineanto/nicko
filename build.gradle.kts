@@ -1,11 +1,11 @@
 plugins {
     id("java")
-    id("io.github.goooler.shadow") version "8.1.7"
+    id("com.gradleup.shadow") version "8.3.2"
     id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 group = "xyz.ineanto"
-version = "1.1.8"
+version = "1.2.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -38,14 +38,13 @@ repositories {
 }
 
 dependencies {
-    // Nicko
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-    compileOnly("com.github.dmulloy2:ProtocolLib:master-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("com.github.dmulloy2:ProtocolLib:-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
 
-    implementation("xyz.xenondevs.invui:invui:1.35")
-    implementation("net.wesjd:anvilgui:1.10.1-SNAPSHOT")
+    implementation("xyz.xenondevs.invui:invui:1.36")
+    implementation("net.wesjd:anvilgui:1.10.2-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
@@ -113,14 +112,6 @@ tasks {
             exclude(dependency("net.wesjd:.*"))
             exclude(dependency("org.bstats:.*"))
         }
-    }
-
-    jar {
-        enabled = false
-    }
-
-    test {
-        useJUnitPlatform()
     }
 
     runServer {

@@ -1,14 +1,15 @@
 package xyz.ineanto.nicko.gui.items.home;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.profile.NickoProfile;
-import xyz.xenondevs.invui.item.builder.SkullBuilder;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
 import java.util.Optional;
@@ -24,8 +25,7 @@ public class RandomSkinItem {
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            final SkullBuilder.HeadTexture texture = new SkullBuilder.HeadTexture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzgzMTEzOGMyMDYxMWQzMDJjNDIzZmEzMjM3MWE3NDNkMTc0MzdhMTg5NzNjMzUxOTczNDQ3MGE3YWJiNCJ9fX0=");
-            final SkullBuilder builder = new SkullBuilder(texture);
+            final ItemBuilder builder = new ItemBuilder(Material.SPAWNER);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.RANDOM_SKIN);
         }, (event) -> {
             final Player player = event.getPlayer();

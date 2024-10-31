@@ -38,12 +38,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    compileOnly("com.github.dmulloy2:ProtocolLib:-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
+    compileOnly("com.github.dmulloy2:ProtocolLib:5.3.0")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
 
-    implementation("xyz.xenondevs.invui:invui:1.36")
+    implementation("xyz.xenondevs.invui:invui:1.39")
     implementation("net.wesjd:anvilgui:1.10.2-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
@@ -54,7 +54,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
-    testImplementation("com.github.MockBukkit:MockBukkit:v3.99.1")
+    testImplementation("com.github.MockBukkit:MockBukkit:v3.133.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")

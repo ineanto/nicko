@@ -144,13 +144,15 @@ public class AppearanceManager {
         final boolean wasFlying = player.isFlying();
         final boolean wasAllowedToFly = player.getAllowFlight();
         final int foodLevel = player.getFoodLevel();
+
         final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn();
-        respawn.setDimension(world);
+        //respawn.setDimension(world);
         respawn.setSeed(world.getSeed());
         respawn.setGameMode(player.getGameMode());
         respawn.setPreviousGameMode(player.getGameMode());
         respawn.setCopyMetadata(true);
-        respawn.sendPacket(player);
+        //respawn.sendPacket(player);
+
         player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
         player.setAllowFlight(wasAllowedToFly);
         player.setFlying(wasFlying);

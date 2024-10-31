@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.wrapper;
+package xyz.ineanto.nicko.packet.wrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.InternalStructure;
@@ -56,11 +56,20 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         } else {
             // 1.20.5 to 1.21.1
 
+            /*
+              Honestly, I've tried everything to make this work.
+              Fields inside the CommonPlayerSpawnInfo are Record Components and are
+              marked final.
+
+              This would work with some trickery involved, but here's the
+              caveat: Record Components/Fields and are immutable by DESIGN.
+              So... here we are now, stopped right in my track by Java's language design and Mojang themselves.
+             */
+
             try {
                 final Object spawnInfoStructureHandle = spawnInfoStructure.getHandle();
                 final RecordComponent[] components = spawnInfoStructureHandle.getClass().getRecordComponents();
 
-                // Doesn't work!
                 final Field levelKeyField = spawnInfoStructureHandle.getClass().getDeclaredField(components[1].getAccessor().getName());
                 levelKeyField.setAccessible(true);
                 levelKeyField.set(spawnInfoStructureHandle, BukkitConverters.getWorldKeyConverter().getGeneric(Bukkit.getWorld("world")));

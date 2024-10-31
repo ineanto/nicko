@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.debug;
+package xyz.ineanto.nicko.packet.debug;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListeningWhitelist;

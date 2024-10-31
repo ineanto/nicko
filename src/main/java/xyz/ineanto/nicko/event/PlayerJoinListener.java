@@ -50,7 +50,7 @@ public class PlayerJoinListener implements Listener {
             if (profile.hasData()) {
                 final AppearanceManager appearanceManager = new AppearanceManager(player);
                 final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(player.getName());
-                final ActionResult actionResult = appearanceManager.updatePlayer(needsASkinChange, false);
+                final ActionResult actionResult = appearanceManager.update(needsASkinChange, false);
                 if (!actionResult.isError()) {
                     player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Restore.OK));
                 } else {
@@ -68,7 +68,7 @@ public class PlayerJoinListener implements Listener {
             optionalOnlinePlayerProfile.ifPresent(profile -> {
                 final AppearanceManager appearanceManager = new AppearanceManager(online);
                 final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(online.getName());
-                final ActionResult actionResult = appearanceManager.updateForOthers(needsASkinChange, false);
+                final ActionResult actionResult = appearanceManager.update(needsASkinChange, false);
                 if (actionResult.isError()) {
                     logger.warning("Something wrong happened while updating players to joining player (" + actionResult.getErrorKey() + ")");
                 }

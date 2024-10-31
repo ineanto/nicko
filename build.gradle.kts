@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
     id("xyz.jpenilla.run-paper") version "2.3.0"
+    id("io.papermc.paperweight.userdev") version "1.7.4"
 }
 
 group = "xyz.ineanto"
@@ -38,7 +39,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
+
     compileOnly("com.github.dmulloy2:ProtocolLib:5.3.0")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")

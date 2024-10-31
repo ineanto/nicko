@@ -114,7 +114,7 @@ public class AnvilManager {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) { return Collections.singletonList(AnvilGUI.ResponseAction.close()); }
 
-        final ActionResult actionResult = appearanceManager.updatePlayer(skinChange, false);
+        final ActionResult actionResult = appearanceManager.update(skinChange, false);
         if (!actionResult.isError()) {
             player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
         } else {

@@ -1,6 +1,5 @@
 package xyz.ineanto.nicko;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -11,7 +10,6 @@ import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
 import xyz.ineanto.nicko.command.NickoCommand;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.ConfigurationManager;
-import xyz.ineanto.nicko.debug.RespawnPacketListener;
 import xyz.ineanto.nicko.event.PlayerJoinListener;
 import xyz.ineanto.nicko.event.PlayerQuitListener;
 import xyz.ineanto.nicko.language.CustomLanguage;
@@ -134,8 +132,6 @@ public class Nicko extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
             metrics = new Metrics(this, 20483);
-
-            ProtocolLibrary.getProtocolManager().addPacketListener(new RespawnPacketListener());
         }
 
         getLogger().info("Nicko has been enabled.");

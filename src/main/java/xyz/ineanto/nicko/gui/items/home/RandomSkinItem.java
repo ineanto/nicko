@@ -40,7 +40,7 @@ public class RandomSkinItem {
                     instance.getDataStore().updateCache(player.getUniqueId(), profile);
 
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
-                    final ActionResult result = appearanceManager.updatePlayer(true, false);
+                    final ActionResult result = appearanceManager.update(true, false);
                     if (!result.isError()) {
                         player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
                     } else {

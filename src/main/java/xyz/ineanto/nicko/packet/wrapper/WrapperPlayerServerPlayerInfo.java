@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.wrapper;
+package xyz.ineanto.nicko.packet.wrapper;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;

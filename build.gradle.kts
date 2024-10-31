@@ -48,8 +48,8 @@ dependencies {
     implementation("xyz.xenondevs.invui:invui:1.39")
     implementation("net.wesjd:anvilgui:1.10.2-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.18.1")
     implementation("com.mysql:mysql-connector-j:8.2.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
     implementation("redis.clients:jedis:5.1.2")
@@ -83,8 +83,7 @@ tasks {
         relocate("me.clip", "xyz.ineanto.nicko.libs.placeholderapi")
         relocate("net.wesjd", "xyz.ineanto.nicko.libs.anvilgui")
         relocate("com.github.jsixface", "xyz.ineanto.nicko.libs.yaml")
-        relocate("com.fasterxml.jackson.dataformat", "xyz.ineanto.nicko.libs.jackson.yaml")
-        relocate("com.fasterxml.jackson.core", "xyz.ineanto.nicko.libs.jackson.core")
+        relocate("com.fasterxml.jackson", "xyz.ineanto.nicko.libs.jacksonpr")
         relocate("com.mysql", "xyz.ineanto.nicko.libs.mysql")
         relocate("org.mariadb.jdbc", "xyz.ineanto.nicko.libs.mariadb")
         relocate("redis.clients", "xyz.ineanto.nicko.libs.redis")
@@ -129,6 +128,6 @@ tasks {
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.21.1")
+        minecraftVersion("1.21.3")
     }
 }

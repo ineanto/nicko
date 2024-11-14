@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
-import xyz.ineanto.nicko.storage.name.PlayerNameStore;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -14,8 +13,6 @@ public class NickoProfile implements Cloneable {
 
     private static final Nicko instance = Nicko.getInstance();
     private static final PlayerDataStore dataStore = instance.getDataStore();
-
-    private final PlayerNameStore nameStore = instance.getNameStore();
 
     private String name;
     private String skin;

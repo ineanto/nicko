@@ -12,13 +12,11 @@ import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlayerLanguage {
     private final MessageFormat formatter = new MessageFormat("");
-    private final Logger logger = Logger.getLogger("I18N");
     private final Nicko instance = Nicko.getInstance();
     private final Pattern replacementPattern = Pattern.compile("(?ms)\\{\\d+}");
     private final YamlConfig yamlConfig;

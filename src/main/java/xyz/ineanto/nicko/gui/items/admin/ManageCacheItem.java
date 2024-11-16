@@ -8,9 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import xyz.ineanto.nicko.gui.CacheManagementGUI;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
+import xyz.xenondevs.invui.util.MojangApiUtils;
+
+import java.io.IOException;
 
 public class ManageCacheItem extends AsyncItem {
     public ManageCacheItem(PlayerLanguage playerLanguage) {
@@ -19,7 +24,14 @@ public class ManageCacheItem extends AsyncItem {
                     return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
                 }, (click -> true)).getItemProvider(),
                 () -> {
-                    final ItemBuilder builder = new ItemBuilder(Material.PLAYER_HEAD);
+                    AbstractItemBuilder<?> builder;
+
+                    try {
+                        builder = new SkullBuilder("Notch");
+                    } catch (MojangApiUtils.MojangApiException | IOException e) {
+                        builder = new ItemBuilder(Material.PLAYER_HEAD);
+                    }
+
                     return playerLanguage.translateItem(builder, LanguageKey.GUI.Admin.MANAGE_CACHE);
                 });
     }

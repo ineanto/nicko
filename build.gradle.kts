@@ -1,3 +1,7 @@
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
+import io.papermc.paperweight.util.path
+import xyz.jpenilla.runtask.RunExtension
+
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
@@ -45,16 +49,17 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
 
-    implementation("xyz.xenondevs.invui:invui:1.39")
-    implementation("net.wesjd:anvilgui:1.10.2-SNAPSHOT")
+    implementation("xyz.xenondevs.invui:invui-core:1.41")
+    implementation("xyz.xenondevs.invui:inventory-access-r21:1.41")
+
+    implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1")
     implementation("com.fasterxml.jackson.core:jackson-core:2.18.1")
-    implementation("com.mysql:mysql-connector-j:8.2.0")
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
-    implementation("redis.clients:jedis:5.1.2")
+    implementation("com.mysql:mysql-connector-j:9.1.0")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.0")
+    implementation("redis.clients:jedis:5.2.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.bstats:bstats-bukkit:3.0.2")
 
     testImplementation("com.github.MockBukkit:MockBukkit:v3.133.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
@@ -62,7 +67,12 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
+paperweight {
+    reobfArtifactConfiguration = ReobfArtifactConfiguration.REOBF_PRODUCTION
+}
+
 tasks {
+
     processResources {
         from("src/main/resources")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -72,12 +82,6 @@ tasks {
     }
 
     shadowJar {
-        // NAMING
-        archiveBaseName.set("nicko")
-        archiveVersion.set(version.toString())
-        archiveAppendix.set("")
-        archiveClassifier.set("")
-
         // RELOCATIONS
         relocate("xyz.xenondevs", "xyz.ineanto.nicko.libs.invui")
         relocate("me.clip", "xyz.ineanto.nicko.libs.placeholderapi")
@@ -113,10 +117,30 @@ tasks {
             exclude(dependency("net.wesjd:.*"))
             exclude(dependency("org.bstats:.*"))
         }
+
+        manifest {
+            attributes["paperweight-mappings-namespace"] = "spigot"
+        }
     }
 
     runServer {
-        dependsOn(shadowJar)
+        dependsOn(reobfJar)
+
+
+        /**
+         * https://github.com/jpenilla/run-task/issues/56
+         *
+         * jpenilla:
+         * "On 1.20.5+ it makes no sense to waste time obfuscating the jar in development
+         * just for it to be immediately deobfuscated.
+         * If you have an edge case setup where this makes sense somehow,
+         * you can disable plugin jar detection and configure the plugin jars collection yourself."
+         *
+         * Well, Nicko is an edge case.
+         * AnvilGUI and InvUI are still using Spigot Mappings,
+         * and I'm stuck using them until they push a major, breaking update.
+         */
+        args("-add-plugin=${reobfJar.get().outputJar.path.toAbsolutePath()}")
 
         downloadPlugins {
             url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
@@ -130,4 +154,8 @@ tasks {
 
         minecraftVersion("1.21.3")
     }
+}
+
+extensions.configure<RunExtension> {
+    disablePluginJarDetection()
 }

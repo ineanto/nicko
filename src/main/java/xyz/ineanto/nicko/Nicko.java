@@ -1,7 +1,6 @@
 package xyz.ineanto.nicko;
 
 import com.comphenix.protocol.utility.MinecraftVersion;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
@@ -40,7 +39,6 @@ public class Nicko extends JavaPlugin {
     private CustomLanguage customLanguage;
     private PlayerNameStore nameStore;
     private RandomNameFetcher nameFetcher;
-    private Metrics metrics;
 
     public Nicko() {
         this.unitTesting = false;
@@ -66,7 +64,7 @@ public class Nicko extends JavaPlugin {
 
         if (!MinecraftVersion.TRAILS_AND_TAILS.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
-            getLogger().severe("As of version 1.2.0, Nicko only supports the latest Minecraft versions. (Currently 1.21.3)");
+            getLogger().severe("As of version 1.2.0, Nicko only supports the latest Minecraft version. (Currently 1.21.3)");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);
         }
@@ -131,7 +129,6 @@ public class Nicko extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-            metrics = new Metrics(this, 20483);
         }
 
         getLogger().info("Nicko has been enabled.");
@@ -150,7 +147,6 @@ public class Nicko extends JavaPlugin {
 
         if (!unitTesting) {
             nameStore.clearStoredNames();
-            metrics.shutdown();
         }
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }

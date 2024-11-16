@@ -20,10 +20,10 @@ event:
   appearance:
     set:
       error: "<gray>Wasn''t able to apply your disguise! ({0})</gray>"
-      ok: "<gray>You're now disguised.</gray>"
+      ok: "<gray>You''re now disguised.</gray>"
     restore:
       error: "<gray>Wasn''t able to apply the previous disguise! ({0})</gray>"
-      ok: "<gray>Disguise restored from last time.</gray>"
+      ok: "<gray>Previous disguise restored.</gray>"
     remove:
       error: "<gray>Wasn''t able to remove your disguise!.</gray>"
       missing: "<gray>You''re not currently disguised.</gray>"

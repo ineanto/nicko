@@ -27,16 +27,17 @@ public class AppearanceManager {
     public ActionResult reset() {
         final NickoProfile profile = getNickoProfile();
         final String defaultName = nameStore.getStoredName(player);
+
         profile.setName(defaultName);
         profile.setSkin(defaultName);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
         final ActionResult result = update(true, true);
-        if (!result.isError()) {
-            profile.setName(null);
-            profile.setSkin(null);
-            dataStore.getCache().cache(player.getUniqueId(), profile);
-        }
+
+        profile.setName(null);
+        profile.setSkin(null);
+        dataStore.getCache().cache(player.getUniqueId(), profile);
+
         return result;
     }
 

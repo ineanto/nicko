@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -11,8 +12,8 @@ import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.mojang.MojangUtils;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -116,14 +117,15 @@ public class AnvilManager {
 
         final ActionResult actionResult = appearanceManager.update(skinChange, false);
         if (!actionResult.isError()) {
-            player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
+            player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
+            player.playSound(player, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
         } else {
             player.sendMessage(
-                    playerLanguage.translate(
+                    playerLanguage.translateWithOops(
                             LanguageKey.Event.Appearance.Set.ERROR,
-                            true,
                             playerLanguage.translate(actionResult.getErrorKey(), false)
                     ));
+            player.playSound(player, Sound.BLOCK_ANVIL_PLACE, 0.5f, 1f);
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

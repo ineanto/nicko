@@ -2,6 +2,7 @@ package xyz.ineanto.nicko.gui.items.admin.check;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -77,7 +78,8 @@ public class PlayerInformationItem extends AsyncItem {
                     @Override
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
-                        appearanceManager.reset();
+                        appearanceManager.reset(true);
+                        player.playSound(player, Sound.ENTITY_VILLAGER_TRADE, 1, 1f);
                         player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
                     }
 

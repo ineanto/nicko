@@ -25,7 +25,7 @@ public class RandomSkinItem {
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.SPAWNER);
+            final ItemBuilder builder = new ItemBuilder(Material.WIND_CHARGE);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.RANDOM_SKIN);
         }, (event) -> {
             final Player player = event.getPlayer();
@@ -42,14 +42,14 @@ public class RandomSkinItem {
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
                     final ActionResult result = appearanceManager.update(true, false);
                     if (!result.isError()) {
-                        player.sendMessage(playerLanguage.translate(LanguageKey.Event.Appearance.Set.OK, true));
+                        player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
                     } else {
-                        player.sendMessage(playerLanguage.translate(
+                        player.sendMessage(playerLanguage.translateWithOops(
                                         LanguageKey.Event.Appearance.Set.ERROR,
-                                        true,
                                         playerLanguage.translate(result.getErrorKey(), false)
                                 )
                         );
+                        appearanceManager.reset(false);
                     }
                 });
                 return true;

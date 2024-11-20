@@ -73,7 +73,7 @@ public class InternalPacketSender implements PacketSender {
 
     @Override
     public ActionResult sendGameProfileUpdate(String name, boolean skinChange, boolean reset) {
-        final GameProfile gameProfile = ((CraftPlayer) player).getProfile();
+        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), name);
 
         // TODO (Ineanto, 31/10/2024): Could this be refactored to get rid of the boolean?
         if (skinChange) {

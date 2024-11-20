@@ -2,6 +2,7 @@ package xyz.ineanto.nicko.gui.items.admin.cache;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -55,7 +56,8 @@ public class CacheEntryItem extends AsyncItem {
                 @Override
                 public void onConfirm() {
                     final PlayerLanguage playerLanguage = new PlayerLanguage(player);
-                    player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Admin.Cache.INVALIDATE_ENTRY, name));
+                    player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Cache.INVALIDATE_ENTRY, true, name));
+                    player.playSound(player, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
                     mojangAPI.eraseFromCache(uuid);
                 }
 

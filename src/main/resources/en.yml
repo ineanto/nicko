@@ -94,7 +94,7 @@ gui:
     change_both:
       name: "Change <gold>both</gold>"
     random_skin:
-      name: "<rainbow>Get a random appearance!</rainbow>"
+      name: "<bold>I feel <gold>lucky!</gold></bold>"
     reset:
       name: "Reset appearance"
       lore:

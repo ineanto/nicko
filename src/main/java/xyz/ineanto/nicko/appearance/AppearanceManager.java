@@ -24,7 +24,7 @@ public class AppearanceManager {
         this.packetSender = new InternalPacketSender(player, getNickoProfile());
     }
 
-    public ActionResult reset() {
+    public ActionResult reset(boolean apply) {
         final NickoProfile profile = getNickoProfile();
         final String defaultName = nameStore.getStoredName(player);
 
@@ -32,13 +32,17 @@ public class AppearanceManager {
         profile.setSkin(defaultName);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        final ActionResult result = update(true, true);
+        if (apply) {
+            final ActionResult result = update(true, true);
 
-        profile.setName(null);
-        profile.setSkin(null);
-        dataStore.getCache().cache(player.getUniqueId(), profile);
+            profile.setName(null);
+            profile.setSkin(null);
+            dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        return result;
+            return result;
+        }
+
+        return ActionResult.ok();
     }
 
     public ActionResult update(boolean skinChange, boolean reset) {
@@ -47,7 +51,9 @@ public class AppearanceManager {
 
         final ActionResult result = packetSender.sendGameProfileUpdate(displayName, skinChange, reset);
 
-        if (result.isError()) { reset(); }
+        if (result.isError()) {
+            return reset(false);
+        }
 
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);

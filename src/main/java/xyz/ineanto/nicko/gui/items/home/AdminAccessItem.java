@@ -18,7 +18,7 @@ public class AdminAccessItem {
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.SCAFFOLDING);
+            final ItemBuilder builder = new ItemBuilder(Material.COMMAND_BLOCK);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.ADMIN);
         }, click -> {
             final ClickType clickType = click.getClickType();

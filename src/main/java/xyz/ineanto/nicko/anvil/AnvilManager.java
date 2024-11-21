@@ -118,14 +118,14 @@ public class AnvilManager {
         final ActionResult actionResult = appearanceManager.update(skinChange, false);
         if (!actionResult.isError()) {
             player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
-            player.playSound(player, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
+            player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
         } else {
             player.sendMessage(
                     playerLanguage.translateWithOops(
                             LanguageKey.Event.Appearance.Set.ERROR,
                             playerLanguage.translate(actionResult.getErrorKey(), false)
                     ));
-            player.playSound(player, Sound.BLOCK_ANVIL_PLACE, 0.5f, 1f);
+            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f, 1f);
         }
         return Collections.singletonList(AnvilGUI.ResponseAction.close());
     }

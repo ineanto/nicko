@@ -13,8 +13,8 @@ import xyz.ineanto.nicko.gui.ChoiceGUI;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
 import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -79,7 +79,7 @@ public class PlayerInformationItem extends AsyncItem {
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
                         appearanceManager.reset(true);
-                        player.playSound(player, Sound.ENTITY_VILLAGER_TRADE, 1, 1f);
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_TRADE, 1, 1f);
                         player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
                     }
 

@@ -57,7 +57,7 @@ public class CacheEntryItem extends AsyncItem {
                 public void onConfirm() {
                     final PlayerLanguage playerLanguage = new PlayerLanguage(player);
                     player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Cache.INVALIDATE_ENTRY, true, name));
-                    player.playSound(player, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
+                    player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
                     mojangAPI.eraseFromCache(uuid);
                 }
 

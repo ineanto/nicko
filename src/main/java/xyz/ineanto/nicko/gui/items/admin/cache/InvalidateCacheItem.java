@@ -29,7 +29,7 @@ public class InvalidateCacheItem {
                 final Player player = click.getPlayer();
                 final PlayerLanguage playerLanguage = new PlayerLanguage(player);
                 player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Admin.Cache.INVALIDATE_CACHE));
-                player.playSound(player, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
+                player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
                 Nicko.getInstance().getMojangAPI().getSkinCache().invalidateAll();
                 return true;
             }

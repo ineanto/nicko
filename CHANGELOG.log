@@ -1,10 +1,12 @@
 1.2.0: Update n°13 (XX/XX/24)
     [FEATURES]
-        - Players are now able to save disguises as presets.
+        - Players are now able to mark disguises as favorites.
         - Modernized the messages and added various sound effects upon interacting with the plugin.
+        - Made GUIs names cleaner.
 
      [FIXES]
         - Fixed an oversight preventing the configuration from properly being migrated.
+        - Fixed the placeholder item in the skin cache invalidation not being translated.
 
     [LANGUAGE]
         - Moved the prefix to the language file.

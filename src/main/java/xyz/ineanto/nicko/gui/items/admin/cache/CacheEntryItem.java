@@ -1,6 +1,5 @@
 package xyz.ineanto.nicko.gui.items.admin.cache;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -18,6 +17,7 @@ import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
+import xyz.xenondevs.invui.item.impl.SuppliedItem;
 import xyz.xenondevs.invui.util.MojangApiUtils;
 
 import java.io.IOException;
@@ -29,10 +29,10 @@ public class CacheEntryItem extends AsyncItem {
     private final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
 
     public CacheEntryItem(PlayerLanguage playerLanguage, String uuid) {
-        super(new ItemBuilder(Material.PAINTING)
-                        .setDisplayName(
-                                Component.text(playerLanguage.translate(LanguageKey.GUI.LOADING, false)).content()
-                        ),
+        super(new SuppliedItem(() -> {
+                    final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
+                    return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
+                }, (click -> true)).getItemProvider(),
                 () -> {
                     final String dashedUuid = uuid.replaceAll("(.{8})(.{4})(.{4})(.{4})(.+)", "$1-$2-$3-$4-$5");
                     final UUID uuidObject = UUID.fromString(dashedUuid);

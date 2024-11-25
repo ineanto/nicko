@@ -4,7 +4,9 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.Optionull;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.RemoteChatSession;
 import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.*;
@@ -141,14 +143,14 @@ public class InternalPacketSender implements PacketSender {
                 ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY);
 
         final List<ClientboundPlayerInfoUpdatePacket.Entry> entries = List.of(new ClientboundPlayerInfoUpdatePacket.Entry(
-                player.getUniqueId(),
+                serverPlayer.getUUID(),
                 serverPlayer.gameProfile,
                 true,
-                player.getPing(),
+                serverPlayer.connection.latency(),
                 serverPlayer.gameMode.getGameModeForPlayer(),
                 MutableComponent.create(new PlainTextContents.LiteralContents(displayName)),
-                1,
-                null
+                serverPlayer.getTabListOrder(),
+                Optionull.map(serverPlayer.getChatSession(), RemoteChatSession::asData)
         ));
 
         final ClientboundPlayerInfoUpdatePacket update = new ClientboundPlayerInfoUpdatePacket(actions, entries);

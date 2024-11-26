@@ -29,7 +29,7 @@ public class NickoExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.0.0";
+        return "1.0.1";
     }
 
     @Override
@@ -51,15 +51,8 @@ public class NickoExpansion extends PlaceholderExpansion {
         final Optional<NickoProfile> optionalProfile = instance.getDataStore().getData(player.getUniqueId());
         if (optionalProfile.isPresent()) {
             final NickoProfile profile = optionalProfile.get();
-            if (profile.hasData()) {
-                if (profile.getName() != null) {
-                    name = profile.getName();
-                }
-
-                if (profile.getSkin() != null) {
-                    skin = profile.getSkin();
-                }
-            }
+            name = profile.getName() == null ? player.getName() : profile.getName();
+            skin = profile.getSkin() == null ? player.getName() : profile.getSkin();
             locale = profile.getLocale().getName();
             randomSkin = profile.isRandomSkin();
         }

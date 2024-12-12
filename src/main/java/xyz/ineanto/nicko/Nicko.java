@@ -64,7 +64,7 @@ public class Nicko extends JavaPlugin {
 
         if (!MinecraftVersion.TRAILS_AND_TAILS.atOrAbove()) {
             getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
-            getLogger().severe("As of version 1.2.0, Nicko only supports the latest Minecraft version. (Currently 1.21.3)");
+            getLogger().severe("As of version 1.2.0, Nicko only supports the latest two majors Minecraft versions. (Currently 1.20.6-1.21.X)");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);
         }

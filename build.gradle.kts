@@ -1,12 +1,7 @@
-import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
-import io.papermc.paperweight.util.path
-import xyz.jpenilla.runtask.RunExtension
-
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
     id("xyz.jpenilla.run-paper") version "2.3.0"
-    id("io.papermc.paperweight.userdev") version "1.7.4"
 }
 
 group = "xyz.ineanto"
@@ -23,34 +18,24 @@ java {
 repositories {
     mavenCentral()
     mavenLocal()
+
     maven { url = uri("https://jitpack.io") }
-    maven {
-        name = "xenondevs"
-        url = uri("https://repo.xenondevs.xyz/releases")
-    }
-    maven {
-        name = "papermc"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
-    maven {
-        name = "codemc"
-        url = uri("https://repo.codemc.io/repository/maven-snapshots/")
-    }
-    maven {
-        name = "placeholderapi"
-        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    }
+    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
+    maven { url = uri("https://repo.xenondevs.xyz/releases") }
+    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+    maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
 
-    compileOnly("com.github.dmulloy2:ProtocolLib:5.3.0")
+    compileOnly("com.github.dmulloy2:ProtocolLib:6845acd89d")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
+    compileOnly("xyz.xenondevs.invui:invui:1.41")
 
-    implementation("xyz.xenondevs.invui:invui-core:1.41")
-    implementation("xyz.xenondevs.invui:inventory-access-r21:1.41")
+    implementation(project(":common"))
+    implementation(project(":mappings"))
 
     implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
     implementation("com.github.jsixface:yamlconfig:1.2")
@@ -60,15 +45,6 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client:3.5.0")
     implementation("redis.clients:jedis:5.2.0")
     implementation("com.google.code.gson:gson:2.10.1")
-
-    testImplementation("com.github.MockBukkit:MockBukkit:v3.133.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-}
-
-paperweight {
-    reobfArtifactConfiguration = ReobfArtifactConfiguration.REOBF_PRODUCTION
 }
 
 tasks {
@@ -83,7 +59,6 @@ tasks {
 
     shadowJar {
         // RELOCATIONS
-        relocate("xyz.xenondevs", "xyz.ineanto.nicko.libs.invui")
         relocate("me.clip", "xyz.ineanto.nicko.libs.placeholderapi")
         relocate("net.wesjd", "xyz.ineanto.nicko.libs.anvilgui")
         relocate("com.github.jsixface", "xyz.ineanto.nicko.libs.yaml")
@@ -93,7 +68,6 @@ tasks {
         relocate("redis.clients", "xyz.ineanto.nicko.libs.redis")
         relocate("com.google.gson", "xyz.ineanto.nicko.libs.gson")
         relocate("org.apache.commons.pool2", "xyz.ineanto.nicko.libs.pool2")
-        relocate("org.bstats", "xyz.ineanto.nicko.libs.bstats")
 
         // EXCLUSIONS
         exclude("colors.bin")
@@ -113,20 +87,11 @@ tasks {
 
         // MINIFY
         minimize {
-            exclude(dependency("xyz.xenondevs.invui:.*"))
             exclude(dependency("net.wesjd:.*"))
-            exclude(dependency("org.bstats:.*"))
-        }
-
-        manifest {
-            attributes["paperweight-mappings-namespace"] = "spigot"
         }
     }
 
     runServer {
-        dependsOn(reobfJar)
-
-
         /**
          * https://github.com/jpenilla/run-task/issues/56
          *
@@ -140,7 +105,7 @@ tasks {
          * AnvilGUI and InvUI are still using Spigot Mappings,
          * and I'm stuck using them until they push a major, breaking update.
          */
-        args("-add-plugin=${reobfJar.get().outputJar.path.toAbsolutePath()}")
+        //args("-add-plugin=${reobfJar.get().outputJar.path.toAbsolutePath()}")
 
         downloadPlugins {
             url("https://download.luckperms.net/1554/bukkit/loader/LuckPerms-Bukkit-5.4.139.jar")
@@ -152,10 +117,6 @@ tasks {
             url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
-        minecraftVersion("1.21.3")
+        minecraftVersion("1.20.6")
     }
-}
-
-extensions.configure<RunExtension> {
-    disablePluginJarDetection()
 }

@@ -3,6 +3,7 @@ package xyz.ineanto.nicko.appearance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.action.ActionResult;
 import xyz.ineanto.nicko.packet.InternalPacketSender;
 import xyz.ineanto.nicko.packet.PacketSender;
 import xyz.ineanto.nicko.profile.NickoProfile;

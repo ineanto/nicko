@@ -149,6 +149,7 @@ public class InternalPacketSender implements PacketSender {
                 serverPlayer.connection.latency(),
                 serverPlayer.gameMode.getGameModeForPlayer(),
                 MutableComponent.create(new PlainTextContents.LiteralContents(displayName)),
+                true,
                 serverPlayer.getTabListOrder(),
                 Optionull.map(serverPlayer.getChatSession(), RemoteChatSession::asData)
         ));

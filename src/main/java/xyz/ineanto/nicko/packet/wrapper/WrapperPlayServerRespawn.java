@@ -3,7 +3,11 @@ package xyz.ineanto.nicko.packet.wrapper;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.reflect.FuzzyReflection;
 import com.comphenix.protocol.reflect.StructureModifier;
+import com.comphenix.protocol.reflect.accessors.Accessors;
+import com.comphenix.protocol.reflect.fuzzy.FuzzyMethodContract;
+import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
@@ -13,8 +17,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
+import java.util.Arrays;
 
 /**
  * PacketPlayServerRespawn Wrapper class (1.20.X to 1.21.X)
@@ -56,24 +63,49 @@ public class WrapperPlayServerRespawn extends AbstractPacket {
         } else {
             // 1.20.5 to 1.21.1
 
-            /*
-              Honestly, I've tried everything to make this work.
-              Fields inside the CommonPlayerSpawnInfo are Record Components and are
-              marked final.
-
-              This would work with some trickery involved, but here's the
-              caveat: Record Components/Fields and are immutable by DESIGN.
-              So... here we are now, stopped right in my track by Java's language design and Mojang themselves.
-             */
-
             try {
-                final Object spawnInfoStructureHandle = spawnInfoStructure.getHandle();
-                final RecordComponent[] components = spawnInfoStructureHandle.getClass().getRecordComponents();
+                final Class<?> spawnInfoClass = MinecraftReflection.getMinecraftClass("network.protocol.game.CommonPlayerSpawnInfo");
 
-                final Field levelKeyField = spawnInfoStructureHandle.getClass().getDeclaredField(components[1].getAccessor().getName());
-                levelKeyField.setAccessible(true);
-                levelKeyField.set(spawnInfoStructureHandle, BukkitConverters.getWorldKeyConverter().getGeneric(Bukkit.getWorld("world")));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
+                Class<?>[] componentTypes = Arrays.stream(spawnInfoClass.getRecordComponents())
+                        .map(RecordComponent::getType)
+                        .toArray(Class<?>[]::new);
+                final Constructor<?> spawnInfoConstructor = spawnInfoClass.getDeclaredConstructor(componentTypes);
+
+                /**
+                 * Holder<DimensionType> dimensionType,
+                 * ResourceKey<Level> dimension,
+                 * long seed,
+                 * GameType gameType,
+                 * GameType previousGameType,
+                 * boolean isDebug,
+                 * boolean isFlat,
+                 * Optional<GlobalPos> lastDeathLocation,
+                 * int portalCooldown
+                 */
+
+                final World world = Bukkit.getWorld("world");
+
+                FuzzyReflection.fromClass(spawnInfoClass).getConstructor(
+                        FuzzyMethodContract
+                                .newBuilder()
+                                .build()
+                );
+
+                final Object spawnInfo = spawnInfoConstructor.newInstance(
+                        BukkitConverters.getDimensionConverter().getGeneric(world),
+                        BukkitConverters.getWorldKeyConverter().getGeneric(world),
+                        world.getSeed(),
+                        EnumWrappers.getGameModeConverter().getGeneric(EnumWrappers.NativeGameMode.fromBukkit(GameMode.SURVIVAL)),
+                        EnumWrappers.getGameModeConverter().getGeneric(EnumWrappers.NativeGameMode.fromBukkit(GameMode.SURVIVAL)),
+                        false,
+                        false,
+                        BukkitConverters.getSectionPositionConverter()
+                );
+
+                final Field commonSpawnDataField = Accessors.getFieldAccessor(TYPE.getPacketClass(), spawnInfoClass, true).getField();
+                commonSpawnDataField.set(spawnInfoStructure.getHandle(), spawnInfo);
+            } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException |
+                     InstantiationException e) {
                 throw new RuntimeException();
             }
         }

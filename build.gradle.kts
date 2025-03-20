@@ -36,9 +36,6 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
-    //compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
-
-    //implementation("xyz.xenondevs.invui:inventory-access-r22:$invuiVersion:remapped-mojang")
 
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1")
@@ -61,8 +58,6 @@ tasks {
 
     shadowJar {
         // RELOCATIONS
-        //relocate("xyz.xenondevs", "xyz.ineanto.nicko.libs.invui")
-        //relocate("net.wesjd", "xyz.ineanto.nicko.libs.anvilgui")
         relocate("com.github.jsixface", "xyz.ineanto.nicko.libs.yaml")
         relocate("me.clip", "xyz.ineanto.nicko.libs.placeholderapi")
         relocate("com.fasterxml.jackson", "xyz.ineanto.nicko.libs.jacksonpr")
@@ -91,8 +86,6 @@ tasks {
 
         // MINIFY
         minimize {
-            //exclude(dependency("xyz.xenondevs.invui:.*"))
-            //exclude(dependency("net.wesjd:.*"))
             exclude(dependency("org.bstats:.*"))
         }
 

@@ -3,7 +3,6 @@ package xyz.ineanto.nicko;
 import com.comphenix.protocol.utility.MinecraftVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.ineanto.nicko.appearance.random.RandomNameFetcher;
 import xyz.ineanto.nicko.command.NickoCommand;
@@ -21,6 +20,7 @@ import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.json.JSONStorage;
 import xyz.ineanto.nicko.storage.map.MapCache;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
+import xyz.xenondevs.invui.InvUI;
 import xyz.xenondevs.invui.gui.structure.Structure;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
@@ -30,8 +30,6 @@ import java.io.IOException;
 public class Nicko extends JavaPlugin {
     private static Nicko plugin;
 
-    private final boolean unitTesting;
-
     private MojangAPI mojangAPI;
     private PlayerDataStore dataStore;
     private ConfigurationManager configurationManager;
@@ -39,19 +37,6 @@ public class Nicko extends JavaPlugin {
     private CustomLanguage customLanguage;
     private PlayerNameStore nameStore;
     private RandomNameFetcher nameFetcher;
-
-    public Nicko() {
-        this.unitTesting = false;
-    }
-
-    /**
-     * Used by MockBukkit
-     */
-    protected Nicko(Configuration configuration) {
-        this.unitTesting = true;
-        this.configuration = configuration;
-        getLogger().info("Unit Testing Mode enabled.");
-    }
 
     @Override
     public void onEnable() {
@@ -96,40 +81,36 @@ public class Nicko extends JavaPlugin {
             dataStore.setCache(cache);
         }
 
-        if (!unitTesting) {
-            nameStore = new PlayerNameStore();
-            mojangAPI = new MojangAPI();
-            nameFetcher = new RandomNameFetcher(this);
+        nameStore = new PlayerNameStore();
+        mojangAPI = new MojangAPI();
+        nameFetcher = new RandomNameFetcher(this);
 
-            new ConfigurationMigrator(this).migrate();
+        new ConfigurationMigrator(this).migrate();
+        InvUI.getInstance().setPlugin(this);
 
-            if (configuration.isCustomLocale()) {
-                try {
-                    CustomLanguage.dumpIntoFile(Language.ENGLISH);
-                    customLanguage = new CustomLanguage();
-                    new CustomLocaleMigrator(this, customLanguage).migrate();
-                    getLogger().info("Successfully loaded the custom locale.");
-                } catch (IOException e) {
-                    getLogger().severe("Failed to load the custom locale!");
-                }
+        if (configuration.isCustomLocale()) {
+            try {
+                CustomLanguage.dumpIntoFile(Language.ENGLISH);
+                customLanguage = new CustomLanguage();
+                new CustomLocaleMigrator(this, customLanguage).migrate();
+                getLogger().info("Successfully loaded the custom locale.");
+            } catch (IOException e) {
+                getLogger().severe("Failed to load the custom locale!");
             }
-
-            final PluginCommand command = getCommand("nicko");
-            if (command != null) {
-                command.setExecutor(new NickoCommand());
-            }
-
-            Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
-            Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
-
-            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                getLogger().info("Enabling PlaceHolderAPI support...");
-                new NickoExpansion(this).register();
-            }
-
-            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-            getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
         }
+
+        registerCommand("nicko", new NickoCommand());
+
+        Structure.addGlobalIngredient('#', new SimpleItem(new ItemBuilder(Material.AIR)));
+        Structure.addGlobalIngredient('%', new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ")));
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            getLogger().info("Enabling PlaceHolderAPI support...");
+            new NickoExpansion(this).register();
+        }
+
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
         getLogger().info("Nicko has been enabled.");
     }
@@ -145,9 +126,7 @@ public class Nicko extends JavaPlugin {
             }
         }
 
-        if (!unitTesting) {
-            nameStore.clearStoredNames();
-        }
+        nameStore.clearStoredNames();
         getLogger().info("Nicko (Bukkit) has been disabled.");
     }
 

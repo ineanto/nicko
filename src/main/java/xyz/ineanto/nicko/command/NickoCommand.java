@@ -1,28 +1,29 @@
 package xyz.ineanto.nicko.command;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 import xyz.ineanto.nicko.gui.HomeGUI;
-import xyz.ineanto.nicko.language.PlayerLanguage;
-import xyz.ineanto.nicko.language.LanguageKey;
 
-public class NickoCommand implements CommandExecutor {
+public class NickoCommand implements BasicCommand {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender instanceof Player player) {
-            if (player.isOp() || player.hasPermission("nicko.use") || player.hasPermission("nicko.*")) {
-                new HomeGUI(player).open();
-            } else {
-                final PlayerLanguage playerLanguage = new PlayerLanguage(player);
-                player.sendMessage(playerLanguage.translate(LanguageKey.Error.PERMISSION, true));
-            }
-            return false;
-        }
+    public void execute(CommandSourceStack stack, String[] strings) {
+        final Entity executor = stack.getExecutor();
+        final Player player = (Player) executor;
 
-        sender.sendMessage("This plugin can only be used in-game. Sorry!");
-        return false;
+        new HomeGUI(player).open();
+    }
+
+    @Override
+    public boolean canUse(CommandSender sender) {
+        return sender instanceof Player && sender.isOp() || sender.hasPermission(permission());
+    }
+
+    @Override
+    public @Nullable String permission() {
+        return "nicko.use";
     }
 }

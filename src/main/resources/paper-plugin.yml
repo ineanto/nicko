@@ -1,17 +1,19 @@
 name: Nicko
 main: xyz.ineanto.nicko.Nicko
+loader: xyz.ineanto.nicko.loader.NickoPluginLoader
 version: ${version}
 author: Ineanto
 description: "The feature packed, next generation disguise plugin for Minecraft."
-api-version: 1.21
+api-version: "1.21"
 softdepend: [ PlaceholderAPI ]
 depend:
   - ProtocolLib
-load: POSTWORLD
-commands:
-  nicko:
-    description: "Opens Nicko's GUI."
-    permission: nicko.use
+
+# Suppose we require ProtocolLib to be loaded for our plugin
+AnvilGUI:
+  join-classpath: true
+  required: true
+
 permissions:
   nicko.*:
     default: op

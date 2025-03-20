@@ -36,7 +36,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
-    compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
+    //compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
 
     //implementation("xyz.xenondevs.invui:inventory-access-r22:$invuiVersion:remapped-mojang")
 

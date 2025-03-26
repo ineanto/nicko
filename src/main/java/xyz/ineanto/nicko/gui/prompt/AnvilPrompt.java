@@ -15,6 +15,10 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This is currently unused, I'm waiting for AnvilGUI
+ * to be updated to compile with Paper mappings.
+ */
 public class AnvilPrompt implements Prompt {
     private final Player player;
     private final PlayerLanguage playerLanguage;

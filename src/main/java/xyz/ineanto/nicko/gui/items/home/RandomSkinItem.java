@@ -49,7 +49,7 @@ public class RandomSkinItem {
                                         playerLanguage.translate(result.getErrorKey(), false)
                                 )
                         );
-                        appearanceManager.reset(false);
+                        appearanceManager.reset();
                     }
                 });
                 return true;

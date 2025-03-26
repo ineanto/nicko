@@ -1,8 +1,11 @@
 package xyz.ineanto.nicko.appearance;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
+import xyz.ineanto.nicko.event.custom.PlayerResetDisguiseEvent;
 import xyz.ineanto.nicko.packet.InternalPacketSender;
 import xyz.ineanto.nicko.packet.PacketSender;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -24,25 +27,24 @@ public class AppearanceManager {
         this.packetSender = new InternalPacketSender(player, getNickoProfile());
     }
 
-    public ActionResult reset(boolean apply) {
+    public ActionResult reset() {
         final NickoProfile profile = getNickoProfile();
         final String defaultName = nameStore.getStoredName(player);
 
+        // Call the event.
+        final PlayerResetDisguiseEvent event = new PlayerResetDisguiseEvent(player);
+        Bukkit.getPluginManager().callEvent(event);
+
         profile.setName(defaultName);
         profile.setSkin(defaultName);
+
+        final ActionResult result = update(true, true);
+
+        profile.setName(null);
+        profile.setSkin(null);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        if (apply) {
-            final ActionResult result = update(true, true);
-
-            profile.setName(null);
-            profile.setSkin(null);
-            dataStore.getCache().cache(player.getUniqueId(), profile);
-
-            return result;
-        }
-
-        return ActionResult.ok();
+        return result;
     }
 
     public ActionResult update(boolean skinChange, boolean reset) {
@@ -52,8 +54,12 @@ public class AppearanceManager {
         final ActionResult result = packetSender.sendGameProfileUpdate(displayName, skinChange, reset);
 
         if (result.isError()) {
-            return reset(false);
+            return reset();
         }
+
+        // Call the event.
+        final PlayerDisguiseEvent event = new PlayerDisguiseEvent(player, profile.getSkin(), profile.getName());
+        Bukkit.getPluginManager().callEvent(event);
 
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);

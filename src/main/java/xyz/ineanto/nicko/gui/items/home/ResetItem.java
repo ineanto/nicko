@@ -36,7 +36,7 @@ public class ResetItem {
                     }
 
                     final AppearanceManager appearanceManager = new AppearanceManager(player);
-                    if (!appearanceManager.reset(true).isError()) {
+                    if (!appearanceManager.reset().isError()) {
                         player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Remove.OK));
                     } else {
                         player.sendMessage(playerLanguage.translateWithOops(LanguageKey.Event.Appearance.Remove.ERROR));

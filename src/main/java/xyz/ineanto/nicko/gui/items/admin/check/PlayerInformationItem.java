@@ -78,7 +78,7 @@ public class PlayerInformationItem extends AsyncItem {
                     @Override
                     public void onConfirm() {
                         final AppearanceManager appearanceManager = new AppearanceManager(target);
-                        appearanceManager.reset(true);
+                        appearanceManager.reset();
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_TRADE, 1, 1f);
                         player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Check.REMOVE_SKIN, true, target.getName()));
                     }

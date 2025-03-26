@@ -37,6 +37,7 @@ dependencies {
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
 
+    implementation("de.rapha149.signgui:signgui:2.5.0")
     implementation("com.github.jsixface:yamlconfig:1.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1")
     implementation("com.fasterxml.jackson.core:jackson-core:2.18.1")

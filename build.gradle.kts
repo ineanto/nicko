@@ -22,7 +22,6 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.xenondevs.xyz/releases") }
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
     maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
@@ -91,10 +90,6 @@ tasks {
         minimize {
             exclude(dependency("xyz.xenondevs.invui:.*"))
             exclude(dependency("org.bstats:.*"))
-        }
-
-        manifest {
-            attributes["paperweight-mappings-namespace"] = "mojang"
         }
     }
 

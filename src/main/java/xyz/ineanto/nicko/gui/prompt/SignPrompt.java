@@ -27,9 +27,9 @@ public class SignPrompt implements Prompt {
     private final AtomicReference<Optional<String>> name = new AtomicReference<>();
     private final AtomicReference<Optional<String>> skin = new AtomicReference<>();
 
-    public SignPrompt(Player player) {
+    public SignPrompt(Player player, PlayerLanguage playerLanguage) {
         this.player = player;
-        this.playerLanguage = new PlayerLanguage(player);
+        this.playerLanguage = playerLanguage;
     }
 
     @Override

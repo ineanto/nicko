@@ -1,8 +1,7 @@
 package xyz.ineanto.nicko.packet;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
+import com.destroystokyo.paper.profile.PlayerProfile;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.Optionull;
 import net.minecraft.network.chat.MutableComponent;
@@ -39,11 +38,11 @@ import java.util.concurrent.ExecutionException;
  * I want you to really stare at this code.
  * You made me do this.
  */
-public class InternalPacketSender implements PacketSender {
+public class PaperPacketSender implements PacketSender {
     private final Player player;
     private final NickoProfile profile;
 
-    public InternalPacketSender(Player player, NickoProfile profile) {
+    public PaperPacketSender(Player player, NickoProfile profile) {
         this.player = player;
         this.profile = profile;
     }
@@ -74,39 +73,38 @@ public class InternalPacketSender implements PacketSender {
     }
 
     @Override
-    public ActionResult sendGameProfileUpdate(String name, boolean skinChange, boolean reset) {
-        final GameProfile gameProfile = new GameProfile(player.getUniqueId(), name);
-
-        // TODO (Ineanto, 31/10/2024): Could this be refactored to get rid of the boolean?
-        if (skinChange) {
-            Optional<MojangSkin> skin;
-            try {
-                final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
-                final Optional<String> uuid = mojangAPI.getUUID(profile.getSkin());
-                if (uuid.isPresent()) {
-                    skin = reset ? mojangAPI.getSkinWithoutCaching(uuid.get()) : mojangAPI.getSkin(uuid.get());
-                    if (skin.isPresent()) {
-                        final MojangSkin skinResult = skin.get();
-                        final PropertyMap properties = gameProfile.getProperties();
-                        properties.get("textures").clear();
-                        properties.put("textures", new Property("textures", skinResult.value(), skinResult.signature()));
-                        ((CraftPlayer) player).getHandle().gameProfile = gameProfile;
-                    } else {
-                        return ActionResult.error(LanguageKey.Error.MOJANG_SKIN);
-                    }
-                } else {
-                    return ActionResult.error(LanguageKey.Error.MOJANG_NAME);
-                }
-                return ActionResult.ok();
-            } catch (ExecutionException e) {
-                return ActionResult.error(LanguageKey.Error.CACHE);
-            } catch (IOException e) {
-                return ActionResult.error(LanguageKey.Error.MOJANG_NAME);
-            } catch (InterruptedException e) {
-                return ActionResult.error("Unknown error");
-            }
-        }
+    public ActionResult updatePlayerProfile(String name) {
+        final PlayerProfile playerProfile = new CraftPlayerProfile(player.getUniqueId(), name);
+        // Copy previous properties to preserve skin
+        playerProfile.setProperties(playerProfile.getProperties());
+        player.setPlayerProfile(playerProfile);
         return ActionResult.ok();
+    }
+
+    @Override
+    public ActionResult updatePlayerProfileProperties() {
+        final PlayerProfile playerProfile = new CraftPlayerProfile(player.getUniqueId(), profile.getName() == null ? player.getName() : profile.getName());
+
+        try {
+            final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
+
+            final Optional<String> uuid = mojangAPI.getUUID(profile.getSkin());
+            if (uuid.isEmpty()) {
+                return ActionResult.error(LanguageKey.Error.MOJANG);
+            }
+
+            final Optional<MojangSkin> skin = mojangAPI.getSkin(uuid.get());
+            if (skin.isEmpty()) {
+                return ActionResult.error(LanguageKey.Error.MOJANG);
+            }
+
+            final MojangSkin skinResult = skin.get();
+            playerProfile.setProperties(skinResult.asProfileProperties());
+            player.setPlayerProfile(playerProfile);
+            return ActionResult.ok();
+        } catch (ExecutionException | IOException e) {
+            return ActionResult.error(LanguageKey.Error.CACHE);
+        }
     }
 
     @Override

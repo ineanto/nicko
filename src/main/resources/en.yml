@@ -1,7 +1,7 @@
 # Nicko ${version} - Language File:
 
 # Specifies the configuration version, don't change.
-version: "1.2.0"
+version: "1.3.0"
 
 prefix: "<b><gradient:#01a97c:#8ffd54>NICKO</gradient></b>"
 whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
@@ -10,8 +10,7 @@ oops: "<b><color:#ff4640>OOPS!</color></b>"
 error:
   permission: "<gray>You're missing the permission to do that.</gray>"
   invalid_username: "<gray>This is an invalid Minecraft username.</gray>"
-  mojang_name: "<gray>There's is not Minecraft account with this username.</gray>"
-  mojang_skin: "<gray>This Minecraft account has no skin.</gray>"
+  mojang: "<gray>Something went wrong while fetching data from Mojang.</gray>"
   cache: "<gray>Unable to get data from the cache.</gray>"
 
 event:

@@ -9,10 +9,11 @@ softdepend: [ PlaceholderAPI ]
 depend:
   - ProtocolLib
 
-# Suppose we require ProtocolLib to be loaded for our plugin
-AnvilGUI:
-  join-classpath: true
-  required: true
+dependencies:
+  server:
+    ProtocolLib:
+      load: BEFORE
+      join-classpath: true
 
 permissions:
   nicko.*:

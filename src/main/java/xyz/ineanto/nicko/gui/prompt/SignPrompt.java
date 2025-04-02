@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +17,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class SignPrompt implements Prompt {
     private final Player player;
     private final PlayerLanguage playerLanguage;
-
-    private List<String> lines = List.of(
-            "VVVVVVVVVVVVVVV",
-            null,
-            null,
-            "ΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛ"
+    private final ArrayList<String> lines = new ArrayList<>(
+            List.of(
+                    "VVVVVVVVVVVVVVV",
+                    "",
+                    "",
+                    "ΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛ"
+            )
     );
 
     private final AtomicReference<Optional<String>> name = new AtomicReference<>();
@@ -73,6 +75,7 @@ public class SignPrompt implements Prompt {
         try {
             final SignGUI gui = SignGUI.builder()
                     .setLines(lines.toArray(new String[0]))
+                    .setLine(2, null)
                     .setType(Material.OAK_SIGN)
                     .setHandler((_, result) -> {
                         final String internalLine2 = result.getLineWithoutColor(2);
@@ -89,6 +92,7 @@ public class SignPrompt implements Prompt {
             gui.open(player);
             return reference.get();
         } catch (SignGUIVersionException exception) {
+            exception.printStackTrace();
             return Optional.empty();
         }
     }

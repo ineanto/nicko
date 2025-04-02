@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
 import xyz.ineanto.nicko.event.custom.PlayerResetDisguiseEvent;
-import xyz.ineanto.nicko.packet.InternalPacketSender;
+import xyz.ineanto.nicko.packet.PaperPacketSender;
 import xyz.ineanto.nicko.packet.PacketSender;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
@@ -24,7 +24,7 @@ public class AppearanceManager {
 
     public AppearanceManager(Player player) {
         this.player = player;
-        this.packetSender = new InternalPacketSender(player, getNickoProfile());
+        this.packetSender = new PaperPacketSender(player, getNickoProfile());
     }
 
     public ActionResult reset() {
@@ -51,10 +51,14 @@ public class AppearanceManager {
         final NickoProfile profile = getNickoProfile();
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
 
-        final ActionResult result = packetSender.sendGameProfileUpdate(displayName, skinChange, reset);
+        final ActionResult result = packetSender.updatePlayerProfile(displayName);
 
-        if (result.isError()) {
-            return reset();
+        if (skinChange) {
+            final ActionResult propertiesUpdateResult = packetSender.updatePlayerProfileProperties();
+
+            if (propertiesUpdateResult.isError()) {
+                return reset();
+            }
         }
 
         // Call the event.
@@ -63,8 +67,8 @@ public class AppearanceManager {
 
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);
-        respawnPlayer();
-        packetSender.sendEntityRespawn();
+        //respawnPlayer();
+        //packetSender.sendEntityRespawn();
 
         return result;
     }

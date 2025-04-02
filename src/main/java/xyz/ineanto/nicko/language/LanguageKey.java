@@ -10,8 +10,7 @@ public class LanguageKey {
 
         public static final String PERMISSION = ERROR_KEY + "permission";
         public static final String CACHE = ERROR_KEY + "cache";
-        public static final String MOJANG_NAME = ERROR_KEY + "mojang_name";
-        public static final String MOJANG_SKIN = ERROR_KEY + "mojang_skin";
+        public static final String MOJANG = ERROR_KEY + "mojang";
     }
 
     public static class Event {

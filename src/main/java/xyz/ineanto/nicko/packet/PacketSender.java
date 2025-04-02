@@ -5,7 +5,9 @@ import xyz.ineanto.nicko.appearance.ActionResult;
 public interface PacketSender {
     void sendEntityRespawn();
 
-    ActionResult sendGameProfileUpdate(String name, boolean skinChange, boolean reset);
+    ActionResult updatePlayerProfile(String name);
+
+    ActionResult updatePlayerProfileProperties();
 
     void sendEntityMetadataUpdate();
 

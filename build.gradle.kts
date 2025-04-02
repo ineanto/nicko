@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
-    id("xyz.jpenilla.run-paper") version "2.3.0"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.10"
 }
 
@@ -31,11 +31,11 @@ repositories {
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.4.0-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
     compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.4.0-SNAPSHOT")
 
     implementation("de.rapha149.signgui:signgui:2.5.0")
     implementation("com.github.jsixface:yamlconfig:1.2")
@@ -62,7 +62,7 @@ tasks {
         relocate("net.wesjd", "xyz.ineanto.nicko.libs.anvilgui")
         relocate("com.github.jsixface", "xyz.ineanto.nicko.libs.yaml")
         relocate("me.clip", "xyz.ineanto.nicko.libs.placeholderapi")
-        relocate("com.fasterxml.jackson", "xyz.ineanto.nicko.libs.jacksonpr")
+        relocate("com.fasterxml.jackson", "xyz.ineanto.nicko.libs.jackson")
         relocate("com.mysql", "xyz.ineanto.nicko.libs.mysql")
         relocate("org.mariadb.jdbc", "xyz.ineanto.nicko.libs.mariadb")
         relocate("redis.clients", "xyz.ineanto.nicko.libs.redis")
@@ -95,10 +95,10 @@ tasks {
 
     runServer {
         downloadPlugins {
-            url("https://download.luckperms.net/1568/bukkit/loader/LuckPerms-Bukkit-5.4.151.jar")
+            url("https://download.luckperms.net/1575/bukkit/loader/LuckPerms-Bukkit-5.4.158.jar")
 
             // 1.20.5 - latest testing
-            url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+            //url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
         }
 
         minecraftVersion("1.21.4")

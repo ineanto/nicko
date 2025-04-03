@@ -38,7 +38,7 @@ public class AppearanceManager {
         profile.setName(defaultName);
         profile.setSkin(defaultName);
 
-        final ActionResult result = update(true, true);
+        final ActionResult result = update(true);
 
         profile.setName(null);
         profile.setSkin(null);
@@ -47,7 +47,7 @@ public class AppearanceManager {
         return result;
     }
 
-    public ActionResult update(boolean skinChange, boolean reset) {
+    public ActionResult update(boolean skinChange) {
         final NickoProfile profile = getNickoProfile();
         final String displayName = profile.getName() == null ? player.getName() : profile.getName();
 

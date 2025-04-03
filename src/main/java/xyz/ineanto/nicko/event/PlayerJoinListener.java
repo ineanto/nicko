@@ -11,8 +11,8 @@ import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.gui.PlayerCheckGUI;
 import xyz.ineanto.nicko.gui.PlayerCheckGUIData;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
@@ -22,12 +22,9 @@ import xyz.xenondevs.invui.window.WindowManager;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class PlayerJoinListener implements Listener {
-    private final Logger logger = Logger.getLogger("PlayerJoinListener");
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final Nicko instance = Nicko.getInstance();
@@ -50,7 +47,7 @@ public class PlayerJoinListener implements Listener {
             if (profile.hasData()) {
                 final AppearanceManager appearanceManager = new AppearanceManager(player);
                 final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(player.getName());
-                final ActionResult actionResult = appearanceManager.update(needsASkinChange, false);
+                final ActionResult actionResult = appearanceManager.update(needsASkinChange);
                 if (!actionResult.isError()) {
                     player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Restore.OK));
                 } else {
@@ -61,19 +58,6 @@ public class PlayerJoinListener implements Listener {
                 }
             }
         }, () -> instance.getLogger().warning("Failed to load data for " + player.getName()));
-
-        for (Player online : Bukkit.getOnlinePlayers().stream().filter(op -> op.getUniqueId() != player.getUniqueId()).toList()) {
-            final Optional<NickoProfile> optionalOnlinePlayerProfile = dataStore.getData(online.getUniqueId());
-
-            optionalOnlinePlayerProfile.ifPresent(profile -> {
-                final AppearanceManager appearanceManager = new AppearanceManager(online);
-                final boolean needsASkinChange = profile.getSkin() != null && !profile.getSkin().equals(online.getName());
-                final ActionResult actionResult = appearanceManager.update(needsASkinChange, false);
-                if (actionResult.isError()) {
-                    logger.warning("Something wrong happened while updating players to joining player (" + actionResult.getErrorKey() + ")");
-                }
-            });
-        }
 
         @SuppressWarnings("unchecked") final ArrayList<UUID> viewers = (ArrayList<UUID>) PlayerCheckGUIData.VIEWERS.clone();
         viewers.forEach(uuid -> {

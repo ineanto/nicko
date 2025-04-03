@@ -3,6 +3,7 @@ package xyz.ineanto.nicko.event;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.ineanto.nicko.Nicko;
@@ -18,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PlayerQuitListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         final ActionResult result = Nicko.getInstance().getDataStore().saveData(player);

@@ -63,7 +63,7 @@ public class PromptManager {
     }
 
     private void update(boolean skinChange) {
-        final ActionResult actionResult = appearanceManager.update(skinChange, false);
+        final ActionResult actionResult = appearanceManager.update(skinChange);
         if (!actionResult.isError()) {
             player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
             player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);

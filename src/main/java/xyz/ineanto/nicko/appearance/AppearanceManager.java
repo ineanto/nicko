@@ -2,12 +2,11 @@ package xyz.ineanto.nicko.appearance;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
 import xyz.ineanto.nicko.event.custom.PlayerResetDisguiseEvent;
-import xyz.ineanto.nicko.packet.PaperPacketSender;
 import xyz.ineanto.nicko.packet.PacketSender;
+import xyz.ineanto.nicko.packet.PaperPacketSender;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
@@ -67,25 +66,7 @@ public class AppearanceManager {
 
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);
-        //respawnPlayer();
-        //packetSender.sendEntityRespawn();
-
         return result;
-    }
-
-    private void respawnPlayer() {
-        final boolean wasFlying = player.isFlying();
-        final boolean wasAllowedToFly = player.getAllowFlight();
-        final int foodLevel = player.getFoodLevel();
-
-        packetSender.sendPlayerRespawn();
-
-        player.teleport(player.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
-        player.setAllowFlight(wasAllowedToFly);
-        player.setFlying(wasFlying);
-        player.updateInventory();
-        player.sendHealthUpdate();
-        player.setFoodLevel(foodLevel);
     }
 
     private NickoProfile getNickoProfile() {

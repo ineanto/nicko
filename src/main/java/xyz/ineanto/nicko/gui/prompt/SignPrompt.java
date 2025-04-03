@@ -5,6 +5,7 @@ import de.rapha149.signgui.SignGUIAction;
 import de.rapha149.signgui.exception.SignGUIVersionException;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SignPrompt implements Prompt {
     private final Player player;
@@ -26,8 +26,8 @@ public class SignPrompt implements Prompt {
             )
     );
 
-    private final AtomicReference<Optional<String>> name = new AtomicReference<>();
-    private final AtomicReference<Optional<String>> skin = new AtomicReference<>();
+    private String name = null;
+    private String skin = null;
 
     public SignPrompt(Player player, PlayerLanguage playerLanguage) {
         this.player = player;
@@ -36,64 +36,63 @@ public class SignPrompt implements Prompt {
 
     @Override
     public Optional<String[]> displayNameThenSkinPrompt() {
-        try {
-            final SignGUI gui = SignGUI.builder()
-                    .setLines(lines.toArray(new String[0]))
-                    .setType(Material.OAK_SIGN)
-                    .setHandler((_, result) -> {
-                        String internalLine2 = result.getLineWithoutColor(2);
+        displayNamePrompt();
+        displaySkinPrompt();
 
-                        if (internalLine2.isEmpty()) {
-                            return List.of(SignGUIAction.displayNewLines(lines.toArray(new String[0])));
-                        }
-
-                        name.set(Optional.of(internalLine2));
-                        return Collections.emptyList();
-                    })
-                    .build();
-
-            gui.open(player);
-            return Optional.of(new String[]{name.get().orElse(player.getName()), skin.get().orElse(player.getName())});
-        } catch (SignGUIVersionException exception) {
+        if (skin == null || name == null) {
             return Optional.empty();
         }
+
+        return Optional.of(new String[]{name, skin});
     }
 
     @Override
     public Optional<String> displaySkinPrompt() {
         this.lines.set(1, playerLanguage.translate(LanguageKey.GUI.NEW_SKIN, false));
-        return displaySign(skin);
+        displaySign(true);
+
+        if (skin == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(skin);
     }
 
     @Override
     public Optional<String> displayNamePrompt() {
         this.lines.set(1, playerLanguage.translate(LanguageKey.GUI.NEW_NAME, false));
-        return displaySign(name);
+        displaySign(false);
+
+        if (name == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(skin);
     }
 
-    private Optional<String> displaySign(AtomicReference<Optional<String>> reference) {
+    private void displaySign(boolean isSkin) {
         try {
             final SignGUI gui = SignGUI.builder()
                     .setLines(lines.toArray(new String[0]))
-                    .setLine(2, null)
                     .setType(Material.OAK_SIGN)
+                    .callHandlerSynchronously(Nicko.getInstance())
                     .setHandler((_, result) -> {
-                        final String internalLine2 = result.getLineWithoutColor(2);
+                        final String internalLine1 = result.getLineWithoutColor(1);
 
-                        if (internalLine2.isEmpty()) {
+                        if (internalLine1.isEmpty()) {
                             return List.of(SignGUIAction.displayNewLines(lines.toArray(new String[0])));
                         }
 
-                        reference.set(Optional.of(internalLine2));
+                        if (isSkin) {
+                            skin = internalLine1;
+                        } else {
+                            name = internalLine1;
+                        }
+
                         return Collections.emptyList();
                     })
                     .build();
-
             gui.open(player);
-            return reference.get();
-        } catch (SignGUIVersionException exception) {
-            exception.printStackTrace();
-            return Optional.empty();
-        }
+        } catch (SignGUIVersionException _) { }
     }
 }

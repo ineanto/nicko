@@ -68,7 +68,6 @@ tasks {
         relocate("redis.clients", "xyz.ineanto.nicko.libs.redis")
         relocate("com.google.gson", "xyz.ineanto.nicko.libs.gson")
         relocate("org.apache.commons.pool2", "xyz.ineanto.nicko.libs.pool2")
-        relocate("org.bstats", "xyz.ineanto.nicko.libs.bstats")
 
         // EXCLUSIONS
         exclude("colors.bin")
@@ -89,7 +88,7 @@ tasks {
         // MINIFY
         minimize {
             exclude(dependency("xyz.xenondevs.invui:.*"))
-            exclude(dependency("org.bstats:.*"))
+            exclude(dependency("de.rapha149.signgui:.*"))
         }
     }
 

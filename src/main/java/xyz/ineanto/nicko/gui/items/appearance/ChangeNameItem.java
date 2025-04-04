@@ -3,7 +3,6 @@ package xyz.ineanto.nicko.gui.items.appearance;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.gui.prompt.PromptManager;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
@@ -11,13 +10,9 @@ import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
 public class ChangeNameItem {
-    private final AppearanceManager appearanceManager;
-    private final Player player;
     private final PlayerLanguage playerLanguage;
 
     public ChangeNameItem(Player player) {
-        this.appearanceManager = new AppearanceManager(player);
-        this.player = player;
         this.playerLanguage = new PlayerLanguage(player);
     }
 

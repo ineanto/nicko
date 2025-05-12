@@ -27,7 +27,7 @@ public class PromptManager {
         final Optional<NickoProfile> optionalProfile = dataStore.getData(player.getUniqueId());
         this.profile = optionalProfile.orElse(NickoProfile.EMPTY_PROFILE.clone());
         this.appearanceManager = new AppearanceManager(player);
-        this.prompt = new SignPrompt(player, playerLanguage);
+        this.prompt = new ChatPrompt(player, playerLanguage);
     }
 
     public void displayNameThenSkinPrompt() {

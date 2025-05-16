@@ -37,7 +37,7 @@ public class ConversationPrompt extends Prompt {
         conversationFactory
                 .thatExcludesNonPlayersWithMessage("Player only")
                 .withTimeout(30)
-                .withFirstPrompt(new NickoConversation(player, playerLanguage))
+                .withFirstPrompt(new ChangeAppearanceConversation(player, playerLanguage))
                 .withInitialSessionData(Map.of(identifier, true, identifier + "-skin", true))
                 .withLocalEcho(false)
                 .buildConversation(player)
@@ -48,11 +48,11 @@ public class ConversationPrompt extends Prompt {
     public void displayNamePrompt() {
     }
 
-    private class NickoConversation extends StringPrompt {
+    private class ChangeAppearanceConversation extends StringPrompt {
         private final Player player;
         private final PlayerLanguage playerLanguage;
 
-        public NickoConversation(Player player, PlayerLanguage playerLanguage) {
+        public ChangeAppearanceConversation(Player player, PlayerLanguage playerLanguage) {
             this.player = player;
             this.playerLanguage = playerLanguage;
 
@@ -60,7 +60,13 @@ public class ConversationPrompt extends Prompt {
 
         @Override
         public @NotNull String getPromptText(@NotNull ConversationContext context) {
-            return "Enter your skin";
+
+            if (Objects.equals(context.getSessionData(identifier + "-skin"), true)) {
+                // If changing skin
+                return "Enter your new skin";
+            }
+
+            return "Enter your new name";
         }
 
         @Override

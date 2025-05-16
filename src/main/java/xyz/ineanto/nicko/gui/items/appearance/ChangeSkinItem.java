@@ -43,7 +43,7 @@ public class ChangeSkinItem {
             if (clickType.isLeftClick() || clickType.isRightClick()) {
                 click.getEvent().getView().close();
                 final PromptManager manager = new PromptManager(click.getPlayer());
-                manager.displaySkinPromptThenUpdate();
+                manager.displaySkinPrompt();
             }
             return true;
         });

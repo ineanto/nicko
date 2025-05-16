@@ -10,7 +10,6 @@ import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.config.ConfigurationManager;
 import xyz.ineanto.nicko.event.PlayerJoinListener;
 import xyz.ineanto.nicko.event.PlayerQuitListener;
-import xyz.ineanto.nicko.event.PromptCloseListener;
 import xyz.ineanto.nicko.language.CustomLanguage;
 import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.migration.ConfigurationMigrator;
@@ -112,7 +111,6 @@ public class Nicko extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-        getServer().getPluginManager().registerEvents(new PromptCloseListener(), this);
 
         getLogger().info("Nicko has been enabled.");
     }

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.Nullable;
 import xyz.ineanto.nicko.gui.HomeGUI;
 
+@SuppressWarnings("UnstableApiUsage")
 public class NickoCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack stack, String[] strings) {

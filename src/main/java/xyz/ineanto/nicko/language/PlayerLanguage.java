@@ -144,8 +144,16 @@ public class PlayerLanguage {
         }
     }
 
+    public Component getPrefixComponent() {
+        return MiniMessage.miniMessage().deserialize(readString(LanguageKey.PREFIX));
+    }
+
     private String readString(String key) {
         return yamlConfig.getString(key);
+    }
+
+    private String getPrefix() {
+        return LegacyComponentSerializer.legacySection().serialize(getPrefixComponent());
     }
 
     private String readStringWithMiniMessage(String key) {
@@ -154,10 +162,6 @@ public class PlayerLanguage {
 
     private ArrayList<String> readList(String key) {
         return yamlConfig.getStringList(key);
-    }
-
-    private String getPrefix() {
-        return readStringWithMiniMessage(LanguageKey.PREFIX);
     }
 
     private String getWhoosh() {

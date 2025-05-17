@@ -15,7 +15,7 @@ public record Version(int major, int minor, int patch) implements Comparable<Ver
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return major + "." + minor + "." + patch;
     }
 

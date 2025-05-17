@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class ConversationPrompt extends Prompt {
     private final ConversationFactory conversationFactory = new ConversationFactory(Nicko.getInstance());
-    private final String identifier;
+    private final String changeBothTag = "changeBoth";
     private final Player player;
 
     private String name;
@@ -22,7 +22,6 @@ public class ConversationPrompt extends Prompt {
     public ConversationPrompt(Player player) {
         super(player);
         this.player = player;
-        this.identifier = "nicko-conversation-" + player.getUniqueId();
     }
 
 
@@ -34,7 +33,7 @@ public class ConversationPrompt extends Prompt {
                 .withModality(false)
                 .withFirstPrompt(new ChangeNameConversation())
                 .withEscapeSequence("EXIT")
-                .withInitialSessionData(Map.of(identifier, true, identifier + "-both", true))
+                .withInitialSessionData(Map.of(changeBothTag, true))
                 .withLocalEcho(false)
                 .buildConversation(player)
                 .begin();
@@ -74,7 +73,7 @@ public class ConversationPrompt extends Prompt {
 
         @Override
         public @Nullable org.bukkit.conversations.Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
-            if (Objects.equals(context.getSessionData(identifier + "-both"), true)) {
+            if (Objects.equals(context.getSessionData(changeBothTag), true)) {
                 name = input;
                 return new ChangeSkinConversation();
             }

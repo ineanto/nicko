@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.gui.prompt.Prompt;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 
 import java.util.Map;
 import java.util.Objects;
@@ -19,7 +18,6 @@ public class ConversationPrompt extends Prompt {
     private final Player player;
 
     private String name;
-    private String skin;
 
     public ConversationPrompt(Player player) {
         super(player);
@@ -30,15 +28,26 @@ public class ConversationPrompt extends Prompt {
 
     @Override
     public void displayNameThenSkinPrompt() {
+        conversationFactory
+                .thatExcludesNonPlayersWithMessage("Player only")
+                .withTimeout(30)
+                .withModality(false)
+                .withFirstPrompt(new ChangeNameConversation())
+                .withEscapeSequence("EXIT")
+                .withInitialSessionData(Map.of(identifier, true, identifier + "-both", true))
+                .withLocalEcho(false)
+                .buildConversation(player)
+                .begin();
     }
 
     @Override
     public void displaySkinPrompt() {
         conversationFactory
                 .thatExcludesNonPlayersWithMessage("Player only")
+                .withModality(false)
                 .withTimeout(30)
-                .withFirstPrompt(new ChangeAppearanceConversation(player, playerLanguage))
-                .withInitialSessionData(Map.of(identifier, true, identifier + "-skin", true))
+                .withFirstPrompt(new ChangeSkinConversation())
+                .withEscapeSequence("EXIT")
                 .withLocalEcho(false)
                 .buildConversation(player)
                 .begin();
@@ -46,37 +55,45 @@ public class ConversationPrompt extends Prompt {
 
     @Override
     public void displayNamePrompt() {
+        conversationFactory
+                .thatExcludesNonPlayersWithMessage("Player only")
+                .withModality(false)
+                .withTimeout(30)
+                .withFirstPrompt(new ChangeNameConversation())
+                .withEscapeSequence("EXIT")
+                .withLocalEcho(false)
+                .buildConversation(player)
+                .begin();
     }
 
-    private class ChangeAppearanceConversation extends StringPrompt {
-        private final Player player;
-        private final PlayerLanguage playerLanguage;
-
-        public ChangeAppearanceConversation(Player player, PlayerLanguage playerLanguage) {
-            this.player = player;
-            this.playerLanguage = playerLanguage;
-
-        }
-
+    private class ChangeNameConversation extends StringPrompt {
         @Override
         public @NotNull String getPromptText(@NotNull ConversationContext context) {
-
-            if (Objects.equals(context.getSessionData(identifier + "-skin"), true)) {
-                // If changing skin
-                return "Enter your new skin";
-            }
-
             return "Enter your new name";
         }
 
         @Override
         public @Nullable org.bukkit.conversations.Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
-            if (Objects.equals(context.getSessionData(identifier + "-skin"), true)) {
-                skin = input;
-                update(null, skin, true);
-                return END_OF_CONVERSATION;
+            if (Objects.equals(context.getSessionData(identifier + "-both"), true)) {
+                name = input;
+                return new ChangeSkinConversation();
             }
 
+            update(input, null, false);
+            return END_OF_CONVERSATION;
+        }
+    }
+
+    private class ChangeSkinConversation extends StringPrompt {
+        @Override
+        public @NotNull String getPromptText(@NotNull ConversationContext context) {
+            return "Enter your new skin";
+        }
+
+        @Override
+        public @Nullable org.bukkit.conversations.Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
+            update(name != null ? name : null, input, true);
+            name = null;
             return END_OF_CONVERSATION;
         }
     }

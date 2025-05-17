@@ -49,7 +49,8 @@ public class LanguageKey {
                 public static final String OK = SET_KEY + "ok";
                 public static final String ERROR = SET_KEY + "error";
 
-                public static final String CHAT_PROMPT = SET_KEY + "chat_prompt";
+                public static final String CHAT_PROMPT_NAME = SET_KEY + "chat_prompt_name";
+                public static final String CHAT_PROMPT_SKIN = SET_KEY + "chat_prompt_skin";
             }
 
             public static class Remove {

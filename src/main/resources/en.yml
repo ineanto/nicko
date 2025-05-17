@@ -20,7 +20,8 @@ event:
     set:
       error: "<gray>Wasn''t able to apply your disguise! ({0})</gray>"
       ok: "<gray>You''re now disguised.</gray>"
-      chat_prompt: "<gray>Please enter your new {0} in chat.</gray>"
+      chat_prompt_name: "<gray>Please enter your new name in chat (type \"EXIT\" to cancel).</gray>"
+      chat_prompt_skin: "<gray>Please enter your new skin in chat (type \"EXIT\" to cancel).</gray>"
     restore:
       error: "<gray>Wasn''t able to apply the previous disguise! ({0})</gray>"
       ok: "<gray>Previous disguise restored.</gray>"

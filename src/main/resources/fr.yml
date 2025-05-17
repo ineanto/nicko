@@ -20,6 +20,8 @@ event:
     set:
       error: "<gray>Impossible d''appliquer votre déguisement ! ({0})</gray>"
       ok: "<gray>Déguisement appliqué avec succès.</gray>"
+      chat_prompt_name: "<gray>Veuillez entrer votre nouveau pseudo (saisissez \"EXIT\" pour arrêter).</gray>"
+      chat_prompt_skin: "<gray>Veuillez entrer votre nouveau skin (saisissez \"EXIT\" pour arrêter).</gray>"
     restore:
       error: "<gray>Impossible d''appliquer le précédent déguisement ! ({0})</gray>"
       ok: "<gray>Votre précédent déguisement a été appliqué.<gray>"

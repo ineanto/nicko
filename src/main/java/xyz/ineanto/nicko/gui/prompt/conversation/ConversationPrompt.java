@@ -8,14 +8,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.gui.prompt.Prompt;
+import xyz.ineanto.nicko.language.LanguageKey;
 
 import java.util.Map;
 import java.util.Objects;
 
 public class ConversationPrompt extends Prompt {
-    private final ConversationFactory conversationFactory = new ConversationFactory(Nicko.getInstance());
     private final String changeBothTag = "changeBoth";
     private final Player player;
+    private final ConversationFactory conversationFactory = new ConversationFactory(Nicko.getInstance())
+            .withTimeout(30)
+            .withModality(false)
+            .withEscapeSequence("EXIT")
+            .withLocalEcho(false)
+            .thatExcludesNonPlayersWithMessage("Player only");
 
     private String name;
 
@@ -24,17 +30,11 @@ public class ConversationPrompt extends Prompt {
         this.player = player;
     }
 
-
     @Override
     public void displayNameThenSkinPrompt() {
         conversationFactory
-                .thatExcludesNonPlayersWithMessage("Player only")
-                .withTimeout(30)
-                .withModality(false)
                 .withFirstPrompt(new ChangeNameConversation())
-                .withEscapeSequence("EXIT")
                 .withInitialSessionData(Map.of(changeBothTag, true))
-                .withLocalEcho(false)
                 .buildConversation(player)
                 .begin();
     }
@@ -42,12 +42,7 @@ public class ConversationPrompt extends Prompt {
     @Override
     public void displaySkinPrompt() {
         conversationFactory
-                .thatExcludesNonPlayersWithMessage("Player only")
-                .withModality(false)
-                .withTimeout(30)
                 .withFirstPrompt(new ChangeSkinConversation())
-                .withEscapeSequence("EXIT")
-                .withLocalEcho(false)
                 .buildConversation(player)
                 .begin();
     }
@@ -55,12 +50,7 @@ public class ConversationPrompt extends Prompt {
     @Override
     public void displayNamePrompt() {
         conversationFactory
-                .thatExcludesNonPlayersWithMessage("Player only")
-                .withModality(false)
-                .withTimeout(30)
                 .withFirstPrompt(new ChangeNameConversation())
-                .withEscapeSequence("EXIT")
-                .withLocalEcho(false)
                 .buildConversation(player)
                 .begin();
     }
@@ -68,7 +58,7 @@ public class ConversationPrompt extends Prompt {
     private class ChangeNameConversation extends StringPrompt {
         @Override
         public @NotNull String getPromptText(@NotNull ConversationContext context) {
-            return "Enter your new name";
+            return playerLanguage.translate(LanguageKey.Event.Appearance.Set.CHAT_PROMPT_NAME, true);
         }
 
         @Override
@@ -86,7 +76,7 @@ public class ConversationPrompt extends Prompt {
     private class ChangeSkinConversation extends StringPrompt {
         @Override
         public @NotNull String getPromptText(@NotNull ConversationContext context) {
-            return "Enter your new skin";
+            return playerLanguage.translate(LanguageKey.Event.Appearance.Set.CHAT_PROMPT_SKIN, true);
         }
 
         @Override

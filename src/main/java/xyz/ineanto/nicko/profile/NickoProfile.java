@@ -2,28 +2,36 @@ package xyz.ineanto.nicko.profile;
 
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.appearance.Appearance;
 import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class NickoProfile implements Cloneable {
-    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(null, null, Language.ENGLISH, true);
+    public static final NickoProfile EMPTY_PROFILE = new NickoProfile(
+            new Appearance(null, null),
+            Language.ENGLISH,
+            true,
+            Collections.emptyList()
+    );
 
     private static final Nicko instance = Nicko.getInstance();
     private static final PlayerDataStore dataStore = instance.getDataStore();
 
-    private String name;
-    private String skin;
+    private Appearance appearance;
     private Language language;
     private boolean randomSkin;
+    private transient List<Appearance> favorites;
 
-    public NickoProfile(String name, String skin, Language language, boolean randomSkin) {
-        this.name = name;
-        this.skin = skin;
+    public NickoProfile(Appearance appearance, Language language, boolean randomSkin, List<Appearance> favorites) {
+        this.appearance = appearance;
         this.language = language;
         this.randomSkin = randomSkin;
+        this.favorites = favorites;
     }
 
     public static Optional<NickoProfile> get(Player player) {
@@ -35,23 +43,31 @@ public class NickoProfile implements Cloneable {
     }
 
     public boolean hasData() {
-        return name != null || skin != null;
+        return appearance.name() != null || appearance.skin() != null;
     }
 
     public String getName() {
-        return name;
+        return appearance.name();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.appearance = new Appearance(name, appearance.skin() == null ? null : appearance.skin());
     }
 
     public String getSkin() {
-        return skin;
+        return appearance.skin();
     }
 
     public void setSkin(String skin) {
-        this.skin = skin;
+        this.appearance = new Appearance(appearance.name() == null ? null : appearance.name(), skin);
+    }
+
+    public List<Appearance> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Appearance> favorites) {
+        this.favorites = favorites;
     }
 
     public Language getLocale() {
@@ -68,16 +84,6 @@ public class NickoProfile implements Cloneable {
 
     public void setRandomSkin(boolean randomSkin) {
         this.randomSkin = randomSkin;
-    }
-
-    @Override
-    public String toString() {
-        return "NickoProfile{" +
-               "name='" + name + '\'' +
-               ", skin='" + skin + '\'' +
-               ", locale=" + language +
-               ", randomSkin=" + randomSkin +
-               '}';
     }
 
     @Override

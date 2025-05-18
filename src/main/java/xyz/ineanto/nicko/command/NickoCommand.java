@@ -30,13 +30,13 @@ public class NickoCommand implements BasicCommand {
 
         if (args.length >= 1 && args[0].equalsIgnoreCase("about")) {
             final Component firstAboutMessage = MiniMessage.miniMessage().deserialize(
-                    "<prefix> <gray>v<version></gray>",
+                    "<prefix> <dark_gray>(© Ineanto 2023-2025) </dark_gray><gray>v<version></gray> ",
                     Placeholder.component("prefix", playerLanguage.getPrefixComponent()),
                     Placeholder.unparsed("version", Nicko.getInstance().getPluginMeta().getVersion())
             );
 
             final Component secondAboutMessage = MiniMessage.miniMessage().deserialize(
-                    "<gradient:#01a97c:#8ffd54>Configuration</gradient> <gray>v<configversion></gray>, <gradient:#01a97c:#8ffd54>I18N</gradient> <gray>v<i18nversion></gray>",
+                    "<gradient:#01a97c:#8ffd54>Configuration</gradient> <gray>v<configversion></gray>, <gradient:#01a97c:#8ffd54>I18N</gradient> <gray><i18nversion></gray>",
                     Placeholder.component("prefix", playerLanguage.getPrefixComponent()),
                     Placeholder.unparsed("configversion", Configuration.VERSION.toString()),
                     Placeholder.unparsed("i18nversion", Language.VERSION.toString())

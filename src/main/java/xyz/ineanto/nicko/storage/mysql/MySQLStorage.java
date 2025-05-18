@@ -1,6 +1,7 @@
 package xyz.ineanto.nicko.storage.mysql;
 
 import xyz.ineanto.nicko.appearance.ActionResult;
+import xyz.ineanto.nicko.appearance.Appearance;
 import xyz.ineanto.nicko.config.Configuration;
 import xyz.ineanto.nicko.language.Language;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -83,15 +85,16 @@ public class MySQLStorage extends Storage {
             String name = "";
             String skin = "";
             String locale = "";
-            boolean bungeecord = false;
+            boolean randomSkin = false;
             while (resultSet.next()) {
                 name = resultSet.getString("name");
                 skin = resultSet.getString("skin");
                 locale = resultSet.getString("locale");
-                bungeecord = resultSet.getBoolean("bungeecord");
+                randomSkin = resultSet.getBoolean("randomskin");
             }
 
-            final NickoProfile profile = new NickoProfile(name, skin, Language.fromCode(locale), bungeecord);
+            // TODO (Ineanto, 17/05/2025): Retrieve favorites
+            final NickoProfile profile = new NickoProfile(new Appearance(name, skin), Language.fromCode(locale), randomSkin, Collections.emptyList());
             return Optional.of(profile);
         } catch (SQLException e) {
             logger.warning("Couldn't fetch profile: " + e.getMessage());
@@ -117,7 +120,7 @@ public class MySQLStorage extends Storage {
     }
 
     private PreparedStatement getInsertStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
-        final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `bungeecord`) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `randomskin`) VALUES (?, ?, ?, ?, ?)";
         final PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, uuid.toString());
         statement.setString(2, profile.getName() == null ? null : profile.getName());
@@ -128,7 +131,7 @@ public class MySQLStorage extends Storage {
     }
 
     private PreparedStatement getUpdateStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
-        final String sql = "UPDATE nicko.DATA SET name = ?, skin = ?, locale = ?, bungeecord = ? WHERE uuid = ?";
+        final String sql = "UPDATE nicko.DATA SET name = ?, skin = ?, locale = ?, randomskin = ? WHERE uuid = ?";
         final PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, profile.getName() == null ? null : profile.getName());
         statement.setString(2, profile.getSkin() == null ? null : profile.getSkin());

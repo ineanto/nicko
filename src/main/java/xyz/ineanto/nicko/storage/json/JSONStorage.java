@@ -46,6 +46,7 @@ public class JSONStorage extends Storage {
             }
         } catch (IOException e) {
             logger.warning("Could not create file.");
+            e.printStackTrace();
             return ActionResult.error();
         }
 
@@ -54,14 +55,12 @@ public class JSONStorage extends Storage {
 
     @Override
     public boolean isStored(UUID uuid) {
-        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         return file.exists();
     }
 
     @Override
     public Optional<NickoProfile> retrieve(UUID uuid) {
-        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         try (FileReader fileReader = new FileReader(file)) {
             try (BufferedReader reader = new BufferedReader(fileReader)) {
@@ -75,7 +74,6 @@ public class JSONStorage extends Storage {
 
     @Override
     public ActionResult delete(UUID uuid) {
-        final File directory = new File(Nicko.getInstance().getDataFolder() + "/players/");
         final File file = new File(directory, uuid.toString() + ".json");
         if (file.delete() || !file.exists()) {
             return ActionResult.ok();
@@ -84,6 +82,11 @@ public class JSONStorage extends Storage {
     }
 
     private boolean checkFileExists(File file) throws IOException {
+        // Additional check if the folder gets deleted while the plugin is running.
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
         if (!file.exists()) {
             return file.createNewFile();
         }

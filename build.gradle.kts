@@ -44,7 +44,7 @@ dependencies {
     implementation("com.mysql:mysql-connector-j:9.2.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.5.2")
     implementation("redis.clients:jedis:5.2.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.13.1")
 }
 
 tasks {

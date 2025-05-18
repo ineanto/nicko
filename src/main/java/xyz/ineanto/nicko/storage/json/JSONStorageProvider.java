@@ -12,11 +12,12 @@ public class JSONStorageProvider implements StorageProvider {
     }
 
     @Override
-    public boolean init()
-    {
+    public boolean init() {
         return directory.exists() || directory.mkdirs();
     }
 
     @Override
-    public boolean close() { return true; }
+    public boolean close() {
+        return true;
+    }
 }

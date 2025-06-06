@@ -45,6 +45,7 @@ gui:
     confirm: "Êtes-vous sûr ?"
     cache: "Gestion du Cache"
     invalidate_skin: "Purge du cache..."
+    favorites: "Favoris"
 
   exit:
     name: "Quitter"
@@ -101,6 +102,10 @@ gui:
       name: "Réinitialiser l'apparence"
       lore:
         - "<gray>Supprime complètement votre déguisement.</gray>"
+    favorites:
+      name: "Favoris"
+      lore:
+        - "<gray>Listez toutes vos apparences favorites.</gray>"
   admin:
     manage_cache:
       name: "Gérer le cache de skin..."

@@ -45,6 +45,7 @@ gui:
     confirm: "Are you sure?"
     cache: "Cache Management"
     invalidate_skin: "Purge cache..."
+    favorites: "Favorites"
 
   exit:
     name: "Exit"
@@ -100,6 +101,10 @@ gui:
       name: "Reset appearance"
       lore:
         - "<gray>Completely remove your disguise.</gray>"
+    favorites:
+      name: "Favorites"
+      lore:
+        - "<gray>List all your favorites appearances.</gray>"
   admin:
     manage_cache:
       name: "Manage the skin cache..."

@@ -92,6 +92,7 @@ public class LanguageKey {
             public static final String CONFIRM = TITLE_KEY + "confirm";
             public static final String CACHE = TITLE_KEY + "cache";
             public static final String INVALIDATE_SKIN = TITLE_KEY + "invalidate_skin";
+            public static final String FAVORITES = TITLE_KEY + "favorites";
         }
 
         public static class Choice {
@@ -112,6 +113,7 @@ public class LanguageKey {
             public static final String RESET = HOME_KEY + "reset";
             public static final String RANDOM_SKIN = HOME_KEY + "random_skin";
             public static final String SETTINGS = HOME_KEY + "settings";
+            public static final String FAVORITES = HOME_KEY + "favorites";
         }
 
         public static class Settings {

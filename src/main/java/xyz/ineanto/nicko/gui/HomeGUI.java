@@ -19,7 +19,7 @@ public class HomeGUI {
         final String[] dynamicStructure = new String[]{
                 "# # # # D # # # #",
                 "A # # N B S # # #",
-                "E P # # # # # # R"};
+                "E P # # F # # # R"};
 
         if (!player.isOp() || !player.hasPermission("nicko.admin")) {
             dynamicStructure[2] = dynamicStructure[2].replace("A", "#");
@@ -36,6 +36,7 @@ public class HomeGUI {
         final SettingsAccessItem settingsAccessItem = new SettingsAccessItem(player);
         final AdminAccessItem adminAccessItem = new AdminAccessItem(player);
         final RandomSkinItem randomSkinItem = new RandomSkinItem(player);
+        final FavoritesItem favoritesItem = new FavoritesItem(player);
 
         this.gui = Gui.normal()
                 .setStructure(dynamicStructure)
@@ -47,6 +48,7 @@ public class HomeGUI {
                 .addIngredient('P', settingsAccessItem.get())
                 .addIngredient('A', adminAccessItem.get())
                 .addIngredient('D', randomSkinItem.get())
+                .addIngredient('F', favoritesItem.get())
                 .build();
         this.player = player;
     }

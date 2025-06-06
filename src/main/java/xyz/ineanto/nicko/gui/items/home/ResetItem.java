@@ -1,6 +1,7 @@
 package xyz.ineanto.nicko.gui.items.home;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import xyz.ineanto.nicko.appearance.AppearanceManager;
@@ -40,6 +41,7 @@ public class ResetItem {
                         player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Remove.OK));
                     } else {
                         player.sendMessage(playerLanguage.translateWithOops(LanguageKey.Event.Appearance.Remove.ERROR));
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1f);
                     }
                 });
                 return true;

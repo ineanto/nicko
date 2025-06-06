@@ -2,6 +2,9 @@
     [FEATURES]
         - Players are now able to mark disguises as favorites.
 
+    [FIXES]
+        - Added a missing sound when players undisguised.
+
 1.2.0-RC1: Update n°12 (XX/XX/25)
     [FEATURES]
         - Updated to support Minecraft 1.21.5.

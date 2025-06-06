@@ -1,7 +1,7 @@
 # Nicko ${version} - Fichier de langue:
 
 # Précise la version de la configuration, ne pas changer.
-version: "1.3.0"
+version: "1.3.1"
 
 prefix: "<b><gradient:#01a97c:#8ffd54>NICKO</gradient></b>"
 whoosh: "<b><gradient:#01a97c:#8ffd54>WHOOSH!</gradient></b>"
@@ -38,7 +38,7 @@ event:
 
 gui:
   title:
-    home: "Nicko - Accueil"
+    home: "Nicko"
     settings: "Paramètres"
     admin: "Administration"
     check: "Gestion des Joueurs"
@@ -103,7 +103,7 @@ gui:
         - "<gray>Supprime complètement votre déguisement.</gray>"
   admin:
     manage_cache:
-      name: "Gérer le cache de <gold>skin...</gold>"
+      name: "Gérer le cache de skin..."
       lore:
         - "<gray>Consultez et gérez le cache de skin.</gray>"
     manage_player:

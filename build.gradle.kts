@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
     id("xyz.jpenilla.run-paper") version "2.3.0"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.10"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
 }
 
 group = "xyz.ineanto"
@@ -13,6 +13,7 @@ val invuiVersion: String = "1.44"
 java {
     sourceCompatibility = JavaVersion.VERSION_22
     targetCompatibility = JavaVersion.VERSION_22
+
     toolchain {
         languageVersion = JavaLanguageVersion.of(22)
     }
@@ -22,10 +23,10 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    maven { url = uri("https://repo.xenondevs.xyz/releases") }
-    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
-    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
-    maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
+    maven("https://repo.xenondevs.xyz/releases")
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {

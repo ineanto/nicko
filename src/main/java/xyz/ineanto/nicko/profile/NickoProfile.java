@@ -25,7 +25,7 @@ public class NickoProfile implements Cloneable {
     private Appearance appearance;
     private Language language;
     private boolean randomSkin;
-    private transient List<Appearance> favorites;
+    private List<Appearance> favorites;
 
     public NickoProfile(Appearance appearance, Language language, boolean randomSkin, List<Appearance> favorites) {
         this.appearance = appearance;

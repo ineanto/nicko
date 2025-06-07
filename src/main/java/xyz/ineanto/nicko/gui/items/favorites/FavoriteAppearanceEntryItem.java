@@ -14,7 +14,6 @@ import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
-import xyz.ineanto.nicko.mojang.MojangAPI;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
@@ -24,7 +23,6 @@ import xyz.xenondevs.invui.util.MojangApiUtils;
 import java.io.IOException;
 
 public class FavoriteAppearanceEntryItem extends AsyncItem {
-    private final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
     private final PlayerLanguage playerLanguage;
     private final Appearance appearance;
 

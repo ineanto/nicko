@@ -16,6 +16,7 @@ import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.window.Window;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,17 +29,22 @@ public class FavoritesGUI {
         final PlayerLanguage playerLanguage = new PlayerLanguage(player);
         this.title = playerLanguage.translate(LanguageKey.GUI.Titles.FAVORITES, false);
 
-        final NickoProfile profile = Nicko.getInstance().getDataStore().getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
-        final List<Appearance> favorites = profile.getFavorites();
-
-        final List<Item> items = favorites.stream()
-                .map((appearance) -> new FavoriteAppearanceEntryItem(playerLanguage, appearance))
-                .collect(Collectors.toList());
-
         final HomeGUI parent = new HomeGUI(player);
         final GoBackItem backItem = new GoBackItem(player);
         final ScrollUpItem scrollUpItem = new ScrollUpItem(playerLanguage);
         final ScrollDownItem scrollDownItem = new ScrollDownItem(playerLanguage);
+
+        final NickoProfile profile = Nicko.getInstance().getDataStore().getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
+        final List<Appearance> favorites = profile.getFavorites();
+        List<Item> items;
+
+        if (favorites == null || favorites.isEmpty()) {
+            items = Collections.emptyList();
+        } else {
+            items = favorites.stream()
+                    .map((appearance) -> new FavoriteAppearanceEntryItem(playerLanguage, appearance))
+                    .collect(Collectors.toList());
+        }
 
         gui = ScrollGui.items(guiItemBuilder -> {
             guiItemBuilder.setStructure(
@@ -47,7 +53,7 @@ public class FavoritesGUI {
                     "x x x x x x x x #",
                     "x x x x x x x x #",
                     "x x x x x x x x D",
-                    "B % % % % % % % %");
+                    "% % % A B R % % %");
             guiItemBuilder.addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL);
             guiItemBuilder.addIngredient('U', scrollUpItem);
             guiItemBuilder.addIngredient('D', scrollDownItem);

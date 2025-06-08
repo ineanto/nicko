@@ -22,7 +22,7 @@ public class ManageCacheItem extends AsyncItem {
         super(new SuppliedItem(() -> {
                     final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
                     return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
-                }, (click -> true)).getItemProvider(),
+                }, (_ -> true)).getItemProvider(),
                 () -> {
                     AbstractItemBuilder<?> builder;
 

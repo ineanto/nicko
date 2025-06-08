@@ -22,7 +22,7 @@ public class ManagePlayerItem {
         return new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.WRITABLE_BOOK);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Admin.MANAGE_PLAYER);
-        }, click -> {
+        }, _ -> {
             new PlayerCheckGUI(player, Bukkit.getOnlinePlayers()).open();
             return true;
         });

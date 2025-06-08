@@ -1,14 +1,12 @@
 package xyz.ineanto.nicko.gui;
 
 import org.bukkit.entity.Player;
-import xyz.ineanto.nicko.gui.items.ItemDefaults;
 import xyz.ineanto.nicko.gui.items.admin.ManageCacheItem;
 import xyz.ineanto.nicko.gui.items.admin.ManagePlayerItem;
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
-import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.language.LanguageKey;
+import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.xenondevs.invui.gui.Gui;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
 import xyz.xenondevs.invui.window.Window;
 
 public class AdminGUI {
@@ -32,7 +30,6 @@ public class AdminGUI {
                 )
                 .addIngredient('S', new ManageCacheItem(playerLanguage))
                 .addIngredient('C', managePlayerItem.get())
-                .addIngredient('U', new SimpleItem(ItemDefaults.getUnavailableItem(playerLanguage)))
                 .addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()))
                 .build();
         this.player = player;

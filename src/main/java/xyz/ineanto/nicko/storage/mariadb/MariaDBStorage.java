@@ -1,5 +1,8 @@
 package xyz.ineanto.nicko.storage.mariadb;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.Appearance;
 import xyz.ineanto.nicko.config.Configuration;
@@ -12,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -19,6 +23,7 @@ import java.util.logging.Logger;
 public class MariaDBStorage extends Storage {
     private final Logger logger = Logger.getLogger("SQLStorage");
     private final Configuration configuration;
+    private final Gson gson = new GsonBuilder().serializeNulls().create();
 
     private MariaDBStorageProvider provider;
 
@@ -86,15 +91,17 @@ public class MariaDBStorage extends Storage {
             String skin = "";
             String locale = "";
             boolean randomSkin = false;
+            List<Appearance> favorites = Collections.emptyList();
             while (resultSet.next()) {
                 name = resultSet.getString("name");
                 skin = resultSet.getString("skin");
                 locale = resultSet.getString("locale");
                 randomSkin = resultSet.getBoolean("randomskin");
+                favorites = gson.fromJson(resultSet.getString("favorites"), new TypeToken<List<Appearance>>() { }.getType());
             }
 
             // TODO (Ineanto, 17/05/2025): Retrieve favorites
-            final NickoProfile profile = new NickoProfile(new Appearance(name, skin), Language.fromCode(locale), randomSkin, Collections.emptyList());
+            final NickoProfile profile = new NickoProfile(new Appearance(name, skin), Language.fromCode(locale), randomSkin, favorites);
             return Optional.of(profile);
         } catch (SQLException e) {
             logger.warning("Couldn't fetch profile: " + e.getMessage());
@@ -120,13 +127,14 @@ public class MariaDBStorage extends Storage {
     }
 
     private PreparedStatement getInsertStatement(Connection connection, UUID uuid, NickoProfile profile) throws SQLException {
-        final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `randomskin`) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "INSERT IGNORE INTO nicko.DATA (`uuid`, `name`, `skin`, `locale`, `randomskin`, `favorites`) VALUES (?, ?, ?, ?, ?, ?)";
         final PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, uuid.toString());
         statement.setString(2, profile.getName() == null ? null : profile.getName());
         statement.setString(3, profile.getSkin() == null ? null : profile.getSkin());
         statement.setString(4, profile.getLocale().getCode());
         statement.setBoolean(5, profile.isRandomSkin());
+        statement.setString(6, gson.toJson(profile.getFavorites(), new TypeToken<List<Appearance>>() { }.getRawType()));
         return statement;
     }
 

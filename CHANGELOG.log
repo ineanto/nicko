@@ -3,6 +3,7 @@
         - Players are now able to mark disguises as favorites.
 
     [FIXES]
+        - Fixed a bug where a player was improperly named when inspecting it in the admin panel.
         - Added a missing sound when players undisguised.
 
 1.2.0-RC1: Update n°12 (XX/XX/25)

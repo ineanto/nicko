@@ -16,6 +16,7 @@ import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.profile.NickoProfile;
+import xyz.ineanto.nicko.storage.name.PlayerNameStore;
 import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
@@ -35,15 +36,16 @@ public class PlayerInformationItem extends AsyncItem {
         super(new SuppliedItem(() -> {
             final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
-        }, (click -> true)).getItemProvider(), () -> {
+        }, (_ -> true)).getItemProvider(), () -> {
             try {
                 final SkullBuilder skull = new SkullBuilder(target.getUniqueId());
                 final Optional<NickoProfile> optionalProfile = Nicko.getInstance().getDataStore().getData(target.getUniqueId());
+                final PlayerNameStore playerNameStore = Nicko.getInstance().getNameStore();
 
                 if (optionalProfile.isPresent()) {
                     final NickoProfile profile = optionalProfile.get();
                     final AbstractItemBuilder<?> headItem = playerLanguage.translateItem(skull, LanguageKey.GUI.Admin.CHECK,
-                            target.getName(),
+                            playerNameStore.getStoredName(target),
                             (profile.hasData() ? "<green>✔</green>" : "<red>❌</red>"),
                             (profile.getName() == null ? "<grey>N/A<grey>" : profile.getName()),
                             (profile.getSkin() == null ? "<grey>N/A</grey>" : profile.getSkin()));

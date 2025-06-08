@@ -6,7 +6,9 @@ import xyz.ineanto.nicko.appearance.Appearance;
 import xyz.ineanto.nicko.gui.items.common.GoBackItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollDownItem;
 import xyz.ineanto.nicko.gui.items.common.ScrollUpItem;
+import xyz.ineanto.nicko.gui.items.favorites.FavoriteAddItem;
 import xyz.ineanto.nicko.gui.items.favorites.FavoriteAppearanceEntryItem;
+import xyz.ineanto.nicko.gui.items.favorites.FavoriteRemoveItem;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.profile.NickoProfile;
@@ -34,6 +36,9 @@ public class FavoritesGUI {
         final ScrollUpItem scrollUpItem = new ScrollUpItem(playerLanguage);
         final ScrollDownItem scrollDownItem = new ScrollDownItem(playerLanguage);
 
+        final FavoriteAddItem favoriteAddItem = new FavoriteAddItem(playerLanguage);
+        final FavoriteRemoveItem favoriteRemoveItem = new FavoriteRemoveItem(playerLanguage);
+
         final NickoProfile profile = Nicko.getInstance().getDataStore().getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
         final List<Appearance> favorites = profile.getFavorites();
         List<Item> items;
@@ -58,6 +63,8 @@ public class FavoritesGUI {
             guiItemBuilder.addIngredient('U', scrollUpItem);
             guiItemBuilder.addIngredient('D', scrollDownItem);
             guiItemBuilder.addIngredient('B', backItem.get(parent.getGUI(), parent.getTitle()));
+            guiItemBuilder.addIngredient('A', favoriteAddItem.get());
+            guiItemBuilder.addIngredient('R', favoriteRemoveItem.get());
             guiItemBuilder.setContent(items);
         });
         this.player = player;

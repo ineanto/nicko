@@ -162,7 +162,7 @@ gui:
       name: "Add a favorite"
       lore:
         - "<grey>Add a new favorite appearance to the list.</grey>"
-        - "<grey>Hold <gold><b>SHIFT</b></gold> to add your current disguise!</grey>"
+        - "<grey>Hold <b><gold>SHIFT</gold></b> to add your current disguise!</grey>"
     remove:
       name: "Toggle deletion mode"
       lore:

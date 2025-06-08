@@ -27,7 +27,7 @@ public class AdminGUI {
         this.gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# # # S C U # # #",
+                        "# # # S # C # # #",
                         "B # # # # # # # #"
                 )
                 .addIngredient('S', new ManageCacheItem(playerLanguage))

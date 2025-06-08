@@ -142,5 +142,12 @@ public class LanguageKey {
                 public static final String ENTRY = CACHE_KEY + "entry";
             }
         }
+
+        public static class Favorites {
+            private static final String FAVORITES_KEY = GUI_KEY + "favorites.";
+
+            public static final String ADD = FAVORITES_KEY + "add";
+            public static final String REMOVE = FAVORITES_KEY + "remove";
+        }
     }
 }

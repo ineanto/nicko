@@ -42,7 +42,7 @@ public class FavoriteRemoveItem {
             );
 
             final ItemBuilder builder = new ItemBuilder(banner);
-            return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.FAVORITES);
+            return playerLanguage.translateItem(builder, LanguageKey.GUI.Favorites.REMOVE);
         }, click -> {
             final ClickType clickType = click.getClickType();
             if (clickType.isLeftClick() || clickType.isRightClick()) {

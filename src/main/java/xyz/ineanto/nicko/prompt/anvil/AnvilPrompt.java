@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.gui.prompt.anvil;
+package xyz.ineanto.nicko.prompt.anvil;
 
 import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -7,15 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.ineanto.nicko.Nicko;
-import xyz.ineanto.nicko.gui.prompt.Prompt;
+import xyz.ineanto.nicko.prompt.Prompt;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.mojang.MojangUtils;
 
 import java.util.Collections;
 
 /**
- * This is currently unused, I'm waiting for AnvilGUI
- * to be updated to compile with Paper mappings.
+ * This is currently unused, I'm waiting on AnvilGUI
+ * to be compiled against Paper mappings.
  */
 // TODO (Ineanto, 16/05/2025): Do some validation on the inputs
 public class AnvilPrompt extends Prompt {

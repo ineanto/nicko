@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.gui.prompt;
+package xyz.ineanto.nicko.prompt;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -50,7 +50,7 @@ public abstract class Prompt {
         final ActionResult actionResult = appearanceManager.update(skinChange);
         if (!actionResult.isError()) {
             player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
-            player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
+            player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1f, 1f);
         } else {
             player.sendMessage(
                     playerLanguage.translateWithOops(

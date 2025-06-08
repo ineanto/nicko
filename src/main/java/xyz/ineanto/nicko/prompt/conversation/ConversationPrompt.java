@@ -1,4 +1,4 @@
-package xyz.ineanto.nicko.gui.prompt.conversation;
+package xyz.ineanto.nicko.prompt.conversation;
 
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationFactory;
@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.ineanto.nicko.Nicko;
-import xyz.ineanto.nicko.gui.prompt.Prompt;
+import xyz.ineanto.nicko.prompt.Prompt;
 import xyz.ineanto.nicko.language.LanguageKey;
 
 import java.util.Map;

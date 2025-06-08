@@ -100,7 +100,6 @@ public class MariaDBStorage extends Storage {
                 favorites = gson.fromJson(resultSet.getString("favorites"), new TypeToken<List<Appearance>>() { }.getType());
             }
 
-            // TODO (Ineanto, 17/05/2025): Retrieve favorites
             final NickoProfile profile = new NickoProfile(new Appearance(name, skin), Language.fromCode(locale), randomSkin, favorites);
             return Optional.of(profile);
         } catch (SQLException e) {

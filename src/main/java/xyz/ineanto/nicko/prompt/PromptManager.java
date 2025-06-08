@@ -1,7 +1,7 @@
-package xyz.ineanto.nicko.gui.prompt;
+package xyz.ineanto.nicko.prompt;
 
 import org.bukkit.entity.Player;
-import xyz.ineanto.nicko.gui.prompt.conversation.ConversationPrompt;
+import xyz.ineanto.nicko.prompt.conversation.ConversationPrompt;
 
 public class PromptManager {
     private final Prompt prompt;

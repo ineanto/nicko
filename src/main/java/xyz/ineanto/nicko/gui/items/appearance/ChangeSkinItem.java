@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import xyz.ineanto.nicko.Nicko;
-import xyz.ineanto.nicko.gui.prompt.PromptManager;
+import xyz.ineanto.nicko.prompt.PromptManager;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;

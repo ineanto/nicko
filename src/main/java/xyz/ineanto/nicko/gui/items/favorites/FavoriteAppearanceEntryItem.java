@@ -33,13 +33,14 @@ public class FavoriteAppearanceEntryItem extends AsyncItem {
                 }, (_ -> true)).getItemProvider(),
                 () -> {
                     try {
-                        final String name = (appearance.name() == null ? appearance.skin() : appearance.name());
-                        final String skin = (appearance.skin() == null ? appearance.name() : appearance.skin());
+                        // TODO (Ineanto, 08/06/2025): set a default skin if the entry contains only a name
+                        final String name = (appearance.name() == null ? "N/A" : appearance.name());
+                        final String skin = (appearance.skin() == null ? "N/A" : appearance.skin());
                         final SkullBuilder skull = new SkullBuilder(skin);
                         return playerLanguage.translateItem(skull, LanguageKey.GUI.Admin.Cache.ENTRY, name);
                     } catch (MojangApiUtils.MojangApiException | IOException e) {
                         Nicko.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + appearance.skin() + ")! (GUI/Favorites/Entry)");
-                        return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Admin.Cache.ENTRY, Nicko.getInstance().getMojangAPI().getUUIDName("Notch"));
+                        return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Admin.Cache.ENTRY, "...");
                     }
                 });
         this.playerLanguage = playerLanguage;

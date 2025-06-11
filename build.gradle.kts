@@ -33,7 +33,7 @@ dependencies {
     paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
 
     compileOnly("me.clip:placeholderapi:2.11.5")
-    compileOnly("net.kyori:adventure-api:4.17.0")
+    compileOnly("net.kyori:adventure-api:4.21.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
     compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.4.0-SNAPSHOT")

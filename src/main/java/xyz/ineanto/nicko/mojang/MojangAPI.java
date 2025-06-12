@@ -105,11 +105,13 @@ public class MojangAPI {
     private JsonObject getRequestToUrl(String parametrizedUrl) throws ExecutionException, InterruptedException {
         return worker.submit(() -> {
             final URL url = URI.create(parametrizedUrl).toURL();
-            final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-            con.setDoInput(true);
-            con.setRequestMethod("GET");
+            final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-            switch (con.getResponseCode()) {
+            connection.setDoInput(true);
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0");
+            connection.setRequestMethod("GET");
+
+            switch (connection.getResponseCode()) {
                 case 403:
                     logger.warning("Failed to parse request: forbidden?");
                     return getErrorObject();
@@ -121,7 +123,7 @@ public class MojangAPI {
                     logger.warning("Failed to parse request: The connection is throttled.");
                     return getErrorObject();
                 case 200:
-                    final BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    final BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     final StringBuilder builder = new StringBuilder();
                     String line;
                     while ((line = input.readLine()) != null) {
@@ -136,7 +138,7 @@ public class MojangAPI {
                         return getErrorObject();
                     }
                 default:
-                    logger.warning("Unhandled response code from Mojang: " + con.getResponseCode());
+                    logger.warning("Unhandled response code from Mojang: " + connection.getResponseCode());
                     return getErrorObject();
             }
         }).get();

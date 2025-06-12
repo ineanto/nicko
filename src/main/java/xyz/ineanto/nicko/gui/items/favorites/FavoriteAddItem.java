@@ -72,7 +72,6 @@ public class FavoriteAddItem {
 
                 final List<Appearance> favorites = profile.getFavorites();
                 favorites.add(profile.getAppearance());
-                profile.setFavorites(favorites);
                 dataStore.updateCache(player.getUniqueId(), profile);
                 new FavoritesGUI(player).open();
                 return true;

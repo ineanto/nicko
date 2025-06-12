@@ -28,22 +28,16 @@ public class AppearanceManager {
 
     public ActionResult reset() {
         final NickoProfile profile = getNickoProfile();
-        final String defaultName = nameStore.getStoredName(player);
 
         // Call the event.
         final PlayerResetDisguiseEvent event = new PlayerResetDisguiseEvent(player);
         Bukkit.getPluginManager().callEvent(event);
 
-        profile.setName(defaultName);
-        profile.setSkin(defaultName);
-
-        final ActionResult result = update(true);
-
         profile.setName(null);
         profile.setSkin(null);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        return result;
+        return ActionResult.error();
     }
 
     public ActionResult update(boolean skinChange) {

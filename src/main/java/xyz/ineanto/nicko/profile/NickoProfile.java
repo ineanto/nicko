@@ -42,6 +42,10 @@ public class NickoProfile implements Cloneable {
         return dataStore.getData(uuid);
     }
 
+    public Appearance getAppearance() {
+        return appearance;
+    }
+
     public boolean hasData() {
         return appearance.name() != null || appearance.skin() != null;
     }

@@ -6,20 +6,34 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import xyz.ineanto.nicko.Nicko;
+import xyz.ineanto.nicko.appearance.Appearance;
+import xyz.ineanto.nicko.gui.FavoritesGUI;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
+import xyz.ineanto.nicko.profile.NickoProfile;
+import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class FavoriteAddItem {
-    private final PlayerLanguage playerLanguage;
+import java.util.List;
 
-    public FavoriteAddItem(PlayerLanguage playerLanguage) {
-        this.playerLanguage = playerLanguage;
+public class FavoriteAddItem {
+    private final PlayerDataStore dataStore = Nicko.getInstance().getDataStore();
+
+    private final Player player;
+    private final PlayerLanguage playerLanguage;
+    private final NickoProfile profile;
+
+    public FavoriteAddItem(Player player) {
+        this.player = player;
+        this.playerLanguage = new PlayerLanguage(player);
+        this.profile = dataStore.getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
     }
 
     public SuppliedItem get() {
@@ -50,8 +64,17 @@ public class FavoriteAddItem {
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Favorites.ADD);
         }, click -> {
             final ClickType clickType = click.getClickType();
-            if (clickType.isLeftClick() || clickType.isRightClick()) {
-                click.getEvent().getView().close();
+            if (clickType.isShiftClick() && clickType.isLeftClick()) {
+                if (!profile.hasData()) {
+                    click.getEvent().getView().close();
+                    return false;
+                }
+
+                final List<Appearance> favorites = profile.getFavorites();
+                favorites.add(profile.getAppearance());
+                profile.setFavorites(favorites);
+                dataStore.updateCache(player.getUniqueId(), profile);
+                new FavoritesGUI(player).open();
                 return true;
             }
             return false;

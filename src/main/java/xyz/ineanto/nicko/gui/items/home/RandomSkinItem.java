@@ -46,7 +46,7 @@ public class RandomSkinItem {
                     } else {
                         player.sendMessage(playerLanguage.translateWithOops(
                                         LanguageKey.Event.Appearance.Set.ERROR,
-                                        playerLanguage.translate(result.getErrorKey(), false)
+                                        result.getErrorKey()
                                 )
                         );
                         appearanceManager.reset();

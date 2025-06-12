@@ -36,7 +36,7 @@ public class FavoritesGUI {
         final ScrollUpItem scrollUpItem = new ScrollUpItem(playerLanguage);
         final ScrollDownItem scrollDownItem = new ScrollDownItem(playerLanguage);
 
-        final FavoriteAddItem favoriteAddItem = new FavoriteAddItem(playerLanguage);
+        final FavoriteAddItem favoriteAddItem = new FavoriteAddItem(player);
         final FavoriteRemoveItem favoriteRemoveItem = new FavoriteRemoveItem(playerLanguage);
 
         final NickoProfile profile = Nicko.getInstance().getDataStore().getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);

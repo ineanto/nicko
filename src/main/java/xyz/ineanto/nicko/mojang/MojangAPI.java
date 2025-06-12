@@ -113,7 +113,9 @@ public class MojangAPI {
 
             switch (connection.getResponseCode()) {
                 case 403:
-                    logger.warning("Failed to parse request: forbidden?");
+                    logger.warning("The Mojang API denied the request. This should not happen.");
+                    logger.warning("Nicko is NOT responsible for this error. Try again in a few minutes or hours.");
+                    logger.warning("See https://bugs.mojang.com/browse/WEB/issues/WEB-7591 for more info.");
                     return getErrorObject();
                 case 404:
                 case 400:

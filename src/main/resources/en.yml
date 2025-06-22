@@ -168,12 +168,3 @@ gui:
       lore:
         - "<grey>Clicking on any disguise as this mode is</grey>"
         - "<grey>active will remove it from your favorites.</grey>"
-
-    cycling_choices:
-      lore:
-        - "<gray><i>Cycle through the values</i></gray>"
-        - "<gray><i>by left or right clicking.</i></gray>"
-    language:
-      name: "Language"
-    random_skin:
-      name: "Random skin on login"

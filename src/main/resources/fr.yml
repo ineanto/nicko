@@ -159,3 +159,14 @@ gui:
       name: "Langage"
     random_skin:
       name: "Apparence aléatoire à la connexion"
+  favorites:
+    add:
+      name: "Ajouter un favori"
+      lore:
+        - "<grey>Ajoute une nouvelle apparence favorite.</grey>"
+        - "<grey>Maintenez <gold>SHIFT</gold> pour ajouter votre apparence actuelle !</grey>"
+    remove:
+      name: "Activer la suppression"
+      lore:
+        - "<grey>Cliquer sur un déguisement lorsque le mode est</grey>"
+        - "<grey>actif le supprimera de vos favoris.</grey>"

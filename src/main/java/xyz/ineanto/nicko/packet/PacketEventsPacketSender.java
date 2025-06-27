@@ -1,10 +1,17 @@
 package xyz.ineanto.nicko.packet;
 
-import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.protocol.world.Difficulty;
+import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerRespawn;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
@@ -15,6 +22,7 @@ import xyz.ineanto.nicko.profile.NickoProfile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class PacketEventsPacketSender implements PacketSender {
@@ -30,27 +38,39 @@ public class PacketEventsPacketSender implements PacketSender {
     public void sendEntityRespawn() {
         if (!profile.hasData()) return;
 
-        // TODO (Ineanto, 27/06/2025): Create/Delete packets here
+        final WrapperPlayServerDestroyEntities destroy = new WrapperPlayServerDestroyEntities(player.getEntityId());
+        final WrapperPlayServerSpawnEntity spawn = new WrapperPlayServerSpawnEntity(
+                new Random().nextInt(9999),
+                Optional.of(player.getUniqueId()),
+                EntityTypes.PLAYER,
+                new Vector3d(player.getX(), player.getY(), player.getZ()),
+                player.getPitch(),
+                player.getYaw(),
+                player.getBodyYaw(),
+                0,
+                Optional.empty()
+        );
 
         Bukkit.getOnlinePlayers().stream().filter(receiver -> receiver.getUniqueId() != player.getUniqueId()).forEach(receiver -> {
-            // TODO (Ineanto, 27/06/2025): Send packets
-            //sendPacket(destroy, player);
-            //sendPacket(create, player);
+            sendPacket(destroy, player);
+            sendPacket(spawn, player);
         });
     }
 
     @Override
     public ActionResult updatePlayerProfile(String name) {
-        final PlayerProfile playerProfile = new CraftPlayerProfile(player.getUniqueId(), name);
+        final PlayerProfile previousProfile = player.getPlayerProfile();
+        final PlayerProfile newProfile = Bukkit.getServer().createProfile(player.getUniqueId(), name);
+
         // Copy previous properties to preserve skin
-        playerProfile.setProperties(playerProfile.getProperties());
-        player.setPlayerProfile(playerProfile);
+        newProfile.setProperties(previousProfile.getProperties());
+        player.setPlayerProfile(newProfile);
         return ActionResult.ok();
     }
 
     @Override
     public ActionResult updatePlayerProfileProperties() {
-        // TODO (Ineanto, 27/06/2025): Player profile
+        final PlayerProfile playerProfile = player.getPlayerProfile();
 
         try {
             final MojangAPI mojangAPI = Nicko.getInstance().getMojangAPI();
@@ -66,8 +86,8 @@ public class PacketEventsPacketSender implements PacketSender {
             }
 
             final MojangSkin skinResult = skin.get();
-            //playerProfile.setProperties(skinResult.asProfileProperties());
-            //player.setPlayerProfile(playerProfile);
+            playerProfile.setProperties(skinResult.asProfileProperties());
+            player.setPlayerProfile(playerProfile);
             return ActionResult.ok();
         } catch (ExecutionException | IOException e) {
             return ActionResult.error(LanguageKey.Error.CACHE);
@@ -82,8 +102,24 @@ public class PacketEventsPacketSender implements PacketSender {
 
     @Override
     public void sendPlayerRespawn() {
-        // TODO (Ineanto, 27/06/2025): Respawn packet
-        //sendPacket(respawn, player);
+        final World world = player.getWorld();
+
+        final WrapperPlayServerRespawn respawn = new WrapperPlayServerRespawn(
+                SpigotConversionUtil.typeFromBukkitWorld(world),
+                world.getName(),
+                Difficulty.getById(world.getDifficulty().ordinal()),
+                world.getSeed(),
+                SpigotConversionUtil.fromBukkitGameMode(player.getGameMode()),
+                SpigotConversionUtil.fromBukkitGameMode(player.getPreviousGameMode()),
+                false,
+                false,
+                true,
+                null,
+                null,
+                null
+        );
+
+        sendPacket(respawn, player);
     }
 
     @Override

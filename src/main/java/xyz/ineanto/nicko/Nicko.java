@@ -2,6 +2,7 @@ package xyz.ineanto.nicko;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,8 +41,18 @@ public class Nicko extends JavaPlugin {
     private RandomNameFetcher nameFetcher;
 
     @Override
+    public void onLoad() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().load();
+    }
+
+    @Override
     public void onEnable() {
         plugin = this;
+
+        PacketEvents.getAPI().init();
+        PacketEvents.getAPI().getSettings().checkForUpdates(false).kickOnPacketException(true);
+
 
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
@@ -49,10 +60,9 @@ public class Nicko extends JavaPlugin {
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
 
         if (PacketEvents.getAPI().getServerManager().getVersion().isOlderThan(ServerVersion.V_1_20)) {
-            getLogger().severe("This version (" + PacketEvents.getAPI().getServerManager().getVersion() + ") is not supported by Nicko!");
-            getLogger().severe("As of version 1.2.0, Nicko only supports the two latest major Minecraft versions. (Currently 1.20 to 1.21.5)");
-            dataStore.getStorage().setError(true);
-            Bukkit.getPluginManager().disablePlugin(this);
+            getLogger().severe("This version (" + PacketEvents.getAPI().getServerManager().getVersion() + ") is not officially supported by Nicko!");
+            getLogger().severe("As of version 1.3.0, Nicko only supports the two latest major Minecraft versions. (Currently 1.20 to 1.21.5)");
+            getLogger().severe("Do NOT complain about it not working, you've been warned!");
         }
 
         if (!Bukkit.getOnlineMode()) {

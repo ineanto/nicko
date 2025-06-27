@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.event.custom.PlayerDisguiseEvent;
 import xyz.ineanto.nicko.event.custom.PlayerResetDisguiseEvent;
+import xyz.ineanto.nicko.packet.PacketEventsPacketSender;
 import xyz.ineanto.nicko.packet.PacketSender;
-import xyz.ineanto.nicko.packet.PaperPacketSender;
 import xyz.ineanto.nicko.profile.NickoProfile;
 import xyz.ineanto.nicko.storage.PlayerDataStore;
 import xyz.ineanto.nicko.storage.name.PlayerNameStore;
@@ -23,7 +23,7 @@ public class AppearanceManager {
 
     public AppearanceManager(Player player) {
         this.player = player;
-        this.packetSender = new PaperPacketSender(player, getNickoProfile());
+        this.packetSender = new PacketEventsPacketSender(player, getNickoProfile());
     }
 
     public ActionResult reset() {

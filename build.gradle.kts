@@ -2,7 +2,6 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.2"
     id("xyz.jpenilla.run-paper") version "2.3.0"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
 }
 
 group = "xyz.ineanto"
@@ -31,14 +30,14 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
 
     compileOnly("me.clip:placeholderapi:2.11.5")
     compileOnly("net.kyori:adventure-api:4.21.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
     compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.8.0")
 
+    implementation("com.github.retrooper:packetevents-spigot:2.8.0")
 
     implementation("de.rapha149.signgui:signgui:2.5.0")
     implementation("com.github.jsixface:yamlconfig:1.2")

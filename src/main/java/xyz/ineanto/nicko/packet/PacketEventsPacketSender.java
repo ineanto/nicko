@@ -3,13 +3,14 @@ package xyz.ineanto.nicko.packet;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.protocol.player.TextureProperty;
+import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.protocol.world.Difficulty;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerRespawn;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import com.github.retrooper.packetevents.wrapper.play.server.*;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -21,6 +22,8 @@ import xyz.ineanto.nicko.mojang.MojangSkin;
 import xyz.ineanto.nicko.profile.NickoProfile;
 
 import java.io.IOException;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -124,12 +127,50 @@ public class PacketEventsPacketSender implements PacketSender {
 
     @Override
     public void sendTabListUpdate(String displayName) {
-        // TODO (Ineanto, 27/06/2025): TabList packet
+        final EnumSet<WrapperPlayServerPlayerInfoUpdate.Action> actions = EnumSet.of(
+                WrapperPlayServerPlayerInfoUpdate.Action.ADD_PLAYER,
+                WrapperPlayServerPlayerInfoUpdate.Action.INITIALIZE_CHAT,
+                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LISTED,
+                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_DISPLAY_NAME,
+                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_GAME_MODE,
+                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LATENCY
+        );
+
+        final List<WrapperPlayServerPlayerInfoUpdate.PlayerInfo> entries = List.of(
+                new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(
+                        toUserProfile(player.getPlayerProfile()),
+                        true,
+                        player.getPing(),
+                        SpigotConversionUtil.fromBukkitGameMode(player.getGameMode()),
+                        Component.text(displayName),
+                        null,
+                        player.getPlayerListOrder(),
+                        true
+                )
+        );
+
+        final WrapperPlayServerPlayerInfoRemove remove = new WrapperPlayServerPlayerInfoRemove(player.getUniqueId());
+        final WrapperPlayServerPlayerInfoUpdate update = new WrapperPlayServerPlayerInfoUpdate(actions, entries);
 
         Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
-            //sendPacket(remove, onlinePlayer);
-            //sendPacket(update, onlinePlayer);
+            sendPacket(remove, onlinePlayer);
+            sendPacket(update, onlinePlayer);
         });
+    }
+
+    private UserProfile toUserProfile(PlayerProfile playerProfile) {
+        return new UserProfile(
+                playerProfile.getId(),
+                playerProfile.getName(),
+                playerProfile.getProperties()
+                        .stream()
+                        .map(profileProperty -> new TextureProperty(
+                                profileProperty.getName(),
+                                profileProperty.getValue(),
+                                profileProperty.getSignature()
+                        ))
+                        .toList()
+        );
     }
 
     private void sendPacket(PacketWrapper<?> packet, Player player) {

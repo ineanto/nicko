@@ -2,6 +2,8 @@ package xyz.ineanto.nicko.packet;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
@@ -99,8 +101,11 @@ public class PacketEventsPacketSender implements PacketSender {
 
     @Override
     public void sendEntityMetadataUpdate() {
-        // TODO (Ineanto, 27/06/2025): Entity Metadata packet
-        //sendPacket(data, player);
+        // This was surprisingly easy to write?
+        final EntityData<Byte> entityData = new EntityData<>(17, EntityDataTypes.BYTE, (byte) 0x7f);
+        final WrapperPlayServerEntityMetadata metadata = new WrapperPlayServerEntityMetadata(player.getEntityId(), List.of(entityData));
+
+        sendPacket(metadata, player);
     }
 
     @Override
@@ -143,7 +148,7 @@ public class PacketEventsPacketSender implements PacketSender {
                         player.getPing(),
                         SpigotConversionUtil.fromBukkitGameMode(player.getGameMode()),
                         Component.text(displayName),
-                        null,
+                        null, // Welcome back fucked chat encryption
                         player.getPlayerListOrder(),
                         true
                 )

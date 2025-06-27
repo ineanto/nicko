@@ -26,6 +26,7 @@ repositories {
     maven("https://repo.xenondevs.xyz/releases")
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.codemc.io/repository/maven-snapshots/")
+    maven("https://repo.codemc.io/repository/maven-releases/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
@@ -36,7 +37,8 @@ dependencies {
     compileOnly("net.kyori:adventure-api:4.21.0")
     compileOnly("xyz.xenondevs.invui:invui-core:$invuiVersion")
     compileOnly("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.4.0-SNAPSHOT")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.8.0")
+
 
     implementation("de.rapha149.signgui:signgui:2.5.0")
     implementation("com.github.jsixface:yamlconfig:1.2")

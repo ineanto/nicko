@@ -1,6 +1,7 @@
 package xyz.ineanto.nicko;
 
-import com.comphenix.protocol.utility.MinecraftVersion;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,9 +48,9 @@ public class Nicko extends JavaPlugin {
 
         dataStore = new PlayerDataStore(mojangAPI, getNickoConfig());
 
-        if (!MinecraftVersion.v1_21_5.atOrAbove()) {
-            getLogger().severe("This version (" + MinecraftVersion.getCurrentVersion().getVersion() + ") is not supported by Nicko!");
-            getLogger().severe("As of version 1.2.0, Nicko only supports the latest Minecraft version. (Currently 1.21.5)");
+        if (PacketEvents.getAPI().getServerManager().getVersion().isOlderThan(ServerVersion.V_1_20)) {
+            getLogger().severe("This version (" + PacketEvents.getAPI().getServerManager().getVersion() + ") is not supported by Nicko!");
+            getLogger().severe("As of version 1.2.0, Nicko only supports the two latest major Minecraft versions. (Currently 1.20 to 1.21.5)");
             dataStore.getStorage().setError(true);
             Bukkit.getPluginManager().disablePlugin(this);
         }

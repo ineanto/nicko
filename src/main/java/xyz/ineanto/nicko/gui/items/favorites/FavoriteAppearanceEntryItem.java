@@ -1,68 +1,46 @@
 package xyz.ineanto.nicko.gui.items.favorites;
 
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.jetbrains.annotations.NotNull;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.Appearance;
-import xyz.ineanto.nicko.gui.ChoiceGUI;
-import xyz.ineanto.nicko.gui.InvalidateSkinGUI;
+import xyz.ineanto.nicko.appearance.AppearanceManager;
 import xyz.ineanto.nicko.gui.items.ItemDefaults;
-import xyz.ineanto.nicko.gui.items.common.choice.ChoiceCallback;
 import xyz.ineanto.nicko.language.LanguageKey;
 import xyz.ineanto.nicko.language.PlayerLanguage;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
-import xyz.xenondevs.invui.item.impl.SuppliedItem;
 import xyz.xenondevs.invui.util.MojangApiUtils;
 
 import java.io.IOException;
 
-public class FavoriteAppearanceEntryItem extends AsyncItem {
+public class FavoriteAppearanceEntryItem {
+    private final AppearanceManager appearanceManager;
     private final PlayerLanguage playerLanguage;
     private final Appearance appearance;
 
-    public FavoriteAppearanceEntryItem(PlayerLanguage playerLanguage, Appearance appearance) {
-        super(new SuppliedItem(() -> {
-                    final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
-                    return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
-                }, (_ -> true)).getItemProvider(),
+    public FavoriteAppearanceEntryItem(Player player, Appearance appearance) {
+        this.appearanceManager = new AppearanceManager(player);
+        this.playerLanguage = new PlayerLanguage(player);
+        this.appearance = appearance;
+    }
+
+    public AsyncItem get() {
+        // TODO (Ineanto, 26/06/2025): handle click
+        final ItemBuilder temporaryItemBuilder = new ItemBuilder(Material.PAINTING);
+        return new AsyncItem(playerLanguage.translateItem(temporaryItemBuilder, LanguageKey.GUI.LOADING),
                 () -> {
                     try {
                         // TODO (Ineanto, 08/06/2025): set a default skin if the entry contains only a name
                         final String name = (appearance.name() == null ? "N/A" : appearance.name());
                         final String skin = (appearance.skin() == null ? "N/A" : appearance.skin());
                         final SkullBuilder skull = new SkullBuilder(skin);
-                        return playerLanguage.translateItem(skull, LanguageKey.GUI.Admin.Cache.ENTRY, name);
+                        return playerLanguage.translateItem(skull, LanguageKey.GUI.Favorites.ENTRY, name, skin);
                     } catch (MojangApiUtils.MojangApiException | IOException e) {
                         Nicko.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + appearance.skin() + ")! (GUI/Favorites/Entry)");
-                        return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Admin.Cache.ENTRY, "...");
+                        return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Favorites.ENTRY, "N/A", "N/A");
                     }
                 });
-        this.playerLanguage = playerLanguage;
-        this.appearance = appearance;
-    }
-
-    @Override
-    public void handleClick(@NotNull ClickType click, @NotNull Player player, @NotNull InventoryClickEvent event) {
-        if (click.isLeftClick() || click.isRightClick()) {
-            event.getView().close();
-            new ChoiceGUI(player, new ChoiceCallback() {
-                @Override
-                public void onConfirm() {
-                    player.sendMessage(playerLanguage.translate(LanguageKey.Event.Admin.Cache.INVALIDATE_ENTRY, true, appearance.name()));
-                    player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1, 1f);
-                }
-
-                @Override
-                public void onCancel() {
-                    new InvalidateSkinGUI(player).open();
-                }
-            }).open();
-        }
     }
 }

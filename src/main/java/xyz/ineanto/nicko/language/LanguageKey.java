@@ -148,6 +148,7 @@ public class LanguageKey {
 
             public static final String ADD = FAVORITES_KEY + "add";
             public static final String REMOVE = FAVORITES_KEY + "remove";
+            public static final String ENTRY = FAVORITES_KEY + "entry";
         }
     }
 }

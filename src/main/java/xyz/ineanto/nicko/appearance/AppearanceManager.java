@@ -37,7 +37,7 @@ public class AppearanceManager {
         profile.setSkin(null);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        return ActionResult.error();
+        return ActionResult.ok();
     }
 
     public ActionResult update(boolean skinChange) {

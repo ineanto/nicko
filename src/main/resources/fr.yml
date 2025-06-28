@@ -26,7 +26,7 @@ event:
       error: "<gray>Impossible d''appliquer le précédent déguisement ! ({0})</gray>"
       ok: "<gray>Votre précédent déguisement a été appliqué.<gray>"
     remove:
-      error: "<gray>Impossible de retirer votre déguisement.</gray>"
+      error: "<gray>Impossible de retirer votre déguisement ({0}).</gray>"
       missing: "<gray>Vous n''avez pas de déguisement.</gray>"
       ok: "<gray>Déguisement retiré.</gray>"
   admin:

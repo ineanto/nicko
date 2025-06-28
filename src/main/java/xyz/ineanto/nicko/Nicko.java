@@ -53,7 +53,6 @@ public class Nicko extends JavaPlugin {
         PacketEvents.getAPI().init();
         PacketEvents.getAPI().getSettings().checkForUpdates(false).kickOnPacketException(true);
 
-
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();
 

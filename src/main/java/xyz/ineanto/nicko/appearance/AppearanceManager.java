@@ -33,11 +33,16 @@ public class AppearanceManager {
         final PlayerResetDisguiseEvent event = new PlayerResetDisguiseEvent(player);
         Bukkit.getPluginManager().callEvent(event);
 
+        final String playerName = nameStore.getStoredName(player);
+        profile.setName(playerName);
+        profile.setSkin(playerName);
+        final ActionResult resetSkinUpdate = update(true);
+
         profile.setName(null);
         profile.setSkin(null);
         dataStore.getCache().cache(player.getUniqueId(), profile);
 
-        return ActionResult.ok();
+        return resetSkinUpdate;
     }
 
     public ActionResult update(boolean skinChange) {
@@ -50,7 +55,7 @@ public class AppearanceManager {
             final ActionResult propertiesUpdateResult = packetSender.updatePlayerProfileProperties();
 
             if (propertiesUpdateResult.isError()) {
-                return reset();
+                return resetWithoutUpdate();
             }
         }
 
@@ -61,6 +66,20 @@ public class AppearanceManager {
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);
         return result;
+    }
+
+    private ActionResult resetWithoutUpdate() {
+        final NickoProfile profile = getNickoProfile();
+
+        // Call the event.
+        final PlayerResetDisguiseEvent event = new PlayerResetDisguiseEvent(player);
+        Bukkit.getPluginManager().callEvent(event);
+
+        profile.setName(null);
+        profile.setSkin(null);
+        dataStore.getCache().cache(player.getUniqueId(), profile);
+
+        return ActionResult.ok();
     }
 
     private NickoProfile getNickoProfile() {

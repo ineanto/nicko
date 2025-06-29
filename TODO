@@ -1,5 +1,0 @@
-la fonctionnalité pour retirer les déguisements fonctionne pas (admin comme via la tnt côté utilisateur)
-l'item favori explose si skin == null
-les messages d'erreurs ne contiennent pas la raison (est affiché null en raison, pb de trad ?)
-impossible de s'équiper d'un favori
-les chat session sont baisées (https://github.com/retrooper/packetevents/issues/1271)

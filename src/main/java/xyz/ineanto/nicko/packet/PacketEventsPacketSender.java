@@ -30,15 +30,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-public class PacketEventsPacketSender implements PacketSender {
-    private final Player player;
-    private final NickoProfile profile;
-
-    public PacketEventsPacketSender(Player player, NickoProfile profile) {
-        this.player = player;
-        this.profile = profile;
-    }
-
+public record PacketEventsPacketSender(Player player, NickoProfile profile) implements PacketSender {
     @Override
     public void sendEntityRespawn() {
         if (!profile.hasData()) return;

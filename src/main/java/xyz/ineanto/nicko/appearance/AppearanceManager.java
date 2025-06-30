@@ -54,10 +54,15 @@ public class AppearanceManager {
         if (skinChange) {
             final ActionResult propertiesUpdateResult = packetSender.updatePlayerProfileProperties();
 
+            System.out.println(player.getPlayerProfile().getName());
+
             if (propertiesUpdateResult.isError()) {
                 return resetWithoutUpdate();
             }
         }
+
+        // Not needed, but still broken using PE.
+        //packetSender.sendPlayerRespawn();
 
         // Call the event.
         final PlayerDisguiseEvent event = new PlayerDisguiseEvent(player, profile.getSkin(), profile.getName());
@@ -65,6 +70,8 @@ public class AppearanceManager {
 
         packetSender.sendEntityMetadataUpdate();
         packetSender.sendTabListUpdate(displayName);
+
+        packetSender.sendEntityRespawn();
         return result;
     }
 

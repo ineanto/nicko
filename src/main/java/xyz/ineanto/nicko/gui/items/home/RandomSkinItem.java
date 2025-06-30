@@ -25,7 +25,7 @@ public class RandomSkinItem {
 
     public SuppliedItem get() {
         return new SuppliedItem(() -> {
-            final ItemBuilder builder = new ItemBuilder(Material.WIND_CHARGE);
+            final ItemBuilder builder = new ItemBuilder(Material.COBWEB);
             return playerLanguage.translateItem(builder, LanguageKey.GUI.Home.RANDOM_SKIN);
         }, (event) -> {
             final Player player = event.getPlayer();

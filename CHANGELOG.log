@@ -1,4 +1,7 @@
 1.3.0-RC1: Update n°13 (XX/XX/25)
+As of 1.3.0-RC1, Nicko will now run on every Minecraft version.
+However, I will NOT provide support if the plugin breaks.
+
     [FEATURES]
         - Players are now able to mark disguises as favorites.
 

@@ -47,7 +47,7 @@ public class FavoriteAppearanceEntryItem {
                         return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Favorites.ENTRY, "N/A", "N/A");
                     }
                 }, (click) -> {
-                    System.out.println("there's a click folks!");
+                    // TODO (Ineanto, 30/06/2025): Doesn't work for some obscure reason.
                     final ClickType clickType = click.getClickType();
 
                     if (clickType.isLeftClick() || clickType.isRightClick()) {

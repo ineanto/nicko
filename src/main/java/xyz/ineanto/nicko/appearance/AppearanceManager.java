@@ -54,8 +54,6 @@ public class AppearanceManager {
         if (skinChange) {
             final ActionResult propertiesUpdateResult = packetSender.updatePlayerProfileProperties();
 
-            System.out.println(player.getPlayerProfile().getName());
-
             if (propertiesUpdateResult.isError()) {
                 return resetWithoutUpdate();
             }

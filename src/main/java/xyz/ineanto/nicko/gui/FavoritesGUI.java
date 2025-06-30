@@ -47,7 +47,7 @@ public class FavoritesGUI {
             items = Collections.emptyList();
         } else {
             items = favorites.stream()
-                    .map((appearance) -> new FavoriteAppearanceEntryItem(player, appearance).get())
+                    .map((appearance) -> new FavoriteAppearanceEntryItem(playerLanguage, appearance))
                     .collect(Collectors.toList());
         }
 

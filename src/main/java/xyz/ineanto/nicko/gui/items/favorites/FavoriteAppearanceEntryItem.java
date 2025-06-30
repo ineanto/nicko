@@ -3,6 +3,8 @@ package xyz.ineanto.nicko.gui.items.favorites;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.jetbrains.annotations.NotNull;
 import xyz.ineanto.nicko.Nicko;
 import xyz.ineanto.nicko.appearance.ActionResult;
 import xyz.ineanto.nicko.appearance.Appearance;
@@ -17,25 +19,18 @@ import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.item.impl.AsyncItem;
 import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class FavoriteAppearanceEntryItem {
+public class FavoriteAppearanceEntryItem extends AsyncItem {
     private final PlayerDataStore dataStore = Nicko.getInstance().getDataStore();
 
-    private final AppearanceManager appearanceManager;
     private final PlayerLanguage playerLanguage;
     private final Appearance appearance;
-    private final Player player;
 
-    public FavoriteAppearanceEntryItem(Player player, Appearance appearance) {
-        this.player = player;
-        this.appearanceManager = new AppearanceManager(player);
-        this.playerLanguage = new PlayerLanguage(player);
-        this.appearance = appearance;
-    }
-
-    public AsyncItem get() {
-        // what the f is this entanglement of suppliers
-        return new AsyncItem(playerLanguage.translateItem(new ItemBuilder(Material.PAINTING), LanguageKey.GUI.LOADING),
-                () -> new SuppliedItem(() -> {
+    public FavoriteAppearanceEntryItem(PlayerLanguage playerLanguage, Appearance appearance) {
+        super(new SuppliedItem(() -> {
+                    final ItemBuilder builder = new ItemBuilder(Material.PAINTING);
+                    return playerLanguage.translateItem(builder, LanguageKey.GUI.LOADING);
+                }, (_ -> true)).getItemProvider(),
+                () -> {
                     try {
                         // TODO (Ineanto, 08/06/2025): set a default skin if the entry contains only a name
                         final String name = (appearance.name() == null ? "N/A" : appearance.name());
@@ -46,34 +41,34 @@ public class FavoriteAppearanceEntryItem {
                         Nicko.getInstance().getLogger().warning("Unable to get Head texture for specified UUID (" + appearance.skin() + ")! (GUI/Favorites/Entry)");
                         return ItemDefaults.getErrorSkullItem(playerLanguage, LanguageKey.GUI.Favorites.ENTRY, "N/A", "N/A");
                     }
-                }, (click) -> {
-                    // TODO (Ineanto, 30/06/2025): Doesn't work for some obscure reason.
-                    final ClickType clickType = click.getClickType();
+                });
+        this.playerLanguage = playerLanguage;
+        this.appearance = appearance;
+    }
 
-                    if (clickType.isLeftClick() || clickType.isRightClick()) {
-                        click.getEvent().getView().close();
-                        final NickoProfile profile = dataStore.getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
+    @Override
+    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
+        if (clickType.isLeftClick() || clickType.isRightClick()) {
+            event.getView().close();
+            final NickoProfile profile = dataStore.getData(player.getUniqueId()).orElse(NickoProfile.EMPTY_PROFILE);
+            final AppearanceManager appearanceManager = new AppearanceManager(player);
 
-                        profile.setName(appearance.name());
-                        profile.setSkin(appearance.skin());
-                        dataStore.updateCache(player.getUniqueId(), profile);
+            profile.setName(appearance.name());
+            profile.setSkin(appearance.skin());
+            dataStore.updateCache(player.getUniqueId(), profile);
 
-                        final ActionResult result = appearanceManager.update(true);
-                        if (!result.isError()) {
-                            player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
-                            return true;
-                        } else {
-                            player.sendMessage(playerLanguage.translateWithOops(
-                                            LanguageKey.Event.Appearance.Set.ERROR,
-                                            result.getErrorKey()
-                                    )
-                            );
-                            appearanceManager.reset();
-                            return false;
-                        }
-                    }
-                    return false;
-                }).getItemProvider()
-        );
+            final ActionResult result = appearanceManager.update(true);
+            if (!result.isError()) {
+                player.sendMessage(playerLanguage.translateWithWhoosh(LanguageKey.Event.Appearance.Set.OK));
+
+            } else {
+                player.sendMessage(playerLanguage.translateWithOops(
+                                LanguageKey.Event.Appearance.Set.ERROR,
+                                result.getErrorKey()
+                        )
+                );
+                appearanceManager.reset();
+            }
+        }
     }
 }

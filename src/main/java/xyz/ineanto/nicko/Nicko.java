@@ -43,6 +43,7 @@ public class Nicko extends JavaPlugin {
     @Override
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings().checkForUpdates(false).kickOnPacketException(true);
         PacketEvents.getAPI().load();
     }
 
@@ -51,7 +52,6 @@ public class Nicko extends JavaPlugin {
         plugin = this;
 
         PacketEvents.getAPI().init();
-        PacketEvents.getAPI().getSettings().checkForUpdates(false).kickOnPacketException(true);
 
         configurationManager = new ConfigurationManager(getDataFolder());
         configurationManager.saveDefaultConfig();

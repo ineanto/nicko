@@ -171,7 +171,7 @@ gui:
         - "<grey>Cliquer sur un déguisement lorsque le mode est</grey>"
         - "<grey>actif le supprimera de vos favoris.</grey>"
     entry:
-      name: "Favori"
+      name: "<gold>Favori</gold>"
       lore:
-        - "<gray>Nom:</gray> <green>{0}</green>"
-        - "<gray>Skin:</gray> <green>{1}</green>"
+        - "<gray>Nom:</gray> <yellow>{0}</yellow>"
+        - "<gray>Skin:</gray> <yellow>{1}</yellow>"

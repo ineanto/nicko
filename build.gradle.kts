@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "xyz.ineanto"
-version = "1.2.0"
+version = "1.3.0"
 
 val invuiVersion: String = "1.44"
 

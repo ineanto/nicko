@@ -169,7 +169,7 @@ gui:
         - "<grey>Clicking on any disguise as this mode is</grey>"
         - "<grey>active will remove it from your favorites.</grey>"
     entry:
-      name: "Favorite"
+      name: "<gold>Favorite</gold>"
       lore:
-        - "<gray>Name:</gray> <green>{0}</green>"
-        - "<gray>Skin:</gray> <green>{1}</green>"
+        - "<gray>Name:</gray> <yellow>{0}</yellow>"
+        - "<gray>Skin:</gray> <yellow>{1}</yellow>"
